@@ -236,17 +236,17 @@
 										<c:if test="${ selectedSortBy == null }">
 										<c:out value="selected"></c:out>
 									</c:if>>Choose...</option>
-									<option value="toprate"
-										<c:if test="${ selectedSortBy == 'toprate' }">
+									<option value="toprating"
+										<c:if test="${ selectedSortBy == 'toprating' }">
 										<c:out value="selected"></c:out>
 									</c:if>>Top
-										Rated</option>
+										Rating</option>
 									<option value="newest"
 										<c:if test="${ selectedSortBy == 'newest' }">
 										<c:out value="selected"></c:out>
 									</c:if>>Newest</option>
-									<option value="price"
-										<c:if test="${ selectedSortBy == 'price' }">
+									<option value="price:asc"
+										<c:if test="${ selectedSortBy == 'price:asc' }">
 										<c:out value="selected"></c:out>
 									</c:if>>Price</option>
 									<option value="stylename"
@@ -634,31 +634,33 @@
 								<div class="products-el">
 									<c:if test="${listProd.discount > 0 }">
 										<div class="img-product-products zoom zoo"
-											id="exe${ i.getIndex() }" name="${listProd.discount }%">
+											id="${ listProd.id }" name="${listProd.discount }%">
 											<img
 												src="<c:url value="/assets/images/products/${ listProd.thumbnail }"/>"
 												alt="img-product">
 										</div>
 									</c:if>
 									<c:if test="${listProd.discount <= 0 }">
-										<div class="img-product-products zoom"
-											id="exe${ i.getIndex() }">
+										<div class="img-product-products zoom" 
+											id="${ listProd.id }">
 											<img
 												src="<c:url value="/assets/images/products/${ listProd.thumbnail }"/>"
 												alt="img-product">
 										</div>
 									</c:if>
 									<div class="content-product-products">
-										<div class="brand-product-products">${ listProd.style.style_name }</div>
-										<div class="name-product-products">${ listProd.title }</div>
+										<div class="brand-product-products" id="${ listProd.style.id }">${ listProd.style.style_name }</div>
+										<div class="name-product-products" id="${ listProd.id }">${ listProd.title }</div>
 										<div class="show-products">
 											<div class="price-product-products">
 												<c:if test="${ listProd.discount <= 0 }">
 													<div class="price-sale-products">$${ listProd.price }</div>
 												</c:if>
 												<c:if test="${ listProd.discount > 0 }">
-													<div class="price-sale-products">$${ listProd.price -
-														listProd.price*discount/100 }</div>
+													<div class="price-sale-products">
+														$<fmt:formatNumber type="number" maxFractionDigits="2"
+															value="${ listProd.price - listProd.price*listProd.discount/100 }" />
+													</div>
 													<div class="price-old-products">
 														<s>$${ listProd.price }</s>
 													</div>
@@ -704,7 +706,7 @@
 							<div class="products-el">
 								<c:if test="${listProd.discount > 0 }">
 									<div class="img-product-products zoom zoo"
-										id="exe${ i.getIndex() }" name="${listProd.discount }%">
+										id="${ listProd.id }" name="${listProd.discount }%">
 										<img
 											src="<c:url value="/assets/images/products/${ listProd.thumbnail }"/>"
 											alt="img-product">
@@ -712,23 +714,26 @@
 								</c:if>
 								<c:if test="${listProd.discount <= 0 }">
 									<div class="img-product-products zoom"
-										id="exe${ i.getIndex() }">
+										id="${ listProd.id }">
 										<img
 											src="<c:url value="/assets/images/products/${ listProd.thumbnail }"/>"
 											alt="img-product">
 									</div>
 								</c:if>
 								<div class="content-product-products">
-									<div class="brand-product-products">${ listProd.style.style_name }</div>
-									<div class="name-product-products">${ listProd.title }</div>
+									<div class="brand-product-products" id="${ listProd.style.id }">${ listProd.style.style_name }</div>
+									<div class="name-product-products" id="${ listProd.id }">${ listProd.title }</div>
 									<div class="show-products">
 										<div class="price-product-products">
 											<c:if test="${ listProd.discount <= 0 }">
 												<div class="price-sale-products">$${ listProd.price }</div>
 											</c:if>
 											<c:if test="${ listProd.discount > 0 }">
-												<div class="price-sale-products">$${ listProd.price -
-													listProd.price*discount/100 }</div>
+												<div class="price-sale-products">
+													$
+													<fmt:formatNumber type="number" maxFractionDigits="2"
+														value="${ listProd.price - listProd.price*listProd.discount/100 }" />
+												</div>
 												<div class="price-old-products">
 													<s>$${ listProd.price }</s>
 												</div>
@@ -773,30 +778,33 @@
 				<div class="products-el">
 					<c:if test="${listProd.discount > 0 }">
 						<div class="img-product-products zoom zoo"
-							id="exe${ i.getIndex() }" name="${listProd.discount }%">
+							id="${ listProd.id }" name="${listProd.discount }%">
 							<img
 								src="<c:url value="/assets/images/products/${ listProd.thumbnail }"/>"
 								alt="img-product">
 						</div>
 					</c:if>
 					<c:if test="${listProd.discount <= 0 }">
-						<div class="img-product-products zoom" id="exe${ i.getIndex() }">
+						<div class="img-product-products zoom" id="${ listProd.id }">
 							<img
 								src="<c:url value="/assets/images/products/${ listProd.thumbnail }"/>"
 								alt="img-product">
 						</div>
 					</c:if>
 					<div class="content-product-products">
-						<div class="brand-product-products">${ listProd.style.style_name }</div>
-						<div class="name-product-products">${ listProd.title }</div>
+						<div class="brand-product-products" id="${ listProd.style.id }">${ listProd.style.style_name }</div>
+						<div class="name-product-products" id="${ listProd.id }">${ listProd.title }</div>
 						<div class="show-products">
 							<div class="price-product-products">
 								<c:if test="${ listProd.discount <= 0 }">
 									<div class="price-sale-products">$${ listProd.price }</div>
 								</c:if>
 								<c:if test="${ listProd.discount > 0 }">
-									<div class="price-sale-products">$${ listProd.price -
-										listProd.price*discount/100 }</div>
+									<div class="price-sale-products">
+										$
+										<fmt:formatNumber type="number" maxFractionDigits="2"
+											value="${ listProd.price - listProd.price*listProd.discount/100 }" />
+									</div>
 									<div class="price-old-products">
 										<s>$${ listProd.price }</s>
 									</div>
@@ -931,8 +939,48 @@
 		</form>
 	</footer>
 
+	
+
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$("div.brand-product-products").click(function() {
+				var id_style = this.id;
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", "http://localhost:8888/SpringMVC/products?stylename="+id_style);
+				xhr.onload = function() {
+					window.location
+							.assign("http://localhost:8888/SpringMVC/products?stylename="+id_style);
+				};
+				xhr.send();
+			});
+		});
+	</script>
+	<script>
+		$(document).ready(function() {
+			$("div.name-product-products").click(function() {
+				var id_prod = this.id;
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", "http://localhost:8888/SpringMVC/product-details?product-id="+id_prod);
+				xhr.onload = function() {
+					window.location
+							.assign("http://localhost:8888/SpringMVC/product-details?product-id="+id_prod);
+				};
+				xhr.send();
+			});
+			$("div.img-product-products").click(function() {
+				var id_prod = this.id;
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", "http://localhost:8888/SpringMVC/product-details?product-id="+id_prod);
+				xhr.onload = function() {
+					window.location
+							.assign("http://localhost:8888/SpringMVC/product-details?product-id="+id_prod);
+				};
+				xhr.send();
+			});
+		});
+	</script>
 	<script>
 		$(document).ready(function() {
 			$("span.moreSize").click(function() {

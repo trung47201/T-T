@@ -440,6 +440,9 @@ span.span-hidden:hover {
     width: 100%;
     height: 312px;
 }
+.img-product-products:hover {
+	cursor: pointer;
+}
 .img-product-products img{
     width: 100%;
 }
@@ -450,9 +453,15 @@ span.span-hidden:hover {
     margin-top: 5px;
     font-size: 14px;
 }
-.name-product-products{
+.brand-product-products:hover {
+	cursor: pointer;
+}
+.name-product-products {
     font-size: 18px;
     font-weight: bold;
+}
+.name-product-products:hover {
+	cursor: pointer;
 }
 .price-sale-products{
     color: #FF6200;

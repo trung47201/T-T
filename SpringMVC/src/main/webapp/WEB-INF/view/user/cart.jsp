@@ -380,7 +380,7 @@
 			</div>
 			<div class="btn-buy-continue">
 				<div class="btn-continue">
-					<input type="button" onclick="history.back()" name="" id=""
+					<input type="submit" name="continueShopping" id=""
 						value="Continue Shopping">
 				</div>
 				<div class="btn-buy-cart">

@@ -15,7 +15,6 @@ import TiShoes.Model.Product;
 import TiShoes.Model.Sizes;
 import TiShoes.Service.User.CheckoutService;
 import TiShoes.Service.User.ColorService;
-import TiShoes.Service.User.MD5Service;
 import TiShoes.Service.User.ProductService;
 import TiShoes.Service.User.SizeService;
 
@@ -25,8 +24,6 @@ public class ThankController {
 	private ColorService colorService;
 	private SizeService sizeService;
 	private ProductService productService;
-	private MD5Service md5Service;
-
 	
 	@RequestMapping(value = {"sucess-buynow"})
 	public ModelAndView loadOrder(HttpServletRequest request, HttpServletResponse response){
@@ -73,7 +70,6 @@ public class ThankController {
 		checkoutService = new CheckoutService();
 		colorService = new ColorService();
 		sizeService = new SizeService();
-		md5Service = new MD5Service();
 		
 		List<Product> li_prod = null;
 		HashMap<Integer, Color> li_color = null;

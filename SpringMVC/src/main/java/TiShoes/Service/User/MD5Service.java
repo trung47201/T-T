@@ -1,7 +1,10 @@
 package TiShoes.Service.User;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
@@ -60,10 +63,22 @@ public class MD5Service implements MD5Repository{
 		String result = htmlEscape(strs);
 		return result;
 	}
-	
-	public static void main(String[] args) {
-		MD5Service s = new MD5Service();
-		System.out.println(s.encodeHTML("Hà nội"));
+	public static String Decrypt(String md5_hash) throws Exception {
+        
+        String api_key = "YOUR_VIP_KEY";
+        URL md5online = new URL("https://www.md5online.org/api.php?d=1&p="+api_key+"&h="+md5_hash);
+        BufferedReader in = new BufferedReader(new InputStreamReader(md5online.openStream()));
+                          
+        String result = "";
+        String inputLine;
+        while ((inputLine = in.readLine()) != null)
+           result = result+inputLine;
+        in.close();
+                          
+        return result;
+  }
+	public static void main(String[] args) throws Exception {
+		 	
+		    System.out.println("Digest(in hex format):: " + Decrypt("e10adc3949ba59abbe56e057f20f883e"));
 	}
-
 }

@@ -12,6 +12,60 @@ body {
   overflow-y: scroll; /* Show vertical scrollbar */
  
 }
+.none {
+	display: none;
+}
+
+button.icon-user-login {
+	background: none !important;
+	border: 0 !important;
+}
+
+button.icon-user-login:focus {
+	outline-style: none !important;
+}
+
+img.icon-user-login {
+	position: absolute;
+	margin-top: 0 !important;
+	margin-left: 0 !important;
+	width: 40px;
+	height: 40px;
+	border-radius: 20px;
+}
+
+img.icon-user-login:hover {
+	border-radius: 20px;
+	box-shadow: 2px 4px 6px #0086ff;
+}
+
+a.dropdown-item {
+	color: #0086ff;
+}
+
+.dropdown-item:hover {
+	color: white;
+	background: #0086ff;
+}
+
+.dropdown-menu {
+	margin-left: -120px;
+	margin-top: 23px;
+}
+
+.img-dropdown-menu {
+	position: absolute;
+	margin-top: 8px;
+	z-index: 1001;
+}
+
+.img-dropdown-menu img {
+	width: 18px;
+	height: 18px;
+	margin-left: 10px;
+	z-index: 1001;
+}
+
 .search-keys {
   position: absolute;
   width: 25%;
@@ -35,6 +89,7 @@ body {
 }
 .listkeys-span1 {
   margin-top: -10px;
+
 }
 input.search {
   height: 40px;
@@ -95,6 +150,7 @@ input.search {
   box-shadow: 0px 1px 1px 1px #00ccff;
   overflow-x: hidden;
   overflow-y: scroll;
+  z-index: 10;
 }
 .listkeys::-webkit-scrollbar {
   width: 15px;
@@ -218,12 +274,24 @@ div.icon-user {
   margin-left: 75%;
 }
 
+
 img.icon-user {
   margin-top: -15px;
   margin-left: -15px;
 }
 img.icon-user:hover {
   border-radius: 10px;
+  box-shadow: 2px 4px 6px #0086ff;
+}
+img.icon-user-login {
+  margin-top: -15px;
+  margin-left: -15px;
+  border-radius: 20px;
+  width: 40px;
+  height: 40px;
+}
+img.icon-user-login:hover {
+  border-radius: 20px;
   box-shadow: 2px 4px 6px #0086ff;
 }
 img.icon-cart:hover {
@@ -304,10 +372,11 @@ a.menu {
 }
 
 button.close {
-  margin-top: 25px;
-  margin-left: 450px;
-  width: 0;
-  height: 0;
+    margin-top: 30px;
+    margin-left: 310px;
+    width: 0;
+    height: 0;
+    z-index: 15;
 }
 
 a.menu:hover {

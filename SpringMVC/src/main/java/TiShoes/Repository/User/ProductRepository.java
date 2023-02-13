@@ -2,6 +2,8 @@ package TiShoes.Repository.User;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import TiShoes.Model.Color_size;
 import TiShoes.Model.Product;
@@ -19,4 +21,10 @@ public interface ProductRepository {
 	public List<Integer> getPrice (String txt);
 	public List<Integer> getColor (String txt);
 	public List<Integer> getSizes (String txt);
+	public <K,V extends Comparable<? super V>> List<Entry<K, V>> entriesSortedByValues(Map<K,V> map);
+	public List<Integer> getGender(String txt);
+	public List<Integer> getStyleName(String txt);
+	public Double averageRating(int id);
+	public List<Integer> getRating(String txt);
+	public List<Integer> getSortBy(String txt, HashMap<Integer, Integer> hms);
 }

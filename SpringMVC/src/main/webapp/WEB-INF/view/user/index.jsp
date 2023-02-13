@@ -22,7 +22,61 @@
 <link rel="stylesheet"
 	href='<c:url value="/assets/css/add-to-cart.css"/>'>
 <link rel="stylesheet" href="<c:url value="/assets/css/zoom-img.css"/>">
+<style>
+.none {
+	display: none;
+}
 
+button.icon-user-login {
+	background: none !important;
+	border: 0 !important;
+}
+
+button.icon-user-login:focus {
+	outline-style: none !important;
+}
+
+img.icon-user-login {
+	position: absolute;
+	margin-top: 0 !important;
+	margin-left: 0 !important;
+	width: 40px;
+	height: 40px;
+	border-radius: 20px;
+}
+
+img.icon-user-login:hover {
+	border-radius: 20px;
+	box-shadow: 2px 4px 6px #0086ff;
+}
+
+a.dropdown-item {
+	color: #0086ff;
+}
+
+.dropdown-item:hover {
+	color: white;
+	background: #0086ff;
+}
+
+.dropdown-menu {
+	margin-left: -120px;
+	margin-top: 23px;
+}
+
+.img-dropdown-menu {
+	position: absolute;
+	margin-top: 8px;
+	z-index: 1001;
+}
+
+.img-dropdown-menu img {
+	width: 18px;
+	height: 18px;
+	margin-left: 10px;
+	z-index: 1001;
+}
+</style>
 <body style="color: white;">
 	<header class="container-xl header-content">
 		<form method="post">
@@ -39,35 +93,74 @@
 
 				<!--################################################## btn LOGIN ################################################################### -->
 				<div class="container-xl icon-user">
-					<button type="button" class="icon-user btn btn-primary"
-						data-toggle="modal" data-target="#login">
-						<img class="icon-user"
-							src="<c:url value="/assets/images/icons/user48.png"/>"
-							alt="icon-user">
-					</button>
+					<c:if test="${ userID != null }">
+						<button type="button" class="icon-user btn btn-primary none"
+							data-toggle="modal" data-target="#login">
+							<img class="icon-user"
+								src="<c:url value="/assets/images/icons/user48.png"/>"
+								alt="icon-user">
+						</button>
+						<button type="button" class="icon-user-login dropdown-toggle"
+							id="dropdownMenuButton" data-toggle="dropdown"
+							aria-haspopup="true" aria-expanded="false">
+							<img class="icon-user-login"
+								src="<c:url value="/assets/images/icons/emiuuu.jpg"/>"
+								alt="icon-user">
+						</button>
+						<div class="img-dropdown-menu none">
+							<img src="<c:url value="/assets/images/icons/triangle-up.png"/>">
+						</div>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<a class="dropdown-item" href="#">Order</a> <a
+								class="dropdown-item" onclick="logout()">Logout</a>
+						</div>
+					</c:if>
+					<c:if test="${ userID == null }">
+						<button type="button" class="icon-user btn btn-primary"
+							data-toggle="modal" data-target="#login">
+							<img class="icon-user"
+								src="<c:url value="/assets/images/icons/user48.png"/>"
+								alt="icon-user">
+						</button>
+						<button type="button" class="icon-user btn btn-primary none">
+							<img class="icon-user-login"
+								src="<c:url value="/assets/images/icons/emiuuu.jpg"/>"
+								alt="icon-user">
+						</button>
+					</c:if>
 					<div class="modal fade" id="login" tabindex="-1" role="dialog"
 						aria-labelledby="exampleModalLabel" aria-hidden="true">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
-								<button type="button" class="btn btn-secondary close"
-									data-dismiss="modal">
-									<img class="close-login-icon"
-										src="<c:url value="/assets/images/icons/close48.png"/>"
-										alt="icon-close" width="32px">
-								</button>
+								<div class="btn-close-login">
+									<button type="button" class="btn btn-secondary close"
+										data-dismiss="modal">
+										<img class="close-login-icon"
+											src="<c:url value="/assets/images/icons/close48.png"/>"
+											alt="icon-close" width="32px">
+									</button>
+								</div>
 								<div class="login_form_container">
 									<div class="login_form">
 										<h2>Login</h2>
 										<div class="input_group">
-											<i class="fa fa-user"></i> <input type="text"
-												placeholder="Username" class="input_text" autocomplete="off" />
+											<i class="fa fa-user"></i> <input type="text" id="username"
+												name="username" placeholder="Username" class="input_text"
+												autocomplete="off" />
 										</div>
 										<div class="input_group">
 											<i class="fa fa-unlock-alt"></i> <input type="password"
-												placeholder="Password" class="input_text" autocomplete="off" />
+												id="password" name="password" placeholder="Password"
+												class="input_text" autocomplete="off" />
+										</div>
+										<div class="form-check">
+											<input class="form-check-input" type="checkbox" value=""
+												id="flexCheckChecked" checked> <label
+												class="form-check-label" for="flexCheckChecked">
+												Remember me </label>
 										</div>
 										<div class="button_group" id="login_button">
-											<a>Login</a>
+											<a onclick="login()">Login</a>
 										</div>
 										<div class="fotter">
 											<a>Forgot Password ?</a> <a>SingUp</a>
@@ -86,27 +179,6 @@
 							src="<c:url value="/assets/images/icons/heart.png"/>"
 							alt="icon-user">
 					</button>
-					<div class="modal fade" id="heart" tabindex="-1" role="dialog"
-						aria-labelledby="exampleModalLabel" aria-hidden="true">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								<div class="modal-body">...</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary"
-										data-dismiss="modal">Close</button>
-									<button type="button" class="btn btn-primary">Save
-										changes</button>
-								</div>
-							</div>
-						</div>
-					</div>
 				</div>
 				<!--####################################   btn CART    ################################################# -->
 				<div class="container-xl icon-cart">
@@ -130,7 +202,8 @@
 								<ul>
 									<c:forEach var="li_style" items="${ style }" varStatus="index">
 										<c:if test="${ index.getIndex() < 9 }">
-											<li><a class="menu" href="#">${ li_style.style_name }</a></li>
+											<li><a class="menu"
+												href="http://localhost:8888/SpringMVC/products?stylename=${ li_style.id }">${ li_style.style_name }</a></li>
 										</c:if>
 									</c:forEach>
 									<li><a href="" class="desktop-link menu">More</a>
@@ -138,7 +211,8 @@
 											<c:forEach var="li_style" items="${ style }"
 												varStatus="index">
 												<c:if test="${ index.getIndex() >= 9 }">
-													<li><a class="menu" href="#">${ li_style.style_name }</a></li>
+													<li><a class="menu"
+														href="http://localhost:8888/SpringMVC/products?stylename=${ li_style.id }">${ li_style.style_name }</a></li>
 												</c:if>
 											</c:forEach>
 										</ul></li>
@@ -668,9 +742,80 @@
 				reserved.</div>
 		</form>
 	</footer>
-
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 
+	<script>
+	function logout() {
+		$(document).ready(function(){
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET",
+					"http://localhost:8888/SpringMVC/home?logout=true");
+			// What to do when server responds
+			xhr.onload = function() {
+				window.location.assign("http://localhost:8888/SpringMVC/");
+			};
+			xhr.send();
+		});
+	}
+	</script>
+	<script>
+		$(document).ready(function(){
+		  $(".dropdown-toggle").click(function(){
+			  $(".img-dropdown-menu").toggleClass("none");
+		  });
+		  $(".dropdown-item").click(function(){
+			  $(".img-dropdown-menu").toggleClass("none");
+		  });
+		  $(".img-dropdown-menu").click(function(){
+			  $(".img-dropdown-menu").toggleClass("none");
+		  });
+		});
+	</script>
+	<script>
+		if(${userID == null }) {
+			$(document).ready(function() {
+				if(${message != "logout"}) {
+					$('#login').modal('toggle');
+				}
+			});
+		}
+	</script>
+	<script type="text/javascript">
+	
+	if(${ message != null }) {
+		if(${message == "true"}) {
+			alert("Welcome to Ti Shoes!");
+		} else if(${message == "false"}){
+			alert("Login unsuccess!");
+			$(document).ready(function() {
+				$('#login').modal('toggle');
+			});			
+		} else if(${message == "logout"}) {
+			alert("Looking forward to seeing you again soon!");
+		}
+	}
+		function login() {
+			var username = document.getElementById("username").value;
+			var password = document.getElementById("password").value;
+			if (username=="" || password=="") {
+				alert("Username or password is empty");
+			} else {
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET",
+						"http://localhost:8888/SpringMVC/home?username="
+								+ username +"&password="+password);
+				// What to do when server responds
+				xhr.onload = function() {
+					window.location.assign("http://localhost:8888/SpringMVC/");
+				};
+				xhr.send();
+			}
+			
+		}
+		
+	</script>
 	<script>
 		function test($a) {
 			for (let i = 1; i <= 10; i++) {
@@ -698,8 +843,6 @@
 			}
 		})
 	</script>
-
-
 
 	<!-- Initialize Swiper -->
 	<script>
@@ -741,8 +884,7 @@
 			listkeys.style.visibility = 'hidden';
 		}
 	</script>
-	<script
-		src="<c:url value="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"/>"></script>
+
 	<script src="<c:url value="/assets/js/jquery.zoom.js"/>"></script>
 	<script>
 		var div1 = document.getElementsByClassName('zoom');

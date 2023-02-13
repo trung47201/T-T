@@ -80,6 +80,7 @@ public class ProductController {
 		if (!sortby.equals("null")) {
 			mv.addObject("selectedSortBy", sortby);
 			hm.put("sortby", sortby);
+			System.out.println(sortby);
 		}
 		if (!price.equals("null")) {
 			mv.addObject("checkedPrice", price);
@@ -123,10 +124,6 @@ public class ProductController {
 					mv.addObject("listProducts", "");
 				} else {
 					mv.addObject("listProducts", productService.getAllProductsColorSize(hm));
-				}
-			} else {
-				for (String s : hm.keySet()) {
-					System.out.println(s + "=" + hm.get(s));
 				}
 			}
 		}

@@ -42,21 +42,26 @@ public class CartController {
 		String del_prod = String.valueOf(request.getParameter("deleleProduct"));
 		String checkedAll = String.valueOf(request.getParameter("checkedAll"));
 		String totalmoney = String.valueOf(request.getParameter("totalmoney"));
-		System.out.println(del_prod);
+		String addtocart = String.valueOf(request.getParameter("product"));
+		String continueShop = String.valueOf(request.getParameter("continueShopping"));
+
 		double totalPayment = 0;
-		
+
 		HashMap<Product, Integer> hm = new HashMap<>();
 		HashMap<Integer, Integer> map_color = null;
 		HashMap<String, Integer> map_size = null;
-		
+
 		List<String> li_color = null;
 		List<String> li_color_split = null;
-		
+
 		Cookie color_prod[] = request.getCookies();
 		Cookie size_prod[] = request.getCookies();
 		Cookie cart[] = request.getCookies();
 		Cookie o_color[] = request.getCookies();
-		
+
+		if (continueShop.equals("Continue Shopping")) {
+			return new ModelAndView("redirect:/products");
+		}
 		for (Cookie cookie : cart) {
 			if (cookie.getName().equals("addtocart")) {
 				HashMap<String, Integer> map = cartService.getListProdCard(cookie.getValue());
@@ -71,7 +76,7 @@ public class CartController {
 
 			}
 		}
-		
+
 		if (!totalmoney.equals("null")) {
 			totalPayment = cartService.totalProd(totalmoney);
 			mv.addObject("listProd_id", cartService.listProd_id(totalmoney));
@@ -110,16 +115,14 @@ public class CartController {
 						response.addCookie(cart2);
 					} else {
 						Cookie cart2 = new Cookie("addtocart", list);
-						cart2.setMaxAge(60*60*24);
+						cart2.setMaxAge(60 * 60 * 24);
 						response.addCookie(cart2);
 					}
-					
+
 				}
 			}
 		}
-		
-		
-		
+
 		if (color_prod != null) {
 			li_color = new ArrayList<>();
 			for (Cookie o : color_prod) {
@@ -131,26 +134,26 @@ public class CartController {
 			for (Cookie o : color_prod) {
 				if (o.getName().equals("prod_color")) {
 					String a[] = o.getValue().split("/");
-					for (int i=0; i<a.length; i++) {
+					for (int i = 0; i < a.length; i++) {
 						li_color_split.add(a[i]);
 					}
 				}
-				
+
 			}
 		}
-			
+
 		if (color_prod != null) {
 			for (Cookie o : color_prod) {
 				if (o.getName().equals("prod_color")) {
-					if(!color.equals("null")) {
+					if (!color.equals("null")) {
 						Cookie color_cart = new Cookie("prod_color", cartService.getTxt(color, o.getValue()));
-						color_cart.setMaxAge(60*60*24);
+						color_cart.setMaxAge(60 * 60 * 24);
 						response.addCookie(color_cart);
 					}
-				} else if (!li_color.contains("prod_color")){
-					if(!color.equals("null")) {
+				} else if (!li_color.contains("prod_color")) {
+					if (!color.equals("null")) {
 						Cookie color_cart = new Cookie("prod_color", color);
-						color_cart.setMaxAge(60*60*24);
+						color_cart.setMaxAge(60 * 60 * 24);
 						response.addCookie(color_cart);
 					}
 				}
@@ -159,51 +162,115 @@ public class CartController {
 		if (size != null) {
 			for (Cookie o : size_prod) {
 				if (o.getName().equals("prod_size")) {
-					if(!size.equals("null")) {
+					if (!size.equals("null")) {
 						Cookie size_cart = new Cookie("prod_size", cartService.getTxt_size(size, o.getValue()));
-						size_cart.setMaxAge(60*60*24);
+						size_cart.setMaxAge(60 * 60 * 24);
 						response.addCookie(size_cart);
 					}
-				} else if (!li_color.contains("prod_size")){
-					if(!size.equals("null")) {
+				} else if (!li_color.contains("prod_size")) {
+					if (!size.equals("null")) {
 						Cookie size_cart = new Cookie("prod_size", size);
-						size_cart.setMaxAge(60*60*24);
+						size_cart.setMaxAge(60 * 60 * 24);
 						response.addCookie(size_cart);
 					}
 				}
 			}
 		}
-	
-		
-		
+
 		for (Cookie o : o_color) {
-			if(o.getName().equals("prod_color")) {
+			if (o.getName().equals("prod_color")) {
+				// System.out.println(o.getValue());
 				map_color = cartService.getProd_Color_Size(o.getValue());
 			}
 		}
-		
+
 		for (Cookie o : o_color) {
-			if(o.getName().equals("prod_size")) {
+			if (o.getName().equals("prod_size")) {
+				// System.out.println(o.getValue());
 				map_size = cartService.getProd_Color_Sizes(o.getValue());
 			}
 		}
-		
-		//System.out.println(size );
-	
+
+		if (!addtocart.equals("null")) {
+			StringBuilder strReverse = new StringBuilder(addtocart);
+			String arr[] = strReverse.reverse().toString().split("_");
+			// size_color_product
+			for (Cookie o : o_color) {
+				String add = arr[0] + "_" + arr[1] + "_" + arr[2];
+				if (o.getName().equals("prod_size")) {
+					if (o.getName().equals("prod_size")) {
+						Cookie addtocartprod = new Cookie("prod_size", cartService.getTxt_size(add, o.getValue()));
+						addtocartprod.setMaxAge(60 * 60 * 24);
+						response.addCookie(addtocartprod);
+
+					}
+				} else if (!li_color.contains("prod_size")) {
+					Cookie addtocartprod = new Cookie("prod_size", add);
+					addtocartprod.setMaxAge(60 * 60 * 24);
+					response.addCookie(addtocartprod);
+				}
+			}
+			// color_product
+			for (Cookie o : o_color) {
+				String add = arr[1] + "_" + arr[2];
+				if (o.getName().equals("prod_color")) {
+					if (o.getName().equals("prod_color")) {
+						Cookie addtocartprod = new Cookie("prod_color", cartService.getTxt(add, o.getValue()));
+						addtocartprod.setMaxAge(60 * 60 * 24);
+						response.addCookie(addtocartprod);
+
+					}
+				} else if (!li_color.contains("prod_color")) {
+					Cookie addtocartprod = new Cookie("prod_color", add);
+					addtocartprod.setMaxAge(60 * 60 * 24);
+					response.addCookie(addtocartprod);
+				}
+			}
+			// product
+			for (Cookie o : o_color) {
+				String add = arr[2];
+				if (o.getName().equals("addtocart")) {
+					Cookie addtocartprod = new Cookie("addtocart", o.getValue() + "/" + add);
+					addtocartprod.setMaxAge(60 * 60 * 24);
+					response.addCookie(addtocartprod);
+				} else if (!li_color.contains("addtocart")) {
+					Cookie addtocartprod = new Cookie("addtocart", add);
+					addtocartprod.setMaxAge(60 * 60 * 24);
+					response.addCookie(addtocartprod);
+				}
+			}
+		}
+		// System.out.println(size );
+
 		/*
 		 * for (Cookie o : o_color) { if(o.getName().equals("prod_color")) {
 		 * System.out.println(o.getValue()); } }
 		 */
+
+//		for (Cookie o : o_color) {
+//			if (o.getName().equals("addtocart")) {
+//				System.out.println(o.getValue());
+//			}
+//		}
+
 		
-		//for (Cookie o : o_color) { if(o.getName().equals("prod_size")) {
-			// System.out.println(o.getValue()); } }
+			
+			mv.addObject("listSize", map_size);
 		
-		mv.addObject("listSize", map_size);
-		mv.addObject("listColor", map_color);
-		mv.addObject("listAllColor", colorService.getAllColor());
-		mv.addObject("hmProd_Color_Size", color_sizeService.getCS());
+	
+			mv.addObject("listColor", map_color);
+		
+		if (!colorService.getAllColor().isEmpty()) {
+			mv.addObject("listAllColor", colorService.getAllColor());
+		}
+		if (!color_sizeService.getCS().isEmpty()) {
+			mv.addObject("hmProd_Color_Size", color_sizeService.getCS());
+		}
+		if (!hm.isEmpty()) {
+			mv.addObject("listProd", hm);
+		}
+
 		mv.addObject("totalPayment", totalPayment);
-		mv.addObject("listProd", hm);
 
 		return mv;
 	}

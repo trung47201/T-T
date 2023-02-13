@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -24,7 +25,6 @@ import TiShoes.Model.Sizes;
 import TiShoes.Model.Style;
 import TiShoes.Model.User;
 import TiShoes.Repository.User.ProductRepository;
-import TiShoes.Service.RatingService;
 
 public class ProductService implements ProductRepository {
 	private ConnectService connectService;
@@ -203,7 +203,7 @@ public class ProductService implements ProductRepository {
 	public List<Product> getNewArrivals() {
 		ProductService p = new ProductService();
 		List<Product> li = p.getAllProducts();
-		List<Product> listNewArrivals = new ArrayList<>();
+		List<Product> listNewArrivals = new LinkedList<>();
 		Collections.sort(li, new Comparator<Product>() {
 			@Override
 			public int compare(Product o1, Product o2) {
@@ -226,7 +226,7 @@ public class ProductService implements ProductRepository {
 	public List<Product> getMostLovedProducts() {
 		ProductService p = new ProductService();
 		List<Product> li = p.getAllProducts();
-		List<Product> listMostLovedProducts = new ArrayList<>();
+		List<Product> listMostLovedProducts = new LinkedList<>();
 		Collections.sort(li, new Comparator<Product>() {
 			@Override
 			public int compare(Product o1, Product o2) {
@@ -293,8 +293,238 @@ public class ProductService implements ProductRepository {
 		}
 		return li;
 	}
-//#######################################################################################3#########################
 
+//#######################################################################################3#########################
+	@Override
+	public List<Integer> getSortBy(String txt, HashMap<Integer, Integer> hms) {
+		boolean check = false;
+		for (Integer i : hms.keySet()) {
+			if (hms.get(i) > 1) {
+				check = true;
+			}
+		}
+
+		List<Integer> list = new LinkedList<>();
+		if (hms.isEmpty()) {
+			if (txt.equals("newest")) {
+				List<Product> li = getAllProducts();
+				Collections.sort(li, new Comparator<Product>() {
+					@Override
+					public int compare(Product o1, Product o2) {
+						return o2.getPublished_at().compareTo(o1.getPublished_at());
+					}
+				});
+				for (Product product : li) {
+					list.add(product.getId());
+				}
+			} else if (txt.equals("salesoff")) {
+				List<Product> li = getAllProducts();
+				for (Product product : li) {
+					if (product.getDiscount() > 0) {
+						list.add(product.getId());
+					}
+				}
+			} else if (txt.equals("toprating")) {
+				HashMap<Integer, Double> hm = new HashMap<>();
+				for (Product i : getAllProducts()) {
+					hm.put(i.getId(), averageRating(i.getId()));
+				}
+				List<Entry<Integer, Double>> sortedEntries = entriesSortedByValues(hm);
+				for (Entry<Integer, Double> entry : sortedEntries) {
+					if (entry.getValue() >= 1) {
+						list.add(entry.getKey());
+					}
+				}
+			} else if (txt.equals("stylename")) {
+				List<Product> li = getAllProducts();
+				Collections.sort(li, new Comparator<Product>() {
+					@Override
+					public int compare(Product o1, Product o2) {
+						return o1.getStyle().getStyle_name().compareTo(o2.getStyle().getStyle_name());
+					}
+				});
+				for (Product product : li) {
+					list.add(product.getId());
+				}
+			} else if (txt.equals("price:asc")) {
+				List<Product> li = new LinkedList<>();
+				for (Product i : getAllProducts()) {
+					if (i.getDiscount() > 0) {
+						Product p = new Product();
+						p.setId(i.getId());
+						p.setTitle(i.getTitle());
+						p.setPrice(i.getPrice() - i.getPrice() * i.getDiscount() / 100);
+						p.setDiscount(i.getDiscount());
+						p.setThumbnail(i.getThumbnail());
+						p.setDescription(i.getDescription());
+						p.setStyle(i.getStyle());
+						p.setUser(i.getUser());
+						p.setBrand(i.getBrand());
+						p.setCreated_at(i.getCreated_at());
+						p.setUpdated_at(i.getUpdated_at());
+						p.setPublished_at(i.getPublished_at());
+						p.setMost_loved(i.getMost_loved());
+						p.setSold(i.getSold());
+						p.setGender(i.getGender());
+						li.add(p);
+					} else {
+						li.add(i);
+					}
+				}
+				Collections.sort(li, new Comparator<Product>() {
+					@Override
+					public int compare(Product o1, Product o2) {
+						return Double.compare(o1.getPrice(), o2.getPrice());
+					}
+				});
+				for (Product product : li) {
+					list.add(product.getId());
+				}
+			}
+		} else {
+			// hm size > 1
+			if (txt.equals("newest")) {
+				List<Product> li = new LinkedList<>();
+				for (Integer i : hms.keySet()) {
+					if (check == true) {
+						if (hms.get(i) > 1) {
+							li.add(getProduct(i));
+						}
+					} else {
+						li.add(getProduct(i));
+					}
+				}
+				Collections.sort(li, new Comparator<Product>() {
+					@Override
+					public int compare(Product o1, Product o2) {
+						return o2.getPublished_at().compareTo(o1.getPublished_at());
+					}
+				});
+				for (Product product : li) {
+					list.add(product.getId());
+				}
+			} else if (txt.equals("toprating")) {
+				System.out.println("o ady");
+				HashMap<Integer, Double> hm = new HashMap<>();
+				for (Integer i : hms.keySet()) {
+					if (check == true) {
+						if (hms.get(i) > 1) {
+							hm.put(i, averageRating(i));
+						}
+					} else {
+						hm.put(i, averageRating(i));
+					}
+				}
+				List<Entry<Integer, Double>> sortedEntries = entriesSortedByValues(hm);
+				for (Entry<Integer, Double> entry : sortedEntries) {
+					if (entry.getValue() >= 1) {
+						list.add(entry.getKey());
+					}
+				}
+			} else if (txt.equals("salesoff")) {
+				for (Integer i : hms.keySet()) {
+					if (getProduct(i).getDiscount() > 0) {
+						if (check == true) {
+							if (hms.get(i) > 1) {
+								list.add(i);
+							}
+						} else {
+							list.add(i);
+						}
+
+					}
+				}
+			} else if (txt.equals("stylename")) {
+				List<Product> li = new LinkedList<>();
+				for (Integer i : hms.keySet()) {
+					if (check == true) {
+						if (hms.get(i) > 1) {
+							li.add(getProduct(i));
+						}
+					} else {
+						li.add(getProduct(i));
+					}
+				}
+				Collections.sort(li, new Comparator<Product>() {
+					@Override
+					public int compare(Product o1, Product o2) {
+						return o1.getStyle().getStyle_name().compareTo(o2.getStyle().getStyle_name());
+					}
+				});
+				for (Product product : li) {
+					list.add(product.getId());
+				}
+			} else if (txt.equals("price:asc")) {
+				List<Product> li = new LinkedList<>();
+				for (Integer i : hms.keySet()) {
+					if (check == true) {
+						if (hms.get(i) > 1) {
+							if (getProduct(i).getDiscount() > 0) {
+								Product p = new Product();
+								p.setId(getProduct(i).getId());
+								p.setTitle(getProduct(i).getTitle());
+								p.setPrice(getProduct(i).getPrice()
+										- getProduct(i).getPrice() * getProduct(i).getDiscount() / 100);
+								p.setDiscount(getProduct(i).getDiscount());
+								p.setThumbnail(getProduct(i).getThumbnail());
+								p.setDescription(getProduct(i).getDescription());
+								p.setStyle(getProduct(i).getStyle());
+								p.setUser(getProduct(i).getUser());
+								p.setBrand(getProduct(i).getBrand());
+								p.setCreated_at(getProduct(i).getCreated_at());
+								p.setUpdated_at(getProduct(i).getUpdated_at());
+								p.setPublished_at(getProduct(i).getPublished_at());
+								p.setMost_loved(getProduct(i).getMost_loved());
+								p.setSold(getProduct(i).getSold());
+								p.setGender(getProduct(i).getGender());
+								li.add(p);
+							} else {
+								li.add(getProduct(i));
+							}
+						}
+					} else {
+						if (getProduct(i).getDiscount() > 0) {
+							Product p = new Product();
+							p.setId(getProduct(i).getId());
+							p.setTitle(getProduct(i).getTitle());
+							p.setPrice(getProduct(i).getPrice()
+									- getProduct(i).getPrice() * getProduct(i).getDiscount() / 100);
+							p.setDiscount(getProduct(i).getDiscount());
+							p.setThumbnail(getProduct(i).getThumbnail());
+							p.setDescription(getProduct(i).getDescription());
+							p.setStyle(getProduct(i).getStyle());
+							p.setUser(getProduct(i).getUser());
+							p.setBrand(getProduct(i).getBrand());
+							p.setCreated_at(getProduct(i).getCreated_at());
+							p.setUpdated_at(getProduct(i).getUpdated_at());
+							p.setPublished_at(getProduct(i).getPublished_at());
+							p.setMost_loved(getProduct(i).getMost_loved());
+							p.setSold(getProduct(i).getSold());
+							p.setGender(getProduct(i).getGender());
+							li.add(p);
+						} else {
+							li.add(getProduct(i));
+						}
+					}
+
+				}
+				Collections.sort(li, new Comparator<Product>() {
+					@Override
+					public int compare(Product o1, Product o2) {
+						return Double.compare(o1.getPrice(), o2.getPrice());
+					}
+				});
+				for (Product product : li) {
+					list.add(product.getId());
+				}
+
+			}
+		}
+		return list;
+	}
+
+	// #######################################################################################3#########################
+	@Override
 	public List<Integer> getPrice(String txt) {
 		HashMap<Integer, Integer> hm = new HashMap<>();
 		String arr[] = txt.split("_");
@@ -332,7 +562,8 @@ public class ProductService implements ProductRepository {
 		}
 		return list;
 	}
-	//#######################################################################################3####################
+
+	// #######################################################################################3####################
 	@Override
 	public List<Integer> getColor(String txt) {
 		HashMap<Integer, Integer> hm = new HashMap<>();
@@ -360,7 +591,8 @@ public class ProductService implements ProductRepository {
 		}
 		return list;
 	}
-	//#######################################################################################3####################
+
+	// #######################################################################################3####################
 	@Override
 	public List<Integer> getSizes(String txt) {
 		HashMap<Integer, Integer> hm = new HashMap<>();
@@ -368,16 +600,16 @@ public class ProductService implements ProductRepository {
 		List<Color_size> li = getAllProductsColorSize();
 		List<Integer> list = new ArrayList<>();
 		for (String s : arr) {
-			
+
 			if (!s.equals("")) {
-				
+
 				for (Color_size c : li) {
-					int inter = Integer.parseInt(s);	
+					int inter = Integer.parseInt(s);
 					if (c.getSize().getId() == inter) {
 						if (!hm.containsKey(c.getProd().getId())) {
 							hm.put(c.getProd().getId(), 1);
 						} else {
-							
+
 							hm.put(c.getProd().getId(), hm.get(c.getProd().getId()) + 1);
 						}
 					}
@@ -392,7 +624,9 @@ public class ProductService implements ProductRepository {
 		}
 		return list;
 	}
-	//#######################################################################################3####################
+
+	// #######################################################################################3####################
+	@Override
 	public List<Integer> getStyleName(String txt) {
 		HashMap<Integer, Integer> hm = new HashMap<>();
 		List<Color_size> li = getAllProductsColorSize();
@@ -417,22 +651,24 @@ public class ProductService implements ProductRepository {
 		}
 		return list;
 	}
-	//#######################################################################################3####################
-	public Double averageRating(int id) {
+
+	// #######################################################################################3####################
+	@Override
+	public Double averageRating(int id_prod) {
 		ratingService = new RatingService();
 		List<Rating> li = ratingService.getAllRating();
-		int count=0;
+		int count = 0;
 		double average = 0.0;
 		for (Rating r : li) {
-			if(r.getProduct().getId() == id) {
+			if (r.getProduct().getId() == id_prod) {
 				average += r.getRating_stars();
 				count++;
 			}
 		}
-		return (double) Math.round(average/count*10)/10;
+		return (double) Math.round(average / count * 10) / 10;
 	}
-	
-	
+
+	@Override
 	public List<Integer> getRating(String txt) {
 		HashMap<Integer, Double> rating = new HashMap<>();
 		color_sizeService = new Color_sizeService();
@@ -441,10 +677,10 @@ public class ProductService implements ProductRepository {
 			rating.put(i, averageRating(i));
 		}
 		HashMap<Integer, Integer> hm = new HashMap<>();
-		List<Integer> list = new ArrayList<>();
+		List<Integer> list = new LinkedList<>();
 		if (!txt.equals("") && txt.equals("fivestars")) {
 			for (Integer i : rating.keySet()) {
-				if(rating.get(i) >= 5) {
+				if (rating.get(i) >= 5) {
 					if (!hm.containsKey(i)) {
 						hm.put(i, 1);
 					} else {
@@ -454,7 +690,7 @@ public class ProductService implements ProductRepository {
 			}
 		} else if (!txt.equals("") && txt.equals("fourstars")) {
 			for (Integer i : rating.keySet()) {
-				if(rating.get(i) >= 4) {
+				if (rating.get(i) >= 4) {
 					if (!hm.containsKey(i)) {
 						hm.put(i, 1);
 					} else {
@@ -464,7 +700,7 @@ public class ProductService implements ProductRepository {
 			}
 		} else if (!txt.equals("") && txt.equals("threestars")) {
 			for (Integer i : rating.keySet()) {
-				if(rating.get(i) >= 5) {
+				if (rating.get(i) >= 5) {
 					if (!hm.containsKey(i)) {
 						hm.put(i, 1);
 					} else {
@@ -474,7 +710,7 @@ public class ProductService implements ProductRepository {
 			}
 		} else if (!txt.equals("") && txt.equals("twostars")) {
 			for (Integer i : rating.keySet()) {
-				if(rating.get(i) >= 5) {
+				if (rating.get(i) >= 5) {
 					if (!hm.containsKey(i)) {
 						hm.put(i, 1);
 					} else {
@@ -484,7 +720,7 @@ public class ProductService implements ProductRepository {
 			}
 		} else if (!txt.equals("") && txt.equals("onestar")) {
 			for (Integer i : rating.keySet()) {
-				if(rating.get(i) >= 5) {
+				if (rating.get(i) >= 5) {
 					if (!hm.containsKey(i)) {
 						hm.put(i, 1);
 					} else {
@@ -493,7 +729,7 @@ public class ProductService implements ProductRepository {
 				}
 			}
 		}
-		
+
 		if (!hm.isEmpty()) {
 			for (Integer i : hm.keySet()) {
 				list.add(i);
@@ -501,7 +737,9 @@ public class ProductService implements ProductRepository {
 		}
 		return list;
 	}
-	//#######################################################################################3####################
+
+	// #######################################################################################3####################
+	@Override
 	public List<Integer> getGender(String txt) {
 		HashMap<Integer, Integer> hm = new HashMap<>();
 		List<Color_size> li = getAllProductsColorSize();
@@ -541,7 +779,7 @@ public class ProductService implements ProductRepository {
 
 			}
 		}
-		
+
 		if (!hm.isEmpty()) {
 			for (Integer i : hm.keySet()) {
 				list.add(i);
@@ -549,121 +787,141 @@ public class ProductService implements ProductRepository {
 		}
 		return list;
 	}
-	//#######################################################################################3####################
+
+	// #######################################################################################3####################
 	@Override
 	public List<Product> getAllProductsColorSize(HashMap<String, String> hms) {
-		List<Product> liProd = new ArrayList<>();		
+		List<Product> liProd = new ArrayList<>();
 		HashMap<Integer, Integer> hmt = new HashMap<>();
-		for (String s : hms.keySet()) {			
-			if (s.equals("price")) {	
-				List<Integer> list = new ArrayList<>();				
-				list = getPrice(hms.get(s));				
-				for (Integer pro : list) {			
-					if (!hmt.containsKey(pro)) {
-						hmt.put(pro, 1);
-					} else {
-						hmt.put(pro, hmt.get(pro) + 1);
+		for (String s : hms.keySet()) {
+			if (s.equals("price")) {
+				List<Integer> list = getPrice(hms.get(s));
+				if (!list.isEmpty()) {
+					for (Integer pro : list) {
+						if (!hmt.containsKey(pro)) {
+							hmt.put(pro, 1);
+						} else {
+							hmt.put(pro, hmt.get(pro) + 1);
+						}
 					}
 				}
 			} else if (s.equals("color")) {
-				List<Integer> list = new ArrayList<>();
-				list = getColor(hms.get(s));
-				for (Integer pro : list) {
-					if (!hmt.containsKey(pro)) {
-						hmt.put(pro, 1);
-					} else {
-						hmt.put(pro, hmt.get(pro) + 1);
+				List<Integer> list = getColor(hms.get(s));
+				if (!list.isEmpty()) {
+					for (Integer pro : list) {
+						if (!hmt.containsKey(pro)) {
+							hmt.put(pro, 1);
+						} else {
+							hmt.put(pro, hmt.get(pro) + 1);
+						}
 					}
 				}
-			} else if (s.equals("size")) {				
+			} else if (s.equals("size")) {
 				List<Integer> list = getSizes(String.valueOf(hms.get(s)));
-				for (Integer pro : list) {					
-					if (!hmt.containsKey(pro)) {
-						hmt.put(pro, 1);
-					} else {
-						hmt.put(pro, hmt.get(pro) + 1);
+				if (!list.isEmpty()) {
+					for (Integer pro : list) {
+						if (!hmt.containsKey(pro)) {
+							hmt.put(pro, 1);
+						} else {
+							hmt.put(pro, hmt.get(pro) + 1);
+						}
 					}
 				}
 			} else if (s.equals("gender")) {
-				List<Integer> list = new ArrayList<>();
-				list = getGender(hms.get(s));
-				for (Integer pro : list) {					
-					if (!hmt.containsKey(pro)) {
-						hmt.put(pro, 1);
-					} else {
-						hmt.put(pro, hmt.get(pro) + 1);
+				List<Integer> list = getGender(hms.get(s));
+				if (!list.isEmpty()) {
+					for (Integer pro : list) {
+						if (!hmt.containsKey(pro)) {
+							hmt.put(pro, 1);
+						} else {
+							hmt.put(pro, hmt.get(pro) + 1);
+						}
 					}
 				}
 			} else if (s.equals("rate")) {
-				List<Integer> list = new ArrayList<>();
-				list = getRating(hms.get(s));
-				for (Integer pro : list) {					
-					if (!hmt.containsKey(pro)) {
-						hmt.put(pro, 1);
-					} else {
-						hmt.put(pro, hmt.get(pro) + 1);
+				List<Integer> list = getRating(hms.get(s));
+				if (!list.isEmpty()) {
+					for (Integer pro : list) {
+						if (!hmt.containsKey(pro)) {
+							hmt.put(pro, 1);
+						} else {
+							hmt.put(pro, hmt.get(pro) + 1);
+						}
 					}
 				}
 			} else if (s.equals("stylename")) {
-				List<Integer> list = new ArrayList<>();
-				list = getStyleName(hms.get(s));
-				for (Integer pro : list) {					
-					if (!hmt.containsKey(pro)) {
-						hmt.put(pro, 1);
-					} else {
-						hmt.put(pro, hmt.get(pro) + 1);
+				List<Integer> list = getStyleName(hms.get(s));
+				if (!list.isEmpty()) {
+					for (Integer pro : list) {
+						if (!hmt.containsKey(pro)) {
+							hmt.put(pro, 1);
+						} else {
+							hmt.put(pro, hmt.get(pro) + 1);
+						}
 					}
 				}
 			}
 		}
-		
-		if (hms.size() > 1) {
-			List<Entry<Integer,Integer>> sortedEntries = entriesSortedByValues(hmt);
+
+		if (hms.size() > 1 && !hms.containsKey("sortby")) {
+			List<Entry<Integer, Integer>> sortedEntries = entriesSortedByValues(hmt);
 			for (Entry<Integer, Integer> entry : sortedEntries) {
-				if(entry.getValue() > 1) {
+				if (entry.getValue() > 1) {
 					liProd.add(getProduct(entry.getKey()));
 				}
 			}
+		} else if (hms.size() > 1 && hms.containsKey("sortby")) {
+			List<Integer> list = getSortBy(hms.get("sortby"), hmt);
+			for (Integer i : list) {
+				liProd.add(getProduct(i));
+			}
 		} else {
-			List<Entry<Integer,Integer>> sortedEntries = entriesSortedByValues(hmt);
-			for (Entry<Integer, Integer> entry : sortedEntries) {
-				if(entry.getValue() >= 1) {
-					liProd.add(getProduct(entry.getKey()));
+			if (hms.containsKey("sortby")) {
+
+				List<Integer> list = getSortBy(hms.get("sortby"), hmt);
+				for (Integer i : list) {
+					liProd.add(getProduct(i));
+				}
+			} else {
+				List<Entry<Integer, Integer>> sortedEntries = entriesSortedByValues(hmt);
+				for (Entry<Integer, Integer> entry : sortedEntries) {
+					if (entry.getValue() >= 1) {
+						liProd.add(getProduct(entry.getKey()));
+					}
 				}
 			}
 		}
 		return liProd;
 	}
-	
-	static <K,V extends Comparable<? super V>> 
-	    List<Entry<K, V>> entriesSortedByValues(Map<K,V> map) {
-	
-		List<Entry<K,V>> sortedEntries = new ArrayList<Entry<K,V>>(map.entrySet());
-		
-		Collections.sort(sortedEntries, 
-		    new Comparator<Entry<K,V>>() {
-		        @Override
-		        public int compare(Entry<K,V> e1, Entry<K,V> e2) {
-		            return e2.getValue().compareTo(e1.getValue());
-		        }
-		    }
-		);
+
+	@Override
+	public <K, V extends Comparable<? super V>> List<Entry<K, V>> entriesSortedByValues(Map<K, V> map) {
+		List<Entry<K, V>> sortedEntries = new ArrayList<Entry<K, V>>(map.entrySet());
+		Collections.sort(sortedEntries, new Comparator<Entry<K, V>>() {
+			@Override
+			public int compare(Entry<K, V> e1, Entry<K, V> e2) {
+				return e2.getValue().compareTo(e1.getValue());
+			}
+		});
 		return sortedEntries;
-	
 	}
+
 	public static void main(String[] args) {
 		ProductService p = new ProductService();
 		HashMap<String, String> hms = new HashMap<>();
-		//hms.put("size", "5");
-		hms.put("price", "50_100");
-		//hms.put("rate", "fourstars");
+		// hms.put("size", "5");
+		// hms.put("color", "1");
+		// hms.put("price", "50_100");
+		hms.put("rate", "fourstars");
+		// hms.put("sortby", "price:asc");
+		hms.put("sortby", "toprating");
+		// hms.put("gender", "men");
 		List<Product> li = p.getAllProductsColorSize(hms);
-		
+
 		for (Product product : li) {
-			System.out.println(product.getId());
+			System.out.println(product.getId() + "==" + product.getPrice());
 		}
-		System.out.println("size: "+li.size());
-		
-		
+		System.out.println("size: " + li.size());
+
 	}
 }

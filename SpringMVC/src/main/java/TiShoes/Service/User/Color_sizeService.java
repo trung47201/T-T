@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import com.mysql.jdbc.Statement;
@@ -441,11 +442,29 @@ public class Color_sizeService implements Color_sizeRepository{
 		return hm;
 	}
 	
+	public HashMap<Integer, List<Color_size>> getAllSizeById_Prod(int prod) {
+		HashMap<Integer, List<Color_size>> hm = new LinkedHashMap<>();
+		List<Color_size> li = getAllColorById_prod(prod);
+		
+		for (Color_size color_size : li) {
+			List<Color_size> list = getAllColor_sizeById_prod(prod, color_size.getColor().getId());
+			hm.put(color_size.getColor().getId(), list);
+		}
+		
+		return hm;
+	}
+	
 	public static void main(String[] args) {
 		Color_sizeService cls = new Color_sizeService();
-		List<Integer> li = cls.getAllProd_id();
-		for (Integer i : li) {
-			System.out.println(i);
+		HashMap<Integer, List<Color_size>> hm = cls.getAllSizeById_Prod(11);
+		
+		for (Integer i : hm.keySet()) {
+			System.out.println(""+i+": {");
+			List<Color_size> li = hm.get(i);
+			for (Color_size c : li) {
+				System.out.printf(c.getSize().getId() + ",");
+			}
+			System.out.println("}");
 		}
 	}
 }

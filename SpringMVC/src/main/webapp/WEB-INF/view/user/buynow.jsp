@@ -2,6 +2,8 @@
 <html lang="en">
 <title>Checkout :)</title>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link rel="stylesheet" href="<c:url value="/assets/css/checkout.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/bootstrap.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/js/bootstrap.js"/>">
@@ -83,7 +85,7 @@
 			<div class="customer-info">
 				<h4>Consignee information</h4>
 				<div class="name-customer">
-					
+
 					<c:if test="${ value_name != 'null' }">
 						<input type="text" id="fullname" name="fullname"
 							value="${ value_name }" placeholder="Full name">
@@ -113,7 +115,7 @@
 				<c:if test="${ value_phone != 'null' }">
 					<p class="error-name">${ phone_ }</p>
 				</c:if>
-				
+
 				<div class="mail-customer">
 					<c:set var="_email" value="${ value_email }"></c:set>
 					<c:if test="${ _email != 'null' }">
@@ -127,7 +129,7 @@
 				</div>
 				<c:set var="email_error" value="${ email }"></c:set>
 				<p class="error-name">${ email_error }</p>
-				
+
 				<c:if test="${ _email != 'null' }">
 					<p class="error-name">${ email_ }</p>
 				</c:if>
@@ -191,13 +193,14 @@
 				<h4>Shipping methods</h4>
 				<div class="shipping" id="radio1" onclick="radio(this)">
 					<input type="radio" name="Delivery" id="rad1" checked>
-						<div>&emsp;Delivery to your place</div>
-						<div>&emsp;&emsp;&emsp;$11.00</div>
+					<div>&emsp;Delivery to your place</div>
+					<div>&emsp;&emsp;&emsp;$11.00</div>
 					</input>
 				</div>
 				<h4 class="pm">Payment methods</h4>
 				<div class="shipping" id="radio2" onclick="radio(this)">
-					<input type="radio" name="paymentmethods" id="rad2" value="cod" checked>
+					<input type="radio" name="paymentmethods" id="rad2" value="cod"
+						checked>
 					<div class="icon-cod">
 						&emsp;Payment on delivery (COD) <img
 							src="<c:url value="/assets/images/icons/cash-on-delivery.png"/>"
@@ -207,7 +210,8 @@
 				<div class="content-pm" id="content-pm">You only have to pay
 					when you receive the goods.</div>
 				<div class="shipping" id="radio3" onclick="radio(this)">
-					<input type="radio" name="paymentmethods" id="rad3" value="payByCard">
+					<input type="radio" name="paymentmethods" id="rad3"
+						value="payByCard">
 					<div class="icon-credit">
 						&emsp; Pay by credit card <img
 							src="<c:url value="/assets/images/icons/credit-card.png"/>"
@@ -252,7 +256,16 @@
 					<div class="name-product-checkout">
 						<b>${ prod_checkout.title }</b>
 					</div>
-					<div class="price-product-checkout">$${ prod_checkout.price }</div>
+					<c:if test="${ prod_checkout.discount > 0 }">
+						<div class="price-product-checkout">
+							$<fmt:formatNumber type="number" maxFractionDigits="2"
+								value="${ prod_checkout.price - prod_checkout.price*prod_checkout.discount/100 }" />
+						</div>
+					</c:if>
+					<c:if test="${ prod_checkout.discount <= 0 }">
+						<div class="price-product-checkout">$${ prod_checkout.price
+							}</div>
+					</c:if>
 				</div>
 				<div class="request-product-checkout">
 					<div class="color-checkout">
@@ -312,14 +325,14 @@
 					</div>
 					<div class="amount-checkout">
 						<input class="minus-plus" type="button" name="" id="minus1"
-							onclick="amount(this)" value="-"> 
+							onclick="amount(this)" value="-">
 						<c:if test="${ value_quantity == 'null' }">
-							<input class="input_Id" type="text" name="quantity" id="input_Id1" 
-								value="1" readonly>
+							<input class="input_Id" type="text" name="quantity"
+								id="input_Id1" value="1" readonly>
 						</c:if>
 						<c:if test="${ value_quantity != 'null' }">
-							<input class="input_Id" type="text" name="quantity" id="input_Id1" 
-								value="${ value_quantity }" readonly>
+							<input class="input_Id" type="text" name="quantity"
+								id="input_Id1" value="${ value_quantity }" readonly>
 						</c:if>
 						<input class="minus-plus" type="button" name="" id="plus1"
 							onclick="amount(this)" value="+">
@@ -340,7 +353,13 @@
 							<td class="txt">
 								<div class="total-products-cost">Total products cost</div>
 							</td>
-							<td class="price"><b>$${ prod_checkout.price }</b></td>
+							<c:if test="${ prod_checkout.discount > 0 }">
+								<td class="price"><b>$<fmt:formatNumber type="number" maxFractionDigits="2"
+										value="${ prod_checkout.price - prod_checkout.price*prod_checkout.discount/100 }" /></b></td>
+							</c:if>
+							<c:if test="${ prod_checkout.discount <= 0 }">
+								<td class="price"><b>$${ prod_checkout.price }</b></td>
+							</c:if>
 						</tr>
 						<tr>
 							<td class="txt">
@@ -348,6 +367,26 @@
 							</td>
 							<td class="price"><b>$11.00</b></td>
 						</tr>
+						<c:if test="${ prod_checkout.discount > 0 }">
+							<c:if test="${ (prod_checkout.price - prod_checkout.price * prod_checkout.discount/100) < 50.0 }">
+								<tr>
+									<td class="txt">
+										<div class="shipping-chargers">Free Shipping</div>
+									</td>
+									<td class="price-free"><b>-$11.00</b></td>
+								</tr>
+							</c:if>
+						</c:if>
+						<c:if test="${ prod_checkout.discount <= 0 }">
+							<c:if test="${ (prod_checkout.price) < 50.0 }">
+								<tr>
+									<td class="txt">
+										<div class="shipping-chargers">Free Shipping</div>
+									</td>
+									<td class="price-free"><b>-$11.00</b></td>
+								</tr>
+							</c:if>
+						</c:if>
 						<tr>
 							<td colspan="2">
 								<hr>
@@ -359,8 +398,27 @@
 									<span class="txt-total-payment">Total payment</span>
 								</div>
 							</td>
-							<td class="price"><span class="total-payment"><b>$${
+							<c:if test="${ prod_checkout.discount > 0 }">
+								<c:if test="${ (prod_checkout.price - prod_checkout.price * prod_checkout.discount/100) >= 50.0 }">
+									<td class="price"><span class="total-payment"><b>$<fmt:formatNumber type="number" maxFractionDigits="2"
+										value="${prod_checkout.price - prod_checkout.price * prod_checkout.discount/100 + 11.00 }" /> </b></span></td>
+								</c:if>
+								<c:if test="${ (prod_checkout.price - prod_checkout.price * prod_checkout.discount/100) < 50.0 }">
+									<td class="price"><span class="total-payment"><b>$<fmt:formatNumber type="number" maxFractionDigits="2"
+										value="${prod_checkout.price - prod_checkout.price * prod_checkout.discount/100  }" /> </b></span></td>
+								</c:if>
+							</c:if>
+							<c:if test="${ prod_checkout.discount <= 0 }">
+								<c:if test="${ (prod_checkout.price) >= 50.0 }">
+									<td class="price"><span class="total-payment"><b>$${
+										prod_checkout.price }</b></span></td>
+								</c:if>
+								<c:if test="${ (prod_checkout.price) < 50.0 }">
+									<td class="price"><span class="total-payment"><b>$${
 										prod_checkout.price+11.00 }</b></span></td>
+								</c:if>
+							</c:if>
+							
 						</tr>
 					</table>
 				</div>
@@ -368,8 +426,7 @@
 			</div>
 		</div>
 		<div class="btn-order">
-			<input
-				type="submit" name="order" id="order" value="Order">
+			<input type="submit" name="order" id="order" value="Order">
 		</div>
 	</form>
 
