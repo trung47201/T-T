@@ -2,7 +2,9 @@
 <html lang="en">
 <title>Order :)</title>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<link rel="stylesheet" href="<c:url value="/assets/css/buynow-thank.css"/>">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<link rel="stylesheet"
+	href="<c:url value="/assets/css/buynow-thank.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/bootstrap.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/js/bootstrap.js"/>">
 <link rel="stylesheet"
@@ -11,11 +13,12 @@
 	href="<c:url value="/assets/js/bootstrap.min.js"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/login.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/color.css"/>">
-<link rel="stylesheet" href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />">
+<link rel="stylesheet"
+	href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />">
 
 <body>
-    <form>
-        <div class="nav">
+	<form>
+		<div class="nav">
 			<c:set var="item" value="${ back_home }"></c:set>
 			<c:if test="${ item == 'home'}">
 				<div class="back">
@@ -77,172 +80,186 @@
 				</div>
 			</div>
 		</div>
-        <div class="checkout">
-            <!-- Consignee information -->
-            <div class="customer-info">
-                <div class="thank-you">
-                    <img src="<c:url value="/assets/images/icons/icons8-ok-100.png"/>" alt="">
-                    <div class="content-thank">
-                        <h3>Thank you for your order!</h3>
-                        <p>
-                            We will contact your phone number to confirm, please pay attention to the call.
-                        </p>
-                    </div>
-                </div>
-                <div class="info-customer-left">
-                    <table class="table-info-customer">
-                        <tr>
-                            <th>Buying information</th>
-                            <th>Delivery address</th>
-                        </tr>
-                        <tr>
-                            <td>${ fullname } - ${ phone_number }</td>
-                            <td>${ city } - ${ town } - ${ village }</td>
-                        </tr>
-                        <tr>
-                            <td>${ email }</td>
-                            
-                        </tr>
-                        <tr>
-                            <th>Mode of payment</th>
-                            <th>Shipping method</th>
-                        </tr>
-                        <tr>
-                            <td>Payment on delivery (COD)</td>
-                            <td>Delivery to your place</td>
-                        </tr>
-                        <tr>
-                            <th colspan="2">Note</th>
-                        </tr>
-                        <tr>
-                            <td colspan="2">${ note }</td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="continue-shopping">
-                    <a href="/SpringMVC/products"><input type="button" name="continueShopping" id="continueShopping" value="Continue Shopping"></a>
-                </div>
-            </div>
+		<div class="checkout">
+			<!-- Consignee information -->
+			<div class="customer-info">
+				<div class="thank-you">
+					<img src="<c:url value="/assets/images/icons/icons8-ok-100.png"/>"
+						alt="">
+					<div class="content-thank">
+						<h3>Thank you for your order!</h3>
+						<p>We will contact your phone number to confirm, please pay
+							attention to the call.</p>
+					</div>
+				</div>
+				<div class="info-customer-left">
+					<table class="table-info-customer">
+						<tr>
+							<th>Buying information</th>
+							<th>Delivery address</th>
+						</tr>
+						<tr>
+							<td>${ fullname }-${ phone_number }</td>
+							<td>${ city }-${ town } - ${ village }</td>
+						</tr>
+						<tr>
+							<td>${ email }</td>
 
-            <!-- Order -->
-            <div class="order">
-                <h4>Order information</h4>
-                <div style="width: 84%; margin-left: 7%; margin-top: 30px;">
-                    <div class="products-checkout">
-                        <img src="<c:url value="/assets/images/products/${ product.thumbnail }"/>" alt="">
-                        <div class="name-product-checkout">${ product.title }</div>
-                        <div class="price-product-checkout">$${ product.price- product.price*product.discount/100 }</div>
-                    </div>
-                </div>
-                <div class="request-checkout">
-                    <table>
-                        <tr>
-                            <td class="txt">
-                                <div class="total-products-cost">Color</div>
-                            </td>
-                            <td class="price"><span class="color-span" style="background: ${ color };"></span></td>
-                        </tr>
-                        <tr>
-                            <td class="txt">
-                                <div class="shipping-chargers">Size</div>
-                            </td>
-                            <td class="price"><b>${ size }</b></td>
-                        </tr>
-                        <tr>
-                            <td class="txt">
-                                <div class="shipping-chargers">Quantity</div>
-                            </td>
-                            <td class="price"><b>${ quantity }</b></td>
-                        </tr>
-                    </table>
-                </div>
-              
-                <hr>
-                <div class="calculator" style="margin-top:100px;">
-                    <table>
-                        <tr>
-                            <td class="txt">
-                                <div class="total-products-cost">Total products cost</div>
-                            </td>
-                            <c:if test="${ product.discount <=0 }">
-                            	<td class="price"><b>$${ product.price*quantity }</b></td>
-                            </c:if>
-                            <c:if test="${ product.discount > 0 }">
-                            	<td class="price"><b>$${ product.price*quantity - product.price*quantity*product.discount/100 }</b></td>
-                            </c:if>
-                        </tr>
-                        <tr>
-                            <td class="txt">
-                                <div class="shipping-chargers">Shipping charges</div>
-                            </td>
-                            <td class="price"><b>$11.00</b></td>
-                        </tr>
-                        <c:if test="${ product.discount <= 0 }">
-	                        <c:if test="${ product.price*quantity > 50 }">
-		                         <tr>
-		                            <td class="txt">
-		                                <div class="shipping-chargers">Free ship</div>
-		                            </td>
-		                           
-		                            <td class="price" style="color: #ff6200;"><b>-$11.00</b></td>
-		                        </tr>
-	                        </c:if>
-                        </c:if>
-                         <c:if test="${ product.discount > 0 }">
-	                        <c:if test="${ product.price*quantity - product.price*quantity*product.discount/100 > 50 }">
-		                         <tr>
-		                            <td class="txt">
-		                                <div class="shipping-chargers">Free ship</div>
-		                            </td>
-		                           
-		                            <td class="price" style="color: #ff6200;"><b>-$11.00</b></td>
-		                        </tr>
-	                        </c:if>
-                        </c:if>
-                        <tr>
-                            <td colspan="2">
-                                <hr>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="txt">
-                                <div class="total-payment-calculator"><span class="txt-total-payment">Total
-                                        payment</span></div>
-                            </td>
-                            <c:if test="${ product.price*quantity < 50 }">
-	                            <c:if test="${ product.discount <=0 }">
-	                            	<td class="price"><span class="total-payment"><b>$${ product.price*quantity }</b></span></td>
-	                            </c:if>
-	                            <c:if test="${ product.discount > 0 }">
-	                            	<td class="price"><span class="total-payment"><b>$${  product.price*quantity - product.price*quantity*product.discount/100 }</b></span></td>
-	                            </c:if>
-                            	
-                            </c:if>
-                            <c:if test="${ product.price*quantity >= 50 }">
-                            	<c:if test="${ product.discount <=0 }">
-	                            	<td class="price"><span class="total-payment"><b>$${ product.price*quantity + 11.00 }</b></span></td>
-	                            </c:if>
-	                            <c:if test="${ product.discount > 0 }">
-	                            	<td class="price"><span class="total-payment"><b>$${  product.price*quantity - product.price*quantity*product.discount/100 + 11.00}</b></span></td>
-	                            </c:if>
-                            </c:if>
-                        </tr>
-                    </table>
-                </div>
-                
-            </div>
-           
-        </div>
-     
-    </form>
+						</tr>
+						<tr>
+							<th>Mode of payment</th>
+							<th>Shipping method</th>
+						</tr>
+						<tr>
+							<td>Payment on delivery (COD)</td>
+							<td>Delivery to your place</td>
+						</tr>
+						<tr>
+							<th colspan="2">Note</th>
+						</tr>
+						<tr>
+							<td colspan="2">${ note }</td>
+						</tr>
+					</table>
+				</div>
+				<div class="continue-shopping">
+					<a href="/SpringMVC/products"><input type="button"
+						name="continueShopping" id="continueShopping"
+						value="Continue Shopping"></a>
+				</div>
+			</div>
 
-    <script src="js/login.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
-        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
+			<!-- Order -->
+			<div class="order">
+				<h4>Order information</h4>
+				<div style="width: 84%; margin-left: 7%; margin-top: 30px;">
+					<div class="products-checkout">
+						<img
+							src="<c:url value="/assets/images/products/${ product.thumbnail }"/>"
+							alt="">
+						<div class="name-product-checkout">${ product.title }</div>
+						<div class="price-product-checkout">$${ product.price-
+							product.price*product.discount/100 }</div>
+					</div>
+				</div>
+				<div class="request-checkout">
+					<table>
+						<tr>
+							<td class="txt">
+								<div class="total-products-cost">Color</div>
+							</td>
+							<td class="price"><span class="color-span"
+								style="background: ${ color };"></span></td>
+						</tr>
+						<tr>
+							<td class="txt">
+								<div class="shipping-chargers">Size</div>
+							</td>
+							<td class="price"><b>${ size }</b></td>
+						</tr>
+						<tr>
+							<td class="txt">
+								<div class="shipping-chargers">Quantity</div>
+							</td>
+							<td class="price"><b>${ quantity }</b></td>
+						</tr>
+					</table>
+				</div>
+
+				<hr>
+				<div class="calculator" style="margin-top: 100px;">
+					<table>
+						<tr>
+							<td class="txt">
+								<div class="total-products-cost">Total products cost</div>
+							</td>
+							<c:if test="${ product.discount <=0 }">
+								<td class="price"><b>$${ product.price*quantity }</b></td>
+							</c:if>
+							<c:if test="${ product.discount > 0 }">
+								<td class="price"><b>$${ product.price*quantity -
+										product.price*quantity*product.discount/100 }</b></td>
+							</c:if>
+						</tr>
+						<tr>
+							<td class="txt">
+								<div class="shipping-chargers">Shipping charges</div>
+							</td>
+							<td class="price"><b>$11.00</b></td>
+						</tr>
+						<c:if test="${ product.discount <= 0 }">
+							<c:if test="${ product.price*quantity >= 50 }">
+								<tr>
+									<td class="txt">
+										<div class="shipping-chargers">Free ship</div>
+									</td>
+
+									<td class="price" style="color: #ff6200;"><b>-$11.00</b></td>
+								</tr>
+							</c:if>
+						</c:if>
+						<c:if test="${ product.discount > 0 }">
+							<c:if
+								test="${ product.price*quantity - product.price*quantity*product.discount/100 >= 50 }">
+								<tr>
+									<td class="txt">
+										<div class="shipping-chargers">Free ship</div>
+									</td>
+
+									<td class="price" style="color: #ff6200;"><b>-$11.00</b></td>
+								</tr>
+							</c:if>
+						</c:if>
+						<tr>
+							<td colspan="2">
+								<hr>
+							</td>
+						</tr>
+						<tr>
+							<td class="txt">
+								<div class="total-payment-calculator">
+									<span class="txt-total-payment">Total payment</span>
+								</div>
+							</td>
+
+							<c:if test="${ product.discount <=0 }">
+								<c:if test="${ product.price*quantity >= 50 }">
+									<td class="price"><span class="total-payment"><b>$${
+												product.price*quantity }</b></span></td>
+								</c:if>
+								<c:if test="${ product.price*quantity < 50 }">
+									<td class="price"><span class="total-payment"><b>$${
+												product.price*quantity +11.0}</b></span></td>
+								</c:if>
+							</c:if>
+							<c:if test="${ product.discount > 0 }">
+								<c:if test="${ (product.price*quantity - product.price*quantity*product.discount/100) < 50 }">
+									<td class="price"><span class="total-payment">
+										<b>$${ product.price*quantity - product.price*quantity*product.discount/100 + 11.00}</b></span></td>
+								</c:if>
+								<c:if test="${ (product.price*quantity - product.price*quantity*product.discount/100) >= 50 }">
+									<td class="price"><span class="total-payment">
+										<b>$${ product.price*quantity - product.price*quantity*product.discount/100}</b></span></td>
+								</c:if>
+							</c:if>
+						</tr>
+					</table>
+				</div>
+
+			</div>
+
+		</div>
+
+	</form>
+
+	<script src="js/login.js"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
+		integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+		crossorigin="anonymous"></script>
 </body>
 
 </html>

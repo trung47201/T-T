@@ -16,5 +16,4 @@
 	<session-config>
 		<tracking-mode>COOKIE</tracking-mode>
 	</session-config>
-	
 </web-app>

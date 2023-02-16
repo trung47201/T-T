@@ -81,7 +81,7 @@ a.dropdown-item {
 	<header class="container-xl header-content">
 		<form method="post">
 			<div class="container-xl header-1">
-				<a href="/SpringMVC"><img class="img-fluid logo-header"
+				<a href="/Shoes"><img class="img-fluid logo-header"
 					src="<c:url value="/assets/images/logo/logo_header.jpg"/>"
 					alt="logo_UchihaShoes"></a> <img class="smartphone-icon"
 					src="<c:url value="/assets/images/icons/smartphone48.png"/>"
@@ -144,19 +144,31 @@ a.dropdown-item {
 									<div class="login_form">
 										<h2>Login</h2>
 										<div class="input_group">
+										
 											<i class="fa fa-user"></i> <input type="text" id="username"
 												name="username" placeholder="Username" class="input_text"
-												autocomplete="off" />
+												autocomplete="off" <c:if test="${ username != '' || username != null }">
+													value="${ username }"
+												</c:if>/>
 										</div>
 										<div class="input_group">
 											<i class="fa fa-unlock-alt"></i> <input type="password"
 												id="password" name="password" placeholder="Password"
-												class="input_text" autocomplete="off" />
+												class="input_text" autocomplete="off" <c:if test="${ password != '' || password != null }">
+													value="${ password }"
+												</c:if>
+												/>
+												
+												
 										</div>
 										<div class="form-check">
-											<input class="form-check-input" type="checkbox" value=""
-												id="flexCheckChecked" checked> <label
-												class="form-check-label" for="flexCheckChecked">
+
+											<input class="form-check-input" type="checkbox"
+												name="rememberme" value="" id="flexCheckChecked"
+												<c:if test="${rememberme != null && rememberme=='true' }">
+											<c:out value="checked"></c:out>
+											</c:if>>
+											<label class="form-check-label" for="flexCheckChecked">
 												Remember me </label>
 										</div>
 										<div class="button_group" id="login_button">
@@ -182,7 +194,7 @@ a.dropdown-item {
 				</div>
 				<!--####################################   btn CART    ################################################# -->
 				<div class="container-xl icon-cart">
-					<a href="/SpringMVC/cart">
+					<a href="/Shoes/cart">
 						<button type="button" class="icon-user btn btn-primary">
 							<img class="icon-cart"
 								src="<c:url value="/assets/images/icons/cart48.png"/>"
@@ -197,13 +209,13 @@ a.dropdown-item {
 				<nav>
 					<div class="content">
 						<ul class="links">
-							<li><a class="menu" href="/SpringMVC"><b>Home</b></a></li>
-							<li><a href="/SpringMVC/products" class="desktop-link menu"><b>Shoes</b></a>
+							<li><a class="menu" href="/Shoes"><b>Home</b></a></li>
+							<li><a href="/Shoes/products" class="desktop-link menu"><b>Shoes</b></a>
 								<ul>
 									<c:forEach var="li_style" items="${ style }" varStatus="index">
 										<c:if test="${ index.getIndex() < 9 }">
 											<li><a class="menu"
-												href="http://localhost:8888/SpringMVC/products?stylename=${ li_style.id }">${ li_style.style_name }</a></li>
+												href="http://localhost:8888/Shoes/products?stylename=${ li_style.id }">${ li_style.style_name }</a></li>
 										</c:if>
 									</c:forEach>
 									<li><a href="" class="desktop-link menu">More</a>
@@ -212,7 +224,7 @@ a.dropdown-item {
 												varStatus="index">
 												<c:if test="${ index.getIndex() >= 9 }">
 													<li><a class="menu"
-														href="http://localhost:8888/SpringMVC/products?stylename=${ li_style.id }">${ li_style.style_name }</a></li>
+														href="http://localhost:8888/Shoes/products?stylename=${ li_style.id }">${ li_style.style_name }</a></li>
 												</c:if>
 											</c:forEach>
 										</ul></li>
@@ -232,14 +244,14 @@ a.dropdown-item {
 											<li><a class="menu" href="#">Belts</a></li>
 										</ul></li>
 								</ul></li>
-							<li><a href="/SpringMVC/news" class="desktop-link menu"><b>News</b></a>
+							<li><a href="/Shoes/news" class="desktop-link menu"><b>News</b></a>
 								<ul>
 									<li><a class="menu" href="#">Newest</a></li>
 									<li><a class="menu" href="#">Hot</a></li>
 									<li><a class="menu" href="#">Trending</a></li>
 								</ul></li>
-							<li><a class="menu" href="/SpringMVC/questions"><b>Questions</b></a></li>
-							<li><a class="menu" href="/SpringMVC/contact"><b>Contact</b></a></li>
+							<li><a class="menu" href="/Shoes/questions"><b>Questions</b></a></li>
+							<li><a class="menu" href="/Shoes/contact"><b>Contact</b></a></li>
 						</ul>
 					</div>
 					<div class="nav-search" id="nav-search">
@@ -440,7 +452,7 @@ a.dropdown-item {
 
 											<button class="buy-now" class="shadow-1">
 												<a
-													href="/SpringMVC/cart/checkout?177627f91af678a9b03e993f1a91917f&id_prod=${ it.id }">Buy
+													href="/Shoes/cart/checkout?177627f91af678a9b03e993f1a91917f&id_prod=${ it.id }">Buy
 													now</a>
 											</button>
 										</div>
@@ -538,7 +550,7 @@ a.dropdown-item {
 															</button>
 															<button class="buy-effect">
 																<a
-																	href="/SpringMVC/cart/checkout?177627f91af678a9b03e993f1a91917f&id_prod=${ item.id }">
+																	href="/Shoes/cart/checkout?177627f91af678a9b03e993f1a91917f&id_prod=${ item.id }">
 																	Buy now</a>
 															</button>
 														</div>
@@ -620,7 +632,7 @@ a.dropdown-item {
 											</button>
 											<button class="buy-now" class="shadow-1">
 												<a
-													href="/SpringMVC/cart/checkout?177627f91af678a9b03e993f1a91917f&id_prod=${ it.id }">
+													href="/Shoes/cart/checkout?177627f91af678a9b03e993f1a91917f&id_prod=${ it.id }">
 													Buy now</a>
 											</button>
 										</div>
@@ -746,15 +758,32 @@ a.dropdown-item {
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 
+	<script type="text/javascript">
+	$(document).ready(function(){
+		 $(".form-check-input").click(function(){
+			 var rememberme = this.checked;
+			  var xhr = new XMLHttpRequest();
+				xhr.open("GET",
+						"http://localhost:8888/Shoes/home?rememberme="+rememberme);
+				// What to do when server responds
+				xhr.onload = function() {
+					//window.location.assign("http://localhost:8888/Shoes/");
+				};
+				xhr.send();
+		  });
+		  
+	});
+</script>
 	<script>
+	
 	function logout() {
 		$(document).ready(function(){
 			var xhr = new XMLHttpRequest();
 			xhr.open("GET",
-					"http://localhost:8888/SpringMVC/home?logout=true");
+					"http://localhost:8888/Shoes/home?logout=true");
 			// What to do when server responds
 			xhr.onload = function() {
-				window.location.assign("http://localhost:8888/SpringMVC/");
+				window.location.assign("http://localhost:8888/Shoes/");
 			};
 			xhr.send();
 		});
@@ -804,11 +833,11 @@ a.dropdown-item {
 			} else {
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"http://localhost:8888/SpringMVC/home?username="
+						"http://localhost:8888/Shoes/home?username="
 								+ username +"&password="+password);
 				// What to do when server responds
 				xhr.onload = function() {
-					window.location.assign("http://localhost:8888/SpringMVC/");
+					window.location.assign("http://localhost:8888/Shoes/");
 				};
 				xhr.send();
 			}

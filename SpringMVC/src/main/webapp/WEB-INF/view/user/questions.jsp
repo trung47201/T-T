@@ -2,6 +2,7 @@
 <html lang="en">
 <title>Hi, how are you?</title>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="<c:url value="/assets/css/bootstrap.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/js/bootstrap.js"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/style.css"/>">
@@ -337,7 +338,7 @@
                 </div>
             </div>
             <hr class="copyright">
-            <div class="footer-copyright">UCHIHA SHOES © 2022 All rights reserved.</div>
+            <div class="footer-copyright">UCHIHA SHOES Â© 2022 All rights reserved.</div>
         </form>
     </footer>
 

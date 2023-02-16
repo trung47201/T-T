@@ -3,7 +3,7 @@
 <title>Cart :)</title>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <link rel="stylesheet" href="<c:url value="/assets/css/bootstrap.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/js/bootstrap.js"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/style.css"/>">
@@ -111,7 +111,7 @@
 				</div>
 				<!--####################################   btn CART    ################################################# -->
 				<div class="container-xl icon-cart">
-					<a href="/SpringMVC/cart">
+					<a href="/Shoes/cart">
 						<button type="button" class="icon-user btn btn-primary">
 							<img class="icon-cart"
 								src="<c:url value="/assets/images/icons/cart48.png"/>"
@@ -472,7 +472,7 @@
 			var size = x.value + "_"+x.id;
 			var xhr = new XMLHttpRequest();
 			xhr.open("GET",
-					"http://localhost:8888/SpringMVC/cart?size="+size);
+					"http://localhost:8888/Shoes/cart?size="+size);
 			// What to do when server responds
 			xhr.onload = function() {
 				
@@ -484,7 +484,7 @@
 			
 			var xhr = new XMLHttpRequest();
 			xhr.open("GET",
-					"http://localhost:8888/SpringMVC/cart?color="+color);
+					"http://localhost:8888/Shoes/cart?color="+color);
 			// What to do when server responds
 			xhr.onload = function() {
 				
@@ -560,9 +560,9 @@
 					alert(error);
 				} else {
 					xhr.open("GET",
-							"http://localhost:8888/SpringMVC/cart/checkout-cart?process="+txt_c);
+							"http://localhost:8888/Shoes/cart/checkout-cart?process="+txt_c);
 					xhr.onload = function() {
-						window.location.assign("http://localhost:8888/SpringMVC/cart/checkout-cart?process="+txt_c);
+						window.location.assign("http://localhost:8888/Shoes/cart/checkout-cart?process="+txt_c);
 						
 					};
 					xhr.send();
@@ -612,10 +612,10 @@
 				tcpc.textContent = "("+checkboxes.length+")";
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"http://localhost:8888/SpringMVC/cart?checkedAll=true");
+						"http://localhost:8888/Shoes/cart?checkedAll=true");
 				// What to do when server responds
 				xhr.onload = function() {
-					window.location.assign("http://localhost:8888/SpringMVC/cart?checkedAll=true");
+					window.location.assign("http://localhost:8888/Shoes/cart?checkedAll=true");
 				};
 				xhr.send();
 				
@@ -625,10 +625,10 @@
 			} else if(source.checked==false) {
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"http://localhost:8888/SpringMVC/cart?checkedAll=false");
+						"http://localhost:8888/Shoes/cart?checkedAll=false");
 				// What to do when server responds
 				xhr.onload = function() {
-					window.location.assign("http://localhost:8888/SpringMVC/cart");
+					window.location.assign("http://localhost:8888/Shoes/cart");
 				};
 				xhr.send();
 				
@@ -662,14 +662,14 @@
 			}
 			var xhr = new XMLHttpRequest();
 			xhr.open("GET",
-					"http://localhost:8888/SpringMVC/cart?totalmoney="
+					"http://localhost:8888/Shoes/cart?totalmoney="
 							+ txt_m);
 			// What to do when server responds
 			xhr.onload = function() {
 				if (x.length == 0) {
-					window.location.assign("http://localhost:8888/SpringMVC/cart");
+					window.location.assign("http://localhost:8888/Shoes/cart");
 				} else {
-					window.location.assign("http://localhost:8888/SpringMVC/cart?totalmoney="
+					window.location.assign("http://localhost:8888/Shoes/cart?totalmoney="
 							+ txt_m);
 				}
 				
@@ -706,11 +706,11 @@
 					var value_amount = document.getElementById("input_Id" + i).value;
 					var xhr = new XMLHttpRequest();
 					xhr.open("GET",
-							"http://localhost:8888/SpringMVC/cart?plus="
+							"http://localhost:8888/Shoes/cart?plus="
 									+ x.name);
 					// What to do when server responds
 					xhr.onload = function() {
-						window.location.assign("http://localhost:8888/SpringMVC/cart");
+						window.location.assign("http://localhost:8888/Shoes/cart");
 					};
 					xhr.send();
 					return false;
@@ -722,11 +722,11 @@
 						var value_amount = document.getElementById("input_Id" + i).value;
 						var xhr = new XMLHttpRequest();
 						xhr.open("GET",
-								"http://localhost:8888/SpringMVC/cart?minus="
+								"http://localhost:8888/Shoes/cart?minus="
 										+ x.name);
 						// What to do when server responds
 						xhr.onload = function() {
-							window.location.assign("http://localhost:8888/SpringMVC/cart");
+							window.location.assign("http://localhost:8888/Shoes/cart");
 						};
 						xhr.send();
 						return false;
@@ -734,11 +734,11 @@
 						if (confirm("Are you sure to remove the order from the cart?")) {
 							var xhr = new XMLHttpRequest();
 							xhr.open("GET",
-									"http://localhost:8888/SpringMVC/cart?remove="
+									"http://localhost:8888/Shoes/cart?remove="
 											+ x.name);
 							// What to do when server responds
 							xhr.onload = function() {
-								window.location.assign("http://localhost:8888/SpringMVC/cart");
+								window.location.assign("http://localhost:8888/Shoes/cart");
 							};
 							xhr.send();
 							return false;
@@ -749,11 +749,11 @@
 					if (confirm("Are you sure to remove the order from the cart?")) {
 						var xhr = new XMLHttpRequest();
 						xhr.open("GET",
-								"http://localhost:8888/SpringMVC/cart?deleleProduct="
+								"http://localhost:8888/Shoes/cart?deleleProduct="
 										+ x.name);
 						// What to do when server responds
 						xhr.onload = function() {
-							window.location.assign("http://localhost:8888/SpringMVC/cart");
+							window.location.assign("http://localhost:8888/Shoes/cart");
 						};
 						xhr.send();
 						

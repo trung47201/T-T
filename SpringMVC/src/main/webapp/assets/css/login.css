@@ -13,7 +13,9 @@ body {
 	letter-spacing: 1px;
 	background-color: #0c1022;
 }
-
+.btn-close-login {
+	z-index: 15;
+}
 .form-check {
 	margin-top: 10px;
 }
@@ -25,7 +27,7 @@ body {
 	justify-content: center;
 	align-items: center;
 	letter-spacing: 1px;
-	background: none;
+	background: none !important;
 	border: 0;
 	padding-bottom: 80px;
 }
@@ -63,19 +65,10 @@ body {
 	animation-delay: -3s;
 }
 
-@
-keyframes rotate_border { 0%{
+@keyframes rotate_border { 0%{
 	transform: rotate(0deg);
 }
-
-100
-%
-{
-transform
-:
-rotate(
-360deg
-);
+100%{transform:rotate(360deg);
 }
 }
 .login_form {
