@@ -13,7 +13,9 @@ body {
 	letter-spacing: 1px;
 	background-color: #0c1022;
 }
-
+.btn-close-login {
+    z-index: 15;
+}
 .form-check {
 	margin-top: 10px;
 }

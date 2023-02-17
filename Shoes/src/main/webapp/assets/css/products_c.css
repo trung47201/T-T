@@ -1,0 +1,122 @@
+.products-el {
+  width: 21.6%;
+  margin-left: 21px;
+  margin-bottom: 20px;
+}
+.img-product-products {
+  width: 100%;
+  height: 390px;
+  background: #f1f1f1;
+}
+.img-product-products img{
+  width: 100%;
+}
+.price-product-products {
+  display: flex;
+}
+.brand-product-products{
+  margin-top: 5px;
+  font-size: 14px;
+}
+.name-product-products{
+  font-size: 18px;
+  font-weight: bold;
+}
+.price-sale-products{
+  color: #FF6200;
+  font-weight: bold;
+  font-size: 15px;
+}
+.price-old-products {
+  position: relative;
+  margin-left: 20px;
+  font-size: 15px;
+}
+.price-old-products::after{
+  content: "";
+  width: 108%;
+  height: 2px;
+  background: white;
+  position: absolute;
+  left: 0;
+  margin-top: 10px;
+  margin-left: -3px;
+}
+.rate-product-products {
+  display: flex;
+  font-size: 14px;
+}
+.img-rate-product-products {
+  margin-top: -2px;
+  margin-left: 3px;
+}
+.img-rate-product-products img{
+  width: 70%;
+}
+.show-products {
+  width: 100%;
+  height: 50px;
+  overflow: hidden;
+}
+.favorite-product-products {
+  margin-top: 11px;
+}
+.show-function {
+  width: 100%;
+  height: 100%;
+}
+.show-products:hover .price-product-products{
+  background-color: #0086ff;
+  margin-top: -50px;
+  visibility: visible;
+}
+
+.show-function-effect {
+  cursor: pointer;
+  display: flex;
+  margin-left: 10px;
+}
+
+.fun-hover-effect:hover .price-effect{
+  cursor: pointer;
+  margin-top: -50px;
+}
+
+button.favorite-effect,
+button.add-to-cart-effect {
+  cursor: pointer;
+  display: flex;
+  margin-top: 3px;
+  background: none;
+  border: 0;
+}
+
+button.buy-effect {
+  cursor: pointer;
+  background-color: #FF6200;
+  border: 0;
+  color: white;
+  border-radius: 5px;
+  padding: 0 5px;
+}
+button.buy-effect a {
+	color: white;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+button.buy-effect:hover,
+button.add-to-cart-effect:hover, 
+button.favorite-effect:hover {
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 1px 2px 5px #0086ff;
+}
+
+.add-to-cart-effect, 
+.favorite-effect {
+  margin-right: 20px;
+}
+button.buy-effect:focus {
+  outline-style: none;
+}
