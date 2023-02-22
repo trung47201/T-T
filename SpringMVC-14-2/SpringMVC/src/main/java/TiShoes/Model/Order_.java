@@ -12,7 +12,7 @@ public class Order_ {
 	private Date updated_at;
 	private Voucher voucher;
 	private String note;
-	private String status;
+	private Status status;
 	private String method;
 	
 	public Order_() {
@@ -73,10 +73,11 @@ public class Order_ {
 	public void setNote(String note) {
 		this.note = note;
 	}
-	public String getStatus() {
+	
+	public Status getStatus() {
 		return status;
 	}
-	public void setStatus(String status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 	public String getMethod() {
@@ -84,22 +85,6 @@ public class Order_ {
 	}
 	public void setMethod(String method) {
 		this.method = method;
-	}
-	public Order_(int id, String fullname, String email, String phone_number, String address,
-			Date order_date, String note, String status, String method) {
-		super();
-		this.id = id;
-		this.fullname = fullname;
-		this.email = email;
-		this.phone_number = phone_number;
-		this.address = address;
-		
-		this.order_date = order_date;
-		this.note = note;
-		this.status = status;
-		this.method = method;
-		
-		
 	}
 	
 	

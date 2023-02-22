@@ -66,6 +66,7 @@ public class RatingService implements RatingRepository{
 				user.setPhone_number(rs.getString("phone_number"));
 				user.setAddress(rs.getString("address"));
 				user.setPassword(rs.getString("password"));
+				user.setAvatar(rs.getString("avatar"));
 				user.setRole(role);
 
 				brand.setId(rs.getInt("brand_id"));

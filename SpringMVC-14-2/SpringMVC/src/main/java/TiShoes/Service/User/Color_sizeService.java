@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.mysql.jdbc.PreparedStatement;
@@ -79,6 +80,9 @@ public class Color_sizeService implements Color_sizeRepository {
 
 				role.setId(rs.getInt("role_id"));
 				role.setRole_name(rs.getString("role_name"));
+				role.setDescription(rs.getString("description"));
+				role.setCreated_at(rs.getDate("created_at"));
+				role.setUpdated_at(rs.getDate("updated_at"));
 
 				brand.setId(rs.getInt("brand_id"));
 				brand.setBrand_name(rs.getString("brand_name"));
@@ -89,6 +93,7 @@ public class Color_sizeService implements Color_sizeRepository {
 				user.setPhone_number(rs.getString("phone_number"));
 				user.setAddress(rs.getString("address"));
 				user.setPassword(rs.getString("password"));
+				user.setAvatar(rs.getString("avatar"));
 				user.setRole(role);
 
 				style.setId(rs.getInt("style_id"));
@@ -114,7 +119,7 @@ public class Color_sizeService implements Color_sizeRepository {
 				color_size.setSize(size);
 				color_size.setColor(color);
 				color_size.setProd(product);
-				color_size.setrQuantity(rs.getInt("quantity"));
+				color_size.setQuantity(rs.getInt("quantity"));
 				li.add(color_size);
 			}
 			con.close();
@@ -169,6 +174,9 @@ public class Color_sizeService implements Color_sizeRepository {
 
 				role.setId(rs.getInt("role_id"));
 				role.setRole_name(rs.getString("role_name"));
+				role.setDescription(rs.getString("description"));
+				role.setCreated_at(rs.getDate("created_at"));
+				role.setUpdated_at(rs.getDate("updated_at"));
 
 				brand.setId(rs.getInt("brand_id"));
 				brand.setBrand_name(rs.getString("brand_name"));
@@ -179,6 +187,7 @@ public class Color_sizeService implements Color_sizeRepository {
 				user.setPhone_number(rs.getString("phone_number"));
 				user.setAddress(rs.getString("address"));
 				user.setPassword(rs.getString("password"));
+				user.setAvatar(rs.getString("avatar"));
 				user.setRole(role);
 
 				style.setId(rs.getInt("style_id"));
@@ -204,7 +213,7 @@ public class Color_sizeService implements Color_sizeRepository {
 				color_size.setSize(size);
 				color_size.setColor(color);
 				color_size.setProd(product);
-				color_size.setrQuantity(rs.getInt("quantity"));
+				color_size.setQuantity(rs.getInt("quantity"));
 				li.add(color_size);
 			}
 			con.close();
@@ -216,6 +225,16 @@ public class Color_sizeService implements Color_sizeRepository {
 
 	@Override
 	public List<Color_size> getAllColor_Size() {
+		List<Color_size> li = new LinkedList<>();
+		for (Color_size c : getAllProduct_Color_Size()) {
+			if(c.getQuantity() > 0) {
+				li.add(c);
+			}
+		}
+		return li;
+	}
+	
+	public List<Color_size> getAllProduct_Color_Size() {
 		List<Color_size> li = null;
 		try {
 			connectService = new ConnectService();
@@ -231,7 +250,7 @@ public class Color_sizeService implements Color_sizeRepository {
 							+ "Inner join gender on product.gender_id = gender.id "
 							+ "Inner join role on role.id = user.role_id "
 							+ "Inner join sizes on sizes.id = color_size.size_id "
-							+ "Inner join color on color.id = color_size.color_id " + "Where quantity > 0 ");
+							+ "Inner join color on color.id = color_size.color_id ");
 			while (rs.next()) {
 				product = new Product();
 				brand = new Brand();
@@ -258,7 +277,10 @@ public class Color_sizeService implements Color_sizeRepository {
 
 				role.setId(rs.getInt("role_id"));
 				role.setRole_name(rs.getString("role_name"));
-
+				role.setDescription(rs.getString("description"));
+				role.setCreated_at(rs.getDate("created_at"));
+				role.setUpdated_at(rs.getDate("updated_at"));
+				
 				brand.setId(rs.getInt("brand_id"));
 				brand.setBrand_name(rs.getString("brand_name"));
 
@@ -268,6 +290,7 @@ public class Color_sizeService implements Color_sizeRepository {
 				user.setPhone_number(rs.getString("phone_number"));
 				user.setAddress(rs.getString("address"));
 				user.setPassword(rs.getString("password"));
+				user.setAvatar(rs.getString("avatar"));
 				user.setRole(role);
 
 				style.setId(rs.getInt("style_id"));
@@ -293,7 +316,7 @@ public class Color_sizeService implements Color_sizeRepository {
 				color_size.setSize(size);
 				color_size.setColor(color);
 				color_size.setProd(product);
-				color_size.setrQuantity(rs.getInt("quantity"));
+				color_size.setQuantity(rs.getInt("quantity"));
 				li.add(color_size);
 			}
 			con.close();
@@ -303,6 +326,37 @@ public class Color_sizeService implements Color_sizeRepository {
 		return li;
 	}
 
+	public Color_size getByIdCS(int id_cs) {
+		Color_size cs = null;
+		for (Color_size i : getAllColor_Size()) {
+			if(i.getId() == id_cs) {
+				cs = i;
+			}
+		}
+		return cs;
+	}
+	
+	public User getUserByIdUser(int id_u) {
+		User cs = null;
+		for (Color_size i : getAllColor_Size()) {
+			if (i.getProd().getUser().getId()==id_u) {
+				cs = i.getProd().getUser();
+			}
+		}
+		return cs;
+	}
+	
+	public int firstColor_SizeById_Prod(int id_prod) {
+		int id = 1;
+		for (Color_size c : getAllColor_Size()) {
+			if (c.getProd().getId() == id_prod) {
+				id = c.getId();
+				break;
+			}
+		}
+		return id;
+	}
+	
 	public int firstColorId(int prod) {
 		int color_id = 0;
 		Color_sizeService colorService = new Color_sizeService();
@@ -397,7 +451,10 @@ public class Color_sizeService implements Color_sizeRepository {
 
 				role.setId(rs.getInt("role_id"));
 				role.setRole_name(rs.getString("role_name"));
-
+				role.setDescription(rs.getString("description"));
+				role.setCreated_at(rs.getDate("created_at"));
+				role.setUpdated_at(rs.getDate("updated_at"));
+				
 				brand.setId(rs.getInt("brand_id"));
 				brand.setBrand_name(rs.getString("brand_name"));
 
@@ -407,6 +464,7 @@ public class Color_sizeService implements Color_sizeRepository {
 				user.setPhone_number(rs.getString("phone_number"));
 				user.setAddress(rs.getString("address"));
 				user.setPassword(rs.getString("password"));
+				user.setAvatar(rs.getString("avatar"));
 				user.setRole(role);
 
 				style.setId(rs.getInt("style_id"));
@@ -432,7 +490,7 @@ public class Color_sizeService implements Color_sizeRepository {
 				color_size.setSize(size);
 				color_size.setColor(color);
 				color_size.setProd(product);
-				color_size.setrQuantity(rs.getInt("quantity"));
+				color_size.setQuantity(rs.getInt("quantity"));
 				li.add(rs.getInt("prod_id"));
 			}
 			con.close();
@@ -500,9 +558,72 @@ public class Color_sizeService implements Color_sizeRepository {
 		}
 		return false;
 	}
+	
+	public boolean insertIntoColor_Size(String size_quantity, int color_id, int prod_id) {
+		try {
+			connectService = new ConnectService();
+			Connection conn = connectService.getConnect();
+			HashMap<Integer, Integer> hm = getSize_Quantity(size_quantity);
+			for (Integer i : hm.keySet()) {
+				if (checkColor_size(i, color_id, prod_id)) {
+
+				} else {
+
+					String sql = "INSERT INTO `color_size`(`size_id`, `color_id`, `prod_id`, `quantity`) "
+							+ "VALUES (?, ?, ?, ?)";
+					PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
+					preparedStmt.setInt(1, i);
+					preparedStmt.setInt(2, color_id);
+					preparedStmt.setInt(3, prod_id);
+					preparedStmt.setInt(4, hm.get(i));
+					preparedStmt.execute();
+				}
+
+			}
+
+			conn.close();
+			return true;
+		} catch (Exception e) {
+			System.err.println("Got an exception!");
+			// printStackTrace method
+			// prints line numbers + call stack
+			e.printStackTrace();
+			// Prints what exception has been thrown
+			System.out.println(e);
+		}
+		return false;
+	}
+
+	public HashMap<Integer, Integer> getSize_Quantity(String txt) {
+		HashMap<Integer, Integer> hm = new LinkedHashMap<Integer, Integer>();
+		String arr[] = {};
+		String arr1[] = {};
+		if (!txt.equals("")) {
+			arr = txt.split("/");
+			for (String s : arr) {
+				if (!s.equals("")) {
+					arr1 = s.split("_");
+					hm.put(Integer.parseInt(arr1[0]), Integer.parseInt(arr1[1]));
+				}
+			}
+		}
+		return hm;
+	}
+
+	public boolean checkColor_size(int size_id, int color_id, int prod_id) {
+
+		for (Color_size i : getAllProduct_Color_Size()) {
+			if (i.getSize().getId() == size_id && i.getColor().getId() == color_id && i.getProd().getId() == prod_id) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public static void main(String[] args) {
-		//Color_sizeService cls = new Color_sizeService();
+		Color_sizeService cls = new Color_sizeService();
+		User li = cls.getUserByIdUser(4);
+		System.out.println(li.getId() + "==" + li.getFullname());
 
 	}
 }

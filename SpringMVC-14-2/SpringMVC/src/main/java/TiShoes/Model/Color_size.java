@@ -5,7 +5,7 @@ public class Color_size {
 	private Sizes size;
 	private Color color;
 	private Product prod;
-	private int rQuantity;
+	private int Quantity;
 	public Color_size() {
 		// TODO Auto-generated constructor stub
 	}
@@ -33,11 +33,11 @@ public class Color_size {
 	public void setProd(Product prod) {
 		this.prod = prod;
 	}
-	public int getrQuantity() {
-		return rQuantity;
+	public int getQuantity() {
+		return Quantity;
 	}
-	public void setrQuantity(int rQuantity) {
-		this.rQuantity = rQuantity;
+	public void setQuantity(int Quantity) {
+		this.Quantity = Quantity;
 	}
 	
 }

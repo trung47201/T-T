@@ -17,6 +17,7 @@ import TiShoes.Model.Order_details;
 import TiShoes.Model.Product;
 import TiShoes.Model.Role;
 import TiShoes.Model.Sizes;
+import TiShoes.Model.Status;
 import TiShoes.Model.Style;
 import TiShoes.Model.User;
 import TiShoes.Model.Voucher;
@@ -36,6 +37,7 @@ public class Order_detailsService implements Order_detailsRepository{
 	private Color color;
 	private Sizes size;
 	private Gender gender;
+	private Status status;
 	
 	@Override
 	public List<Order_details> getAllOrder_details() {
@@ -48,6 +50,7 @@ public class Order_detailsService implements Order_detailsRepository{
 			stmt = (Statement) con.createStatement();
 			ResultSet rs = stmt.executeQuery(
 					"select * from order_details " + "Inner join order_ on order_.id = order_details.order_id "
+							+ "Inner join status on order_.status_id = status.id "
 							+ "Inner join voucher on order_.voucher_id = voucher.id "
 							+ "Inner join product on product.id = order_details.prod_id "
 							+ "Inner join sizes on sizes.id = order_details.size_id "
@@ -69,6 +72,11 @@ public class Order_detailsService implements Order_detailsRepository{
 				style = new Style();
 				gender = new Gender();
 				order_details = new Order_details();
+				status = new Status();
+				
+				status.setId(rs.getInt("status_id"));
+				status.setStatus_name(rs.getString("status_name"));
+
 
 				voucher.setId(rs.getInt("voucher_id"));
 				voucher.setCode(rs.getString("code"));
@@ -89,7 +97,7 @@ public class Order_detailsService implements Order_detailsRepository{
 				order_.setUpdated_at(rs.getDate("updated_at"));
 				order_.setVoucher(voucher);
 				order_.setNote(rs.getString("note"));
-				order_.setStatus(rs.getString("status"));
+				order_.setStatus(status);
 				order_.setMethod(rs.getString("method"));
 
 				gender.setId(rs.getInt("gender_id"));
@@ -98,13 +106,17 @@ public class Order_detailsService implements Order_detailsRepository{
 
 				role.setId(rs.getInt("role_id"));
 				role.setRole_name(rs.getString("role_name"));
-
+				role.setDescription(rs.getString("description"));
+				role.setCreated_at(rs.getDate("created_at"));
+				role.setUpdated_at(rs.getDate("updated_at"));
+				
 				user.setId(rs.getInt("user_id"));
 				user.setFullname(rs.getString("fullname"));
 				user.setEmail(rs.getString("email"));
 				user.setPhone_number(rs.getString("phone_number"));
 				user.setAddress(rs.getString("address"));
 				user.setPassword(rs.getString("password"));
+				user.setAvatar(rs.getString("avatar"));
 				user.setRole(role);
 
 				brand.setId(rs.getInt("brand_id"));
@@ -142,9 +154,9 @@ public class Order_detailsService implements Order_detailsRepository{
 				order_details.setOrder_(order_);
 				order_details.setPrice_at(rs.getDouble("price_at"));
 				order_details.setQuantity(rs.getInt("quantity"));
-				order_details.setProd(null);
-				order_details.setSize(null);
-				order_details.setColor(null);
+				order_details.setProd(product);
+				order_details.setSize(size);
+				order_details.setColor(color);
 				li.add(order_details);
 			}
 			con.close();

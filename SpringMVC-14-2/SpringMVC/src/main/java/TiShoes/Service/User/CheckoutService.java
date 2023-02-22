@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
 import TiShoes.Model.Color;
@@ -18,10 +17,8 @@ import TiShoes.Repository.User.CheckoutRepository;
 
 public class CheckoutService implements CheckoutRepository {
 	private ConnectService connectService;
-	private ProductService productService;
 	private OrderService orderService;
 	private Order_detailsService order_detailsService;
-	private Color_sizeService color_sizeService;
 
 	@Override
 	public List<Color> getRgbById_prod(int id_prod) {
@@ -75,7 +72,7 @@ public class CheckoutService implements CheckoutRepository {
 				color_size.setId(rs.getInt("id"));
 				color_size.setSize(size);
 
-				color_size.setrQuantity(rs.getInt("quantity"));
+				color_size.setQuantity(rs.getInt("quantity"));
 				li.add(color_size);
 			}
 			con.close();
@@ -182,24 +179,30 @@ public class CheckoutService implements CheckoutRepository {
 	public boolean checkout_buynow(int id_prod, int amount, int id_size, int id_color, String fullname, String email,
 			String phone_number, String address, int voucher_id, String note, String method, double price_at) {
 
-		productService = new ProductService();
 		orderService = new OrderService();
 		order_detailsService = new Order_detailsService();
-		color_sizeService = new Color_sizeService();
 
-		if (productService.updateProduct_Sold(id_prod, amount) == true
-				&& orderService.insertIntoOrder(fullname, email, phone_number, address, voucher_id, note,
-						method) == true
-				&& order_detailsService.insertIntoOrder_details(price_at, amount, id_prod, id_size, id_color)==true
-				&& color_sizeService.updateColor_size_Quantity(id_size, id_color, id_prod, amount)) {
+		if (orderService.insertIntoOrder(fullname, email, phone_number, address, voucher_id, note, method) == true
+				&& order_detailsService.insertIntoOrder_details(price_at, amount, id_prod, id_size, id_color) == true) {
 			return true;
 		} else {
 			return false;
 		}
 	}
+	
+	public String removeProductFromCartAfterCheckout(int id_prod,String txt) {
+		String s = "";
+		String a[] = txt.split("/");
+		for (String str : a) {
+			if(!str.equals(String.valueOf(id_prod)) && !str.equals("")) {
+				s += str+"/";
+			}
+		}
+		return s;
+	}
 
 	public static void main(String[] args) {
-
+		//System.out.println(removeProductFromCartAfterCheckout(3, "3//4/3"));
 	}
 
 }

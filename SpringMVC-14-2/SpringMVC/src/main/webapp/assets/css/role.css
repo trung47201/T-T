@@ -1,0 +1,131 @@
+.table-role {
+    display: flex;
+    width: 50%;
+    max-height: 480px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin-top: 20px;
+    border-radius: 5px 5px 0 0;
+    margin-left: 20px;
+}
+.table-role::-webkit-scrollbar {
+     width: 17px;
+}
+.table-role::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+}
+.table-role::-webkit-scrollbar-thumb {
+    background: #666;
+}
+.table-role::-webkit-scrollbar-thumb:hover {
+    background: #16222d;
+}
+.search-role {
+	display: flex;
+	width: 90%;
+	margin-left: 5%;
+}
+.td-color-product {
+    border: 1px solid pink;
+}
+tr.tr-search-role {
+    background: linear-gradient(45deg, black, transparent);
+    position: sticky;
+    z-index: 10;
+    top: 0;
+    box-shadow: 0 1.5px 4px black;
+}
+
+.search-role-input input:focus {
+	outline-style: none;
+}
+.search-role-img {
+    display: flex;
+    background: white;
+    height: 30px;
+    width: 30px;
+    border-radius: 20px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 0px 3px #666;
+    z-index: 10;
+}
+.search-role-img:hover {
+	cursor: pointer;
+}
+.search-role-img img {
+    width: 24px;
+    height: 24px;
+}
+
+.search-role-input {
+    display: flex;
+    width: 100%;
+    height: 32px;
+}
+.search-role-input input {
+    width: 90%;
+    height: 100%;
+    border: 0;
+    padding: 0px 40px;
+    margin-left: -32px;
+    border-radius: 20px;
+    background: none;
+    color: white;
+    font-size: 17px;
+}
+.role-form {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    margin-top: 20px;
+}
+.role-func-form {
+    width: 40%;
+    margin-left: 4%;
+}
+.form-input {
+	margin-bottom: 20px;
+    width: 100%;
+}
+.form-input input {
+    width: 90%;
+    height: 32px;
+    border: 0;
+    border-left: 2px solid #0086ff;
+    border-radius: 3px;
+    font-size: 18px;
+    color: black;
+    padding: 0 15px;
+}
+.img-add {
+    width: 96.4%;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    margin-top: -30px;
+}
+.btn-input{
+	margin-top: 50px;
+}
+.btn-input input {
+    display: flex;
+    width: 56.4%;
+    height: 36px;
+    border: 1px solid #0086ff;
+    border-radius: 3px;
+    font-size: 18px;
+    color: #0086ff;
+    text-align: center;
+    font-weight: bold;
+    justify-content: center;
+    background: white;
+    margin-left: 20%;
+}
+input#roleid {
+    background: #DEF !important;
+}
+.form-input input:focus {
+	outline-style: none;
+}

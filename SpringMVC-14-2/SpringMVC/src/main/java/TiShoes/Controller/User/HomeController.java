@@ -8,15 +8,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import TiShoes.Service.User.CartService;
+import TiShoes.Service.User.Color_sizeService;
 import TiShoes.Service.User.LoginService;
 import TiShoes.Service.User.MD5Service;
 import TiShoes.Service.User.NewsService;
 import TiShoes.Service.User.ProductService;
 import TiShoes.Service.User.SlidesService;
 import TiShoes.Service.User.StyleService;
+import TiShoes.Service.User.UserService;
 
 @Controller
 public class HomeController {
@@ -27,7 +31,40 @@ public class HomeController {
 	private StyleService styleService;
 	private LoginService loginService;
 	private MD5Service md5Service;
+	private CartService cartService;
+	private Color_sizeService color_sizeService;
+	private UserService userService;
 	
+	@RequestMapping(value = {"/{id}", "/home/{id}"})
+	public ModelAndView loadHomeByUserID(@PathVariable String id, HttpServletRequest request, HttpServletResponse response){
+		slidesService = new SlidesService();
+		productService = new ProductService();
+		newsService = new NewsService();
+		styleService = new StyleService();
+		loginService = new LoginService();
+		cartService= new CartService();
+		
+		ModelAndView mv = new ModelAndView("user/index");
+		String logout = String.valueOf(request.getParameter("logout"));
+		
+		if(logout.equals("true")) {
+			Cookie oUserId = new Cookie("userID", "0");
+			oUserId.setMaxAge(0);
+			response.addCookie(oUserId);
+			Cookie oMsg = new Cookie("messageLogin", "logout");
+			oMsg.setMaxAge(30);
+			response.addCookie(oMsg);
+		}
+		
+		mv.addObject("style", styleService.getAllStyle());
+		mv.addObject("slides", slidesService.getAllSlides());
+		mv.addObject("listNewArrivals", productService.getNewArrivals());
+		mv.addObject("listNewsHomeRight", newsService.getNewsHome());
+		mv.addObject("listNewsHomeLeft", newsService.listNewsHomeLeft);
+		mv.addObject("listMostLovedProducts", productService.getMostLovedProducts());
+		
+		return mv;
+	}
 	@RequestMapping(value = {"/", "/home"})
 	public ModelAndView loadHome(HttpServletRequest request, HttpServletResponse response){
 		slidesService = new SlidesService();
@@ -36,7 +73,9 @@ public class HomeController {
 		styleService = new StyleService();
 		loginService = new LoginService();
 		md5Service = new MD5Service();
-		
+		color_sizeService = new Color_sizeService();
+		cartService = new CartService();
+		userService = new UserService();
 		
 		ModelAndView mv = new ModelAndView("user/index");
 		
@@ -55,6 +94,20 @@ public class HomeController {
 			for (Cookie o : arr) {
 				li.add(o.getName());
 			}
+		}
+		String userID = "";
+		if (arr != null) {
+			for (Cookie o : arr) {
+				if (o.getName().equals("userID")) {
+					userID = o.getValue();
+				}
+			}
+		}
+		if (!userID.equals("") && addtocart!=null) {
+			int id_prod = color_sizeService.firstColor_SizeById_Prod(Integer.parseInt(addtocart));
+			cartService.insertIntoCartDB(1, id_prod, Integer.valueOf(userID));
+			userID = "redirect: cart/"+userID;
+			return new ModelAndView(userID);
 		}
 		// add product into cart from home
 		if (arr != null) {
@@ -82,19 +135,26 @@ public class HomeController {
 		String msg = "";
 		if(!username.equals("null") && !password.equals("null")) {
 			if(loginService.checkUserPass(username, password)) {
-				msg = "true";
-				Cookie oMsg = new Cookie("messageLogin", msg.trim());
-				oMsg.setMaxAge(30);
-				response.addCookie(oMsg);
-				Cookie oUser = new Cookie("usernameLogin", username.trim());
-				oUser.setMaxAge(60*60*24*20);
-				response.addCookie(oUser);
-				Cookie oPass = new Cookie("passwordLogin", md5Service.StringToMD5(password.trim()).trim());
-				oPass.setMaxAge(60*60*24*20);
-				response.addCookie(oPass);
-				Cookie oUserId = new Cookie("userID", String.valueOf(loginService.getIdUser(username, password)));
-				oUserId.setMaxAge(60*60*24*20);
-				response.addCookie(oUserId);
+				if(loginService.checkStatucBlock(username, password)) {
+					msg = "block";
+					Cookie oMsg = new Cookie("messageLogin", msg.trim());
+					oMsg.setMaxAge(30);
+					response.addCookie(oMsg);
+				} else {
+					msg = "true";
+					Cookie oMsg = new Cookie("messageLogin", msg.trim());
+					oMsg.setMaxAge(30);
+					response.addCookie(oMsg);
+					Cookie oUser = new Cookie("usernameLogin", username.trim());
+					oUser.setMaxAge(60*60*24*20);
+					response.addCookie(oUser);
+					Cookie oPass = new Cookie("passwordLogin", md5Service.StringToMD5(password.trim()).trim());
+					oPass.setMaxAge(60*60*24*20);
+					response.addCookie(oPass);
+					Cookie oUserId = new Cookie("userID", String.valueOf(loginService.getIdUser(username, password)));
+					oUserId.setMaxAge(60*60*24*20);
+					response.addCookie(oUserId);
+				}
 			} else {
 				msg = "false";
 				Cookie oMsg = new Cookie("messageLogin", msg);
@@ -112,6 +172,9 @@ public class HomeController {
 				}
 				if(o.getName().equals("userID")) {
 					mv.addObject("userID", o.getValue().trim());
+					if(!userService.getAvatarByUserID(Integer.parseInt(o.getValue().trim())).equals("")) {
+						mv.addObject("avatar", userService.getAvatarByUserID(Integer.parseInt(o.getValue().trim())));
+					}
 				}
 				if(li.contains("rememberme")) {
 					if(o.getName().equals("rememberme")) {
@@ -129,12 +192,6 @@ public class HomeController {
 						getPassword = o.getValue();
 					}
 				}
-//				if(o.getName().equals("messageLogin")) {
-//					Cookie oMsg = new Cookie("messageLogin", msg);
-//					oMsg.setMaxAge(0);
-//					response.addCookie(oMsg);
-//				}
-				System.out.println(o.getName() +"="+o.getValue());
 			}
 			
 		}
@@ -161,6 +218,7 @@ public class HomeController {
 			oRemember.setMaxAge(0);
 			response.addCookie(oRemember);
 		}
+		
 		
 		mv.addObject("style", styleService.getAllStyle());
 		mv.addObject("slides", slidesService.getAllSlides());

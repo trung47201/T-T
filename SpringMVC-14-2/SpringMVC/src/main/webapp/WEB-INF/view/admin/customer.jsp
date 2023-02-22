@@ -1,1304 +1,1122 @@
 <!DOCTYPE html>
 <html lang="en">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
-<head>
-    <link rel="stylesheet" href="assets/css/admin.css">
-</head>
+<c:if test="${ user == 'true' }">
+	<title>User :)</title>
+</c:if>
+<c:if test="${ role == 'true' }">
+	<title>Role :)</title>
+</c:if>
+<c:if test="${ addnewuser == 'true' }">
+	<title>New user :)</title>
+</c:if>
 
+
+<link rel="stylesheet" href="<c:url value='/assets/css/role.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/customer.css'/>">
+
+<style>
+.table-role::-webkit-scrollbar {
+    width: 17px;
+}
+.table-role::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+}
+.table-role::-webkit-scrollbar-thumb {
+    background: #666;
+}
+.table-role::-webkit-scrollbar-thumb:hover {
+    background: #16222d;
+}
+.behind-zoom-img {
+    background: none;
+    width: 100%;
+    height: 657px;
+    position: absolute;
+    z-index: 15;
+}
+.form-input input {
+    width: 90%;
+    height: 32px;
+    border: 0;
+    border-left: 2px solid #0086ff;
+    border-radius: 3px;
+    font-size: 18px;
+    color: black;
+    padding: 0 15px;
+}
+.btn-input{
+	margin-top: 50px;
+}
+.btn-input input {
+    display: flex;
+    width: 56.4%;
+    height: 36px;
+    border: 1px solid #0086ff;
+    border-radius: 3px;
+    font-size: 18px;
+    color: #0086ff;
+    text-align: center;
+    font-weight: bold;
+    justify-content: center;
+    background: white;
+    margin-left: 20%;
+}
+.btn-input input:hover {
+	color: white;
+	background: #0086ff;
+	border: 1px solid white;
+	transition: 1.5s;
+}
+
+.form-input input:focus {
+	outline-style: none;
+}
+.role-form {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    margin-top: 20px;
+}
+.role-func-form {
+    width: 40%;
+    margin-left: 4%;
+}
+.form-input {
+	margin-bottom: 20px;
+    width: 100%;
+}
+.img-add {
+    width: 96.4%;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    margin-top: -30px;
+}
+input#roleid {
+    background: #DEF !important;
+}
+</style>
 <body>
-    <header>
-        <div class="admin-header">
-            <div class="admin-menu-icon">
-                <img src="assets/icons/icons8-menu-rounded-100.png" alt="icon-menu">
-            </div>
-            <div class="admin-logo">
-                <h2>ADMIN</h2>
-            </div>
-            <div class="admin-search-form">
-                <div class="admin-search-input">
-                    <input type="text" name="" id="" placeholder="Search...">
-                </div>
-                <div class="admin-search-icon">
-                    <img src="assets/icons/icons8-search-50-blue.png" alt="icon-search">
-                </div>
-            </div>
-            <div class="admin-notify-icon">
-                <img src="assets/icons/icons8-notification-100.png" alt="icon-notify">
-            </div>
-            <div class="admin-avatar">
-                <img src="assets/images/emiuuu.jpg" alt="img-avt">
-            </div>
-            <div class="admin-infor">
-                <div class="admin-infor-name">
-                    <p>Dao Thu Trang</p>
-                </div>
-                <div class="admin-infor-icon">
-                    <img src="assets/icons/triangle32.png" alt="icon-triangle">
-                </div>
-            </div>
-        </div>
-    </header>
+	<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
+	<div class="admin-body">
+		<jsp:include page="../layouts/admin/nav.jsp"></jsp:include>
 
-    <div class="admin-body">
-        <nav class="navigation">
-            <!-- DASHBOARD -->
-            <ul class="dashboard">
-                <li>
-                    <div class="menu" id="sub-menu-dashboard">
-                        <img src="assets/icons/icons8-home-page-96.png" alt="">
-                        <h3>Dashboard</h3>
-                    </div>
+		<!-- PRODUCT -->
 
-                </li>
-            </ul>
-            <!-- ORDER -->
-            <ul>
-                <li>
-                    <div class="menu" id="sub-menu-order">
-                        <img src="assets/icons/icons8-purchase-order-100.png" alt="">
-                        <h3>Order</h3>
-                        <p class="dropdown-sub-menu-order dropdown-menu">></p>
-                    </div>
-                </li>
-            </ul>
-            <!-- SUB MENU ORDER -->
-            <div class="sub-menu-order none">
-                <ul class="sub-menu-ul" id="order.html?management">
-                    <li>Management</li>
-                </ul>
-                <ul class="sub-menu-ul" id="order.html?search">
-                    <li>Search</li>
-                </ul>
-            </div>
-            <!-- SHOES -->
-            <ul>
-                <li>
-                    <div class="menu" id="sub-menu-shoes">
-                        <img src="assets/icons/icons8-trainers-100.png" alt="">
-                        <h3>Shoes</h3>
-                        <p class="dropdown-sub-menu-shoes dropdown-menu">></p>
-                    </div>
-
-                </li>
-            </ul>
-            <!-- SUB MENU SHOES -->
-            <div class="sub-menu-shoes none">
-                <ul class="sub-menu-ul" id="shoes.html?product">
-                    <li>Product</li>
-                </ul>
-                <ul class="sub-menu-ul" id="shoes.html?color-size">
-                    <li>Color - Size</li>
-                </ul>
-                <ul class="sub-menu-ul" id="shoes.html?gallery">
-                    <li>Gallery</li>
-                </ul>
-                <ul class="sub-menu-ul" id="shoes.html?bsg">
-                    <li>B-S-G</li>
-                </ul>
-            </div>
-            <!-- CUSTOMER -->
-            <ul>
-                <li>
-                    <div class="menu" id="sub-menu-customer">
-                        <img src="assets/icons/icons8-user-100.png" alt="">
-                        <h3>Customer</h3>
-                        <p class="dropdown-sub-menu-customer dropdown-menu">></p>
-                    </div>
-
-                </li>
-            </ul>
-            <!-- SUB MENU CUSTOMER -->
-            <div class="sub-menu-customer none">
-                <ul class="sub-menu-ul" id="customer.html?user">
-                    <li>User</li>
-                </ul>
-                <ul class="sub-menu-ul" id="customer.html?role">
-                    <li>Role</li>
-                </ul>
-            </div>
-            <!-- PARAMETERS -->
-            <ul>
-                <li>
-                    <div class="menu" id="sub-menu-parameters">
-                        <img src="assets/icons/icons8-setting-100.png" alt="">
-                        <h3>Parameters</h3>
-                        <p class="dropdown-sub-menu-parameters dropdown-menu">></p>
-                    </div>
-
-                </li>
-            </ul>
-            <!-- SUB MENU PARAMETERS -->
-            <div class="sub-menu-parameters none">
-                <ul class="sub-menu-ul" id="parameters.html?revenue">
-                    <li>Revenue</li>
-                </ul>
-                <ul class="sub-menu-ul" id="parameters.html?selling">
-                    <li>Selling products</li>
-                </ul>
-            </div>
-
-            <ul class="other-menu none">
-                <li>
-                    <div class="menu" id="sub-menu-news">
-                        <img src="assets/icons/icons8-newspaper-64.png" alt="">
-                        <h3>New</h3>
-                        <p class="dropdown-sub-menu-news dropdown-menu">></p>
-                    </div>
-                </li>
-            </ul>
-            <!-- SUB MENU NEWS -->
-            <div class="sub-menu-news none">
-                <ul class="sub-menu-ul" id="news.html?revenue">
-                    <li>Revenue</li>
-                </ul>
-                <ul class="sub-menu-ul" id="news.html?selling">
-                    <li>Selling products</li>
-                </ul>
-            </div>
-
-            <ul class="other-menu none">
-                <li>
-                    <div class="menu" id="sub-menu-poster">
-                        <img src="assets/icons/icons8-poster-64.png" alt="">
-                        <h3>Poster</h3>
-                        <p class="dropdown-sub-menu-poster dropdown-menu">></p>
-                    </div>
-                </li>
-            </ul>
-            <!-- SUB MENU POSTER -->
-            <div class="sub-menu-poster none">
-                <ul class="sub-menu-ul" id="poster.html?revenue">
-                    <li>Revenue</li>
-                </ul>
-                <ul class="sub-menu-ul" id="poster.html?selling">
-                    <li>Selling products</li>
-                </ul>
-            </div>
-
-            <!-- OTHER -->
-            <ul class="other">
-                <li>
-                    <div class="menu">
-                        <img src="assets/icons/icons8-view-more-80-white.png" alt="">
-                        <h3>Other</h3>
-                    </div>
-                </li>
-            </ul>
-
-        </nav>
-        <!-- ORDER MANAGEMENT -->
-        <section class="admin-order-management none">
-            <div class="title title-order-management">
-                <img src="assets/icons/icons8-calendar-96.png" alt="">
-                <h1>ORDER MANAGEMENT</h1>
-            </div>
-            <div class="title title-add-new importantNone">
-                <img src="assets/icons/icons8-add-64-title.png" alt="">
-                <h1>ADD NEW</h1>
-            </div>
-            <div class="title title-edit-new importantNone">
-                <img src="assets/icons/icons8-edit-100-title.png" alt="">
-                <h1>EDIT ORDER</h1>
-            </div>
-            <div class="nav-history">
-                <div class="origin">
-                    <img src="assets/icons/icons8-home-page-64.png" alt="">
-                    <a href="">Home</a>
-                </div>
-                <div>
-                    <p>/</p>
-                    <img src="assets/icons/icons8-purchase-order-100-nav.png" alt="">
-                    <a href="">Order</a>
-                </div>
-
-                <div>
-                    <p>/</p>
-                    <img src="assets/icons/icons8-calendar-96.png" alt="">
-                    <a href="">Management</a>
-                </div>
-
-                <div class="addneworder-nav importantNone">
-                    <p>/</p>
-                    <img src="assets/icons/icons8-add-64-title.png" alt="">
-                    <a href="">Add new</a>
-                </div>
-                <div class="editneworder-nav importantNone">
-                    <p>/</p>
-                    <img src="assets/icons/icons8-edit-100-title.png" alt="">
-                    <a href="">Edit order</a>
-                </div>
-            </div>
-            <div class="table-order table-order-add">
-                <table class="order">
-                    <thead>
-                        <tr>
-                            <th colspan="1000" class="td-addneworder">
-                                <button class="addneworder" id="addneworder" name=""> <img
-                                        src="assets/icons/icons8-add-64.png" alt="icon-plus">
-                                    Add New</button>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th>ID</th>
-                            <th>Fullname</th>
-                            <th>Email</th>
-                            <th>Phone number</th>
-                            <th>Address</th>
-                            <th>Order date</th>
-                            <th>Note</th>
-                            <th>Status</th>
-                            <th class="td-action">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Do Van Trung</td>
-                            <td>dovantrung47201@gmail.com</td>
-                            <td>0346 643 755</td>
-                            <td>Cong Hoa - Kim Thanh - Hai Duong</td>
-                            <td>15-02-2023</td>
-                            <td></td>
-                            <td>Cho xac nhan</td>
-                            <td class="td-action">
-                                <button class="btn-confirm-order" id="1"><img src="assets/icons/icons8-done-64.png"
-                                        alt=""></button>
-                                <button class="btn-edit-product" id="editneworder"><img
-                                        src="assets/icons/icons8-edit-100.png" alt=""></button>
-                                <button class="btn-details-order"><img src="assets/icons/icons8-eye-64.png"
-                                        alt=""></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Do Van Trung</td>
-                            <td>dovantrung47201@gmail.com</td>
-                            <td>0346 643 755</td>
-                            <td>Cong Hoa - Kim Thanh - Hai Duong</td>
-                            <td>15-02-2023</td>
-                            <td></td>
-                            <td>Cho xac nhan</td>
-                            <td class="td-action">
-                                <button class="btn-confirm-order" id="2"><img src="assets/icons/icons8-done-64.png"
-                                        alt=""></button>
-                                <button class="btn-edit-product" id="editneworder"><img
-                                        src="assets/icons/icons8-edit-100.png" alt=""></button>
-                                <button class="btn-details-order"><img src="assets/icons/icons8-eye-64.png"
-                                        alt=""></button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="add-new-order-form importantNone">
-                <div class="customer-infor">
-                    <h2>Customer information</h2>
-                    <div class="customer-infor-form">
-                        <div class="fullname">
-                            <label> Full name: </label>
-                            <input type="text">
-                        </div>
-                        <div class="email">
-                            <label> Email: </label>
-                            <input type="text">
-                        </div>
-                        <div class="phone-number">
-                            <label> Phone number: </label>
-                            <input type="text">
-                        </div>
-                        <div class="address">
-                            <label> Address: </label>
-                            <input type="text">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="edit-new-order-form importantNone">
-                <div class="customer-infor">
-                    <h2>Order information</h2>
-                    <div class="customer-infor-form">
-                        <div class="id">
-                            <p> ID </p>
-                            <input type="text">
-                        </div>
-                        <div class="fullname">
-                            <p> Order date </p>
-                            <input type="date">
-                        </div>
-                        <div class="email">
-                            <p> Status </p>
-                            <select class="selected-order status">
-                                <option value="">Choose status</option>
-                                <option value="1">Awaiting confirmation</option>
-                                <option value="2">Packing</option>
-                                <option value="3">Delivery</option>
-                            </select>
-                        </div>
-                        <div class="phone-number">
-                            <p> Method </p>
-                            <select class="selected-order status">
-                                <option value="">Choose method</option>
-                                <option value="1">COD</option>
-                            </select>
-                        </div>
-                        <div class="address">
-                            <p> Voucher </p>
-                            <select class="selected-order status">
-                                <option value="">Choose voucher</option>
-                                <option value="1">1-TET2023 </option>
-                                <option value="2">2-TISHOESTET2023 </option>
-                                <option value="3">3-TSTET2023 </option>
-                            </select>
-                        </div>
-                    </div>
-                    <h2>Customer information</h2>
-                    <div class="customer-infor-form">
-
-                        <div class="fullname">
-                            <p> Full name </p>
-                            <input type="text">
-                        </div>
-                        <div class="email">
-                            <p> Email </p>
-                            <input type="text">
-                        </div>
-                        <div class="phone-number">
-                            <p> Phone number </p>
-                            <input type="text">
-                        </div>
-                        <div class="address">
-                            <p> Address </p>
-                            <input type="text">
-                        </div>
-                        <div class="id">
-                            <p> Note </p>
-                            <input type="text">
-                        </div>
-                    </div>
-                    <h2>Products</h2>
-                    <div class="customer-infor-form table-product-order-edit">
-                        <table class="order product-order">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Name</th>
-                                    <th>Price</th>
-
-                                    <th class="td-display-center">Color</th>
-                                    <th class="td-display-center">Size</th>
-                                    <th class="td-display-center">Quantity</th>
-                                    <th class="td-action">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="td-img-product"><img src="assets/images/emiuuu.jpg" alt=""></td>
-
-                                    <td>Nike Air Max 90 LTR</td>
-                                    <td>$175.55</td>
-
-                                    <td class="td-display-center">
-                                        <select class="order-edit-select">
-                                            <option value="1" style="background: aqua;" selected>Aqua</option>
-                                            <option value="1" style="background: black;">Black</option>
-                                        </select>
-                                    </td>
-                                    <td class="td-display-center"><select class="order-edit-select">
-                                            <option value="1" selected>36</option>
-                                            <option value="1">37</option>
-                                        </select></td>
-                                    <td class="td-display-center quantity-order">
-                                        <input type="text" value="1">
-                                    <td class="td-action">
-                                        <button class="btn-del-order btn-del-order-edit" id="1" onclick="delProdInOrder(this)"><img
-                                                src="assets/icons/icons8-remove-60.png" alt=""></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="td-img-product"><img src="assets/images/emiuuu.jpg" alt=""></td>
-
-                                    <td>Nike Air Max 90 LTR</td>
-                                    <td>$175.55</td>
-
-                                    <td class="td-display-center"><span class="td-color-product"
-                                            style="background: aqua;"></span></td>
-                                    <td class="td-display-center">36</td>
-                                    <td class="td-display-center">1</td>
-                                    <td class="td-action">
-                                        <button class="btn-del-order btn-del-order-edit" id="2" onclick="delProdInOrder(this)"><img
-                                                src="assets/icons/icons8-remove-60.png" alt=""></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="td-img-product"><img src="assets/images/emiuuu.jpg" alt=""></td>
-
-                                    <td>Nike Air Max 90 LTR</td>
-                                    <td>$175.55</td>
-
-                                    <td><span class="td-color-product" style="background: aqua;"></span></td>
-                                    <td>36</td>
-                                    <td>1</td>
-                                    <td class="td-action">
-                                        <button class="btn-del-order btn-del-order-edit" id="3" onclick="delProdInOrder(this)"><img
-                                                src="assets/icons/icons8-remove-60.png" alt=""></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="td-img-product"><img src="assets/images/emiuuu.jpg" alt=""></td>
-
-                                    <td>Nike Air Max 90 LTR</td>
-                                    <td>$175.55</td>
-
-                                    <td><span class="td-color-product" style="background: aqua;"></span></td>
-                                    <td>36</td>
-                                    <td>1</td>
-                                    <td class="td-action">
-                                        <button class="btn-del-order btn-del-order-edit" id="4" onclick="delProdInOrder(this)"><img
-                                                src="assets/icons/icons8-remove-60.png" alt=""></button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- ORDER SEARCH -->
-        <section class="admin-order-search none">
-            <div class="title">
-                <img src="assets/icons/icons8-search-client-60.png" alt="">
-                <h1>SEARCH ORDER</h1>
-            </div>
-            <div class="nav-history">
-                <div class="origin">
-                    <img src="assets/icons/icons8-home-page-64.png" alt="">
-                    <a href="">Home</a>
-                </div>
-                <p>/</p>
-                <div>
-                    <img src="assets/icons/icons8-purchase-order-100-nav.png" alt="">
-                    <a href="">Order</a>
-                </div>
-                <p>/</p>
-                <div>
-                    <img src="assets/icons/icons8-search-client-60.png" alt="">
-                    <a href="">Search order</a>
-                </div>
-            </div>
-            <div class="table-order">
-                <table class="order">
-                    <thead>
-                        <tr>
-                            <th colspan="1000" class="td-addneworder">
-                                <button class="addneworder"> <img src="assets/icons/icons8-add-64.png" alt="icon-plus">
-                                    Add New</button>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th>ID</th>
-                            <th>Fullname</th>
-                            <th>Email</th>
-                            <th>Phone number</th>
-                            <th>Address</th>
-                            <th>Order date</th>
-                            <th>Note</th>
-                            <th>Status</th>
-                            <th class="td-action">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Maria Anders</td>
-                            <td>Germany</td>
-                            <td>Alfreds Futterkiste</td>
-                            <td>Maria Anders</td>
-                            <td>Germany</td>
-                            <td>Alfreds Futterkiste</td>
-                            <td>Maria Anders</td>
-                            <td class="td-action">
-                                <button class="btn-edit-order"><img src="assets/icons/icons8-edit-100.png"
-                                        alt=""></button>
-                                <button class="btn-del-order"><img src="assets/icons/icons8-remove-60.png"
-                                        alt=""></button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-        <!-- PRODUCT -->
-        <section class="admin-shoes-product none">
-            <div class="title">
-                <img src="assets/icons/icons8-trainers-100-title.png" alt="">
-                <h1>PROCUCT</h1>
-            </div>
-            <div class="nav-history">
-                <div class="origin">
-                    <img src="assets/icons/icons8-home-page-64.png" alt="">
-                    <a href="">Home</a>
-                </div>
-                <p>/</p>
-                <div>
-                    <img src="assets/icons/icons8-trainers-100-title.png" alt="">
-                    <a href="">Shoes</a>
-                </div>
-                <p>/</p>
-                <div>
-                    <img src="assets/icons/icons8-calendar-96.png" alt="">
-                    <a href="">Product</a>
-                </div>
-            </div>
-            <div class="table-order">
-                <table class="order">
-                    <thead>
-                        <tr>
-                            <th colspan="1000" class="td-addnewshoes">
-                                <button class="addnewshoes" id="addnewshoes-product"><img src="assets/icons/icons8-add-64.png"
-                                        alt="icon-plus">Add New</button>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th></th>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Discount</th>
-                            <th>Style</th>
-                            <th>Brand</th>
-                            <th>Gender</th>
-                            <th>Created at</th>
-                            <th>Updated at</th>
-                            <th>Published at</th>
-                            <th>Sold</th>
-                            <th>Most loved</th>
-                            <th class="th-description">Description</th>
-                            <th class="td-action">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="td-img-product"><img src="assets/images/emiuuu.jpg" alt=""></td>
-                            <td>1</td>
-                            <td>Nike Air Max 90 LTR</td>
-                            <td>$175.55</td>
-                            <td>20</td>
-                            <td>Running</td>
-                            <td>Sneaker</td>
-                            <td>Men & Women</td>
-                            <td>15-02-2023</td>
-                            <td>15-02-2023</td>
-                            <td>15-02-2023</td>
-                            <td>1234</td>
-                            <td>5000</td>
-                            <td></td>
-                            <td class="td-action">
-                                <button class="btn-edit-order"><img src="assets/icons/icons8-edit-100.png"
-                                        alt=""></button>
-                                <button class="btn-del-order"><img src="assets/icons/icons8-remove-60.png"
-                                        alt=""></button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-        <!-- Color - Size -->
-        <section class="admin-shoes-color-size none">
-            <div class="title">
-                <img src="assets/icons/icons8-paint-palette-64.png" alt="">
-                <h1>COLOR - SIZE</h1>
-            </div>
-            <div class="nav-history">
-                <div class="origin">
-                    <img src="assets/icons/icons8-home-page-64.png" alt="">
-                    <a href="">Home</a>
-                </div>
-                <p>/</p>
-                <div>
-                    <img src="assets/icons/icons8-trainers-100-title.png" alt="">
-                    <a href="">Shoes</a>
-                </div>
-                <p>/</p>
-                <div>
-                    <img src="assets/icons/icons8-paint-palette-64.png" alt="">
-                    <a href="">Color - Size</a>
-                </div>
-            </div>
-            <div class="list-table">
-                <div class="table-order">
-                    <table class="order">
-                        <thead>
-                            <tr>
-                                <th colspan="1000" class="td-addnewshoes">
-                                    <button class="addnewshoes"> <img src="assets/icons/icons8-add-64.png"
-                                            alt="icon-plus"> Add New</button>
-                                </th>
-                            </tr>
-                            <tr>
-                                <th></th>
-                                <th>ID</th>
-                                <th>Product</th>
-                                <th>Color</th>
-                                <th>Rgb</th>
-                                <th>Size</th>
-                                <th>Quantity</th>
-                                <th class="td-action">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="td-img-product"><img src="assets/images/emiuuu.jpg" alt=""></td>
-                                <td>1</td>
-                                <td>Nike Air Max 90 LTR</td>
-                                <td>Aqua Anders</td>
-                                <td><span class="td-color-product" style="background: aqua;"></span></td>
-                                <td>37</td>
-                                <td>1999</td>
-                                <td class="td-action">
-                                    <button class="btn-edit-order"><img src="assets/icons/icons8-edit-100.png"
-                                            alt=""></button>
-                                    <button class="btn-del-order"><img src="assets/icons/icons8-remove-60.png"
-                                            alt=""></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                </div>
-                <div class="table-color">
-                    <table class="order">
-                        <thead>
-                            <tr>
-                                <th colspan="1000" class="td-addnewshoes">
-                                    <button class="addnewshoes"> <img src="assets/icons/icons8-add-64.png"
-                                            alt="icon-plus"> Add New</button>
-                                </th>
-                            </tr>
-                            <tr>
-                                <th>ID</th>
-                                <th>Color</th>
-                                <th>Rgb</th>
-                                <th class="td-action">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-
-                                <td>1</td>
-                                <td>Aqua Anders</td>
-                                <td><span class="td-color-product" style="background: aqua;"></span></td>
-                                <td class="td-action">
-                                    <button class="btn-edit-order"><img src="assets/icons/icons8-edit-100.png"
-                                            alt=""></button>
-                                    <button class="btn-del-order"><img src="assets/icons/icons8-remove-60.png"
-                                            alt=""></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="table-size">
-                    <table class="order">
-                        <thead>
-                            <tr>
-                                <th colspan="1000" class="td-addnewshoes">
-                                    <button class="addnewshoes"> <img src="assets/icons/icons8-add-64.png"
-                                            alt="icon-plus"> Add New</button>
-                                </th>
-                            </tr>
-                            <tr>
-                                <th>ID</th>
-                                <th>Size number</th>
-                                <th class="td-action">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-
-                                <td>1</td>
-                                <td>37</td>
-                                <td class="td-action">
-                                    <button class="btn-edit-order"><img src="assets/icons/icons8-edit-100.png"
-                                            alt=""></button>
-                                    <button class="btn-del-order"><img src="assets/icons/icons8-remove-60.png"
-                                            alt=""></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-        <!-- Gallery -->
-        <section class="admin-shoes-gallery none">
-            <div class="title">
-                <img src="assets/icons/icons8-image-gallery-100.png" alt="">
-                <h1>GALLERY</h1>
-            </div>
-            <div class="nav-history">
-                <div class="origin">
-                    <img src="assets/icons/icons8-home-page-64.png" alt="">
-                    <a href="">Home</a>
-                </div>
-                <p>/</p>
-                <div>
-                    <img src="assets/icons/icons8-trainers-100-title.png" alt="">
-                    <a href="">Shoes</a>
-                </div>
-                <p>/</p>
-                <div>
-                    <img src="assets/icons/icons8-image-gallery-100.png" alt="">
-                    <a href="">Gallery</a>
-                </div>
-            </div>
-            <div class="table-order">
-                <table class="order">
-                    <thead>
-                        <tr>
-                            <th colspan="1000" class="td-addnewshoes">
-                                <button class="addnewshoes"> <img src="assets/icons/icons8-add-64.png" alt="icon-plus">
-                                    Add New</button>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th>ID</th>
-                            <th>Thumbnail</th>
-                            <th>Product</th>
-                            <th>Color</th>
-                            <th>Description</th>
-                            <th class="td-action">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td class="td-img-product"><img src="assets/images/emiuuu.jpg" alt=""></td>
-                            <td>Germany Alfreds Futterkiste</td>
-                            <td><span class="td-color-product" style="background: aqua;"></span></td>
-                            <td></td>
-                            <td class="td-action">
-                                <button class="btn-details-gallery"><img src="assets/icons/icons8-eye-64.png"
-                                        alt=""></button>
-                                <button class="btn-edit-product"><img src="assets/icons/icons8-edit-100.png"
-                                        alt=""></button>
-                                <button class="btn-del-order"><img src="assets/icons/icons8-remove-60.png"
-                                        alt=""></button>
-
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
-            </div>
-        </section>
-        <!-- BRAND - STYLE - GENDER -->
-        <section class="admin-shoes-brand-style-gender none">
-            <div class="title">
-                <img src="assets/icons/icons8-brand-58.png" alt="">
-                <h1>BRAND - STYLE - GENDER</h1>
-            </div>
-            <div class="nav-history">
-                <div class="origin">
-                    <img src="assets/icons/icons8-home-page-64.png" alt="">
-                    <a href="">Home</a>
-                </div>
-                <p>/</p>
-                <div>
-                    <img src="assets/icons/icons8-trainers-100-title.png" alt="">
-                    <a href="">Shoes</a>
-                </div>
-                <p>/</p>
-                <div>
-                    <img src="assets/icons/icons8-brand-58.png" alt="">
-                    <a href="">BRAND - STYLE - GENDER</a>
-                </div>
-            </div>
-            <div class="list-table">
-                <div class="table-brand">
-                    <table class="order">
-                        <thead>
-                            <tr>
-                                <th colspan="1000" class="td-addnewshoes">
-                                    <button class="addnewshoes"> <img src="assets/icons/icons8-add-64.png"
-                                            alt="icon-plus"> Add New</button>
-                                </th>
-                            </tr>
-                            <tr>
-                                <th>ID</th>
-                                <th>Brand</th>
-                                <th class="td-action">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Maria Anders</td>
-                                <td class="td-action">
-                                    <button class="btn-edit-order"><img src="assets/icons/icons8-edit-100.png"
-                                            alt=""></button>
-                                    <button class="btn-del-order"><img src="assets/icons/icons8-remove-60.png"
-                                            alt=""></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="table-style">
-                    <table class="order">
-                        <thead>
-                            <tr>
-                                <th colspan="1000" class="td-addnewshoes">
-                                    <button class="addnewshoes"> <img src="assets/icons/icons8-add-64.png"
-                                            alt="icon-plus"> Add New</button>
-                                </th>
-                            </tr>
-                            <tr>
-                                <th>ID</th>
-                                <th>Style</th>
-                                <th class="td-action">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Maria Anders</td>
-                                <td class="td-action">
-                                    <button class="btn-edit-order"><img src="assets/icons/icons8-edit-100.png"
-                                            alt=""></button>
-                                    <button class="btn-del-order"><img src="assets/icons/icons8-remove-60.png"
-                                            alt=""></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="table-gender">
-                    <table class="order">
-                        <thead>
-                            <tr>
-                                <th colspan="1000" class="td-addnewshoes">
-                                    <button class="addnewshoes"> <img src="assets/icons/icons8-add-64.png"
-                                            alt="icon-plus"> Add New</button>
-                                </th>
-                            </tr>
-                            <tr>
-
-                                <th>ID</th>
-                                <th>Gender</th>
-                                <th class="td-action">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Maria Anders</td>
-                                <td class="td-action">
-                                    <button class="btn-edit-order"><img src="assets/icons/icons8-edit-100.png"
-                                            alt=""></button>
-                                    <button class="btn-del-order"><img src="assets/icons/icons8-remove-60.png"
-                                            alt=""></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-        <!--
+		<!--
             USER
         -->
-        <section class="admin-customer-user">
-            <div class="title">
-                <img src="assets/icons/icons8-customer-64.png" alt="">
-                <h1>USER</h1>
-            </div>
-            <div class="nav-history">
-                <div class="origin">
-                    <img src="assets/icons/icons8-home-page-64.png" alt="">
-                    <a href="">Home</a>
-                </div>
-                <p>/</p>
-                <div>
-                    <img src="assets/icons/icons8-user-64-title.png" alt="">
-                    <a href="">Customer</a>
-                </div>
-                <p>/</p>
-                <div>
-                    <img src="assets/icons/icons8-customer-64.png" alt="">
-                    <a href="">User</a>
-                </div>
-            </div>
-            <div class="table-order">
-                <table class="order">
-                    <thead>
-                        <tr>
-                            <th colspan="1000" class="td-addnewshoes">
-                                <button class="addnewshoes"> <img src="assets/icons/icons8-add-64.png" alt="icon-plus">
-                                    Add New</button>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th></th>
-                            <th>ID</th>
-                            <th>Fullname</th>
-                            <th>Email</th>
-                            <th>Phone number</th>
-                            <th>Address</th>
-                            <th>Password</th>
-                            <th>Role</th>
-                            <th class="td-action">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="img-user"><img src="assets/images/emiuuu.jpg" alt=""></td>
-                            <td>Maria Anders</td>
-                            <td>Germany</td>
-                            <td>Alfreds Futterkiste</td>
-                            <td>Maria Anders</td>
-                            <td>Germany</td>
-                            <td>Alfreds Futterkiste</td>
-                            <td>Maria Anders</td>
-                            <td class="td-action">
-                                <button class="btn-edit-user"><img src="assets/icons/icons8-edit-100.png"
-                                        alt=""></button>
-                                <button class="btn-lock-user"><img class="user-img"
-                                        src="assets/icons/icons8-padlock-100.png" alt=""></button>
-                            </td>
-                        </tr>
-
-                    </tbody>
-                </table>
-            </div>
-        </section>
-        <!--
+		<c:if test="${ user == 'true' }">
+			<section class="admin-customer-user">
+			<div class="title">
+			<img
+				src="<c:url value="/assets/images/icons/icons8-customer-64.png"/>"
+				alt="">
+			<h1>USER</h1>
+		</div>
+		</c:if>
+		
+		<c:if test="${ addnewuser == 'true' }">
+			<section class="admin-customer-user">
+			<div class="title">
+			<img
+				src="<c:url value="/assets/images/icons/icons8-add-64-title.png"/>"
+				alt="">
+			<h1>ADD NEW USER</h1>
+		</div>
+		</c:if>
+		
+		<c:if test="${ user == 'false' && addnewuser == 'false' }">
+			<section class="admin-customer-user none">
+		</c:if>
+		
+		<div class="nav-history">
+			<div class="origin">
+				<img
+					src="<c:url value="/assets/images/icons/icons8-home-page-64.png"/>"
+					alt=""> <a href="/SpringMVC/admin">Home</a>
+			</div>
+			
+			<div>
+				<p>/</p>
+				<img
+					src="<c:url value="/assets/images/icons/icons8-user-64-title.png"/>"
+					alt=""> <a href="">Customer</a>
+			</div>
+			
+			<div>
+				<p>/</p>
+				<img
+					src="<c:url value="/assets/images/icons/icons8-customer-64.png"/>"
+					alt=""> <a href="/SpringMVC/admin/customer">User</a>
+			</div>
+			
+			<c:if test="${ addnewuser == 'true' }">
+				<div>
+					<p>/</p>
+					<img
+						src="<c:url value="/assets/images/icons/icons8-add-64-title.png"/>"
+						alt=""> <a href="">Add new user</a>
+				</div>
+			</c:if>
+		</div>
+		
+			<c:if test="${ user == 'true'}">
+				<div class="table-order">
+			</c:if>
+			<c:if test="${ user == 'false'}">
+				<div class="table-order importantNone">
+			</c:if>
+				<table class="order">
+					<thead>
+						<tr>
+							<th colspan="1000" class="td-addnewshoes">
+								<a href="/SpringMVC/admin/customer/add-new-user">
+									<button class="addnewshoes add-new-user">
+										<img
+											src="<c:url value="/assets/images/icons/icons8-add-64.png"/>"
+											alt="icon-plus"> Add New
+									</button>
+								</a>
+							</th>
+						</tr>
+						<tr>
+							<th></th>
+							<th>ID</th>
+							<th>Fullname</th>
+							<th>Email</th>
+							<th>Phone number</th>
+							<th>Address</th>
+							<th>Password</th>
+							<th>Role</th>
+							<th class="td-action">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="liUser" items="${ listUser }">
+							<tr>
+								<td class="img-user">
+									<div class="td-img-avt">
+										<img
+											src="<c:url value="/assets/images/users/${ liUser.avatar }"/>" alt="">
+									</div>
+								</td>
+								<td>${ liUser.id }</td>
+								<td>${ liUser.fullname }</td>
+								<td>${ liUser.email }</td>
+								<td>${ liUser.phone_number }</td>
+								<td>${ liUser.address }</td>
+								<td>${ liUser.password }</td>
+								<td>${ liUser.role.role_name }</td>
+								<td class="td-action">
+									<button class="btn-edit-user">
+										<img
+											src="<c:url value="/assets/images/icons/icons8-edit-100.png"/>"
+											alt="">
+									</button>
+									<button class="btn-lock-user padlock" id="${ liUser.id }">
+										<c:if test="${ liUser.status == 0 || liUser.status == null }">
+											<img class="user-img" id="${ liUser.id }"
+												src="<c:url value="/assets/images/icons/icons8-padlock-100.png"/>"
+												alt="">
+										</c:if>
+										<c:if test="${ liUser.status == 1 }">
+											<img class="user-img" id="${ liUser.id }"
+												src="<c:url value="/assets/images/icons/icons8-lock-100.png"/>"
+												alt="">
+										</c:if>
+									</button>
+									<div class="btn-lock-user lock-padlock importantNone">
+										<img class="user-img padlock-img"
+											src="<c:url value="/assets/images/icons/icons8-padlock-100.png"/>"
+											alt="">
+										<img class="user-img lock-img"
+											src="<c:url value="/assets/images/icons/icons8-lock-100.png"/>"
+											alt="">
+									</div>
+								</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+				
+			</div>
+		<!-- ADD NEW USER -->
+			<c:if test="${ addnewuser == 'true' }">
+				<div class="tbl-add-new">
+				
+			</c:if>
+			<c:if test="${ addnewuser == 'false' }">
+				<div class="tbl-add-new none">
+			</c:if>
+				<table class="tbl-new-user">
+					<tr>
+						<td class="choose-img-avt" rowspan="7">
+							<div class="input-img">
+								<label for="filetag" class="btn-avt">Choose avatar</label>
+								<input type="file" id="filetag" name="filetag" class="none">
+							</div>
+							<div class="img-display">
+								<img src="<c:url value="/assets/images/users/avt-default.jpg"/>" id="preview">
+							</div>	
+						</td>
+						<td>
+							<div class="input">
+								<p>Full name<span class="required-span"> *</span></p>
+								<input type="text" id="fullname" name="fullname">
+							</div>
+						</td>
+						
+					</tr>
+					<tr>
+						<td>
+							<div class="input">
+								<p>Email address<span class="required-span"> *</span></p>
+								<input type="text" id="email" name="email" autocomplete="off">
+								<p class="msg-required msg-email none">Exp: tishoes@gmail.com</p>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class="input">
+								<p>Phone number<span class="required-span"> *</span></p>
+								<input type="number" id="phonenumber" name="phonenumber">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class="input">
+								<p>City<span class="required-span"> *</span></p>
+								<input type="text" id="address" name="address">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class="input">
+								<p>Password<span class="required-span"> *</span></p>
+								<div class="pw-form">
+									<input type="password" id="password" name="password">
+									<img class="eye-show-hide" src="<c:url value="/assets/images/icons/icons8-hide-60.png"/>" alt="" >
+									<img class="eye-show none" src="<c:url value="/assets/images/icons/icons8-eye-60.png"/>" alt="" >
+									<img class="eye-hide none" src="<c:url value="/assets/images/icons/icons8-hide-60.png"/>" alt="" >
+								</div>
+								<p class="msg-required msg-pw none">Password must contain the following: 
+								At least one uppercase letter, 
+								one lowercase letter, 
+								one digit, 
+								one special symbol & should be more than 8 character.</p>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class="input">
+								<p>Confirm Password<span class="required-span"> *</span></p>
+								<div class="pw-form">
+									<input type="password" id="confirmpw" name="confirmpw">
+									<img class="eye-show-hide-pw" src="<c:url value="/assets/images/icons/icons8-hide-60.png"/>" alt="" >
+									<img class="eye-show-pw none" src="<c:url value="/assets/images/icons/icons8-eye-60.png"/>" alt="" >
+									<img class="eye-hide-pw none" src="<c:url value="/assets/images/icons/icons8-hide-60.png"/>" alt="" >
+								</div>
+								<p class="msg-required msg-confirmpw none">Confirm password must be same as "Password".</p>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class="input">
+								<p>Role<span class="required-span"> *</span></p>
+								<select class="sl-role" id="role">
+									<option value="" disabled="disabled" selected>Choose role...</option>
+									<c:forEach var="liRole" items="${ listRole }">
+										<option value="${ liRole.id }">${ liRole.role_name } - ${ liRole.id }</option>
+									</c:forEach>
+								</select>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class="btn-add">
+								<input type="button" id="btn-addnewuser" name="addnewuser" value="ADD NEW USER">
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+			
+			
+		</section>
+		
+		<div class="behind-zoom-img importantNone">
+			
+		</div>
+		<div class="zoom-img importantNone" id="zoom-img">
+				<img id="display-img-onclick" alt="img-onclick" src="<c:url value="/assets/images/users/emiuuu.jpg"/>">
+			</div> 
+		<!--
             ROLE
         -->
-        <section class="admin-customer-role none">
-            <div class="title">
-                <img src="assets/icons/icons8-role-66.png" alt="">
-                <h1>ROLE</h1>
-            </div>
-            <div class="nav-history">
-                <div class="origin">
-                    <img src="assets/icons/icons8-home-page-64.png" alt="">
-                    <a href="">Home</a>
-                </div>
-                <p>/</p>
-                <div>
-                    <img src="assets/icons/icons8-user-64-title.png" alt="">
-                    <a href="">Customer</a>
-                </div>
-                <p>/</p>
-                <div>
-                    <img src="assets/icons/icons8-role-66.png" alt="">
-                    <a href="">Role</a>
-                </div>
-            </div>
-            <div class="table-order">
-                <table class="order">
-                    <thead>
-                        <tr>
-                            <th colspan="1000" class="td-addnewshoes">
-                                <button class="addnewshoes"> <img src="assets/icons/icons8-add-64.png" alt="icon-plus">
-                                    Add New</button>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th class="td-action">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Germany</td>
-                            <td>Alfreds Futterkiste</td>
-                            <td>Maria Anders</td>
-                            <td class="td-action">
-                                <button class="btn-edit-user"><img src="assets/icons/icons8-edit-100.png"
-                                        alt=""></button>
-                                <button class="btn-lock-user"><img class="user-img"
-                                        src="assets/icons/icons8-remove-60.png" alt=""></button>
-                            </td>
-                        </tr>
+		<c:if test="${ role == 'true' }">
+			<section class="admin-customer-role">
+		</c:if>
+		<c:if test="${ role == 'false' }">
+			<section class="admin-customer-role none">
+		</c:if>
 
-                    </tbody>
-                </table>
-            </div>
-        </section>
-        <!-- REVENUE -->
-        <section class="admin-parameters-revenue none">
-            <div class="title">
-                <img src="assets/icons/icons8-revenue-68.png" alt="">
-                <h1>REVENUE</h1>
-            </div>
-            <div class="nav-history">
-                <div class="origin">
-                    <img src="assets/icons/icons8-home-page-64.png" alt="">
-                    <a href="">Home</a>
-                </div>
-                <p>/</p>
-                <div>
-                    <img src="assets/icons/icons8-calendar-96.png" alt="">
-                    <a href="">Parameters</a>
-                </div>
-                <p>/</p>
-                <div>
-                    <img src="assets/icons/icons8-revenue-68.png" alt="">
-                    <a href="">Revenue</a>
-                </div>
-            </div>
-            <div class="table-order">
-                <table class="order">
-                    <thead>
-                        <tr>
-                            <th colspan="1000" class="td-addnewshoes">
-                                <button class="addnewshoes"> <img src="assets/icons/icons8-add-64.png" alt="icon-plus">
-                                    Add New</button>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th class="td-action">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Germany</td>
-                            <td>Alfreds Futterkiste</td>
-                            <td>Maria Anders</td>
-                            <td class="td-action">
-                                <button class="btn-edit-user"><img src="assets/icons/icons8-edit-100.png"
-                                        alt=""></button>
-                                <button class="btn-lock-user"><img class="user-img"
-                                        src="assets/icons/icons8-remove-60.png" alt=""></button>
-                            </td>
-                        </tr>
+		
+		<c:if test="${ roleedit == 'false' }">
+			<div class="title">
+				<img src="<c:url value="/assets/images/icons/icons8-role-66.png"/>"
+					alt="img-title">
+				<h1>ROLE</h1>
+			</div>
+		</c:if>
+		<c:if test="${ roleedit == 'true' }">
+			<div class="title">
+				<img src="<c:url value="/assets/images/icons/icons8-edit-100-title.png"/>"
+					alt="img-title">
+				<h1>EDIT</h1>
+			</div>
+		</c:if>
+		<div class="nav-history">
+			<div class="origin">
+				<img
+					src="<c:url value="/assets/images/icons/icons8-home-page-64.png"/>"
+					alt=""> <a href="/SpringMVC/admin">Home</a>
+			</div>
+			<div>
+				<p>/</p>
+				<img
+					src="<c:url value="/assets/images/icons/icons8-user-64-title.png"/>"
+					alt=""> <a href="">Customer</a>
+			</div>
+			<div>
+				<p>/</p>
+				<img src="<c:url value="/assets/images/icons/icons8-role-66.png"/>"
+					alt=""> <a href="/SpringMVC/admin/role">Role</a>
+			</div>
+			<c:if test="${ roleedit == 'true' }">
+				<div>
+					<p>/</p>
+					<img src="<c:url value="/assets/images/icons/icons8-edit-100-title.png"/>"
+						alt=""> <a href="/SpringMVC/admin/role">Edit</a>
+				</div>
+			</c:if>
+		</div>
+		<div class="role-form">
+			<c:if test="${ roleedit == 'true' }">
+				<div class="role-func-form">
+				<div class="img-add">
+					<img alt="icons-add" src="<c:url value="/assets/images/icons/icons8-slightly-smiling-face-96.png"/>">
+				</div>
+				<div class="form-input">
+					<p>ID</p>
+					<input type="text" id="roleid" name="" readonly="readonly" value="${ roleEntity.id }">
+				</div>
+				<div class="form-input">
+					<p>Role name</p>
+					<input type="text" id="rolename" name="" value="${ roleEntity.role_name }">
+				</div>
+				<div class="form-input">
+					<p>Description</p>
+					<input type="text" id="description" name="" value="${ roleEntity.description }">
+				</div>
+				<div class="btn-input">
+					<input type="button" id="saverole" name="" value="Save">
+				</div>
+			</div>
+			</c:if>
+			<c:if test="${ roleedit == 'false' }">
+				<div class="role-func-form">
+				<div class="img-add">
+					<img alt="icons-add" src="<c:url value="/assets/images/icons/icons8-slightly-smiling-face-96.png"/>">
+				</div>
+				<div class="form-input">
+					<p>Role name</p>
+					<input type="text" id="rolename" name="">
+				</div>
+				<div class="form-input">
+					<p>Description</p>
+					<input type="text" id="description" name="">
+				</div>
+				<div class="btn-input">
+					<input type="button" id="addnewrole" name="" value="Add new">
+				</div>
+			</div>
+			</c:if>
+			<div class="table-role">
+				<table class="order">
+					<thead>
+						<tr class="tr-search-role">
+							<th colspan="1000" class="td-addnewshoes">
+								<div class="search-role">
+									<div class="search-role-img">
+										<img src="<c:url value="/assets/images/icons/icons8-search-50-blue.png"/>" alt="icon-search">
+									</div>
+									<div class="search-role-input">
+										<input type="text" placeholder="Search...">
+									</div>
+								</div>
+							</th>
+						</tr>
+						<tr>
+							<th>ID</th>
+							<th>Name</th>
+							<th>Description</th>
+							<th class="td-action">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="liRole" items="${ listRole }">
+							<tr>
+								<td>${ liRole.id }</td>
+								<td>${ liRole.role_name }</td>
+								<td>${ liRole.description }</td>
+								<td class="td-action">
+									<a href="/SpringMVC/admin/role/edit/${ liRole.id }">
+										<button class="btn-edit-user" id="${ liRole.id }">
+											<img
+												src="<c:url value="/assets/images/icons/icons8-edit-100.png"/>"
+												alt="">
+										</button>
+									</a>
+									<c:if test="${ roleedit == 'false' }">
+										<button class="btn-lock-user btn-remove-role" id="${ liRole.id }">
+											<img class="user-img"
+												src="<c:url value="/assets/images/icons/icons8-remove-60.png"/>"
+												alt="">
+										</button>
+									</c:if>
+								</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		</section>
+		<!-- REVENUE -->
 
-                    </tbody>
-                </table>
-            </div>
-        </section>
-        <!-- SELLING -->
-        <section class="admin-parameters-selling none">
-            <div class="title">
-                <img src="assets/icons/icons8-fast-50.png" alt="">
-                <h1>SELLING PRODUCTS</h1>
-            </div>
-            <div class="nav-history">
-                <div class="origin">
-                    <img src="assets/icons/icons8-home-page-64.png" alt="">
-                    <a href="">Home</a>
-                </div>
-                <p>/</p>
-                <div>
-                    <img src="assets/icons/icons8-calendar-96.png" alt="">
-                    <a href="">Parameters</a>
-                </div>
-                <p>/</p>
-                <div>
-                    <img src="assets/icons/icons8-fast-50.png" alt="">
-                    <a href="">Selling products</a>
-                </div>
-            </div>
-            <div class="table-order">
-                <table class="order">
-                    <thead>
-                        <tr>
-                            <th colspan="1000" class="td-addnewshoes">
-                                <button class="addnewshoes"> <img src="assets/icons/icons8-add-64.png" alt="icon-plus">
-                                    Add New</button>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th class="td-action">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Germany</td>
-                            <td>Alfreds Futterkiste</td>
-                            <td>Maria Anders</td>
-                            <td class="td-action">
-                                <button class="btn-edit-user"><img src="assets/icons/icons8-edit-100.png"
-                                        alt=""></button>
-                                <button class="btn-lock-user"><img class="user-img"
-                                        src="assets/icons/icons8-remove-60.png" alt=""></button>
-                            </td>
-                        </tr>
+	</div>
 
-                    </tbody>
-                </table>
-            </div>
-        </section>
-    </div>
+	<div class="message message-detete msg-order none">
+		<h2>Message</h2>
+		<p class="content-msg content-msg-delete"></p>
+		<div class="btn-ok-cancel">
+			<input class="cancel" type="button" value="Cancel"> <input
+				class="ok hover-btn" type="button" value="OK">
+		</div>
+	</div>
+	
+	<div class="message message-block msg-order none">
+		<h2 class="msg-h2">
+			Message
+			<img alt="" src="<c:url value="/assets/images/icons/icons8-notification-100-msg.png"/>"></h2>
+		<p class="content-msg"></p>
+		<div class="btn-ok-cancel">
+			<input class="cancel" type="button" value="Cancel"> <input
+				class="ok hover-btn" type="button" value="OK">
+		</div>
+	</div>
 
-    <div class="message msg-order none">
-        <h2>Message</h2>
-        <p class="content-msg"></p>
-        <div class="btn-ok-cancel">
-            <input class="cancel" type="button" value="Cancel">
-            <input class="ok hover-btn" type="button" value="OK">
-        </div>
-    </div>
+	<div class="message message-notify msg-order none">
+		<h2 class="msg-h2">
+			Message 
+			<img alt="" src="<c:url value="/assets/images/icons/icons8-notification-100-msg.png"/>">
+		</h2>
+		<p class="content-msg-notify"></p>
+		<div class="btn-ok-cancel">
+			<input
+				class="ok ok-block hover-btn" type="button" value="OK">
+		</div>
+	</div>
+	
+	<div class="message continue-add msg-order none">
+		<h2 class="msg-h2">
+			Message
+			<img alt="" src="<c:url value="/assets/images/icons/icons8-notification-100-msg.png"/>"></h2>
+		<p class="content-msg-add"></p>
+		<div class="btn-ok-cancel">
+			<input class="cancel continue" id="continue" type="button" value="Continue"> <input
+				class="ok hover-btn" type="button" value="OK">
+		</div>
+	</div>
 
-    <div class="msg-done importantNone">
-        Done!
-    </div>
+	<div class="msg-done importantNone">Done!</div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    
-    <script>
-        function delProdInOrder (x) {
-            $(".message").removeClass("none");
-            $(".content-msg").text("Are you sure you want to delete this order?");
-            var id_prod = x.id;
-            $('.ok').click(function () {
-                $(".message").addClass("none");
-                setTimeout(function () {
-                    $(".msg-done").removeClass("importantNone");
-                    
-                }, 500);
-                setTimeout(function () {
-                    $(".msg-done").addClass("importantNone");
-                    
-                }, 3000);
-                $('.ok').removeData('clicked', true);
-                alert(x.id);
-                location.reload();
-            });            
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+	<script>
+	
+	function exists_role_id_in_tblUser(role_id) { //check exists role id
+		var arr = [];
+		<c:forEach items="${listRoleId}" var="id">
+		       arr.push("${id}");
+		</c:forEach>
+		if(arr.includes(role_id)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	function exists(rolename) { //check exists role name
+		var arr = [];
+		<c:forEach items="${listRoleName}" var="id">
+		       arr.push("${id}");
+		</c:forEach>
+		if(arr.includes(rolename)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	function exists_when_update(rolename) { //check exists when update role
+		var roleUrl = "${ roleEntity.role_name }";
+		if(roleUrl != rolename) {
+			var arr = [];
+			<c:forEach items="${listRoleName}" var="id">
+			       arr.push("${id}");
+			</c:forEach>
+			if(arr.includes(rolename)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	</script>
+
+	<script>
+	//Add new role
+	$('#addnewrole').click(function() {
+		var url = window.location.href;
+		var xhr = new XMLHttpRequest();
+		var rolename = $('#rolename').val().trim();
+		var des = $('#description').val().trim();
+		var error="";
+		
+		if(rolename == "") {
+			error += "Role name is empty!";
+		}
+		
+		if(error != "") {
+			$(".message-notify").removeClass("none");
+			$(".content-msg-notify").text(error);
+			$(".content-msg-notify").html($(".content-msg-notify").html().replace(/\n/g,'<br/>'));
+			$('.ok').click(function() {
+				$(".message-notify").addClass("none");
+			});
+		} else {
+				if(exists(rolename)) {
+					$(".message-notify").removeClass("none");
+					$(".content-msg-notify").text("Role name already exists!");
+					$('.ok').click(function() {
+						$(".message-notify").addClass("none");
+					});
+				} else {
+					xhr.open("GET", url+"?rolename="+rolename+"&description="+des);
+					// What to do when server responds
+					xhr.onload = function() {
+						$(".message-notify").removeClass("none");
+						$(".content-msg-notify").text("Add role successfully!");
+						$('.ok').click(function() {
+							$(".message-notify").addClass("none");
+							window.location.assign(url);
+						});
+					};
+					xhr.send();
+				}
+			
+		}
+		
+		});
+	</script>
+
+	<script>
+		//Save role
+		$('#saverole').click(function() {
+			var url = window.location.href;
+			var xhr = new XMLHttpRequest();
+			var rolename = $('#rolename').val().trim();
+			var des = $('#description').val().trim();
+			var error="";
+			
+			if(rolename == "") {
+				error += "Role name is empty!";
+			}
+			
+			if(error != "") {
+				$(".message-notify").removeClass("none");
+				$(".content-msg-notify").text(error);
+				$(".content-msg-notify").html($(".content-msg-notify").html().replace(/\n/g,'<br/>'));
+				$('.ok').click(function() {
+					$(".message-notify").addClass("none");
+				});
+			} else {
+				
+					if(exists_when_update(rolename)) {
+						$(".message-notify").removeClass("none");
+						$(".content-msg-notify").text("Role name already exists!");
+						$('.ok').click(function() {
+							$(".message-notify").addClass("none");
+						});
+					} else {
+						xhr.open("GET", url+"/?rolename="+rolename+"&description="+des);
+						// What to do when server responds
+						xhr.onload = function() {
+							$(".message-notify").removeClass("none");
+							$(".content-msg-notify").text("Updated role successfully!");
+							$('.ok').click(function() {
+								$(".message-notify").addClass("none");
+								window.location.assign("http://localhost:8888/SpringMVC/admin/role");
+							});
+						};
+						xhr.send();
+					}
+			}
+		});
+	</script>
+
+	<script>
+		$(".td-img-avt img").click(function () {
+			var get = this.src;
+			$("#display-img-onclick").attr("src", get);
+			$(".zoom-img").removeClass("importantNone");
+			$(".behind-zoom-img").removeClass("importantNone");
+		});
+		$(".behind-zoom-img").click(function () {
+			$(".zoom-img").addClass("importantNone");
+			$(".behind-zoom-img").addClass("importantNone");
+		});
+		
+	</script>
+
+	<script>
+	const validateEmail = (email) => {
+		  return email.match(
+		    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+		  );
+		};
+	function validatePassword(pw) {
+
+		    return /[A-Z]/       .test(pw) &&
+		           /[a-z]/       .test(pw) &&
+		           /[0-9]/       .test(pw) &&
+		           /[^A-Za-z0-9]/.test(pw) &&
+		           pw.length > 7;
+
+		}
+	$('#password').focusin(function() {
+		var password = $('#password').val();
+		if(validatePassword(password)) {
+			$('.msg-pw').addClass("none");
+		} else {
+			$('.msg-pw').removeClass("none");
+		}
+	});
+	$('#password').focusout(function() {
+		var password = $('#password').val();
+		if(validatePassword(password)) {
+			$('.msg-pw').addClass("none");
+		}
+		
+	});
+	$('#confirmpw').focusin(function() {
+		var password = $('#password').val();
+		var confirmpw = $('#confirmpw').val();
+		if(password == confirmpw) {
+			$('.msg-confirmpw').addClass("none");
+		} else {
+			$('.msg-confirmpw').removeClass("none");
+		}
+		
+	});
+	$('#confirmpw').focusout(function() {
+		var password = $('#password').val();
+		var confirmpw = $('#confirmpw').val();
+		if(password == confirmpw) {
+			$('.msg-confirmpw').addClass("none");
+		}
+	});
+	$('#email').focusin(function() {
+		$('.msg-email').removeClass("none");
+	});
+	$('#email').focusout(function() {
+		$('.msg-email').addClass("none");
+	});
+	
+	// Add new user
+	$('#btn-addnewuser').click(function() {
+		var url = window.location.href;
+		var xhr = new XMLHttpRequest();
+		var fullname = $('#fullname').val();
+		var email = $('#email').val();
+		var phonenumber = $('#phonenumber').val();
+		var address = $('#address').val();
+		var password = $('#password').val();
+		var confirmpw = $('#confirmpw').val();
+		var role = $('#role').val();
+		var mailformat = "/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/";
+		var avatar = $('#filetag').val();
+		var error="";
+		
+		if(fullname == "") {
+			error += "Full name is empty! \n";
+		}
+		if(email == "") {
+			error += "Email name is empty! \n";
+		} else if(!validateEmail(email)) {
+			error += "You have entered an invalid email address! \n";
+		}
+		if(phonenumber == "") {
+			error += "Phone number name is empty! \n";
+		}
+		if(address == "") {
+			error += "Address name is empty! \n";
+		}
+		if(password == "") {
+			error += "Password name is empty! \n";
+		} else if(!validatePassword(password)) {
+			error += "Invalid password! \n";
+		} else if(password != confirmpw) {
+			error += "Password not correct! \n";
+		}
+		if(role == null) {
+			error += "You haven't chosen a role yet! \n";
+		}
+		
+		if(error != "") {
+			$(".message-notify").removeClass("none");
+			$(".content-msg-notify").text(error);
+			$(".content-msg-notify").html($(".content-msg-notify").html().replace(/\n/g,'<br/>'));
+			$('.ok').click(function() {
+				$(".message-notify").addClass("none");
+			});
+		} else {
+			xhr.open("GET",
+					url +"?fullname="+fullname 
+					+"&email="+email
+					+"&phonenumber="+phonenumber
+					+"&address="+address
+					+"&password="+password
+					+"&role_id="+role
+					+"&avatar="+avatar);
+			// What to do when server responds
+			xhr.onload = function() {
+				$(".continue-add").removeClass("none");
+				$(".content-msg-add").text("Add customer successfully!");
+				$('#continue').click(function() {
+					$(".continue-add").addClass("none");
+					window.location.assign(url);
+				});
+				$('.ok').click(function() {
+					$(".continue-add").addClass("none");
+					window.location.assign("http://localhost:8888/SpringMVC/admin/customer");
+				});
+				
+			};
+			xhr.send();
+		}
+		
+ 	});
+	</script>
+	<!-- SHOW HIDE PASSWORD -->
+	<script>
+		$(".eye-show-hide").click(function() {
+			var sh = this;
+			var get = this.src;
+			var hide = $(".eye-hide")[0].src;
+			var show = $(".eye-show")[0].src;
+			if(get.includes("hide")) {
+				$(sh).attr("src", show);
+				$("#password").attr("type", "text");
+			} else {
+				$(sh).attr("src", hide);
+				$("#password").attr("type", "password");
+			}
+		});
+	</script>
+	<!-- SHOW HIDE CONFIRM PASSWORD -->
+	<script>
+		$(".eye-show-hide-pw").click(function() {
+			var sh = this;
+			var get = this.src;
+			var hide = $(".eye-hide-pw")[0].src;
+			var show = $(".eye-show-pw")[0].src;
+			if(get.includes("hide")) {
+				$(sh).attr("src", show);
+				$("#confirmpw").attr("type", "text");
+			} else {
+				$(sh).attr("src", hide);
+				$("#confirmpw").attr("type", "password");
+			}
+		});
+	</script>
+	
+	
+	
+	
+	<script>
+		$(".btn-remove-role").click(function () {
+			var xhr = new XMLHttpRequest();
+			var url = window.location.href;
+			var role_id = this.id;
+			$(".message-detete").removeClass("none");
+			$(".content-msg").text(
+					"Are you sure you want to delete this order?");
+			$('.ok').click(function() {
+				$(".message-detete").addClass("none");
+				setTimeout(function() {
+					$(".msg-done").removeClass("importantNone");
+
+				}, 500);
+				setTimeout(function() {
+					$(".msg-done").addClass("importantNone");
+
+				}, 3000);
+					if(exists_role_id_in_tblUser(role_id)) {
+						$(".message-notify").removeClass("none");
+						$(".content-msg-notify").text("This role cannot be deleted because it is already in use!");
+						$('.ok').click(function() {
+							$(".message-notify").addClass("none");
+						});
+					} else {
+						xhr.open("GET", url+"?delete="+role_id);
+						// What to do when server responds
+						xhr.onload = function() {
+							$(".message-notify").removeClass("none");
+							$(".content-msg-notify").text("Successfully role deleted!");
+							$('.ok').click(function() {
+								$(".message-notify").addClass("none");
+								window.location.assign(url);
+							});
+						};
+						xhr.send();
+					}
+			});
+		});
+	</script>
+
+	<script>
+		$('.cancel').click(function() {
+			$(".message").addClass("none");
+		});
+	</script>
+	<script>
+		$('.btn-confirm-order').click(
+				function() {
+					$(".message").removeClass("none");
+					$(".content-msg").text(
+							"Are you sure you want to browse this order?");
+					var id_prod = this.id;
+					$('.ok').click(function() {
+						$(".message").addClass("none");
+						setTimeout(function() {
+							$(".msg-done").removeClass("importantNone");
+
+						}, 500);
+						setTimeout(function() {
+							$(".msg-done").addClass("importantNone");
+
+						}, 3000);
+						$('.ok').removeData('clicked', true);
+						alert(id_prod);
+						location.reload();
+					});
+				});
+		$('.cancel').click(function() {
+			$(".message").addClass("none");
+		});
+	</script>
+	<script>
+		$('.cancel').hover(function() {
+			$(".ok").removeClass("hover-btn");
+			$(".ok").removeClass("font-size-btn-msg");
+			$(".cancel").addClass("hover-btn");
+			$(".cancel").addClass("font-size-btn-msg");
+		});
+		$('.ok').hover(function() {
+			$(".cancel").removeClass("hover-btn");
+			$(".cancel").removeClass("font-size-btn-msg");
+			$(".ok").addClass("hover-btn");
+			$(".ok").addClass("font-size-btn-msg");
+		});
+	</script>
+	<!-- ADD NEW ONCLICK-->
+	<script>
+		$('#addneworder').click(function() {
+			$(".addneworder-nav").removeClass("importantNone");
+			$(".table-order-add").addClass("importantNone");
+			$(".title-add-new").removeClass("importantNone");
+			$(".title-order-management").addClass("importantNone");
+			$(".add-new-order-form").removeClass("importantNone");
+
+		});
+		$('#editneworder').click(function() {
+			$(".editneworder-nav").removeClass("importantNone");
+			$(".table-order-add").addClass("importantNone");
+			$(".title-edit-new").removeClass("importantNone");
+			$(".title-order-management").addClass("importantNone");
+			$(".edit-new-order-form").removeClass("importantNone");
+
+		});
+	</script>
+	<script>
+		$('.other').click(function() {
+			$(".other-menu").removeClass("none", 10000, "easeInBack");
+		});
+	</script>
+	<script>
+		$('.dashboard').click(function() {
+			window.location.href = "admin.html";
+		});
+		$('.admin-logo').click(function() {
+			window.location.href = "admin.html";
+		});
+	</script>
+
+	<script>
+		var arrSec = document.getElementsByTagName("section");
+		$(document).ready(function() {
+			$(".sub-menu-ul").click(function() {
+				window.location.href = this.id;
+			});
+		});
+	</script>
+
+	<script>
+		$(document).ready(function() {
+			$(".admin-menu-icon").click(function() {
+				$(".navigation").toggle("none");
+			});
+		});
+	</script>
+
+
+	<script>
+		var arrDiv = document.getElementsByClassName("menu");
+		var arrP = document.getElementsByClassName("dropdown-menu");
+		$(document).ready(function() {
+			$(".menu").click(function() {
+				var classSubMenu = "." + this.id;
+				$(classSubMenu).toggle("none");
+				for (let i = 0; i < arrP.length; i++) {
+					if (arrP[i].className.includes(this.id)) {
+						$(arrP[i]).toggleClass("rotate");
+					}
+				}
+			});
+		});
+	</script>
+	
+
+	<script>
+	<!--  BLOCK-UNLOCK user -->
+		$('.padlock img').click(function() {
+			var url = window.location.href;
+			var xhr = new XMLHttpRequest();
+			var user_id= this.id;
+			var img = this;
+			var get = this.src;
+			var lock = $('.lock-img')[0].src;
+			var padlock = $('.padlock-img')[0].src;
+			if(get.includes("padlock")) {
+				$(".message-block").removeClass("none");
+				$(".content-msg-block").text(
+						"Are you sure you want to block this customer?");
+				$('.ok').click(function() {
+					$(".message-block").addClass("none");
+					setTimeout(function() {
+						$(".msg-done").removeClass("importantNone");
+					}, 500);
+					$(img).attr("src", lock);
+					setTimeout(function() {
+						$(".msg-done").addClass("importantNone");
+					}, 3000);
+					$(".message-notify").removeClass("none");
+					$(".content-msg-notify").text("Successfully blocked!"); // display notify success blocked
+					$('.ok-block').click(function() {
+						$(".message-notify").addClass("none");
+						var urlCurrent = url + "?block="+ user_id;
+						xhr.open("GET", urlCurrent);
+						// What to do when server responds
+						xhr.onload = function() {
+							window.location.assign(url);
+						};
+						xhr.send();
+					});
+					
+				});
+			} else {
+				$(".message-block").removeClass("none");
+				$(".content-msg-block").text(
+						"Are you sure you want to unblock this customer?");
+				$('.ok').click(function() {
+					
+					$(".message-block").addClass("none");
+					setTimeout(function() {
+						$(".msg-done").removeClass("importantNone");
+					}, 500);
+					$(img).attr("src", padlock);
+					setTimeout(function() {
+						$(".msg-done").addClass("importantNone");
+					}, 3000);
+					$(".message-notify").removeClass("none");
+					$(".content-msg-notify").text("Successfully unblocked!"); // display notify success unblocked
+					$('.ok-block').click(function() {
+						$(".message-notify").addClass("none");
+						var urlCurrent = url + "?unblock="+ user_id;
+						xhr.open("GET", urlCurrent);
+						// What to do when server responds
+						xhr.onload = function() {
+							window.location.assign(url);
+						};
+						xhr.send();
+					});
+					
+					
+				});
+			}
+		}) 
+		
+	</script>
+	
+	
+  <script>
+<!-- choose image and display -->
+    var fileTag = document.getElementById("filetag"),
+      preview = document.getElementById("preview");
+
+    fileTag.addEventListener("change", function () {
+      changeImage(this);
+    });
+
+    function changeImage(input) {
+      var reader;
+
+      if (input.files && input.files[0]) {
+        reader = new FileReader();
+
+        reader.onload = function (e) {
+          preview.setAttribute('src', e.target.result);
         }
-    </script>
-    
-    <script>
-        $('.cancel').click(function () {
-            $(".message").addClass("none");
-        });
 
-    </script>
-    <script>
-        $('.btn-confirm-order').click(function () {
-            $(".message").removeClass("none");
-            $(".content-msg").text("Are you sure you want to browse this order?");
-            var id_prod = this.id;
-            $('.ok').click(function () {
-                $(".message").addClass("none");
-                setTimeout(function () {
-                    $(".msg-done").removeClass("importantNone");
-                    
-                }, 500);
-                setTimeout(function () {
-                    $(".msg-done").addClass("importantNone");
-                    
-                }, 3000);
-                $('.ok').removeData('clicked', true);
-                alert(id_prod);
-                location.reload();
-            });       
-        });
-        $('.cancel').click(function () {
-            $(".message").addClass("none");
-        });
-    </script>
-    <script>
-        $('.cancel').hover(function () {
-            $(".ok").removeClass("hover-btn");
-            $(".ok").removeClass("font-size-btn-msg");
-            $(".cancel").addClass("hover-btn");
-            $(".cancel").addClass("font-size-btn-msg");
-        });
-        $('.ok').hover(function () {
-            $(".cancel").removeClass("hover-btn");
-            $(".cancel").removeClass("font-size-btn-msg");
-            $(".ok").addClass("hover-btn");
-            $(".ok").addClass("font-size-btn-msg");
-        });
-    </script>
-    <!-- ADD NEW ONCLICK-->
-    <script>
-        $('#addneworder').click(function () {
-            $(".addneworder-nav").removeClass("importantNone");
-            $(".table-order-add").addClass("importantNone");
-            $(".title-add-new").removeClass("importantNone");
-            $(".title-order-management").addClass("importantNone");
-            $(".add-new-order-form").removeClass("importantNone");
-
-        });
-        $('#editneworder').click(function () {
-            $(".editneworder-nav").removeClass("importantNone");
-            $(".table-order-add").addClass("importantNone");
-            $(".title-edit-new").removeClass("importantNone");
-            $(".title-order-management").addClass("importantNone");
-            $(".edit-new-order-form").removeClass("importantNone");
-
-        });
-    </script>
-    <script>
-        $('.other').click(function () {
-            $(".other-menu").removeClass("none", 10000, "easeInBack");
-        });
-    </script>
-    <script>
-        $('.dashboard').click(function () {
-            window.location.href = "admin.html";
-        });
-        $('.admin-logo').click(function () {
-            window.location.href = "admin.html";
-        });
-    </script>
-
-    <script>
-        var arrSec = document.getElementsByTagName("section");
-        $(document).ready(function () {
-            $(".sub-menu-ul").click(function () {
-               window.location.href= this.id;
-            });
-        });
-    </script>
-
-    <script>
-        $(document).ready(function () {
-            $(".admin-menu-icon").click(function () {
-                $(".navigation").toggle("none");
-            });
-        });
-    </script>
-
-
-    <script>
-        var arrDiv = document.getElementsByClassName("menu");
-        var arrP = document.getElementsByClassName("dropdown-menu");
-        $(document).ready(function () {
-            $(".menu").click(function () {
-                var classSubMenu = "." + this.id;
-                $(classSubMenu).toggle("none");
-                for (let i = 0; i < arrP.length; i++) {
-                    if (arrP[i].className.includes(this.id)) {
-                        $(arrP[i]).toggleClass("rotate");
-                    }
-                }
-            });
-        });
-    </script>
-    <script>
-        var padlock = 'assets/icons/icons8-padlock-100.png';
-        var lock = 'assets/icons/icons8-lock-100.png';
-        $('.btn-lock-user').click(function () {
-            if ($('.user-img').attr('src') === padlock) {
-                $('.user-img').attr('src', lock);
-            } else {
-                $('.user-img').attr('src', padlock)
-            }
-        })
-    </script>
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+  </script>
 </body>
 
 </html>

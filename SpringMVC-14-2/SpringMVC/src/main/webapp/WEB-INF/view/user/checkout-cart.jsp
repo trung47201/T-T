@@ -307,10 +307,10 @@
 
 				<div class="voucher">
 					<div class="input-voucher">
-						<input type="text" name="" id="" placeholder="Voucher">
+						<input type="text" name="voucher_code" id="voucher_code" placeholder="Voucher">
 					</div>
 					<div class="apply-voucher">
-						<input type="button" name="" id="" value="Apply">
+						<input type="button" onclick="apply(this);" name="applyvoucher" id="applyvouchers" value="Apply" >
 					</div>
 				</div>
 				<hr>
@@ -419,7 +419,23 @@
 			}
 		}
 	</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
+<script type="text/javascript">
+function apply (x) {
+	var voucher = document.getElementById("voucher_code").value;
+	var urlCurrent = window.location.href;
+	var xhr = new XMLHttpRequest();
+  	xhr.open("GET", urlCurrent+"&voucher="+voucher);
+  	// What to do when server responds
+  	xhr.onload = function () { 
+  		window.location.assign(urlCurrent+"&voucher="+voucher) 
+  	};
+  	xhr.send();
+  	// (C) PREVENT HTML FORM SUBMIT
+  	return false;	
+}
+</script>
 	<script type="text/javascript">
 	    function ajaxget (x) {	    		    	
 	      	var xhr = new XMLHttpRequest();	      	
@@ -442,8 +458,10 @@
 	      	xhr.send();
 	      	// (C) PREVENT HTML FORM SUBMIT
 	      	return false;	
-	    }	
+	    }
+		
     </script>
+    
 	<script src="<c:url value="/assets/js/color.js" />" defer></script>
 	<script src="js/login.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

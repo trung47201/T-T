@@ -4,12 +4,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <nav class="navigation">
 	<!-- DASHBOARD -->
-	<a href="/Shoes/admin">
+	<a href="/SpringMVC/admin">
 		<ul class="dashboard">
 			<li>
 				<div class="menu" id="sub-menu-dashboard">
 					<img
-						src="<c:url value="assets/images/icons/icons8-home-page-96.png"/>"
+						src="<c:url value="/assets/images/icons/icons8-home-page-96.png"/>"
 						alt="">
 					<h3>Dashboard</h3>
 				</div>
@@ -22,7 +22,7 @@
 		<li>
 			<div class="menu" id="sub-menu-order">
 				<img
-					src="<c:url value="assets/images/icons/icons8-purchase-order-100.png"/>"
+					src="<c:url value="/assets/images/icons/icons8-purchase-order-100.png"/>"
 					alt="">
 				<h3>Order</h3>
 				<p class="dropdown-sub-menu-order dropdown-menu">></p>
@@ -31,12 +31,12 @@
 	</ul>
 	<!-- SUB MENU ORDER -->
 	<div class="sub-menu-order none">
-		<a href="/Shoes/admin/order-management">
+		<a href="/SpringMVC/admin/order-management">
 			<ul class="sub-menu-ul" id="">
 				<li>Management</li>
 			</ul>
 		</a>
-		<a href="/Shoes/admin/search-order">
+		<a href="/SpringMVC/admin/search-order">
 			<ul class="sub-menu-ul" id="">
 				<li>Search</li>
 			</ul>
@@ -47,7 +47,7 @@
 		<li>
 			<div class="menu" id="sub-menu-shoes">
 				<img
-					src="<c:url value="assets/images/icons/icons8-trainers-100.png"/>"
+					src="<c:url value="/assets/images/icons/icons8-trainers-100.png"/>"
 					alt="">
 				<h3>Shoes</h3>
 				<p class="dropdown-sub-menu-shoes dropdown-menu">></p>
@@ -57,22 +57,22 @@
 	</ul>
 	<!-- SUB MENU SHOES -->
 	<div class="sub-menu-shoes none">
-		<a href="/Shoes/admin/product">
+		<a href="/SpringMVC/admin/product">
 			<ul class="sub-menu-ul" id="">
 				<li>Product</li>
 			</ul>
 		</a>
-		<a href="/Shoes/admin/color-size">
+		<a href="/SpringMVC/admin/color-size">
 			<ul class="sub-menu-ul" id="">
 				<li>Color-Size</li>
 			</ul>
 		</a>
-		<a href="/Shoes/admin/gallery">
+		<a href="/SpringMVC/admin/gallery">
 			<ul class="sub-menu-ul" id="">
 				<li>Gallery</li>
 			</ul>
 		</a>
-		<a href="/Shoes/admin/brand-style-gender">
+		<a href="/SpringMVC/admin/brand-style-gender">
 			<ul class="sub-menu-ul" id="">
 				<li>B-S-G</li>
 			</ul>
@@ -82,7 +82,7 @@
 	<ul>
 		<li>
 			<div class="menu" id="sub-menu-customer">
-				<img src="<c:url value="assets/images/icons/icons8-user-100.png"/>"
+				<img src="<c:url value="/assets/images/icons/icons8-user-100.png"/>"
 					alt="">
 				<h3>Customer</h3>
 				<p class="dropdown-sub-menu-customer dropdown-menu">></p>
@@ -92,12 +92,12 @@
 	</ul>
 	<!-- SUB MENU CUSTOMER -->
 	<div class="sub-menu-customer none">
-		<a href="/Shoes/admin/customer">
+		<a href="/SpringMVC/admin/customer">
 			<ul class="sub-menu-ul" id="">
 				<li>User</li>
 			</ul>
 		</a>
-		<a href="/Shoes/admin/role">
+		<a href="/SpringMVC/admin/role">
 			<ul class="sub-menu-ul" id="">
 				<li>Role</li>
 			</ul>
@@ -108,7 +108,7 @@
 		<li>
 			<div class="menu" id="sub-menu-parameters">
 				<img
-					src="<c:url value="assets/images/icons/icons8-setting-100.png"/>"
+					src="<c:url value="/assets/images/icons/icons8-setting-100.png"/>"
 					alt="">
 				<h3>Parameters</h3>
 				<p class="dropdown-sub-menu-parameters dropdown-menu">></p>
@@ -118,12 +118,12 @@
 	</ul>
 	<!-- SUB MENU PARAMETERS -->
 	<div class="sub-menu-parameters none">
-		<a href="/Shoes/admin/revenue">
+		<a href="/SpringMVC/admin/revenue">
 			<ul class="sub-menu-ul" id="">
 				<li>Revenue</li>
 			</ul>
 		</a>
-		<a href="/Shoes/admin/selling-products">
+		<a href="/SpringMVC/admin/selling-products">
 			<ul class="sub-menu-ul" id="">
 				<li>Selling products</li>
 			</ul>
@@ -134,7 +134,7 @@
 		<li>
 			<div class="menu" id="sub-menu-news">
 				<img
-					src="<c:url value="assets/images/icons/icons8-newspaper-64.png"/>"
+					src="<c:url value="/assets/images/icons/icons8-newspaper-64.png"/>"
 					alt="">
 				<h3>New</h3>
 				<p class="dropdown-sub-menu-news dropdown-menu">></p>
@@ -154,7 +154,7 @@
 	<ul class="other-menu none">
 		<li>
 			<div class="menu" id="sub-menu-poster">
-				<img src="<c:url value="assets/images/icons/icons8-poster-64.png"/>"
+				<img src="<c:url value="/assets/images/icons/icons8-poster-64.png"/>"
 					alt="">
 				<h3>Poster</h3>
 				<p class="dropdown-sub-menu-poster dropdown-menu">></p>
@@ -176,7 +176,7 @@
 		<li>
 			<div class="menu">
 				<img
-					src="<c:url value="assets/images/icons/icons8-view-more-80-white.png"/>"
+					src="<c:url value="/assets/images/icons/icons8-view-more-80-white.png"/>"
 					alt="">
 				<h3>Other</h3>
 			</div>

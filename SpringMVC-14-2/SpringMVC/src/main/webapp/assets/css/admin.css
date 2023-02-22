@@ -417,11 +417,12 @@ section {
     margin-top: 15px;
     border-radius: 5px 5px 0 0;
 }
+
 .table-color {
     display: flex;
     min-width: 25%;
     max-height: 480px;
-    margin-left: 8px;
+    margin-left: 20px;
     overflow-y: scroll;
     overflow-x: hidden;
     margin-top: 15px;
@@ -431,7 +432,7 @@ section {
     display: flex;
     min-width: 20%;
     max-height: 480px;
-    margin-left: 8px;
+    margin-left: 20px;
     overflow-y: scroll;
     overflow-x: hidden;
     margin-top: 15px;
@@ -680,6 +681,8 @@ nav ul.dashboard {
     display: flex;
     width: 40px;
     height: 40px;
+    border: 1px solid pink;
+
 }
 .message p {
     margin-top: 5px;
@@ -739,4 +742,16 @@ nav ul.dashboard {
 a{
     color: white;
     text-decoration: none;
+}
+
+th.td-date {
+    width: 77px;
+}
+#w3review {
+	width: 77px;
+	min-width: 77px;
+}
+
+td.td-center {
+	text-align: center !important;
 }

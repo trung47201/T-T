@@ -17,7 +17,9 @@ header {
     width: 100%;
     height: 65px;
 }
-
+select.order-edit-select {
+    background: lightcyan;
+}
 nav {
     background: #364959;
     min-width: 185px;
@@ -268,6 +270,7 @@ ul.other {
     width: 40px;
     border: 0;
     text-align: center;
+    background: lightcyan;
 }
 .order-edit-select {
     height: 24px;
@@ -283,7 +286,10 @@ ul.other {
     display:  flex;
     justify-content: space-between;
     width: 94.3%;
-    margin: 10px 0 20px 25px;
+    margin: 10px 0 10px 25px;
+}
+.customer-infor-form.table-product-order-edit {
+	margin-top: 25px;
 }
 .selected-order {
     width: 210px;
@@ -304,9 +310,14 @@ ul.other {
     border: 0;
     font-size: 18px;
     border-left: 2px solid #0086ff;
+    background: lightcyan;
+}
+
+.selected-order:focus {
+	outline-style: none;
 }
 .edit-new-order-form p {
-    color: black;
+    color: #666;
     font-size: 18px;
 }
 .id input:focus,
@@ -461,7 +472,7 @@ section {
     box-shadow: 0 2px 5px #16222d;
 }
 .table-product-order-edit {
-    max-height: 260px;
+    max-height: 300px;
     overflow-y: scroll;
 }
 .table-product-order-edit thead{
@@ -474,6 +485,7 @@ section {
     border-top: 0;
     background-color: rgb(200, 200, 200);
     color: #29333f;
+    font-size: 18px;
 }
 
 .order td,
@@ -739,4 +751,32 @@ nav ul.dashboard {
 a{
     color: white;
     text-decoration: none;
+}
+
+
+.saved-order {
+    width: 95.0%;
+}
+
+.saved-order button {
+    float: right;
+    padding: 10px 10px;
+    width: 150px;
+    background: #0086ff;
+    border: 0;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+
+
+
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button {  
+
+   opacity: 1;
+
 }

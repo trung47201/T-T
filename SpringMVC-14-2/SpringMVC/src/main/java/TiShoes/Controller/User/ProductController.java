@@ -59,9 +59,9 @@ public class ProductController {
 				if (o.getName().equals("addtocart")) {
 					if (addtocart != null) {
 						txt = o.getValue() + "/" + addtocart;
-						Cookie cart = new Cookie("addtocart", txt);
-						cart.setMaxAge(60 * 60 * 24);
-						response.addCookie(cart);
+						o.setValue(txt);
+						o.setMaxAge(60 * 60 * 24);
+						response.addCookie(o);
 						return new ModelAndView("redirect:/cart");
 					}
 

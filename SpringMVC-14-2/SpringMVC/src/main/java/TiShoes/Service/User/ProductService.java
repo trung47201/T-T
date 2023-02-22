@@ -78,13 +78,17 @@ public class ProductService implements ProductRepository {
 
 				role.setId(rs.getInt("role_id"));
 				role.setRole_name(rs.getString("role_name"));
-
+				role.setDescription(rs.getString("description"));
+				role.setCreated_at(rs.getDate("created_at"));
+				role.setUpdated_at(rs.getDate("updated_at"));
+				
 				user.setId(rs.getInt("user_id"));
 				user.setFullname(rs.getString("fullname"));
 				user.setEmail(rs.getString("email"));
 				user.setPhone_number(rs.getString("phone_number"));
 				user.setAddress(rs.getString("address"));
 				user.setPassword(rs.getString("password"));
+				user.setAvatar(rs.getString("avatar"));
 				user.setRole(role);
 
 				brand.setId(rs.getInt("brand_id"));
@@ -122,7 +126,7 @@ public class ProductService implements ProductRepository {
 				color_size.setSize(size);
 				color_size.setColor(color);
 				color_size.setProd(product);
-				color_size.setrQuantity(rs.getInt("quantity"));
+				color_size.setQuantity(rs.getInt("quantity"));
 
 				list.add(color_size);
 			}
@@ -162,13 +166,17 @@ public class ProductService implements ProductRepository {
 
 				role.setId(rs.getInt("role_id"));
 				role.setRole_name(rs.getString("role_name"));
-
+				role.setDescription(rs.getString("description"));
+				role.setCreated_at(rs.getDate("created_at"));
+				role.setUpdated_at(rs.getDate("updated_at"));
+				
 				user.setId(rs.getInt("user_id"));
 				user.setFullname(rs.getString("fullname"));
 				user.setEmail(rs.getString("email"));
 				user.setPhone_number(rs.getString("phone_number"));
 				user.setAddress(rs.getString("address"));
 				user.setPassword(rs.getString("password"));
+				user.setAvatar(rs.getString("avatar"));
 				user.setRole(role);
 
 				brand.setId(rs.getInt("brand_id"));
@@ -964,7 +972,7 @@ public class ProductService implements ProductRepository {
 	}
 
 	public static void main(String[] args) {
-		ProductService p = new ProductService();
+		//ProductService p = new ProductService();
 		
 	}
 }

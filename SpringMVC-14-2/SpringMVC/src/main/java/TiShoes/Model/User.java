@@ -7,6 +7,8 @@ public class User{
 	private String phone_number;
 	private String address;
 	private String password;
+	private String avatar;
+	private int status;
 	private Role role;
 	public User() {
 		// TODO Auto-generated constructor stub
@@ -55,6 +57,18 @@ public class User{
 		this.role = role;
 	}
 	
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	public String getAvatar() {
+		return avatar;
+	}
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
 }
 	
 

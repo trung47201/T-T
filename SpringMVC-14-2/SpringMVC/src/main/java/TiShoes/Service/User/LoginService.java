@@ -29,13 +29,16 @@ public class LoginService implements LoginRepository{
 			stmt = (Statement) con.createStatement();
 			ResultSet rs = stmt.executeQuery("select * from user "
 					+ "Inner join role on user.role_id = role.id "
-					+ "Where role.id = 2 or role.id = 3 or role.id = 4 ");
+					+ "Where NOT role.id = 1 ");
 			while (rs.next()) {
 				user = new User();
 				role = new Role();
 				
 				role.setId(rs.getInt("role_id"));
 				role.setRole_name(rs.getString("role_name"));
+				role.setDescription(rs.getString("description"));
+				role.setCreated_at(rs.getDate("created_at"));
+				role.setUpdated_at(rs.getDate("updated_at"));
 				
 				user.setId(rs.getInt("id"));
 				user.setFullname(rs.getString("fullname"));
@@ -43,6 +46,8 @@ public class LoginService implements LoginRepository{
 				user.setPhone_number(rs.getString("phone_number"));
 				user.setAddress(rs.getString("address"));
 				user.setPassword(rs.getString("password"));
+				user.setAvatar(rs.getString("avatar"));
+				user.setStatus(rs.getInt("status"));
 				user.setRole(role);
 				
 				li.add(user);
@@ -61,6 +66,8 @@ public class LoginService implements LoginRepository{
 		for (User u : li) {
 			if ((u.getEmail().trim().equals(user) && u.getPassword().trim().equals(md5Service.StringToMD5(pass))) || (u.getEmail().trim().equals(user) && u.getPassword().trim().equals(pass))) {
 				return true;
+			} else if ((u.getPhone_number().trim().equals(user) && u.getPassword().trim().equals(md5Service.StringToMD5(pass))) || (u.getPhone_number().trim().equals(user) && u.getPassword().trim().equals(pass))) {
+				return true;
 			}
 		}
 		return false;
@@ -74,15 +81,36 @@ public class LoginService implements LoginRepository{
 		for (User u : li) {
 			if ((u.getEmail().trim().equals(user) && u.getPassword().trim().equals(md5Service.StringToMD5(pass))) || (u.getEmail().trim().equals(user) && u.getPassword().trim().equals(pass))) {
 				id_user = u.getId();
+			} else if ((u.getPhone_number().trim().equals(user) && u.getPassword().trim().equals(md5Service.StringToMD5(pass))) || (u.getPhone_number().trim().equals(user) && u.getPassword().trim().equals(pass))) {
+				id_user = u.getId();
 			}
 		}
 		return id_user;
 	}
 	
+	public boolean checkStatucBlock(String user, String pass) {
+		List<User> li = getAllUser();
+		md5Service = new MD5Service();
+		if (checkUserPass(user, pass)) {
+			for (User u : li) {
+				if ((u.getEmail().trim().equals(user) && u.getPassword().trim().equals(md5Service.StringToMD5(pass))) || (u.getEmail().trim().equals(user) && u.getPassword().trim().equals(pass))) {
+					if(u.getStatus() == 1) {
+						return true;
+					}
+				} else if ((u.getPhone_number().trim().equals(user) && u.getPassword().trim().equals(md5Service.StringToMD5(pass))) || (u.getPhone_number().trim().equals(user) && u.getPassword().trim().equals(pass))) {
+					if(u.getStatus() == 1) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
 	public static void main(String[] args) {
 		LoginService l = new LoginService();
-		
-		boolean a = l.checkUserPass("dtteng@gmail.com", "Trangdt01!");
-		System.out.println(a);
+		for (User u : l.getAllUser()) {
+			System.out.println(u.getId()+"-"+  u.getStatus() +"-"+ l.checkStatucBlock(u.getPhone_number(), u.getPassword()));
+		}
 	}
 }

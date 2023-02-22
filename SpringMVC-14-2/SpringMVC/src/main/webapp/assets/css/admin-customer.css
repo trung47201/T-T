@@ -740,3 +740,29 @@ a{
     color: white;
     text-decoration: none;
 }
+.tbl-add-new {
+    margin-top: 20px;
+    width: 93.3%;
+    border: 1px solid;
+    margin-left: 37px;
+}
+.tbl-new-user {
+	width: 100%;
+}
+
+.input {
+	width: 100%;
+}
+.input input {
+    width: 100%;
+    color: black;
+    border: 0;
+    border-left: 2px solid #0086ff;
+    border-radius: 4px;
+    height: 36px;
+    font-size: 18px;
+}
+
+.input input:focus {
+	outline-style: none;
+}

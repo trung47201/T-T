@@ -18,7 +18,7 @@
 	href="<c:url value="/assets/css/swiper-bundle.min.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/slide.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/cart.css"/>">
-
+<link rel="stylesheet" href="<c:url value="/assets/css/home.css"/>">
 <style>
 .size {
 	display: none;
@@ -27,183 +27,7 @@
 <body style="color: white;">
 	<header class="container-xl header-content">
 		<form method="post">
-			<div class="container-xl header-1">
-				<a href="index.html"><img class="img-fluid logo-header"
-					src="<c:url value="/assets/images/logo/logo_header.jpg"/>"
-					alt="logo_UchihaShoes"></a> <img class="smartphone-icon"
-					src="<c:url value="/assets/images/icons/smartphone48.png"/>"
-					alt="icon-smartphone">
-				<p class="customer-support-content">
-					Customer Support<br> <a class="phone" href="#">0346 643
-						755</a>
-				</p>
-
-				<!--################################################## btn LOGIN ################################################################### -->
-				<div class="container-xl icon-user">
-					<button type="button" class="icon-user btn btn-primary"
-						data-toggle="modal" data-target="#login">
-						<img class="icon-user"
-							src="<c:url value="/assets/images/icons/user48.png"/>"
-							alt="icon-user">
-					</button>
-					<div class="modal fade" id="login" tabindex="-1" role="dialog"
-						aria-labelledby="exampleModalLabel" aria-hidden="true">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<button type="button" class="btn btn-secondary close"
-									data-dismiss="modal">
-									<img class="close-login-icon"
-										src="<c:url value="/assets/images/icons/close48.png"/>"
-										alt="icon-close" width="32px">
-								</button>
-								<div class="login_form_container">
-									<div class="login_form">
-										<h2>Login</h2>
-										<div class="input_group">
-											<i class="fa fa-user"></i> <input type="text"
-												placeholder="Username" class="input_text" autocomplete="off" />
-										</div>
-										<div class="input_group">
-											<i class="fa fa-unlock-alt"></i> <input type="password"
-												placeholder="Password" class="input_text" autocomplete="off" />
-										</div>
-										<div class="button_group" id="login_button">
-											<a>Login</a>
-										</div>
-										<div class="fotter">
-											<a>Forgot Password ?</a> <a>SingUp</a>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!--################################################## btn Love Product ###################################################### -->
-				<div class="container-xl icon-heart">
-					<button type="button" class="icon-user btn btn-primary"
-						data-toggle="modal" data-target="#heart">
-						<img class="icon-heart"
-							src="<c:url value="/assets/images/icons/heart.png"/>"
-							alt="icon-user">
-					</button>
-					<div class="modal fade" id="heart" tabindex="-1" role="dialog"
-						aria-labelledby="exampleModalLabel" aria-hidden="true">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								<div class="modal-body">...</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary"
-										data-dismiss="modal">Close</button>
-									<button type="button" class="btn btn-primary">Save
-										changes</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!--####################################   btn CART    ################################################# -->
-				<div class="container-xl icon-cart">
-					<a href="/SpringMVC/cart">
-						<button type="button" class="icon-user btn btn-primary">
-							<img class="icon-cart"
-								src="<c:url value="/assets/images/icons/cart48.png"/>"
-								alt="icon-user" style="margin-top: -15px; margin-left: -15px;">
-						</button>
-					</a>
-				</div>
-			</div>
-
-			<!--########################################3   START NAVIGATION ###########################################-->
-			<div class="wrapper container-xl" style="background-color: #212122;">
-				<nav>
-					<div class="content">
-						<ul class="links">
-							<li><a class="menu" href="index.html"><b>Home</b></a></li>
-							<li><a href="#" class="desktop-link menu"><b>Shoes</b></a>
-								<ul>
-									<li><a class="menu" href="#">Drop Menu 1</a></li>
-									<li><a class="menu" href="#">Drop Menu 2</a></li>
-									<li><a class="menu" href="#">Drop Menu 3</a></li>
-									<li><a class="menu" href="#">Drop Menu 4</a></li>
-								</ul></li>
-							<li><a href="#" class="desktop-link menu"><b>Accessories</b></a>
-								<ul>
-									<li><a class="menu" href="#">Drop Menu 1</a></li>
-									<li><a class="menu" href="#">Drop Menu 2</a></li>
-									<li><a class="menu" href="#">Drop Menu 3</a></li>
-									<li><a class="menu" href="#">Drop Menu 4</a></li>
-								</ul></li>
-							<li><a href="#" class="desktop-link menu"><b>News</b></a>
-								<ul>
-									<li><a class="menu" href="#">Drop Menu 1</a></li>
-									<li><a class="menu" href="#">Drop Menu 2</a></li>
-									<li><a class="menu" href="#">Drop Menu 3</a></li>
-									<li><a href="#" class="desktop-link menu">More Items</a>
-										<ul>
-											<li><a class="menu" href="#">Sub Menu 1</a></li>
-											<li><a class="menu" href="#">Sub Menu 2</a></li>
-											<li><a class="menu" href="#">Sub Menu 3</a></li>
-										</ul></li>
-								</ul></li>
-							<li><a class="menu" href="questions.html"><b>Questions</b></a></li>
-							<li><a class="menu" href="contact.html"><b>Contact</b></a></li>
-						</ul>
-					</div>
-					<div class="nav-search" id="nav-search">
-						<input class="container-xl search-nav" type="text"
-							name="search-nav" id="search-nav" placeholder="Search...">
-						<img class="search-triangle-nav-icon"
-							src="<c:url value="/assets/images/icons/triangle32.png"/>"
-							alt="icon-triangle"> <a href="#"
-							class="search-nav-link-icon"> <img class="search-nav-icon"
-							src="<c:url value="/assets/images/icons/search48.png"/>"
-							alt="icon-search" width="32px"></a>
-					</div>
-				</nav>
-			</div>
-			<!--######################################################################################################### -->
-			<div class="search-keys">
-				<input class="container-xl search key-search" type="text"
-					name="search" id="search" placeholder="Search...">
-				<button type="button" class="search-triangle-btn">
-					<img class="search-triangle"
-						src="<c:url value="/assets/images/icons/triangle32.png"/>"
-						alt="icon-triangle">
-					<div class="listkeys" id="listkeys">
-						<p>People also search</p>
-						<div class="listkeys-span1">
-							<div class="keys-search-span">
-								<span class="keys-search-span" id="span_Id1"
-									onclick="test('1');">New shoes</span> <span
-									class="keys-search-span" id="span_Id2" onclick="test('2');">shoes</span>
-								<span class="keys-search-span" id="span_Id3"
-									onclick="test('3');">boot</span> <span class="keys-search-span"
-									id="span_Id4" onclick="test('4');">sneaker</span> <span
-									class="keys-search-span" id="span_Id5" onclick="test('5');">nike</span>
-								<span class="keys-search-span" id="span_Id6"
-									onclick="test('6');">adidas</span> <span
-									class="keys-search-span" id="span_Id7" onclick="test('7');">shoes
-									adidas</span> <span class="keys-search-span" id="span_Id8"
-									onclick="test('8');">shoes nike</span> <span
-									class="keys-search-span" id="span_Id9" onclick="test('9');">shoes
-									sneaker</span> <span class="keys-search-span" id="span_Id10"
-									onclick="test('10');">shoes boot</span>
-							</div>
-						</div>
-					</div>
-				</button>
-				<a href="#" class="search-link-icon"> <img class="search-icon"
-					src="<c:url value="/assets/images/icons/search48.png"/>"
-					alt="icon-search" width="32px"></a>
-			</div>
+			<jsp:include page="../layouts/user/header.jsp"></jsp:include>
 			<!--######################################################################################################### -->
 			<div class="title-page">
 				<h3>Cart</h3>
@@ -216,188 +40,190 @@
 			</c:forEach>
 			<c:if test="${ getProdCountCart==0 }">
 				<div class="cart-empty">
-					<h5>
-						Cart is empty. Please add products so that the cart is not empty.
-					</h5>
+					<h5>Cart is empty. Please add products so that the cart is not
+						empty.</h5>
 				</div>
 			</c:if>
 			<c:if test="${ getProdCountCart != 0 }">
-				
-			
-			<div class="list-products">
-				<table>
-					<tr>
-						<th>
-							<div class="checkbox-cart"></div>
-							<div class="product-cart">Product</div>
-							<div class="classify-cart">Classify</div>
-							<div class="price-cart">Price</div>
-							<div class="amount-cart">Amount</div>
-							<div class="total-money-cart">Total money</div>
-							<div class="del-product-cart"></div>
-						</th>
-					</tr>
-					<tr>
 
-						<c:forEach var="item" items="${ listProd }" varStatus="index">
-							<td>
-								<div class="checkbox-cart">
-									<c:if test="${ checkedAll == 'true' }">
-										<input type="checkbox" name="foo"
-											id="${ item.key.id }_${ item.value }"
-											onclick="checked_prod(this)" checked>
-									</c:if>
-									<c:if test="${ checkedAll != 'true' }">
 
-										<c:if test="${ listProd_id.contains(item.key.id) }">
+				<div class="list-products">
+					<table>
+						<tr>
+							<th>
+								<div class="checkbox-cart"></div>
+								<div class="product-cart">Product</div>
+								<div class="classify-cart">Classify</div>
+								<div class="price-cart">Price</div>
+								<div class="amount-cart">Amount</div>
+								<div class="total-money-cart">Total money</div>
+								<div class="del-product-cart"></div>
+							</th>
+						</tr>
+						<tr>
+
+							<c:forEach var="item" items="${ listProd }" varStatus="index">
+								<td>
+									<div class="checkbox-cart">
+										<c:if test="${ checkedAll == 'true' }">
 											<input type="checkbox" name="foo"
 												id="${ item.key.id }_${ item.value }"
 												onclick="checked_prod(this)" checked>
 										</c:if>
-										<c:if test="${ !listProd_id.contains(item.key.id) }">
-											<input type="checkbox" name="foo"
-												id="${ item.key.id }_${ item.value }"
-												onclick="checked_prod(this)">
-										</c:if>
+										<c:if test="${ checkedAll != 'true' }">
 
-									</c:if>
-								</div>
-								<div class="product-cart">
-									<img
-										src="<c:url value="/assets/images/products/${ item.key.thumbnail }"/>"
-										alt="product-img">
-									<div class="name-product-cart">${ item.key.title }</div>
-								</div>
-								<div class="classify-cart">
-									<c:forEach var="it" items="${ hmProd_Color_Size }">
-										<c:if test="${ item.key.id == it.key }">
-											<select id="${ it.key }" name="color${ it.key }"
-												onchange="color_select(this)" class="color">
-												<option value="" style="display: none;" disabled selected>Choose
-													color</option>
-												<c:forEach var="it_color" items="${ it.value }">
-													<c:forEach var="colorName" items="${ listAllColor }">
-														<c:if test="${ it_color.key == colorName.id }">
-															<option style="background: ${ colorName.rgb };"
-																value="${ it_color.key }_${ item.key.id }" <c:forEach var="li_color_1" items="${ listColor }">
+											<c:if test="${ listProd_id.contains(item.key.id) }">
+												<input type="checkbox" name="foo"
+													id="${ item.key.id }_${ item.value }"
+													onclick="checked_prod(this)" checked>
+											</c:if>
+											<c:if test="${ !listProd_id.contains(item.key.id) }">
+												<input type="checkbox" name="foo"
+													id="${ item.key.id }_${ item.value }"
+													onclick="checked_prod(this)">
+											</c:if>
+
+										</c:if>
+									</div>
+									<div class="product-cart">
+										<img
+											src="<c:url value="/assets/images/products/${ item.key.thumbnail }"/>"
+											alt="product-img">
+										<div class="name-product-cart">${ item.key.title }</div>
+									</div>
+									<div class="classify-cart">
+										<c:forEach var="it" items="${ hmProd_Color_Size }">
+											<c:if test="${ item.key.id == it.key }">
+												<select id="${ it.key }" name="color${ it.key }"
+													onchange="color_select(this)" class="color">
+													<option value="" style="display: none;" disabled selected>Choose
+														color</option>
+													<c:forEach var="it_color" items="${ it.value }">
+														<c:forEach var="colorName" items="${ listAllColor }">
+															<c:if test="${ it_color.key == colorName.id }">
+																<option style="background: ${ colorName.rgb };"
+																	value="${ it_color.key }_${ item.key.id }"
+																	<c:forEach var="li_color_1" items="${ listColor }">
 															<c:if test="${ li_color_1.value == it_color.key && li_color_1.key==item.key.id }">
 															<c:out value="selected"></c:out>
 															</c:if>
 															</c:forEach>>
-																${colorName.color_name }
-															</option>
-															
-														</c:if>
-													</c:forEach>
-												</c:forEach>
-											</select>
+																	${colorName.color_name }</option>
 
-											<c:forEach var="it_color" items="${ it.value }">
-											<c:set var="sKey" value="${ it_color.key }_${ item.key.id }"></c:set>
-												<select id="${ it_color.key }_${ item.key.id }" class="size"
-													name="size" onchange="size_select(this)">
-													<option value="" style="display:none;" disabled selected>Choose size</option>
-													<c:forEach var="it_size" items="${ it_color.value }">
-														<option value="${ it_size.id }" <c:forEach var="i_size_" items="${ listSize }">
+															</c:if>
+														</c:forEach>
+													</c:forEach>
+												</select>
+
+												<c:forEach var="it_color" items="${ it.value }">
+													<c:set var="sKey"
+														value="${ it_color.key }_${ item.key.id }"></c:set>
+													<select id="${ it_color.key }_${ item.key.id }"
+														class="size" name="size" onchange="size_select(this)">
+														<option value="" style="display: none;" disabled selected>Choose
+															size</option>
+														<c:forEach var="it_size" items="${ it_color.value }">
+															<option value="${ it_size.id }"
+																<c:forEach var="i_size_" items="${ listSize }">
 														<c:if test="${ i_size_.key == sKey && i_size_.value==it_size.id }">
 														<c:out value="selected"></c:out>
 														</c:if>
 													</c:forEach>>
-															${ it_size.size_number }
-														</option>
-													</c:forEach>
-													
-												</select>
-											</c:forEach>
+																${ it_size.size_number }</option>
+														</c:forEach>
+
+													</select>
+												</c:forEach>
+											</c:if>
+										</c:forEach>
+									</div>
+									<div class="price-cart">
+										<c:if test="${ item.key.discount > 0 }">
+											<div>
+												$
+												<fmt:formatNumber type="number" maxFractionDigits="2"
+													value="${ item.key.price - item.key.price * item.key.discount/100 }" />
+											</div>
 										</c:if>
-									</c:forEach>
-								</div>
-								<div class="price-cart">
-									<c:if test="${ item.key.discount > 0 }">
-										<div>
-											$<fmt:formatNumber type="number" maxFractionDigits="2"
-												value="${ item.key.price - item.key.price * item.key.discount/100 }" />
-										</div>
-									</c:if>
-									<c:if test="${ item.key.discount <= 0 }">
-										<div>$${ item.key.price }</div>
-									</c:if>
-								</div>
-								<div class="amount-cart">
-									<input class="minus-plus" type="button"
-										name="${ item.key.id }_${ item.value }"
-										id="minus${ index.getIndex() }" onclick="amount(this)"
-										value="-"> 
-									<input class="input_Id" type="text"
-										name="prod" id="input_Id${ index.getIndex() }"
-										value="${ item.value }" readonly> 
-									<input
-										class="minus-plus" type="button"
-										name="${ item.key.id }_${ item.value }"
-										id="plus${ index.getIndex() }" onclick="amount(this)"
-										value="+">
-								</div>
-								<div class="total-money-cart">
-									<c:if test="${ item.key.discount > 0 }">
-										<div>
-											$<fmt:formatNumber type="number" maxFractionDigits="2"
-												value="${ item.key.price * item.value - item.key.price * item.value * item.key.discount/100 }" />
-										</div>
-									</c:if>
-									<c:if test="${ item.key.discount <= 0 }">
-										<div>$${ item.key.price * item.value }</div>
-									</c:if>
-								</div>
-								<div class="del-product-cart">
-									<input type="button" id="del_prod"
-										name="${ item.key.id }_${ item.value }" value="x"
-										onclick="amount(this)">
-								</div>
+										<c:if test="${ item.key.discount <= 0 }">
+											<div>$${ item.key.price }</div>
+										</c:if>
+									</div>
+									<div class="amount-cart">
+										<input class="minus-plus" type="button"
+											name="${ item.key.id }_${ item.value }"
+											id="minus${ index.getIndex() }" onclick="amount(this)"
+											value="-"> <input class="input_Id" type="text"
+											name="prod" id="input_Id${ index.getIndex() }"
+											value="${ item.value }" readonly> <input
+											class="minus-plus" type="button"
+											name="${ item.key.id }_${ item.value }"
+											id="plus${ index.getIndex() }" onclick="amount(this)"
+											value="+">
+									</div>
+									<div class="total-money-cart">
+										<c:if test="${ item.key.discount > 0 }">
+											<div>
+												$
+												<fmt:formatNumber type="number" maxFractionDigits="2"
+													value="${ item.key.price * item.value - item.key.price * item.value * item.key.discount/100 }" />
+											</div>
+										</c:if>
+										<c:if test="${ item.key.discount <= 0 }">
+											<div>$${ item.key.price * item.value }</div>
+										</c:if>
+									</div>
+									<div class="del-product-cart">
+										<input type="button" id="del_prod"
+											name="${ item.key.id }_${ item.value }" value="x"
+											onclick="amount(this)">
+									</div>
 
-							</td>
+								</td>
 
-						</c:forEach>
-					</tr>
-				</table>
-			</div>
-			<div class="cheked-all">
-				<div class="checkbox-all">
-					<c:if test="${ checkedAll == 'true' }">
-						<input type="checkbox" onclick="toggle(this)" name=""
-							id="checkbox-all" checked>
-					</c:if>
-					<c:if test="${ checkedAll != 'true' }">
-						<input type="checkbox" onclick="toggle(this)" name=""
-							id="checkbox-all">
-					</c:if>
+							</c:forEach>
+						</tr>
+					</table>
 				</div>
-				<div class="text-all">ALL</div>
-				<div class="total-payment">
-					Total payment: &emsp; <span>$<fmt:formatNumber type="number"
-							maxFractionDigits="2" value="${ totalPayment }" /></span>
+				<div class="cheked-all">
+					<div class="checkbox-all">
+						<c:if test="${ checkedAll == 'true' }">
+							<input type="checkbox" onclick="toggle(this)" name=""
+								id="checkbox-all" checked>
+						</c:if>
+						<c:if test="${ checkedAll != 'true' }">
+							<input type="checkbox" onclick="toggle(this)" name=""
+								id="checkbox-all">
+						</c:if>
+					</div>
+					<div class="text-all">ALL</div>
+					<div class="total-payment">
+						Total payment: &emsp; <span>$<fmt:formatNumber
+								type="number" maxFractionDigits="2" value="${ totalPayment }" /></span>
+					</div>
+					<div class="total-product-cart" id="total-count-product-cart">(0)</div>
 				</div>
-				<div class="total-product-cart" id="total-count-product-cart">(0)</div>
-			</div>
-			<div class="btn-buy-continue">
-				<div class="btn-continue">
-					<input type="submit" name="continueShopping" id=""
-						value="Continue Shopping">
+				<div class="btn-buy-continue">
+					<div class="btn-continue">
+						<input type="submit" name="continueShopping" id=""
+							value="Continue Shopping">
+					</div>
+					<div class="btn-buy-cart">
+						<input type="button" onclick="checkoutAll(this)"
+							name="checkoutCart" id="checkoutCart" value="Buy">
+					</div>
 				</div>
-				<div class="btn-buy-cart">
-					<input type="button" onclick="checkoutAll(this)"
-						name="checkoutCart" id="checkoutCart" value="Buy">
-				</div>
-			</div>
 			</c:if>
 		</form>
 	</header>
-	
+
 	<div class="box-msg" id="box-msg">
 		<div class="msg-box-title">
 			<h5>Message</h5>
 		</div>
 		<div class="msgbox-content">
-			<p>You have not selected any products yet. Please choose at least one product to payment</p>
+			<p>You have not selected any products yet. Please choose at least
+				one product to payment</p>
 		</div>
 		<div class="msgbox-btn-ok">
 			<button id="ok" name="ok" onclick="OK(this)">OK</button>
@@ -457,8 +283,7 @@
 				reserved.</div>
 		</form>
 	</footer>
-	
-	
+
 	<c:forEach var="abc" items="${ listColor }">
 		<script>
 			var selected_s = "${abc.value}"+"_" +"${abc.key}";
@@ -466,8 +291,26 @@
 			document.getElementById(selected_s).classList.remove('size');
 		</script>
 	</c:forEach>
+	<script type="text/javascript">
+		
+			function OK(x) {
+				document.getElementById("box-msg").classList.add('box-msg');
+			}
+		</script>
+	<script type="text/javascript">
+		var ca = document.getElementById("checkbox-all");
+		var checkboxes = document.getElementsByName('foo');
+		if (checkboxes.length == ${ listProd_id.size() }) {
+			ca.checked = true;
+		}
+		var tcpc = document.getElementById("total-count-product-cart");
+		tcpc.textContent = "("+${ listProd_id.size() }+")";
+	</script>
 
-	<script>
+<!-- if exists -->
+
+	<c:if test="${ userID == null }">
+		<script>
 		function size_select(x) {
 			var size = x.value + "_"+x.id;
 			var xhr = new XMLHttpRequest();
@@ -481,13 +324,11 @@
 		}
 		function color_select(x) {
 			var color=x.value;
-			
 			var xhr = new XMLHttpRequest();
 			xhr.open("GET",
 					"http://localhost:8888/SpringMVC/cart?color="+color);
 			// What to do when server responds
 			xhr.onload = function() {
-				
 			};
 			xhr.send();
 	 	   	let selectElement = document.querySelectorAll('[name=size]');
@@ -505,7 +346,7 @@
 		}
 	</script>
 
-	<script>
+		<script>
 	function checkoutAll (x) {
 		var checkboxes = document.getElementsByName('foo');
 		var check = document.querySelectorAll('input[type="checkbox"]:checked').length;		
@@ -552,9 +393,6 @@
 						}
 						
 					}
-					
-					
-					
 				}
 				if(error != "") {
 					alert(error);
@@ -563,38 +401,16 @@
 							"http://localhost:8888/SpringMVC/cart/checkout-cart?process="+txt_c);
 					xhr.onload = function() {
 						window.location.assign("http://localhost:8888/SpringMVC/cart/checkout-cart?process="+txt_c);
-						
 					};
 					xhr.send();
 				}
-				
-				
-			}
-			
-			
-			
+			}		
 	}
 	</script>
-	
-	<script type="text/javascript">
-	
-		function OK(x) {
-			document.getElementById("box-msg").classList.add('box-msg');
-		}
-	</script>
 
-	<script type="text/javascript">
-		var ca = document.getElementById("checkbox-all");
-		var checkboxes = document.getElementsByName('foo');
-		if (checkboxes.length == ${ listProd_id.size() }) {
-			ca.checked = true;
-		}
-		
-		var tcpc = document.getElementById("total-count-product-cart");
-		tcpc.textContent = "("+${ listProd_id.size() }+")";
-	</script>
+	
 
-	<script>
+		<script>
 		
 		if (${checkedAll=='true'}) {
 			checkboxes = document.getElementsByName('foo');
@@ -617,11 +433,7 @@
 				xhr.onload = function() {
 					window.location.assign("http://localhost:8888/SpringMVC/cart?checkedAll=true");
 				};
-				xhr.send();
-				
-				
-				
-				
+				xhr.send();	
 			} else if(source.checked==false) {
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
@@ -640,7 +452,7 @@
 		
 	</script>
 
-	<script type="text/javascript">
+		<script type="text/javascript">
 
 		function checked_prod(x) {
 			var x = document.querySelectorAll('input[name^="foo"]:checked');
@@ -693,7 +505,8 @@
 		}
 	</script>
 
-	<script>
+
+		<script>
 		function amount(x) {
 
 			var n = document.getElementsByName("prod");
@@ -764,6 +577,7 @@
 
 		}
 	</script>
+	</c:if>
 
 	<script>
 		function test($a) {

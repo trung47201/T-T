@@ -353,10 +353,10 @@
 				</div>
 				<div class="voucher">
 					<div class="input-voucher">
-						<input type="text" name="" id="" placeholder="Voucher">
+						<input type="text" name="voucher_code" id="voucher_code" placeholder="Voucher">
 					</div>
 					<div class="apply-voucher">
-						<input type="button" name="" id="" value="Apply">
+						<input type="button" name="" id="" value="Apply" onclick="applyvoucher()">
 					</div>
 				</div>
 				<hr>

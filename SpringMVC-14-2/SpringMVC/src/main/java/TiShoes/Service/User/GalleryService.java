@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
 import TiShoes.Model.Brand;
@@ -42,7 +43,7 @@ public class GalleryService implements GalleryRepository {
 					+ "Inner join user on product.user_id = user.id "
 					+ "Inner join gender on product.gender_id = gender.id "
 					+ "Inner join role on role.id = user.role_id "
-					+ "");
+					+ "Order by gallery.id");
 			while (rs.next()) {
 				gallery = new Gallery();
 				product = new Product();
@@ -58,6 +59,9 @@ public class GalleryService implements GalleryRepository {
 				
 				role.setId(rs.getInt("role_id"));
 				role.setRole_name(rs.getString("role_name"));
+				role.setDescription(rs.getString("description"));
+				role.setCreated_at(rs.getDate("created_at"));
+				role.setUpdated_at(rs.getDate("updated_at"));
 				
 				brand.setId(rs.getInt("brand_id"));
 				brand.setBrand_name(rs.getString("brand_name"));
@@ -68,6 +72,7 @@ public class GalleryService implements GalleryRepository {
 				user.setPhone_number(rs.getString("phone_number"));
 				user.setAddress(rs.getString("address"));
 				user.setPassword(rs.getString("password"));
+				user.setAvatar(rs.getString("avatar"));
 				user.setRole(role);
 				
 				style.setId(rs.getInt("style_id"));
@@ -109,6 +114,46 @@ public class GalleryService implements GalleryRepository {
 			}
 		}
 		return li;
+	}
+	
+	public boolean checkGallary(String thumbnail, int product_id, int color_id) {
+		
+		for (Gallery i : getAllGallery()) {
+			if (i.getThumbnail().equals(thumbnail) && i.getProduct().getId() == product_id) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+
+	public boolean insertIntoGallery(String thumbnail, int product_id, int color_id) {
+		try {
+			connectService = new ConnectService();
+			Connection conn = connectService.getConnect();
+
+			if (checkGallary(thumbnail, product_id, color_id)) {
+
+			} else {
+				String sql = "INSERT INTO `gallery`(`thumbnail`, `product_id`, `color_id`) " + "VALUES (?, ?, ?)";
+				PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
+				preparedStmt.setString(1, thumbnail);
+				preparedStmt.setInt(2, product_id);
+				preparedStmt.setInt(3, color_id);
+
+				preparedStmt.execute();
+			}
+			conn.close();
+			return true;
+		} catch (Exception e) {
+			System.err.println("Got an exception!");
+			// printStackTrace method
+			// prints line numbers + call stack
+			e.printStackTrace();
+			// Prints what exception has been thrown
+			System.out.println(e);
+		}
+		return false;
 	}
 
 }

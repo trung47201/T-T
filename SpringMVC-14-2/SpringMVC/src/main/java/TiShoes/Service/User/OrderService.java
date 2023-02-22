@@ -3,6 +3,7 @@ package TiShoes.Service.User;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,12 +12,15 @@ import com.mysql.jdbc.Statement;
 
 import TiShoes.Model.Voucher;
 import TiShoes.Model.Order_;
+import TiShoes.Model.Status;
+import TiShoes.Model.TestTruncate;
 import TiShoes.Repository.User.OrderRepository;
 
 public class OrderService implements OrderRepository {
 	private ConnectService connectService;
 	private Order_ order_;
 	private Voucher voucher;
+	private Status status;
 
 	@Override
 	public List<Order_> getAllOrder() {
@@ -28,10 +32,16 @@ public class OrderService implements OrderRepository {
 			Statement stmt;
 			stmt = (Statement) con.createStatement();
 			ResultSet rs = stmt
-					.executeQuery("select * from order_ " + "Inner join voucher on order_.voucher_id = voucher.id");
+					.executeQuery("select * from order_ " + "Inner join voucher on order_.voucher_id = voucher.id "
+							+ "Inner join status on order_.status_id = status.id ");
 			while (rs.next()) {
 				order_ = new Order_();
 				voucher = new Voucher();
+				status = new Status();
+				
+				status.setId(rs.getInt("status_id"));
+				status.setStatus_name(rs.getString("status_name"));
+
 
 				voucher.setId(rs.getInt("voucher_id"));
 				voucher.setCode(rs.getString("code"));
@@ -52,7 +62,7 @@ public class OrderService implements OrderRepository {
 				order_.setUpdated_at(rs.getDate("updated_at"));
 				order_.setVoucher(voucher);
 				order_.setNote(rs.getString("note"));
-				order_.setStatus(rs.getString("status"));
+				order_.setStatus(status);
 				order_.setMethod(rs.getString("method"));
 
 				li.add(order_);
@@ -71,7 +81,7 @@ public class OrderService implements OrderRepository {
 			java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
 			connectService = new ConnectService();
 			Connection conn = connectService.getConnect();
-			String sql = "INSERT INTO `order_`(`fullname`, `email`, `phone_number`, `address`, `order_date`, `updated_at`, `voucher_id`, `note`, `status`, `method`) "
+			String sql = "INSERT INTO `order_`(`fullname`, `email`, `phone_number`, `address`, `order_date`, `updated_at`, `voucher_id`, `note`, `status_id`, `method`) "
 					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
 			preparedStmt.setString(1, fullname);
@@ -82,7 +92,7 @@ public class OrderService implements OrderRepository {
 			preparedStmt.setTimestamp(6, date);
 			preparedStmt.setInt(7, voucher_id);
 			preparedStmt.setString(8, note);
-			preparedStmt.setString(9, "Awaiting confirmation");
+			preparedStmt.setInt(9, 1);
 			preparedStmt.setString(10, method);
 			preparedStmt.execute();
 			conn.close();
@@ -104,9 +114,35 @@ public class OrderService implements OrderRepository {
 		return order_id;
 	}
 	
-	public static void main(String[] args) {
-		OrderService o  = new OrderService();
-		System.out.println(o.getLastOrderId());
+	public List<TestTruncate> getAllTestTruncate() {
+		List<TestTruncate> li = null;
+		try {
+			
+			connectService = new ConnectService();
+			li = new ArrayList<>();
+			Connection con = connectService.getConnect();
+			Statement stmt;
+			stmt = (Statement) con.createStatement();
+			ResultSet rs = stmt
+					.executeQuery("select * from testtruncate");
+			while (rs.next()) {
+				TestTruncate t = new TestTruncate();
+				t.setId(rs.getInt("id"));
+				t.setName(rs.getString("name"));
+
+				li.add(t);
+			}
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return li;
+	}
+	
+	
+	public static void main(String[] args) {		
+		//0 OrderService os = new OrderService();
+		
 	}
 
 }
