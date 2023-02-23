@@ -15,4 +15,5 @@ public interface aRoleRepository {
 	public boolean exists_Role_Name_When_Update(String role_name, int role_id);
 	public boolean exists_Role_Id_In_tblUser(int role_id);
 	public List<String> getAll_role_id_in_tblUser();
+	public List<Role> findRoleByString(String txt);
 }

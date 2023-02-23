@@ -47,6 +47,15 @@
     z-index: 15;
 }
 
+h2.msg-h2 {
+    display: flex;
+    justify-content: space-between;
+}
+
+h2.msg-h2 img {
+    width: 24px;
+    height: 24px;
+}
 </style>
 <body>
 
@@ -188,14 +197,6 @@
 					</c:forEach>
 				</tbody>
 			</table>
-			<div>
-			
-			
-
-
-			
-			</div>
-			
 		</div>
 		<c:if test="${ newProduct == 'true' }">
 			<div class="table-add-new-product">
@@ -203,7 +204,7 @@
 		<c:if test="${ newProduct == 'false' }">
 			<div class="table-add-new-product importantNone">
 		</c:if>
-			<form action="" method="post" enctype="multipart/form-data">
+			<form action="http://localhost:8888/SpringMVC/admin/product/add-new-product/savefile" method="post" enctype="multipart/form-data">
 				<table class="table-new-product">
 					<tr>
 						<td>
@@ -229,9 +230,7 @@
 								<img src="" id="preview">
 							</div>	
 							<div class="btn-add-new-product">
-								
-								<input type="submit" value="Add" id="btn-addnewproduct" name="btn-addnewproduct">
-								
+								<input type="button" value="Add" id="btn-addnewproduct" name="btn-addnewproduct">
 							</div>
 						</td>
 					</tr>
@@ -240,7 +239,7 @@
 						<td>
 							<div class="id-new-product">
 								<p>Style</p>
-								<select class="selected-add-new-product" id="select-style" name="">
+								<select class="selected-add-new-product" id="select-style" name="style">
 									<option value="" disabled="disabled" selected>Choose style</option>
 									<c:forEach var="liStyle" items="${ listStyle }">
 										<option value="${ liStyle.id }">${ liStyle.style_name }</option>
@@ -251,7 +250,7 @@
 						<td>
 							<div class="id-new-product">
 								<p>Gender</p>
-								<select class="selected-add-new-product" id="select-gender" name="">
+								<select class="selected-add-new-product" id="select-gender" name="gender">
 									<option value="" disabled="disabled" selected>Choose gender</option>
 									<c:forEach var="liGender" items="${ listGender }">
 										<option value="${ liGender.id }">${ liGender.gender_name }</option>
@@ -262,7 +261,7 @@
 						<td>
 							<div class="id-new-product">
 								<p>User</p>
-								<select class="selected-add-new-product" id="select-user" name="">
+								<select class="selected-add-new-product" id="select-user" name="user">
 									<option value="" disabled="disabled" selected>Choose user</option>
 									<c:forEach var="liUser" items="${ listUser }">
 										<c:if test="${ liUser.role.id == 1 }">
@@ -277,7 +276,7 @@
 						<td>
 							<div class="id-new-product">
 								<p>Brand</p>
-								<select class="selected-add-new-product" id="select-brand" name="">
+								<select class="selected-add-new-product" id="select-brand" name="brand">
 									<option value="" disabled="disabled" selected>Choose brand</option>
 									<c:forEach var="liBrand" items="${ listBrand }">
 										<option value="${ liBrand.id }">${ liBrand.brand_name }</option>
@@ -285,10 +284,11 @@
 								</select>
 							</div>
 						</td>
+						
 						<td>
 							<div class="id-new-product">
 								<p>Color</p>
-								<select class="selected-add-new-product" id="select-color" name="">
+								<select class="selected-add-new-product" id="select-color" name="color">
 									<option value="" disabled="disabled" selected>Choose color</option>
 									
 									<c:forEach var="liColor" items="${ listColor }">
@@ -299,8 +299,8 @@
 						</td>
 						<td>
 							<div class="id-new-product">
-								<p>Image</p>
-								<input type="file" id="filetag" name="filetag">
+									<p>Image</p>
+									<input type="file" id="filetag" name="filetag">
 							</div>
 						</td>
 					</tr>
@@ -309,24 +309,24 @@
 							<div class="id-new-product-size">
 								<p>Size & Quantity</p>
 								<div class="list-size-add-new-product">
-									<span id="1" onclick="size(this)">32<input class="none" type="number" placeholder="Qty"></span> 
-									<span id="2" onclick="size(this)">33<input class="none" type="number" placeholder="Qty"></span>
-									<span id="3" onclick="size(this)">34<input class="none" type="number" placeholder="Qty"></span>
-									<span id="4" onclick="size(this)">35<input class="none" type="number" placeholder="Qty"></span>
-									<span id="5" onclick="size(this)">36<input class="none" type="number" placeholder="Qty"></span>
-									<span id="6" onclick="size(this)">37<input class="none" type="number" placeholder="Qty"></span>
-									<span id="7" onclick="size(this)">38<input class="none" type="number" placeholder="Qty"></span>
-									<span id="8" onclick="size(this)">39<input class="none" type="number" placeholder="Qty"></span>
+									<span id="1" onclick="size(this)">32<input class="none" id="1" name="size32" type="number" placeholder="Qty"></span> 
+									<span id="2" onclick="size(this)">33<input class="none" id="2" name="size33" type="number" placeholder="Qty"></span>
+									<span id="3" onclick="size(this)">34<input class="none" id="3" name="size34" type="number" placeholder="Qty"></span>
+									<span id="4" onclick="size(this)">35<input class="none" id="4" name="size35" type="number" placeholder="Qty"></span>
+									<span id="5" onclick="size(this)">36<input class="none" id="5" name="size36" type="number" placeholder="Qty"></span>
+									<span id="6" onclick="size(this)">37<input class="none" id="6" name="size37" type="number" placeholder="Qty"></span>
+									<span id="7" onclick="size(this)">38<input class="none" id="7" name="size38" type="number" placeholder="Qty"></span>
+									<span id="8" onclick="size(this)">39<input class="none" id="8" name="size39" type="number" placeholder="Qty"></span>
 								</div>
 								<div class="list-size-add-new-product">
-									<span id="09" onclick="size(this)">40<input class="none" type="number" placeholder="Qty"></span> 
-									<span id="10" onclick="size(this)">41<input class="none" type="number" placeholder="Qty"></span> 
-									<span id="11" onclick="size(this)">42<input class="none" type="number" placeholder="Qty"></span> 
-									<span id="12" onclick="size(this)">43<input class="none" type="number" placeholder="Qty"></span> 
-									<span id="13" onclick="size(this)">44<input class="none" type="number" placeholder="Qty"></span> 
-									<span id="14" onclick="size(this)">45<input class="none" type="number" placeholder="Qty"></span> 
-									<span id="15" onclick="size(this)">46<input class="none" type="number" placeholder="Qty"></span> 
-									<span id="16" onclick="size(this)">47<input class="none" type="number" placeholder="Qty"></span> 
+									<span id="9"  onclick="size(this)">40<input class="none" id="9"   name="size40" type="number" placeholder="Qty"></span> 
+									<span id="10" onclick="size(this)">41<input class="none" id="10"  name="size41" type="number" placeholder="Qty"></span> 
+									<span id="11" onclick="size(this)">42<input class="none" id="11"  name="size42" type="number" placeholder="Qty"></span> 
+									<span id="12" onclick="size(this)">43<input class="none" id="12"  name="size43" type="number" placeholder="Qty"></span> 
+									<span id="13" onclick="size(this)">44<input class="none" id="13"  name="size44" type="number" placeholder="Qty"></span> 
+									<span id="14" onclick="size(this)">45<input class="none" id="14"  name="size45" type="number" placeholder="Qty"></span> 
+									<span id="15" onclick="size(this)">46<input class="none" id="15"  name="size46" type="number" placeholder="Qty"></span> 
+									<span id="16" onclick="size(this)">47<input class="none" id="16"  name="size47" type="number" placeholder="Qty"></span> 
 								</div>                                                                     
 							</div>                                                                                      
 						</td>
@@ -337,7 +337,7 @@
 						<td colspan="3">
 							<div class="phone-number">
 								<p>Description</p>
-								<textarea maxlength="500" id="txt-description" name=""></textarea>
+								<textarea maxlength="500" id="txt-description" name="description"></textarea>
 							</div>
 						</td>
 					</tr>
@@ -771,7 +771,9 @@
 	</div>
 
 	<div class="message msg-order message-notify none">
-		<h2>Message</h2>
+		<h2 class="msg-h2">
+			Message
+			<img alt="" src="<c:url value="/assets/images/icons/icons8-notification-100-msg.png"/>"></h2>
 		<p class="content-msg content-msg-notify"></p>
 		<div class="btn-ok-cancel">
 			<input class="cancel" type="button" value="Cancel"> <input
@@ -779,13 +781,17 @@
 		</div>
 	</div>
 	<div class="message msg-order message-done none">
-		<h2>Message</h2>
+		<h2 class="msg-h2">
+			Message
+			<img alt="" src="<c:url value="/assets/images/icons/icons8-notification-100-msg.png"/>"></h2>
 		<p class="content-msg content-msg-done"></p>
 		<div class="btn-ok-cancel">
 			<input
 				class="ok ok-done hover-btn" type="button" value="OK">
 		</div>
 	</div>
+	
+	
 
 	<div class="msg-done importantNone">Done!</div>
 
@@ -806,37 +812,37 @@
 		
 	</script>
 
-
-<script>
-<!-- check null when click add new product -->
-  async function uploadFile() {
-    let formData = new FormData(); 
-    formData.append("file", ajaxfile.files[0]);
-    await fetch('fileuploadservlet', {
-      method: "POST", 
-      body: formData
-    }); 
-    alert('The file upload with Ajax and Java was a success!');
-  }
-  </script>
+	<script>
+	<!-- get string size -->
+	  function getSize(arr) {
+		  var txt ="";
+		  if(arr.length > 0) {
+			  for(let i=0; i<arr.length; i++) {
+				  if(i == (arr.length-1)) {
+					  txt += arr[i].id +"_"+ arr[i].value;
+				  } else {
+					  txt += arr[i].id +"_"+ arr[i].value +"/";
+				  }
+			  }
+		  }
+		  return txt;
+	  }
+	</script>
 
 	<script>
-	/* $("#btn-addnewproduct").click(function() {
-		var title = $("#title").val();
-		var price = $("#price").val();
-		var discount = $("#discount").val();
-		var style = $('#select-style').find(":selected").val();
-		var gender = $('#select-gender').find(":selected").val();
-		var user = $('#select-user').find(":selected").val();
-		var brand = $('#select-brand').find(":selected").val();
-		var color = $('#select-color').find(":selected").val();
-		var file = $('input[type=file]').val();
-		
+	$("#btn-addnewproduct").click(function() {
+		var title 		= $("#title").val();
+		var price 		= $("#price").val();
+		var discount 	= $("#discount").val();
+		var style 		= $('#select-style').find(":selected").val();
+		var gender 		= $('#select-gender').find(":selected").val();
+		var user 		= $('#select-user').find(":selected").val();
+		var brand 		= $('#select-brand').find(":selected").val();
+		var color	 	= $('#select-color').find(":selected").val();
+		var file 		= $('input[type=file]').val();
 		var description = $("#txt-description").val();
-		var arrSize = $('.list-size-add-new-product span input').not('.none');
-				
-		var error = "";
-		var strs = "";
+		var arrSize 	= $('.list-size-add-new-product span input').not('.none');
+		var error ="";
 		
 		if(title=="") {
 			error += "Title is empty! \n";
@@ -871,29 +877,18 @@
 		if(description=="") {
 			error += "Description is empty! \n";
 		}
-		
 		if(error=="") {
-			var xhr = new XMLHttpRequest();
-			xhr.open("GET",
-					"http://localhost:8888/SpringMVC/cart?remove="
-							+ x.name);
-			// What to do when server responds
-			xhr.onload = function() {
-				window.location.assign("http://localhost:8888/SpringMVC/cart");
-			};
-			xhr.send();
-			return false;
+			$(this).attr('type', 'submit');
 		} else {
-			$("#btn-addnewproduct").submit();
-			/* $(".message-done").removeClass("none");
+			$(".message-done").removeClass("none");
 			$(".content-msg-done").text(
 					error);
 			$(".content-msg-done").html($(".content-msg-done").html().replace(/\n/g,'<br/>'));
 			$('.ok-done').click(function() {
 				$(".message-done").addClass("none");
-			}); */
+			});
 		}
-	}); */
+	});
 	</script>
 
 <!--  show input to enter quantity when click on size box -->

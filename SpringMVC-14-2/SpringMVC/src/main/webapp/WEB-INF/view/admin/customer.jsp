@@ -255,103 +255,106 @@ input#roleid {
 			<c:if test="${ addnewuser == 'false' }">
 				<div class="tbl-add-new none">
 			</c:if>
-				<table class="tbl-new-user">
-					<tr>
-						<td class="choose-img-avt" rowspan="7">
-							<div class="input-img">
-								<label for="filetag" class="btn-avt">Choose avatar</label>
-								<input type="file" id="filetag" name="filetag" class="none">
-							</div>
-							<div class="img-display">
-								<img src="<c:url value="/assets/images/users/avt-default.jpg"/>" id="preview">
-							</div>	
-						</td>
-						<td>
-							<div class="input">
-								<p>Full name<span class="required-span"> *</span></p>
-								<input type="text" id="fullname" name="fullname">
-							</div>
-						</td>
-						
-					</tr>
-					<tr>
-						<td>
-							<div class="input">
-								<p>Email address<span class="required-span"> *</span></p>
-								<input type="text" id="email" name="email" autocomplete="off">
-								<p class="msg-required msg-email none">Exp: tishoes@gmail.com</p>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<div class="input">
-								<p>Phone number<span class="required-span"> *</span></p>
-								<input type="number" id="phonenumber" name="phonenumber">
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<div class="input">
-								<p>City<span class="required-span"> *</span></p>
-								<input type="text" id="address" name="address">
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<div class="input">
-								<p>Password<span class="required-span"> *</span></p>
-								<div class="pw-form">
-									<input type="password" id="password" name="password">
-									<img class="eye-show-hide" src="<c:url value="/assets/images/icons/icons8-hide-60.png"/>" alt="" >
-									<img class="eye-show none" src="<c:url value="/assets/images/icons/icons8-eye-60.png"/>" alt="" >
-									<img class="eye-hide none" src="<c:url value="/assets/images/icons/icons8-hide-60.png"/>" alt="" >
+				<form action="http://localhost:8888/SpringMVC/admin/customer/add-new-user/savefile" method="post" enctype="multipart/form-data">
+					<table class="tbl-new-user">
+						<tr>
+							<td class="choose-img-avt" rowspan="7">
+									<div class="input-img">
+										<label for="filetag" class="btn-avt">Choose avatar</label>
+										<input type="file" id="filetag" name="filetag" class="none">
+									</div>
+								<div class="img-display">
+									<img src="<c:url value="/assets/images/users/avt-default.jpg"/>" id="preview">
+								</div>	
+							</td>
+							<td>
+								<div class="input">
+									<p>Full name<span class="required-span"> *</span></p>
+									<input type="text" id="fullname" name="fullname">
 								</div>
-								<p class="msg-required msg-pw none">Password must contain the following: 
-								At least one uppercase letter, 
-								one lowercase letter, 
-								one digit, 
-								one special symbol & should be more than 8 character.</p>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<div class="input">
-								<p>Confirm Password<span class="required-span"> *</span></p>
-								<div class="pw-form">
-									<input type="password" id="confirmpw" name="confirmpw">
-									<img class="eye-show-hide-pw" src="<c:url value="/assets/images/icons/icons8-hide-60.png"/>" alt="" >
-									<img class="eye-show-pw none" src="<c:url value="/assets/images/icons/icons8-eye-60.png"/>" alt="" >
-									<img class="eye-hide-pw none" src="<c:url value="/assets/images/icons/icons8-hide-60.png"/>" alt="" >
+							</td>
+							
+						</tr>
+						<tr>
+							<td>
+								<div class="input">
+									<p>Email address<span class="required-span"> *</span></p>
+									<input type="text" id="email" name="email" autocomplete="off">
+									<p class="msg-required msg-email none">Exp: tishoes@gmail.com</p>
 								</div>
-								<p class="msg-required msg-confirmpw none">Confirm password must be same as "Password".</p>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<div class="input">
-								<p>Role<span class="required-span"> *</span></p>
-								<select class="sl-role" id="role">
-									<option value="" disabled="disabled" selected>Choose role...</option>
-									<c:forEach var="liRole" items="${ listRole }">
-										<option value="${ liRole.id }">${ liRole.role_name } - ${ liRole.id }</option>
-									</c:forEach>
-								</select>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<div class="btn-add">
-								<input type="button" id="btn-addnewuser" name="addnewuser" value="ADD NEW USER">
-							</div>
-						</td>
-					</tr>
-				</table>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="input">
+									<p>Phone number<span class="required-span"> *</span></p>
+									<input type="number" id="phonenumber" name="phonenumber">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="input">
+									<p>City<span class="required-span"> *</span></p>
+									<input type="text" id="address" name="address">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="input">
+									<p>Password<span class="required-span"> *</span></p>
+									<div class="pw-form">
+										<input type="password" id="password" name="password">
+										<img class="eye-show-hide" src="<c:url value="/assets/images/icons/icons8-hide-60.png"/>" alt="" >
+										<img class="eye-show none" src="<c:url value="/assets/images/icons/icons8-eye-60.png"/>" alt="" >
+										<img class="eye-hide none" src="<c:url value="/assets/images/icons/icons8-hide-60.png"/>" alt="" >
+									</div>
+									<p class="msg-required msg-pw none">Password must contain the following: 
+									At least one uppercase letter, 
+									one lowercase letter, 
+									one digit, 
+									one special symbol & should be more than 8 character.</p>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="input">
+									<p>Confirm Password<span class="required-span"> *</span></p>
+									<div class="pw-form">
+										<input type="password" id="confirmpw" name="confirmpw">
+										<img class="eye-show-hide-pw" src="<c:url value="/assets/images/icons/icons8-hide-60.png"/>" alt="" >
+										<img class="eye-show-pw none" src="<c:url value="/assets/images/icons/icons8-eye-60.png"/>" alt="" >
+										<img class="eye-hide-pw none" src="<c:url value="/assets/images/icons/icons8-hide-60.png"/>" alt="" >
+									</div>
+									<p class="msg-required msg-confirmpw none">Confirm password must be same as "Password".</p>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="input">
+									<p>Role<span class="required-span"> *</span></p>
+									<select class="sl-role" id="role" name="role">
+										<option value="" disabled="disabled" selected>Choose role...</option>
+										<c:forEach var="liRole" items="${ listRole }">
+											<option value="${ liRole.id }">${ liRole.role_name } - ${ liRole.id }</option>
+										</c:forEach>
+									</select>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="btn-add">
+									<input type="button" id="btn-addnewuser" name="addnewuser" value="ADD NEW USER">
+								</div>
+							</td>
+						</tr>
+					</table>
+				</form>
+				
 			</div>
 			
 			
@@ -464,7 +467,7 @@ input#roleid {
 										<img src="<c:url value="/assets/images/icons/icons8-search-50-blue.png"/>" alt="icon-search">
 									</div>
 									<div class="search-role-input">
-										<input type="text" placeholder="Search...">
+										<input type="text" id="search-role" placeholder="Search...">
 									</div>
 								</div>
 							</th>
@@ -558,7 +561,72 @@ input#roleid {
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 	<script>
+	// if users click img search
+	$(".search-role-img").click(function() {
+		var txt = $("#search-role").val();
+		var error="";
+		if(txt == "") {
+			error += "You have not entered search information!";
+		}
+		if(error != "") {
+			$(".message-notify").removeClass("none");
+			$(".content-msg-notify").text(error);
+			$(".content-msg-notify").html($(".content-msg-notify").html().replace(/\n/g,'<br/>'));
+			$('.ok').click(function() {
+				$(".message-notify").addClass("none");
+			});
+		} else {
+			var url = window.location.href;
+			if(url.includes("/edit/")) {
+				url = "http://localhost:8888/SpringMVC/admin/role";
+			} else if(url.includes("?search_role")) {
+				url = "http://localhost:8888/SpringMVC/admin/role";
+			}
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", url+"?search_role="+txt);
+			// What to do when server responds
+			xhr.onload = function() {
+				window.location.assign(url+"?search_role="+txt);
+			};
+			xhr.send();
+		}
+	});
 	
+	// if users press enter
+	$('#search-role').on('keypress', function (e) {
+        if(e.which === 13){
+        	var txt = $("#search-role").val();
+    		var error="";
+    		if(txt == "") {
+    			error += "You have not entered search information!";
+    		}
+    		if(error != "") {
+    			$(".message-notify").removeClass("none");
+    			$(".content-msg-notify").text(error);
+    			$(".content-msg-notify").html($(".content-msg-notify").html().replace(/\n/g,'<br/>'));
+    			$('.ok').click(function() {
+    				$(".message-notify").addClass("none");
+    			});
+    		} else {
+    			var url = window.location.href;
+    			if(url.includes("/edit/")) {
+    				url = "http://localhost:8888/SpringMVC/admin/role";
+    			} else if(url.includes("?search_role")) {
+    				url = "http://localhost:8888/SpringMVC/admin/role";
+    			}
+    			var xhr = new XMLHttpRequest();
+    			xhr.open("GET", url+"?search_role="+txt);
+    			// What to do when server responds
+    			xhr.onload = function() {
+    				window.location.assign(url+"?search_role="+txt);
+    			};
+    			xhr.send();
+    		}
+        }
+ 	});
+	</script>
+
+	<script>
 	function exists_role_id_in_tblUser(role_id) { //check exists role id
 		var arr = [];
 		<c:forEach items="${listRoleId}" var="id">
@@ -805,29 +873,11 @@ input#roleid {
 				$(".message-notify").addClass("none");
 			});
 		} else {
-			xhr.open("GET",
-					url +"?fullname="+fullname 
-					+"&email="+email
-					+"&phonenumber="+phonenumber
-					+"&address="+address
-					+"&password="+password
-					+"&role_id="+role
-					+"&avatar="+avatar);
-			// What to do when server responds
-			xhr.onload = function() {
-				$(".continue-add").removeClass("none");
-				$(".content-msg-add").text("Add customer successfully!");
-				$('#continue').click(function() {
-					$(".continue-add").addClass("none");
-					window.location.assign(url);
-				});
-				$('.ok').click(function() {
-					$(".continue-add").addClass("none");
-					window.location.assign("http://localhost:8888/SpringMVC/admin/customer");
-				});
-				
-			};
-			xhr.send();
+			$(".message-notify").removeClass("none");
+			$(".content-msg-add").text("Add customer successfully!");
+			$('.ok').click(function() {
+				$('#btn-addnewuser').attr('type', 'submit');
+			});
 		}
 		
  	});
@@ -1085,14 +1135,14 @@ input#roleid {
 						};
 						xhr.send();
 					});
-					
-					
 				});
 			}
 		}) 
 		
 	</script>
-	
+	<script>
+  
+  </script>
 	
   <script>
 <!-- choose image and display -->

@@ -25,6 +25,7 @@ import TiShoes.Repository.User.Color_sizeRepository;
 
 public class Color_sizeService implements Color_sizeRepository {
 	private ConnectService connectService;
+	private SizeService sizeService;
 	private Color color;
 	private Color_size color_size;
 	private Sizes size;
@@ -595,6 +596,7 @@ public class Color_sizeService implements Color_sizeRepository {
 	}
 
 	public HashMap<Integer, Integer> getSize_Quantity(String txt) {
+		sizeService = new SizeService();
 		HashMap<Integer, Integer> hm = new LinkedHashMap<Integer, Integer>();
 		String arr[] = {};
 		String arr1[] = {};
@@ -603,7 +605,11 @@ public class Color_sizeService implements Color_sizeRepository {
 			for (String s : arr) {
 				if (!s.equals("")) {
 					arr1 = s.split("_");
-					hm.put(Integer.parseInt(arr1[0]), Integer.parseInt(arr1[1]));
+					if(arr1.length==1) {
+						hm.put(sizeService.get_size_id_by_size_number(Integer.parseInt(arr1[0])), 0);
+					} else {
+						hm.put(sizeService.get_size_id_by_size_number(Integer.parseInt(arr1[0])), Integer.parseInt(arr1[1]));
+					}
 				}
 			}
 		}
@@ -622,8 +628,10 @@ public class Color_sizeService implements Color_sizeRepository {
 
 	public static void main(String[] args) {
 		Color_sizeService cls = new Color_sizeService();
-		User li = cls.getUserByIdUser(4);
-		System.out.println(li.getId() + "==" + li.getFullname());
-
+		HashMap<Integer, Integer> hm = cls.getSize_Quantity("32_123/33_150/34_300/35_400/36_500/37_500/38_400/39_400/40_300/41_200/42_100/43_50/44_50/45_50/46_50/47_50");
+		for (Integer i : hm.keySet()) {
+			System.out.println(i+ "=="+ hm.get(i));
+			
+		}
 	}
 }

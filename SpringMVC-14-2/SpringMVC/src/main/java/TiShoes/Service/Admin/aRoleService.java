@@ -2,6 +2,7 @@ package TiShoes.Service.Admin;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.mysql.jdbc.PreparedStatement;
@@ -186,11 +187,27 @@ public class aRoleService implements aRoleRepository{
 		return li;
 	}
 	
-	public static void main(String[] args) {
-		aRoleService a = new aRoleService();
-		List<String> li = a.getAll_role_id_in_tblUser();
-		for (String string : li) {
-			System.out.println(string);
+	@Override
+	public List<Role> findRoleByString(String txt) {
+		List<Role> li = new LinkedList<>();
+		for (Role r : getAllRole()) {
+			String arrA[] = r.getRole_name().split("\\s+");
+			String arrB[] = r.getDescription().split("\\s+");
+			for (String s : arrA) {
+				if(s.equals(txt)) {
+					if(!li.contains(r)) {
+						li.add(r);
+					}
+				}
+			}
+			for (String s : arrB) {
+				if(s.equals(txt)) {
+					if(!li.contains(r)) {
+						li.add(r);
+					}
+				}
+			}
 		}
+		return li;
 	}
 }

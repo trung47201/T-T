@@ -8,17 +8,16 @@ import java.util.List;
 
 import com.mysql.jdbc.Statement;
 
-
 import TiShoes.Model.Sizes;
 import TiShoes.Repository.User.SizeRepository;
 
-public class SizeService implements SizeRepository{
+public class SizeService implements SizeRepository {
 	private ConnectService connectService;
 	private Sizes size;
-	
+
 	@Override
 	public List<Sizes> getAllSize() {
-		List<Sizes> li= null;
+		List<Sizes> li = null;
 		try {
 			connectService = new ConnectService();
 			li = new ArrayList<>();
@@ -45,12 +44,22 @@ public class SizeService implements SizeRepository{
 	public Sizes getSizeById(int size_id) {
 		SizeService ss = new SizeService();
 		List<Sizes> li = ss.getAllSize();
-		Sizes s = new Sizes();;
+		Sizes s = new Sizes();
+		;
 		for (Sizes sizes : li) {
 			if (sizes.getId() == size_id) {
 				s = sizes;
 			}
 		}
 		return s;
+	}
+
+	public int get_size_id_by_size_number(int size_number) {
+		int id = 0;
+		for (Sizes sizes : getAllSize()) {
+			if (sizes.getSize_number() == size_number) {
+				id = sizes.getId();			}
+		}
+		return id;
 	}
 }

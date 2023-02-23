@@ -956,3 +956,12 @@ input[type=number] {
     z-index: 15;
 }
 
+h2.msg-h2 {
+    display: flex;
+    justify-content: space-between;
+}
+
+h2.msg-h2 img {
+    width: 24px;
+    height: 24px;
+}
