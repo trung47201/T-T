@@ -22,7 +22,7 @@ public class aUserService implements aUserRepository {
 		userService = new UserService();
 		return userService.getAllUser();
 	}
-	
+
 	@Override
 	public boolean existUser(String email, String phone_number) {
 		for (User u : getAllUser()) {
@@ -70,11 +70,11 @@ public class aUserService implements aUserRepository {
 					preparedStmt.setInt(7, role_id);
 					preparedStmt.execute();
 					conn.close();
-					
+
 				}
 				return true;
 			}
-			
+
 		} catch (Exception e) {
 			System.err.println("Got an exception!");
 			// printStackTrace method
@@ -100,11 +100,11 @@ public class aUserService implements aUserRepository {
 			Connection con = connectService.getConnect();
 			boolean check_exists_user = false;
 			for (User u : getAllUser()) {
-				if(u.getId() == user_id) {
+				if (u.getId() == user_id) {
 					check_exists_user = true;
 				}
 			}
-			if(check_exists_user) {
+			if (check_exists_user) {
 				String sql = "UPDATE `user` SET `status`= ? WHERE id = ? ";
 				PreparedStatement preparedStmt = (PreparedStatement) con.prepareStatement(sql);
 				preparedStmt.setInt(1, 1);
@@ -120,7 +120,7 @@ public class aUserService implements aUserRepository {
 			// prints line numbers + call stack
 			e.printStackTrace();
 			// Prints what exception has been thrown
-			System.out.println(e);			
+			System.out.println(e);
 		}
 		return false;
 	}
@@ -132,11 +132,11 @@ public class aUserService implements aUserRepository {
 			Connection con = connectService.getConnect();
 			boolean check_exists_user = false;
 			for (User u : getAllUser()) {
-				if(u.getId() == user_id) {
+				if (u.getId() == user_id) {
 					check_exists_user = true;
 				}
 			}
-			if(check_exists_user) {
+			if (check_exists_user) {
 				String sql = "UPDATE `user` SET `status`= ? WHERE id = ? ";
 				PreparedStatement preparedStmt = (PreparedStatement) con.prepareStatement(sql);
 				preparedStmt.setInt(1, 0);
@@ -144,7 +144,7 @@ public class aUserService implements aUserRepository {
 				preparedStmt.execute();
 				return true;
 			} else {
-				return false;		
+				return false;
 			}
 		} catch (Exception e) {
 			System.err.println("Got an exception!");
@@ -152,8 +152,27 @@ public class aUserService implements aUserRepository {
 			// prints line numbers + call stack
 			e.printStackTrace();
 			// Prints what exception has been thrown
-			System.out.println(e);			
+			System.out.println(e);
 		}
 		return false;
+	}
+
+	public int check_login(String user, String pass) {
+		int id = 0;
+		md5Service = new MD5Service();
+		for (User u : getAllUser()) {
+			if ((u.getEmail().equals(user) && u.getPassword().equals(md5Service.StringToMD5(pass))
+					&& u.getRole().getId() == 1)
+					|| (u.getPhone_number().equals(user) && u.getPassword().equals(md5Service.StringToMD5(pass))
+							&& u.getRole().getId() == 1)) {
+				return u.getId();
+			}
+		}
+		return id;
+	}
+	
+	public static void main(String[] args) {
+//		aUserService a = new aUserService();
+//		System.out.println(a.check_login("0369796369", "Trung47201!"));
 	}
 }

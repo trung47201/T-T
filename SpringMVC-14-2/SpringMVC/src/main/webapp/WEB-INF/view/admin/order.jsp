@@ -7,6 +7,7 @@
 	pageEncoding="UTF-8"%>
 <link rel="stylesheet"
 	href="<c:url value ="/assets/css/admin-order.css"/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/admin-login.css'/>">
 
 <c:if test="${ management == 'true' }">
 	<title>Order management :)</title>
@@ -22,6 +23,7 @@
 </c:if>
 
 <body>
+<jsp:include page="../layouts/admin/login.jsp"></jsp:include>
 	<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
 	<div class="admin-body">
 		<jsp:include page="../layouts/admin/nav.jsp"></jsp:include>

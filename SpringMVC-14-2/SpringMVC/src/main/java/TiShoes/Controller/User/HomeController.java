@@ -218,8 +218,13 @@ public class HomeController {
 			oRemember.setMaxAge(0);
 			response.addCookie(oRemember);
 		}
+		if(arr!= null) {
+			for (Cookie o : arr) {
+				System.out.println(o.getName() +"==" + o.getValue());
+			}
+		}
 		
-		
+
 		mv.addObject("style", styleService.getAllStyle());
 		mv.addObject("slides", slidesService.getAllSlides());
 		mv.addObject("listNewArrivals", productService.getNewArrivals());
@@ -235,23 +240,10 @@ public class HomeController {
 		ModelAndView mv = new ModelAndView("user/news");
 		return mv;
 	}
-	@RequestMapping(value = {"questions"})
-	public ModelAndView loadQuestion(){
-		ModelAndView mv = new ModelAndView("user/questions");
-		return mv;
-	}
-	@RequestMapping(value = {"contact"})
-	public ModelAndView loadContact(){
-		ModelAndView mv = new ModelAndView("user/contact");
-		return mv;
-	}
+	
 	
 	//reset cookie
-//	if(arr!= null) {
-//		for (Cookie o : arr) {
-//			System.out.println(o.getName() +"==" + o.getValue());
-//		}
-//	}
+//	
 //	for (Cookie o : arr) {
 //		if (o.getName().equals("prod_size")) {
 //			Cookie addtocartprod = new Cookie("prod_size", "6_6_1/5_19_12/4_6_1");

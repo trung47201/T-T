@@ -1002,7 +1002,7 @@ div.footer {
   display: flex;
 }
 div.logo-footer {
-  margin-top: 40px;
+  margin-top: 20px;
   margin-left: 7%;
 }
 img.logo-footer {
@@ -1017,7 +1017,7 @@ div.shop-name {
 .content-footer {
   font-size: 24px;
   font-weight: bold;
-  margin-top: 70px;
+  margin-top: 50px;
   margin-left: 70px;
 }
 .content-footer-sub {

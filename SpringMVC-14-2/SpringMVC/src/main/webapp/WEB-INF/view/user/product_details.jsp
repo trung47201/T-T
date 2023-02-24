@@ -239,7 +239,8 @@
 							<div class="customer-reviews">
 								<div class="infor-customoer-reviews">
 									<div class="avt-customoer-reviews">
-										<img src="images/icons/user48.png" alt="image">
+										<img src="<c:url value="/assets/images/users/avt-default.jpg"/>"
+											alt="image">
 									</div>
 									<div class="name-customoer-reviews">
 										<h6>Dao Thu Teng</h6>
@@ -249,11 +250,16 @@
 							</div>
 							<div class="content-reviews">
 								<div class="number-star-rating">
-									<img src="images/icons/star24.png" alt="image"> <img
-										src="images/icons/star24.png" alt="image"> <img
-										src="images/icons/star24.png" alt="image"> <img
-										src="images/icons/star24.png" alt="image"> <img
-										src="images/icons/star24.png" alt="image">
+									<img src="<c:url value="/assets/images/icons/star24.png"/>"
+										alt="image"> <img
+										src="<c:url value="/assets/images/icons/star24.png"/>"
+										alt="image"> <img
+										src="<c:url value="/assets/images/icons/star24.png"/>"
+										alt="image"> <img
+										src="<c:url value="/assets/images/icons/star24.png"/>"
+										alt="image"> <img
+										src="<c:url value="/assets/images/icons/star24.png"/>"
+										alt="image">
 								</div>
 								<div class="date-rating">2022-10-22 12:00 |</div>
 								<div class="content-rating">Trước có mượn son hãng này của
@@ -262,9 +268,12 @@
 									màu mình thích, 909 đi tiệc đẹp. Test lên tay thấy ok, lên môi
 									có khô hay ko thì chưa biết.</div>
 								<div class="img-video-rating">
-									<img src="images/products/0.png" alt="img-reviews"> <img
-										src="images/products/0.png" alt="img-reviews"> <img
-										src="images/products/0.png" alt="img-reviews">
+									<img src="<c:url value="/assets/images/products/0.png"/>"
+										alt="img-reviews"> <img
+										src="<c:url value="/assets/images/products/0.png"/>"
+										alt="img-reviews"> <img
+										src="<c:url value="/assets/images/products/0.png"/>"
+										alt="img-reviews">
 								</div>
 								<div class="feedback-rating">
 									<h6>Phản Hồi Của Người Bán</h6>
@@ -276,18 +285,23 @@
 								</div>
 								<div class="connect-rating">
 									<div class="favorite-rating">
-										<img src="images/icons/favorite24.png" alt="image">
+										<img
+											src="<c:url value="/assets/images/icons/favorite24.png"/>"
+											alt="image">
 									</div>
 									<div class="comment-rating">
-										<img src="images/icons/icons8-comments-24.png" alt="image">
+										<img
+											src="<c:url value="/assets/images/icons/icons8-comments-24.png"/>"
+											alt="image">
 									</div>
 									<div class="share-rating">
-										<img src="images/icons/icons8-share-24.png" alt="image">
+										<img
+											src="<c:url value="/assets/images/icons/icons8-share-24.png"/>"
+											alt="image">
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
 					<div class="details-content none" id="">
 						<div class="description-product-details" id="">
 							<div class="des-title">
@@ -326,61 +340,7 @@
 		</form>
 	</header>
 
-
-	<hr class="shadow">
-
-	<footer>
-		<form action="" method="post">
-			<div class="footer">
-				<div class="logo-footer">
-					<a href="index.html"><img class="logo-footer"
-						src="<c:url value="/assets/images/logo/logo_footer.jpg"/>"
-						alt="logo-footer"></a>
-					<div class="shop-name">
-						<p class="text-shadow">
-							<a href="index.html">UCHIHA SHOES</a>
-						</p>
-					</div>
-				</div>
-				<div class="content-footer">
-					<div class="text-shadow">CONTACT WITH US</div>
-					<div class="content-footer-sub">
-						<div class="col1">
-							ABOUT US
-							<div class="content-col">
-								<a href="#">UCHIHA SHOES Community</a> <br> <a href="#">UCHIHA
-									SHOES Agency</a>
-							</div>
-						</div>
-						<div class="col2">
-							ADDRESS
-							<div class="content-col">
-								dovantrung47201@gmail.com <br> Mr. Trung - 036 97 96 359
-							</div>
-						</div>
-						<div class="col3">
-							FOLLOW
-							<div class="follow-app">
-								<a href="https://www.facebook.com/trung472"><img
-									src="<c:url value="/assets/images/icons/facebook60.png"/>"
-									alt="facebook60" class="app"></a> <a
-									href="https://github.com/trung47201/QLYTHUVIEN"><img
-									src="<c:url value="/assets/images/icons/instagram60.png"/>"
-									alt="instagram60" class="app"></a> <a
-									href="https://www.youtube.com/channel/UCB_GgY-I9WyNOOjVAax3ayg"><img
-									src="<c:url value="/assets/images/icons/youtube60.png"/>"
-									alt="youtube60" class="app"></a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<hr class="copyright">
-			<div class="footer-copyright">T&T SHOES © 2022 All rights
-				reserved.</div>
-		</form>
-	</footer>
-
+	<jsp:include page="../layouts/user/footer.jsp"></jsp:include>
 
 	<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 	<script

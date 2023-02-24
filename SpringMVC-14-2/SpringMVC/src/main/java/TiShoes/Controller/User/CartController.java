@@ -20,6 +20,7 @@ import TiShoes.Service.User.CartService;
 import TiShoes.Service.User.ColorService;
 import TiShoes.Service.User.Color_sizeService;
 import TiShoes.Service.User.ProductService;
+import TiShoes.Service.User.UserService;
 
 @Controller
 public class CartController {
@@ -27,6 +28,7 @@ public class CartController {
 	private CartService cartService;
 	private Color_sizeService color_sizeService;
 	private ColorService colorService;
+	private UserService userService;
 	
 	@RequestMapping(value = { "/cart/{id}" })
 	public ModelAndView loadCartByUserID(@PathVariable String id,HttpServletRequest request, HttpServletResponse response) {
@@ -35,6 +37,7 @@ public class CartController {
 		cartService = new CartService();
 		color_sizeService = new Color_sizeService();
 		colorService = new ColorService();
+		userService = new UserService();
 		
 //		String plus = String.valueOf(request.getParameter("plus"));
 //		String size = String.valueOf(request.getParameter("size"));
@@ -80,7 +83,7 @@ public class CartController {
 		}
 		
 		mv.addObject("userID", id);
-		
+		mv.addObject("avatar", userService.getAvatarByUserID(Integer.parseInt(id)));
 		return mv;
 	}
 

@@ -16,21 +16,7 @@
 <link rel="stylesheet"
 	href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />">
 <style>
-.content-sm{
-    display: flex;
-    text-align: left;
-    width: 70%;
-    height: 70px;
-    border: 1px solid white;
-    margin-left: 15%;
-    border-top:  0;
-    background-color: lightgray;
-    border-radius: 0 0 8px 8px;
-    padding: 0 10px 0 10px;
-    align-items: center;
-    color: #0c1022;
-    visibility: visible;
-}
+
 </style>
 <body>
 	<form action="" method="post">

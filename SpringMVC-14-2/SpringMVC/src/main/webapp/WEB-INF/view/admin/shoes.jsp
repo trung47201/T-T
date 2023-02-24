@@ -23,42 +23,9 @@
 	<title>Add new product :)</title>
 </c:if>
 <link rel="stylesheet" href="<c:url value='/assets/css/admin-product.css'/>">
-
-<style>
-.zoom-img {
-    display: flex;
-    position: absolute;
-    z-index: 30;
-    top: 15%;
-    width: 500px;
-    height: 500px;
-    left: 33%;
-    text-align: center;
-    justify-content: center;
-    overflow-x: hidden;
-    background: #f6f6f6;
-    box-shadow: 0px 0px 10px #0086ff;
-}
-.behind-zoom-img {
-    background: none;
-    width: 100%;
-    height: 700px;
-    position: absolute;
-    z-index: 15;
-}
-
-h2.msg-h2 {
-    display: flex;
-    justify-content: space-between;
-}
-
-h2.msg-h2 img {
-    width: 24px;
-    height: 24px;
-}
-</style>
+<link rel="stylesheet" href="<c:url value='/assets/css/admin-login.css'/>">
 <body>
-
+<jsp:include page="../layouts/admin/login.jsp"></jsp:include>
 	<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
 	<div class="admin-body">
 		<jsp:include page="../layouts/admin/nav.jsp"></jsp:include>

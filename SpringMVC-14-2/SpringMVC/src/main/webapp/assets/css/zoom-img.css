@@ -41,6 +41,5 @@
 	display: flex;
 	color: white;
 	align-items: center;
-	background:
-		url("<c:url value='/assets/images/icons/icons8-starburst-shape-64.png'/>");
+	background: url("../images/icons/icons8-starburst-shape-64.png");
 }

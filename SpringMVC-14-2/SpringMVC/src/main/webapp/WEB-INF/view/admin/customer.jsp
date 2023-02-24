@@ -19,90 +19,10 @@
 
 <link rel="stylesheet" href="<c:url value='/assets/css/role.css'/>">
 <link rel="stylesheet" href="<c:url value='/assets/css/customer.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/admin-login.css'/>">
 
-<style>
-.table-role::-webkit-scrollbar {
-    width: 17px;
-}
-.table-role::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px grey;
-}
-.table-role::-webkit-scrollbar-thumb {
-    background: #666;
-}
-.table-role::-webkit-scrollbar-thumb:hover {
-    background: #16222d;
-}
-.behind-zoom-img {
-    background: none;
-    width: 100%;
-    height: 657px;
-    position: absolute;
-    z-index: 15;
-}
-.form-input input {
-    width: 90%;
-    height: 32px;
-    border: 0;
-    border-left: 2px solid #0086ff;
-    border-radius: 3px;
-    font-size: 18px;
-    color: black;
-    padding: 0 15px;
-}
-.btn-input{
-	margin-top: 50px;
-}
-.btn-input input {
-    display: flex;
-    width: 56.4%;
-    height: 36px;
-    border: 1px solid #0086ff;
-    border-radius: 3px;
-    font-size: 18px;
-    color: #0086ff;
-    text-align: center;
-    font-weight: bold;
-    justify-content: center;
-    background: white;
-    margin-left: 20%;
-}
-.btn-input input:hover {
-	color: white;
-	background: #0086ff;
-	border: 1px solid white;
-	transition: 1.5s;
-}
-
-.form-input input:focus {
-	outline-style: none;
-}
-.role-form {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    margin-top: 20px;
-}
-.role-func-form {
-    width: 40%;
-    margin-left: 4%;
-}
-.form-input {
-	margin-bottom: 20px;
-    width: 100%;
-}
-.img-add {
-    width: 96.4%;
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    margin-top: -30px;
-}
-input#roleid {
-    background: #DEF !important;
-}
-</style>
 <body>
+<jsp:include page="../layouts/admin/login.jsp"></jsp:include>
 	<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
 	<div class="admin-body">
 		<jsp:include page="../layouts/admin/nav.jsp"></jsp:include>

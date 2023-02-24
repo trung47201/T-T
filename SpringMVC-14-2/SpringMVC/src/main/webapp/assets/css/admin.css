@@ -20,9 +20,9 @@ header {
 
 nav {
     background: #364959;
-    min-width: 185px;
-    max-width: 185px;
-    width: 185px;
+    min-width: 200px;
+    max-width: 200px;
+    width: 200px;
     height: 693px;
     overflow-y: scroll;
 }
@@ -120,24 +120,21 @@ nav {
 .admin-search-input input:focus {
     outline-style: none;
 }
-
-.admin-notify-icon {
+.admin-avatar {
     position: absolute;
-    right: 240px;
-    width: 32px;
-    height: 32px;
+    right: 190px;
+    width: 45px;
+    height: 45px;
 }
-
 .admin-notify-icon img {
     width: 100%;
     height: 100%;
 }
-
-.admin-avatar {
+.admin-notify-icon {
     position: absolute;
-    right: 175px;
-    width: 45px;
-    height: 45px;
+    right: 250px;
+    width: 32px;
+    height: 32px;
 }
 
 .admin-avatar img {
@@ -239,7 +236,7 @@ div.menu img {
     order: 0;
     font-weight: bold;
     transition: 0.5s;
-    margin-right: 18px;
+    margin-right: 15px;
 }
 ul.other {
     margin-bottom: 100px;
