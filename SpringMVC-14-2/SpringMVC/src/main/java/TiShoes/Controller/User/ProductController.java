@@ -48,7 +48,8 @@ public class ProductController {
 		String rate = String.valueOf(request.getParameter("rate"));
 		String color = String.valueOf(request.getParameter("color"));
 		String gender = String.valueOf(request.getParameter("gender"));
-
+		String search = request.getParameter("search");
+		
 		Cookie arr[] = request.getCookies();
 		if (arr != null) {
 			li = new ArrayList<>();
@@ -108,34 +109,47 @@ public class ProductController {
 			mv.addObject("checkedColor", productService.getColorCheckedByString(color));
 			hm.put("color", color);
 		}
+		
+		if (search != null) {
+			if(productService.get_all_product_by_search_keywords(search).size()>0) {
+				mv.addObject("listProducts", productService.get_all_product_by_search_keywords(search));
+			} else {
+				mv.addObject("listProductsEmpty", "");
+				mv.addObject("keyword", search);
+			}
+			
+		} else {
+			if (color.equals("null") && size.equals("null") && gender.equals("null") && sortby.equals("null")
+					&& price.equals("null") && stylename.equals("null") && rate.equals("null")) {
+				if (productService.getAllProducts().size() == 0) {
+					mv.addObject("listProducts", "");
+				} else {
+					mv.addObject("listProducts", productService.getAllProducts());
+				}
+			} else {
+				if (!productService.getAllProductsColorSize(hm).isEmpty()) {
+					if (productService.getAllProductsColorSize(hm).size() == 0) {
+						mv.addObject("listProducts", "");
+					} else {
+						mv.addObject("listProducts", productService.getAllProductsColorSize(hm));
+					}
+				}
+			}
+
+		}
+
 
 		mv.addObject("color", colorService.getAllColor());
 		mv.addObject("listSize", sizeService.getAllSize());
 		mv.addObject("style", styleService.getAllStyle());
 
-		if (color.equals("null") && size.equals("null") && gender.equals("null") && sortby.equals("null")
-				&& price.equals("null") && stylename.equals("null") && rate.equals("null")) {
-			if (productService.getAllProducts().size() == 0) {
-				mv.addObject("listProducts", "");
-			} else {
-				mv.addObject("listProducts", productService.getAllProducts());
-			}
-		} else {
-			if (!productService.getAllProductsColorSize(hm).isEmpty()) {
-				if (productService.getAllProductsColorSize(hm).size() == 0) {
-					mv.addObject("listProducts", "");
-				} else {
-					mv.addObject("listProducts", productService.getAllProductsColorSize(hm));
-				}
-			}
-		}
-		
+
 		return mv;
 	}
-	
-	
+
 	@RequestMapping(value = { "products/{id}" })
-	public ModelAndView loadProductsByUser(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView loadProductsByUser(@PathVariable String id, HttpServletRequest request,
+			HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("user/products");
 
 		productService = new ProductService();
@@ -143,7 +157,7 @@ public class ProductController {
 		sizeService = new SizeService();
 		colorService = new ColorService();
 		userService = new UserService();
-		
+
 		HashMap<String, String> hm = new HashMap<>();
 		List<String> li = null;
 		String txt = "";
@@ -237,10 +251,10 @@ public class ProductController {
 				}
 			}
 		}
-		
+
 		mv.addObject("userID", id);
 		mv.addObject("avatar", userService.getAvatarByUserID(Integer.parseInt(id)));
-		
+
 		return mv;
 	}
 }

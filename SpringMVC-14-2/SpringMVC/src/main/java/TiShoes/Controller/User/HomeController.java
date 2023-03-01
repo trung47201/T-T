@@ -87,6 +87,7 @@ public class HomeController {
 		String logout = String.valueOf(request.getParameter("logout"));
 		String rememberme = String.valueOf(request.getParameter("rememberme"));
 		
+		System.out.println(username +"==" + password); 
 		Cookie arr[] = request.getCookies();
 		//add name available in cookie to check name in cookie then add to cart
 		if (arr != null) {
@@ -208,6 +209,22 @@ public class HomeController {
 			Cookie oMsg = new Cookie("messageLogin", "logout");
 			oMsg.setMaxAge(30);
 			response.addCookie(oMsg);
+			if(arr!= null) {
+				for (Cookie o : arr) {
+					if(o.getName().equals("usernameLogin")) {
+						o.setValue("");
+						o.setMaxAge(0);
+						response.addCookie(o);
+					}
+					if(o.getName().equals("passwordLogin")) {
+						o.setValue("");
+						o.setMaxAge(0);
+						response.addCookie(o);
+					}
+					System.out.println(o.getName()+"=="+o.getValue());
+				}
+				
+			}
 		}
 		if(rememberme.equals("true")) {
 			Cookie oRemember = new Cookie("rememberme", "true");
@@ -218,12 +235,13 @@ public class HomeController {
 			oRemember.setMaxAge(0);
 			response.addCookie(oRemember);
 		}
+		
 		if(arr!= null) {
 			for (Cookie o : arr) {
-				System.out.println(o.getName() +"==" + o.getValue());
+				System.out.println(o.getName()+"=="+o.getValue());
 			}
+			
 		}
-		
 
 		mv.addObject("style", styleService.getAllStyle());
 		mv.addObject("slides", slidesService.getAllSlides());

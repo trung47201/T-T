@@ -11,6 +11,7 @@ button.icon-user-login:focus {
 	outline-style: none !important;
 }
 
+
 img.icon-user-login {
 	position: absolute;
 	margin-top: 0 !important;
@@ -30,7 +31,7 @@ a.dropdown-item {
 }
 
 .dropdown-item:hover {
-	color: white;
+	color: white !important;
 	background: #0086ff;
 }
 
@@ -71,4 +72,85 @@ a.dropdown-item {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #0086FF; 
+}
+a:hover {
+    color: #0086ff !important;
+}
+.buy-now a:hover {
+    color: white !important;
+}
+.dropdown-item:hover {
+    color: white !important;
+    background: #0086ff;
+}
+.none {
+	display:none;
+}
+.welcome {
+    position: absolute;
+    background: white;
+    color: #0086ff;
+    top: 40%;
+    padding: 20px;
+    font-weight: bold !important;
+    left: 35%;
+    z-index: 1000;
+    border-radius: 12px;
+}
+.search-link-icon:hover {
+	cursor: pointer;}
+.search-link-icon:focus {
+	outline-style: none;
+}
+.search-link-icon {
+	background: none;
+}
+.ok-btn button:hover {
+	border: 1px solid pink;
+    background: #0096ff;
+    color: white;
+    cursor: pointer;
+}
+.ok-btn button:focus {
+	outline-style: none; 
+}
+.ok-btn button {
+    padding: 5px 10px;
+    width: 80px;
+    border: 1px solid #0096ff;
+    background: white;
+    color: #0086ff;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 4px;
+}
+.error-login {
+	margin-top: 5px;
+}
+.error-login p {
+    font-size: 14px;
+    color: red;
+    text-align: center;
+}
+.importantNone {
+	display: none !important;
+}
+.endow {
+    width: 86%;
+    display: flex;
+    margin: 0 7%;
+    margin-top: 10px;
+    justify-content: space-between;
+}
+.navigation-auto {
+    position: absolute;
+    display: flex;
+    margin-left: calc(50% - 86px);
+    margin-top: 460px;
+}
+.navigation-manual {
+    position: absolute;
+    margin-top: -40px;
+    margin-left: calc(50% - 86px);
+    display: flex;
 }

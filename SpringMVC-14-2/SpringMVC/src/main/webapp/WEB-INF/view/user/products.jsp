@@ -4,9 +4,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="<c:url value="/assets/css/bootstrap.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/js/bootstrap.js"/>">
-<link rel="stylesheet" href="<c:url value="/assets/css/style.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/index.css"/>">
 <link rel="stylesheet"
 	href="<c:url value="/assets/css/bootstrap.min.css"/>">
 <link rel="stylesheet"
@@ -425,7 +426,14 @@
 			<!-- LIST PRODUCTS -->
 			<div class="list-products">
 				<!--Line 1-->
-				<c:if test="${ listProducts == null }">
+				<c:if test="${ listProductsEmpty != null && listProducts == null}">
+					<div class="msg-empty-product">
+						<h4>No products found with keyword "${ keyword }".</h4>
+						<img alt="icon-crying"
+							src="<c:url value="/assets/images/icons/crying-64.png"/>">
+					</div>
+				</c:if>
+				<c:if test="${ listProductsEmpty == null && listProducts == null }">
 					<div class="msg-empty-product">
 						<h4>Sorry! Product is being updated.</h4>
 						<img alt="icon-crying"

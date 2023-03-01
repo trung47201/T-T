@@ -4,9 +4,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <link rel="stylesheet" href='<c:url value="/assets/css/bootstrap.css"/>'>
 <link rel="stylesheet" href='<c:url value="/assets/js/bootstrap.js"/>'>
-<link rel="stylesheet" href='<c:url value="/assets/css/style.css"/>'>
+<link rel="stylesheet" href='<c:url value="/assets/css/index.css"/>'>
 <link rel="stylesheet"
 	href='<c:url value="/assets/css/bootstrap.min.css"/>'>
 <link rel="stylesheet"
@@ -23,6 +24,35 @@
 <link rel="stylesheet" href="<c:url value="/assets/css/home.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/order_details.css"/>">
 <style>
+
+.track-order {
+    display: flex;
+    margin: 0 18%;
+    margin-bottom: 20px;
+    
+}
+.form-prod-col3 p {
+    font-style: italic;
+    height: 100%;
+    align-items: center;
+    display: flex;
+}
+
+.row2 {
+    display: flex;
+    float: right;
+}
+.order-list-product {
+    border: 1px solid purple;
+    height: 150px;
+    margin-left: 7%;
+    margin-right: 7%;
+    margin-bottom: 30px;
+    border-radius: 10px;
+}
+.track-order-form {
+    width: 100%;
+}
 </style>
 <body style="color: white;">
 	<header class="container-xl header-content">
@@ -37,137 +67,100 @@
               
                 <div class="list-order">
                     <div class="thanks-for-order">
-                        <h4>Thanks for your Order, <span>Trung</span>!</h4>
+                        <h4>Thanks for your Order, <span>${ nameUser }</span>!</h4>
                         <div>
                             
-                            <p><b>Dong Xuan - Soc Son - Ha Noi</b></p>
-                            <p><b>0369 796 359</b></p>
+                            <p><b>${ order.address }</b></p>
+                            <p><b>${ order.phone_number }</b></p>
                         </div>
                     </div>
                     <div class="order-form">
                         <div class="order-form-hearder">
                             <div class="order-code">
-                                <h5>INVOICE <span>#Y34XDRH</span></h5>
+                                <h5>INVOICE <span>#${ order.bill }</span></h5>
                             </div>
                             <div class="order-infor">
                                 <div class="">
-                                    <p>Order Date <b>2023-02-19</b></p>
+                                    <p>Order Date <b>${ order.order_date }</b></p>
                                     <p>Expected Arrival <b>2023-12-01</b></p>
                                     <p>VNPost <b>CW763479047VN</b></p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="order-list-product">
-                        <div class="product-ele">
-                            <div class="img">
-                                <img src="<c:url value="/assets/images/products/0374b813-9567-4099-8916-5c9f0708c8cf.webp"/>" alt="">
-                            </div>
-                            <div class="title">
-                                <div class="form-prod-col2">
-                                    <h5>Women's GG Matelassa lace-up boot</h5>
-                                    <p class="p-price">$155.99</p>
-                                    <p>Black - 42</p>
-                                </div>
-                                <div class="form-prod-col3">
-                                    <div class="row2">
-                                        <p>x2</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="strike-prod">
-                        
-                        <div class="track-order">
-                            <div class="track-order-txt">
-                                <p>Track Order</p>
-                            </div>
-                            <div class="track-order-form">
-                               <div class="order-form-status">
-                                    <div class="dot"><span><img src="<c:url value="/assets/images/icons/icons8-checkmark-64.png"/>" alt=""></span> </div>
-                                    <hr class="strike-dot">
-                                    <div class="dot"><span><img src="<c:url value="/assets/images/icons/icons8-checkmark-64.png"/>" alt=""></span> </div>
-                                    <hr class="strike-dot">
-                                    <div class="dot"><span><img src="<c:url value="/assets/images/icons/icons8-checkmark-64.png"/>" alt=""></span> </div>
-                                    <hr class="strike-dot-sub-left">
-                                    <hr class="strike-dot-sub-right">
-                                    <div class="dot"><span><span class="being"></span></span> </div>
-                                </div>
-                                <div class="order-form-status-text">
-                                    <div class="dot">PROCESSED</div>
-                                    <div class="dot">PACKED</div>
-                                    <div class="dot">SHIPPED</div>
-                                    <div class="dot">DELIVERED</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="order-list-product">
-                        <div class="product-ele">
-                            <div class="img">
-                                <img src="<c:url value="/assets/images/products/0374b813-9567-4099-8916-5c9f0708c8cf.webp"/>" alt="">
-                            </div>
-                            <div class="title">
-                                <div class="form-prod-col2">
-                                    <h5>Women's GG Matelassa lace-up boot</h5>
-                                    <p class="p-price">$155.99</p>
-                                    <p>Black - 42</p>
-                                </div>
-                                <div class="form-prod-col3">
-                                    <div class="row2">
-                                        <p>x2</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="strike-prod">
-                        
-                        <div class="track-order">
-                            <div class="track-order-txt">
-                                <p>Track Order</p>
-                            </div>
-                            <div class="track-order-form">
-                                <div class="order-form-status">
-                                    <div class="dot"><span><img src="<c:url value="/assets/images/icons/icons8-checkmark-64.png"/>" alt=""></span> </div>
-                                    <hr class="strike-dot">
-                                    <div class="dot"><span><img src="<c:url value="/assets/images/icons/icons8-checkmark-64.png"/>" alt=""></span> </div>
-                                    <hr class="strike-dot">
-                                    <div class="dot"><span><img src="<c:url value="/assets/images/icons/icons8-checkmark-64.png"/>" alt=""></span> </div>
-                                    <hr class="strike-dot-sub-left">
-                                    <hr class="strike-dot-sub-right">
-                                    <div class="dot"><span><span class="being"></span></span> </div>
-                                </div>
-                                <div class="order-form-status-text">
-                                    <div class="dot">PROCESSED</div>
-                                    <div class="dot">PACKED</div>
-                                    <div class="dot">SHIPPED</div>
-                                    <div class="dot">DELIVERED</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="track-order">
+	                            <div class="track-order-form">
+	                               <div class="order-form-status">
+	                                    <div class="dot"><span><img src="<c:url value="/assets/images/icons/icons8-checkmark-64.png"/>" alt=""></span> </div>
+	                                    <hr class="strike-dot">
+	                                    <div class="dot"><span><img src="<c:url value="/assets/images/icons/icons8-checkmark-64.png"/>" alt=""></span> </div>
+	                                    <hr class="strike-dot">
+	                                    <div class="dot"><span><img src="<c:url value="/assets/images/icons/icons8-checkmark-64.png"/>" alt=""></span> </div>
+	                                    <hr class="strike-dot-sub-left">
+	                                    <hr class="strike-dot-sub-right">
+	                                    <div class="dot"><span><span class="being"></span></span> </div>
+	                                </div>
+	                                <div class="order-form-status-text">
+	                                    <div class="dot">PROCESSED</div>
+	                                    <div class="dot">PACKED</div>
+	                                    <div class="dot">SHIPPED</div>
+	                                    <div class="dot">DELIVERED</div>
+	                                </div>
+	                            </div>
+	                    </div>
+                    <c:forEach var="liOrder_details" items="${ listOrder_details }">
+                    	<div class="order-list-product">
+	                        <div class="product-ele">
+	                            <div class="img">
+	                                <img src="<c:url value="/assets/images/products/${ liOrder_details.prod.thumbnail }"/>" alt="">
+	                            </div>
+	                            <div class="title">
+	                                <div class="form-prod-col2">
+	                                    <h5>${ liOrder_details.prod.title }</h5>
+	                                    
+	                                    <p>${ liOrder_details.color.color_name } - ${ liOrder_details.size.size_number }</p>
+	                                </div>
+	                                <div class="form-prod-col3">
+	                                    <div class="row2">
+	                                        <p>x${ liOrder_details.quantity }</p>
+	                                        
+	                                    </div>
+	                                    <p class="p-price">$<fmt:formatNumber type = "number" 
+         									maxFractionDigits = "2" value = "${ liOrder_details.price_at }" /></p>
+	                                </div>
+	                                
+	                            </div>
+	                        </div>
+	                    </div>
+                    </c:forEach>
+                    
                     <div class="prod_details">
                         <div class="total-prod">
                             <p>Total:</p>
-                            <p class="money">$1040.0</p>
+                            <p class="money">$<fmt:formatNumber type = "number" maxFractionDigits = "2" value = "${ total }" /></p>
                         </div>
                         <div class="total-prod">
                             <p>Shipping charges:</p>
                             <p class="money">$11.00</p>
                         </div>
-                        <div class="total-prod">
-                            <p>Free:</p>
-                            <p class="money">-$11.00</p>
-                        </div>
-                        <div class="total-prod">
-                            <p>Voucher:</p>
-                            <p class="money">-$22.00</p>
-                        </div>
+                        <c:if test="${ total > 50 }">
+                        	<div class="total-prod">
+	                            <p>Free:</p>
+	                            <p class="money">-$11.00</p>
+	                        </div>
+                        </c:if>
+                        <c:if test="${ voucher > 0 }">
+                        	<div class="total-prod">
+	                            <p>Voucher:</p>
+	                            <p class="money">-$${ voucher }</p>
+	                        </div>
+                        </c:if>
+                        
                         
                     </div>
                     <div class="total">
                         <p>TOTAL PAID:</p>
-                        <span>$1040.00</span>
+                        <span>$${ totalPaid }</span>
                     </div>
                 </div>
                 

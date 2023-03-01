@@ -4,9 +4,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <link rel="stylesheet" href='<c:url value="/assets/css/bootstrap.css"/>'>
 <link rel="stylesheet" href='<c:url value="/assets/js/bootstrap.js"/>'>
-<link rel="stylesheet" href='<c:url value="/assets/css/style.css"/>'>
+<link rel="stylesheet" href='<c:url value="/assets/css/index.css"/>'>
 <link rel="stylesheet"
 	href='<c:url value="/assets/css/bootstrap.min.css"/>'>
 <link rel="stylesheet"
@@ -35,118 +36,48 @@
             </div>
             <!-- ######################################################################################################################################### -->
                 <div class="order">
-                    <div class="list-order">
+                    <c:forEach var="liOrder" items="${ listOrder }">
+                    	<div class="list-order">
                         <div class="order-form">
                             <div class="order-form-hearder">
                                 <div class="order-code">
-                                    <h5>INVOICE <span>#Y34XDRH</span></h5>
+                                    <h5>INVOICE <span>#${ liOrder.bill }</span></h5>
                                 </div>
                                 <div class="order-infor">
                                     <div>
-                                        <a href="/SpringMVC/order-details/${ id_user }">View Details ></a>
+                                        <a href="/SpringMVC/order-details/${ id_user }_${ liOrder.id }">View Details ></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="order-list-product">
-                            <div class="product-ele">
-                                <div class="img">
-                                    <img src="<c:url value="/assets/images/products/0374b813-9567-4099-8916-5c9f0708c8cf.webp"/>" alt="">
-                                </div>
-                                <div class="title">
-                                    <div class="form-prod-col2">
-                                        <h5>Women's GG Matelassa lace-up boot</h5>
-                                        <p>Black - 42</p>
-                                    </div>
-                                    <div class="form-prod-col3">
-                                        <div class="row1">
-                                            <p>x2</p>
-                                        </div>
-                                        <div class="row2">
-                                            <h5>$155.99</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="order-list-product">
-                            <div class="product-ele">
-                                <div class="img">
-                                    <img src="images/products/Nike/0374b813-9567-4099-8916-5c9f0708c8cf.webp" alt="">
-                                </div>
-                                <div class="title">
-                                    <div class="form-prod-col2">
-                                        <h5>Women's GG Matelassa lace-up boot</h5>
-                                        <p>Black - 42</p>
-                                    </div>
-                                    <div class="form-prod-col3">
-                                        <div class="row1">
-                                            <p>x2</p>
-                                        </div>
-                                        <div class="row2">
-                                            <h5>$155.99</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
+                        <c:forEach var="liOrder_detalis" items="${ listOrder_detalis }">
+                        	<c:if test="${ liOrder.id == liOrder_detalis.order_.id }">
+                        		<div class="order-list-product">
+		                            <div class="product-ele">
+		                                <div class="img">
+		                                    <img src="<c:url value="/assets/images/products/${ liOrder_detalis.prod.thumbnail }"/>" alt="">
+		                                </div>
+		                                <div class="title">
+		                                    <div class="form-prod-col2">
+		                                        <h5>${ liOrder_detalis.prod.title }</h5>
+		                                        <p>${ liOrder_detalis.color.color_name } - ${ liOrder_detalis.size.size_number }</p>
+		                                    </div>
+		                                    <div class="form-prod-col3">
+		                                        <div class="row1">
+		                                            <p>x${ liOrder_detalis.quantity }</p>
+		                                        </div>
+		                                        <div class="row2">
+		                                            <h5>$${ liOrder_detalis.price_at }</h5>
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                        </div>
+                        	</c:if>
+                        </c:forEach>
                     </div>
-                    <div class="list-order">
-                        <div class="order-form">
-                            <div class="order-form-hearder">
-                                <div class="order-code">
-                                    <h5>INVOICE <span>#Y34XDRH</span></h5>
-                                </div>
-                                <div class="order-infor">
-                                    <div>
-                                        <a href="">View Details ></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="order-list-product">
-                            <div class="product-ele">
-                                <div class="img">
-                                    <img src="images/products/Nike/0374b813-9567-4099-8916-5c9f0708c8cf.webp" alt="">
-                                </div>
-                                <div class="title">
-                                    <div class="form-prod-col2">
-                                        <h5>Women's GG Matelassa lace-up boot</h5>
-                                        <p>Black - 42</p>
-                                    </div>
-                                    <div class="form-prod-col3">
-                                        <div class="row1">
-                                            <p>x2</p>
-                                        </div>
-                                        <div class="row2">
-                                            <h5>$155.99</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="order-list-product">
-                            <div class="product-ele">
-                                <div class="img">
-                                    <img src="images/products/Nike/0374b813-9567-4099-8916-5c9f0708c8cf.webp" alt="">
-                                </div>
-                                <div class="title">
-                                    <div class="form-prod-col2">
-                                        <h5>Women's GG Matelassa lace-up boot</h5>
-                                        <p>Black - 42</p>
-                                    </div>
-                                    <div class="form-prod-col3">
-                                        <div class="row1">
-                                            <p>x2</p>
-                                        </div>
-                                        <div class="row2">
-                                            <h5>$155.99</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </c:forEach>
                 </div>
 		</form>
 	</header>

@@ -971,8 +971,32 @@ public class ProductService implements ProductRepository {
 		return Math.round(price*100)/100;
 	}
 
+	public List<Product> get_all_product_by_search_keywords(String kw) {
+		List<Product> li = new LinkedList<>();
+		List<Product> liProd = getAllProducts();
+		for (Product p : liProd) {
+			if(p.getTitle().toLowerCase().contains(kw.toLowerCase()) || p.getStyle().getStyle_name().toLowerCase().contains(kw.toLowerCase()) || p.getBrand().getBrand_name().toLowerCase().contains(kw.toLowerCase())) {
+				li.add(p);
+			}
+		}
+		String arr[] = kw.split("\\s+");
+		for (Product p : liProd) {
+			for (String s : arr) {
+				if(p.getTitle().toLowerCase().contains(s.toLowerCase()) || p.getStyle().getStyle_name().toLowerCase().contains(s.toLowerCase()) || p.getBrand().getBrand_name().toLowerCase().contains(s.toLowerCase())) {
+					if(!li.contains(p)) {
+						li.add(p);
+					}
+				}
+			}
+		}
+		return li;
+	}
 	public static void main(String[] args) {
-		//ProductService p = new ProductService();
+		ProductService p = new ProductService();
+		List<Product> li = p.get_all_product_by_search_keywords("nike duck low");
+		for (Product pr : li) {
+			System.out.println(pr.getTitle());
+		}
 		
 	}
 }

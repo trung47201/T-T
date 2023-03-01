@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.mysql.jdbc.PreparedStatement;
@@ -23,7 +24,7 @@ import TiShoes.Model.User;
 import TiShoes.Model.Voucher;
 import TiShoes.Repository.User.Order_detailsRepository;
 
-public class Order_detailsService implements Order_detailsRepository{
+public class Order_detailsService implements Order_detailsRepository {
 	private ConnectService connectService;
 	private Order_details order_details;
 	private OrderService orderService;
@@ -38,7 +39,7 @@ public class Order_detailsService implements Order_detailsRepository{
 	private Sizes size;
 	private Gender gender;
 	private Status status;
-	
+
 	@Override
 	public List<Order_details> getAllOrder_details() {
 		List<Order_details> li = null;
@@ -73,10 +74,9 @@ public class Order_detailsService implements Order_detailsRepository{
 				gender = new Gender();
 				order_details = new Order_details();
 				status = new Status();
-				
+
 				status.setId(rs.getInt("status_id"));
 				status.setStatus_name(rs.getString("status_name"));
-
 
 				voucher.setId(rs.getInt("voucher_id"));
 				voucher.setCode(rs.getString("code"));
@@ -99,6 +99,7 @@ public class Order_detailsService implements Order_detailsRepository{
 				order_.setNote(rs.getString("note"));
 				order_.setStatus(status);
 				order_.setMethod(rs.getString("method"));
+				order_.setBill(rs.getString("bill"));
 
 				gender.setId(rs.getInt("gender_id"));
 				gender.setGender_name(rs.getString("gender_name"));
@@ -109,7 +110,7 @@ public class Order_detailsService implements Order_detailsRepository{
 				role.setDescription(rs.getString("description"));
 				role.setCreated_at(rs.getDate("created_at"));
 				role.setUpdated_at(rs.getDate("updated_at"));
-				
+
 				user.setId(rs.getInt("user_id"));
 				user.setFullname(rs.getString("fullname"));
 				user.setEmail(rs.getString("email"));
@@ -167,8 +168,7 @@ public class Order_detailsService implements Order_detailsRepository{
 	}
 
 	@Override
-	public boolean insertIntoOrder_details(double price_at, int quantity, int prod_id, int size_id,
-			int color_id) {
+	public boolean insertIntoOrder_details(double price_at, int quantity, int prod_id, int size_id, int color_id) {
 		try {
 			orderService = new OrderService();
 			connectService = new ConnectService();
@@ -195,11 +195,65 @@ public class Order_detailsService implements Order_detailsRepository{
 		}
 		return false;
 	}
+
+	public List<Order_details> get_all_order_details_by_order_id(int order_id) {
+		List<Order_details> li = new LinkedList<>();
+		for (Order_details o : getAllOrder_details()) {
+			if (o.getOrder_().getId() == order_id) {
+				li.add(o);
+			}
+		}
+		return li;
+	}
 	
+	public double total_order_by_id_order(int order_id) {
+		List<Order_details> li = get_all_order_details_by_order_id(order_id);
+		double total=0;
+		for (Order_details o : li) {
+			
+			total += o.getPrice_at();
+		}
+		System.out.println(total);
+		return (double) Math.round(total*100)/100;
+	}
+	
+	public double price_when_apply_voucher_by_order_id(int order_id) {
+		orderService = new OrderService();
+		int discount = orderService.get_voucher_discount_by_order_id(order_id);
+		double total = total_order_by_id_order(order_id);
+		double rs = (double) discount*total/100;
+		return (double) Math.round(rs*100)/100;
+	}
+
+	public double total_paid_by_order_id(int order_id) {
+		double total = total_order_by_id_order(order_id);
+		double voucher = price_when_apply_voucher_by_order_id(order_id);
+		double rs = 0;
+		if(total > 50) {
+			rs = total - 11.0 - voucher;
+		} else {
+			rs = total - voucher;
+		}
+		return rs;
+	}
+	
+	public List<Order_details> get_all_order_details_by_user_id(int user_id) {
+		orderService = new OrderService();
+		List<Order_details> li = new LinkedList<>();
+		for (Order_ o : orderService.get_all_order_by_user_id(user_id)) {
+			for (Order_details od : get_all_order_details_by_order_id(o.getId())) {
+				li.add(od);
+			}
+		}
+		return li;
+	}
+
 	public static void main(String[] args) {
 		Order_detailsService o = new Order_detailsService();
-		if(o.insertIntoOrder_details(123.55, 2, 1, 4, 6)) {
-			System.out.println("ass");
-		}
+//		for (Order_details od : o.get_all_order_details_by_user_id(1)) {
+//			System.out.println(od.getOrder_().getId());
+//		}
+		System.out.println(o.price_when_apply_voucher_by_order_id(1));
+		
 	}
 }

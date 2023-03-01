@@ -2,9 +2,10 @@
 <html lang="en">
 <title>Hi, how are you?</title>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="<c:url value="/assets/css/bootstrap.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/js/bootstrap.js"/>">
-<link rel="stylesheet" href="<c:url value="/assets/css/style.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/index.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/bootstrap.min.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/js/bootstrap.min.js"/>">
 <link rel="stylesheet" href="<c:url value="/assets/https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>">

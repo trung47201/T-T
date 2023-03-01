@@ -14,6 +14,7 @@ public class Order_ {
 	private String note;
 	private Status status;
 	private String method;
+	private String bill;
 	
 	public Order_() {
 		// TODO Auto-generated constructor stub
@@ -86,8 +87,12 @@ public class Order_ {
 	public void setMethod(String method) {
 		this.method = method;
 	}
-	
-	
+	public String getBill() {
+		return bill;
+	}
+	public void setBill(String bill) {
+		this.bill = bill;
+	}
 	@Override
 	public String toString() {
 		return fullname+"+"+phone_number+"+"+email+"+"+address+"+"+note;

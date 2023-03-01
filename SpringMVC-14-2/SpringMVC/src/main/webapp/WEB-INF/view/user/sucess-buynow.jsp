@@ -2,6 +2,7 @@
 <html lang="en">
 <title>Order :)</title>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <link rel="stylesheet"
 	href="<c:url value="/assets/css/buynow-thank.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/bootstrap.css"/>">

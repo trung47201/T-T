@@ -184,7 +184,13 @@ public class CartService implements CartRepository {
 		for (int i = 0; i < arr.length; i++) {
 			if (!arr[i].equals("null")) {
 				String arr1[] = arr[i].split("_");
-				map.put(Integer.parseInt(arr1[1]), Integer.parseInt(arr1[0]));
+				if(arr1.length > 1) {
+					map.put(Integer.parseInt(arr1[1]), Integer.parseInt(arr1[0]));
+				} else {
+					if(!arr1[0].equals("")) {
+						map.put(1, Integer.parseInt(arr1[0]));
+					}
+				}
 			}
 		}
 		return map;
@@ -196,7 +202,10 @@ public class CartService implements CartRepository {
 		for (int i = 0; i < arr.length; i++) {
 			if (!arr[i].equals("null")) {
 				String arr1[] = arr[i].split("_");
-				map.put(arr1[1] + "_" + arr1[2], Integer.parseInt(arr1[0]));
+				if(arr1.length > 2) {
+					map.put(arr1[1] + "_" + arr1[2], Integer.parseInt(arr1[0]));
+				}
+				
 			}
 		}
 		return map;

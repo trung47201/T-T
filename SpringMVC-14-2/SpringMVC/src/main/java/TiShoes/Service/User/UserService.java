@@ -58,6 +58,16 @@ public class UserService implements UserRepository{
 		return li;
 	}
 	
+	public User get_user_by_id(int user_id) {
+		User user = null;
+		for (User u : getAllUser()) {
+			if(u.getId() == user_id) {
+				user = u;
+			}
+		}
+		return user;
+	}
+	
 	public String getAvatarByUserID(int user_id) {
 		String avt = "";
 		for (User u : getAllUser()) {
@@ -66,5 +76,10 @@ public class UserService implements UserRepository{
 			}
 		}
 		return avt;
+	}
+	
+	public static void main(String[] args) {
+		//UserService u = new UserService();
+		
 	}
 }

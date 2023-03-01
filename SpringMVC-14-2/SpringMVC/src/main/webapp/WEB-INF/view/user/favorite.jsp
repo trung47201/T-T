@@ -2,9 +2,10 @@
 <html lang="en">
 <title>What do you want? :)</title>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="<c:url value="/assets/css/bootstrap.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/js/bootstrap.js"/>">
-<link rel="stylesheet" href="<c:url value="/assets/css/style.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/index.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/bootstrap.min.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/js/bootstrap.min.js"/>">
 <link rel="stylesheet" href="<c:url value="/assets/https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>">
@@ -195,7 +196,7 @@
                     </div>
                     <div class="content-contact">
                         <div class="line-address">Address</div>
-                        <div class="line-address">Đông Xuân - Sóc Sơn - Hà Nội</div>
+                        <div class="line-address">ÄÃ´ng XuÃ¢n - SÃ³c SÆ¡n - HÃ  Ná»i</div>
                     </div>
                 </div>
                 <div class="phone-contact">
@@ -295,7 +296,7 @@
                 </div>
             </div>
             <hr class="copyright">
-            <div class="footer-copyright">UCHIHA SHOES © 2022 All rights reserved.</div>
+            <div class="footer-copyright">UCHIHA SHOES Â© 2022 All rights reserved.</div>
         </form>
     </footer>
 
