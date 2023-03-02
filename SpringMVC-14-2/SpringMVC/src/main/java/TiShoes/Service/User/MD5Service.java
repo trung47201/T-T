@@ -62,8 +62,14 @@ public class MD5Service implements MD5Repository{
 		return result;
 	}
 	
-	public static void main(String[] args) throws Exception {
-		 	
-		    //System.out.println("Digest(in hex format):: " + Decrypt("e10adc3949ba59abbe56e057f20f883e"));
+	public String decodeText(String encoded) {
+		String decoded ="";
+		try {
+			decoded = new String(encoded.getBytes("ISO-8859-1"));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 return decoded;
 	}
 }

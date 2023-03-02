@@ -113,6 +113,11 @@ public class LoginService implements LoginRepository{
 	
 	public static void main(String[] args) {
 		LoginService l = new LoginService();
-		System.out.println(l.checkUserPass("dovantrung47201@gmail.com", "26c92f48534c591674295d6e788f014b"));
+		System.out.println(l.checkUserPass("0913913835", "267dca3062e07c065ecc9a4b8bc1f8a"));
+		
+		List<User> li = l.getAllUser();
+		for (User user : li) {
+			System.out.println(user.getId() + "-" + user.getPhone_number() +"=="+ user.getPassword());
+		}
 	}
 }

@@ -141,6 +141,7 @@ public class HomeController {
 					Cookie oMsg = new Cookie("messageLogin", msg.trim());
 					oMsg.setMaxAge(30);
 					response.addCookie(oMsg);
+					System.out.println(msg);
 				} else {
 					msg = "true";
 					Cookie oMsg = new Cookie("messageLogin", msg.trim());

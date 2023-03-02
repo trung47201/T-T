@@ -588,7 +588,6 @@ $(".ok-btn").click(function () {
 	$(document).ready(function(){
 		 $(".form-check-input").click(function(){
 			 var rememberme = this.checked;
-			 alert(rememberme);
 			  var xhr = new XMLHttpRequest();
 				xhr.open("GET",
 						"http://localhost:8888/SpringMVC/home?rememberme="+rememberme);
@@ -652,7 +651,10 @@ $(".ok-btn").click(function () {
 		} else if(${message == "logout"}) {
 			//alert("Looking forward to seeing you again soon!");
 		} else if(${message == "block"}){
-			alert("Your account has been locked, please contact hotline: 0346 643 755 for more details!");
+			document.getElementById("login_form_container").style.maxHeight = "550px";
+			document.getElementById("login_form_container").style.height = "550px";
+			$(".error-login").removeClass("none");
+			document.getElementById("msg-error").innerHTML = "Your account has been locked, please contact hotline: 0346 643 755 for more details!";  
 			$(document).ready(function() {
 				$('#login').modal('toggle');
 			});			

@@ -111,9 +111,9 @@
 								alt="icon-close" width="32px">
 						</button>
 					</div>
-					<div class="login_form_container">
+					<div class="login_form_container" id="login_form_container">
 						<div class="login_form">
-							<h2>Login</h2>
+							<h2>LOGIN</h2>
 							<div class="input_group">
 
 								<i class="fa fa-user"></i> <input type="text" id="username"
@@ -150,7 +150,7 @@
 								<a onclick="login()">Login</a>
 							</div>
 							<div class="fotter">
-								<a>Forgot Password ?</a> <a>SingUp</a>
+								<a>Forgot Password ?</a> <a href="/SpringMVC/sign-up">SignUp</a>
 							</div>
 						</div>
 					</div>

@@ -4,6 +4,7 @@
 	box-sizing: border-box;
 }
 
+
 body {
 	width: 100%;
 	height: 100%;
@@ -13,11 +14,28 @@ body {
 	letter-spacing: 1px;
 	background-color: #0c1022;
 }
-.btn-close-login {
-    z-index: 15;
+.none {
+	display: none;
 }
+
+#login {
+	margin-top: 70px;
+}
+
+.btn-close-login {
+	z-index: 15;
+}
+
 .form-check {
 	margin-top: 10px;
+}
+
+.form-input {
+	display: flex;
+}
+
+.right-form-input {
+	margin-right: 15px;
 }
 
 .modal-content {
@@ -34,10 +52,10 @@ body {
 
 .login_form_container {
 	position: relative;
-	width: 400px;
-	height: 510px;
-	max-width: 400px;
-	max-height: 510px;
+	width: 600px;
+	height: 543px;
+	max-width: 600px;
+	max-height: 543px;
 	background: #040717;
 	border-radius: 50px 5px;
 	display: flex;
@@ -65,17 +83,16 @@ body {
 	animation-delay: -3s;
 }
 
-@keyframes rotate_border { 0%{
-	transform: rotate(0deg);
+@keyframes rotate_border {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
 }
 
-100%
-{
-transform
-:rotate(
-360deg);
-}
-}
 .login_form {
 	position: absolute;
 	content: '';
@@ -112,7 +129,16 @@ h2 {
 	padding-left: 10px;
 	color: #00ccff;
 }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
 ::placeholder {
 	font-size: 15px;
 	color: #00ccff52;
@@ -123,15 +149,12 @@ h2 {
 	font-size: 20px;
 }
 
-#login_button {
-	position: relative;
-	width: 300px;
-	height: 40px;
-	transition: 1s;
-	margin-top: 50px;
+.error-login {
+	margin-top: 15px;
+	color: red;
 }
 
-#login_button a {
+#login_button button {
 	position: absolute;
 	width: 100%;
 	height: 100%;
@@ -146,6 +169,15 @@ h2 {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	color: #00ccff;
+    font-weight: bold;
+}
+#login_button {
+	position: relative;
+	width: 510px;
+	height: 40px;
+	transition: 1s;
+	margin-top: 77px;
 }
 
 .fotter {
@@ -158,6 +190,11 @@ h2 {
 	text-decoration: none;
 	cursor: pointer;
 	font-size: 18px;
+	color: #00ccff;
+}
+
+.fotter a:hover {
+	text-shadow: 0 0 10px #00ccff;
 }
 
 .glowIcon {

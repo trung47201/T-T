@@ -242,7 +242,6 @@ a.phone:hover {
 }
 img.icon-user:hover {
 	border-radius: 10px;
-	box-shadow: 2px 4px 6px #0086ff;
 }
 
 img.icon-user-login {
@@ -253,17 +252,14 @@ img.icon-user-login {
 
 img.icon-user-login:hover {
 	border-radius: 20px;
-	box-shadow: 2px 4px 6px #0086ff;
 }
 
 img.icon-cart:hover {
 	border-radius: 10px;
-	box-shadow: 2px 4px 6px #0086ff;
 }
 
 img.icon-heart:hover {
 	border-radius: 10px;
-	box-shadow: 2px 4px 6px #0086ff;
 }
 
 button.icon-user {
