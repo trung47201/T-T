@@ -15,15 +15,14 @@ body {
 div.header-div {
 	display: flex;
 	align-items: center;
+	background: #212122;
+    border-bottom: 1px solid white;
 }
 
 .header-1 {
 	height: 95px;
 }
-header.container-xl.header-content form {
-    background: #212122;
-    border-bottom: 1px solid white;
-}
+
 .logo-header {
     min-width: 150px;
     max-width: 150px;
@@ -1095,15 +1094,6 @@ div.txt-sale {
 .news-name {
   text-shadow: 0px 1px 5px #00ccff;
 }
-
-
-
-
-
-
-
-
-
 
 
 

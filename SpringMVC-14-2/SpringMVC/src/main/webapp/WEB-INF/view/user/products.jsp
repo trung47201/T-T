@@ -24,8 +24,10 @@
 
 <body style="color: white;">
 	<header class="container-xl header-content">
-		<form method="post">
+		
+		<div class="back-header">
 			<jsp:include page="../layouts/user/header.jsp"></jsp:include>
+		</div>
 
 			<!--########################################3   START PRODUCTS   ###########################################-->
 			<div class="title-page">
@@ -697,14 +699,27 @@
 					<input class="okey-error" type="button" value="Okey">
 				</div>
 			</div>
-		</form>
+	
 	</header>
 
 	<jsp:include page="../layouts/user/footer.jsp"></jsp:include>
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-	<script>
+	
+	<script type="text/javascript"> //search
+	$(".search-link-icon").click(function () {
+		var txt = $('#search').val();
+		if(txt == "") {
+			$(".welcome").removeClass("none");
+			$(".welcome h3").html("You have not entered search information!");
+		} else {
+			$("#search-link-icon").attr("type", "submit");
+		}
+	});
+	</script>
+	
+	<script> // click name style
 		$(document).ready(function() {
 			$("div.brand-product-products").click(function() {
 				var id_style = this.id;

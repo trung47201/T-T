@@ -83,20 +83,20 @@ a:hover {
     color: white !important;
     background: #0086ff;
 }
-.none {
-	display:none;
-}
 .welcome {
     position: absolute;
     background: white;
     color: #0086ff;
-    top: 40%;
     padding: 20px;
     font-weight: bold !important;
-    left: 35%;
     z-index: 1000;
     border-radius: 12px;
+    transform: translate(50%);
 }
+.none {
+	display:none;
+}
+
 .search-link-icon:hover {
 	cursor: pointer;}
 .search-link-icon:focus {

@@ -46,10 +46,9 @@
 	position: absolute;
 	background: white;
 	color: #0086ff;
-	top: 40%;
+	transform: translate(50%);
 	padding: 20px;
 	font-weight: bold !important;
-	left: 35%;
 	z-index: 1000;
 	border-radius: 12px;
 }
@@ -141,9 +140,11 @@
 	</c:if>
 
 	<header class="container-xl header-content">
-	<form method="post">
-		<jsp:include page="../layouts/user/header.jsp"></jsp:include>
-	</form>
+	
+		<div class="back-header">
+			<jsp:include page="../layouts/user/header.jsp"></jsp:include>
+		</div>
+	
 		<div class="header-slide">
 			<div class="slider">
 				<div class="slides">
@@ -575,14 +576,13 @@
 			$("#search-link-icon").attr("type", "submit");
 		}
 	});
-</script>
+	</script>
 
 	<script>
-$(".ok-btn").click(function () {
-	$(".welcome").addClass("none");
-});
-
-</script>
+	$(".ok-btn").click(function () {
+		$(".welcome").addClass("none");
+	});
+	</script>
 
 	<script type="text/javascript">
 	$(document).ready(function(){
