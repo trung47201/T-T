@@ -1,0 +1,93 @@
+.admin-avatar {
+	position: absolute;
+	right: 190px !important;
+	width: 45px;
+	height: 45px;
+}
+.admin-notify-icon {
+    position: absolute;
+    right: 250px !important;
+    width: 32px;
+    height: 32px;
+}
+.admin-infor {
+    position: absolute;
+    right: 40px;
+    display: flex;
+    align-items: center;
+}
+nav {
+    background: #364959;
+    min-width: 200px !important;
+    max-width: 200px !important;
+    width: 200px !important;
+    height: 693px;
+    overflow-y: scroll;
+}
+.search-role {
+    display: flex;
+    width: 100%;
+}
+.search-role-img {
+    display: flex;
+    background: white;
+    height: 30px;
+    width: 30px;
+    border-radius: 20px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 0px 3px #666;
+    z-index: 10;
+}
+.search-role-img img {
+    width: 24px;
+    height: 24px;
+}
+.search-role-img:hover {
+	cursor: pointer;
+}
+.search-role-input {
+    display: flex;
+    width: 100%;
+    height: 32px;
+}
+#search-voucher {
+    margin-left: -30px;
+    padding-left: 40px;
+    width: 100%;
+    color: white;
+    background: linear-gradient(45deg, black, transparent, rgb(166, 166, 166) 50%) right;
+    background-size: 400% 100%;
+    background-position: right;
+    transition: all 0.5s ease-out;
+}
+.search-role-input input {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    padding: 0px 15px;
+    background: none;
+    color: white;
+    font-size: 17px;
+}
+.search-role-input input:focus {
+	outline-style: none;
+}
+#search-voucher:focus {
+	background-position: left;
+}
+
+#search-voucher:hover {
+	background-position: left;
+}
+tr.tr-search-voucher {
+	position: sticky;
+	z-index: 10;
+	top: 0;
+	box-shadow: 0 1.5px 4px black;
+}
+
+.order {
+    font-size: 14px !important;
+}

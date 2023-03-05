@@ -8,6 +8,7 @@
 <link rel="stylesheet"
 	href="<c:url value ="/assets/css/admin-order.css"/>">
 <link rel="stylesheet" href="<c:url value='/assets/css/admin-login.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/search.css'/>">
 
 <c:if test="${ management == 'true' }">
 	<title>Order management :)</title>
@@ -366,11 +367,17 @@
 			<thead>
 				<tr>
 					<th colspan="1000" class="td-addneworder">
-						<button class="addneworder">
-							<img
-								src="<c:url value="/assets/images/icons/icons8-add-64.png"/>"
-								alt="icon-plus"> Add New
-						</button>
+						<div class="search-role">
+							<div class="search-role-img">
+								<img
+									src="<c:url value="/assets/images/icons/icons8-search-50-blue.png"/>"
+									alt="icon-search">
+							</div>
+							<div class="search-role-input">
+								<input type="text" id="search-voucher" placeholder="Search..."
+									value="${ keyword }">
+							</div>
+						</div>
 					</th>
 				</tr>
 				<tr>
@@ -399,11 +406,6 @@
 						<button class="btn-edit-order">
 							<img
 								src="<c:url value="/assets/images/icons/icons8-edit-100.png"/>"
-								alt="">
-						</button>
-						<button class="btn-del-order">
-							<img
-								src="<c:url value="/assets/images/icons/icons8-remove-60.png"/>"
 								alt="">
 						</button>
 					</td>

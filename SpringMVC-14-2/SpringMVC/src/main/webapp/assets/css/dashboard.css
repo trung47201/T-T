@@ -1,9 +1,31 @@
 body { 
-    background-color: #666;
+    background: rgb(222, 222, 222);
 }
 section {
 	overflow-y: scroll;
 	width: 100% !important;
+	padding: 0 10px !important;
+}
+
+section::-webkit-scrollbar {
+  width: 15px;
+}
+
+/* Track */
+section::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+}
+ 
+/* Handle */
+section::-webkit-scrollbar-thumb {
+  background: #999; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+section::-webkit-scrollbar-thumb:hover {
+  background: #16222d; 
 }
 .section-dashboard { 
 	border: 0 !important;
@@ -103,6 +125,14 @@ span.green {
     color: #4caf50;
     font-size: 16px;
 }
+span.green {
+    color: #4caf50;
+    font-size: 16px;
+}
+span.red {
+    color: #f44335 !important;
+    font-size: 16px;
+}
 .chart-col {
     flex: 1 1 290px;
     width: 30%;
@@ -114,7 +144,7 @@ span.green {
     margin-right: 13px;
     margin-left: 12px;
     padding: 0 20px;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
 }
 .chart-row {
     width: 100%;
@@ -174,7 +204,9 @@ span.green {
 }
 
 .infor-table {
-    height: 400px;
+    margin-left: 12px;
+    height: 527px;
+    padding-bottom: 60px;
 }
 .table-row {
     width: 100%;
@@ -182,17 +214,23 @@ span.green {
     height: 100%;
 }
 .table-col.col2 {
-    width: 65%;
+    width: 65.2%;
     background: white;
     border-radius: 12px;
 }
 .table-col.col1 {
-    width: 30%;
+    width: 31.7%;
     margin-left: 25px;
-    height: 100%;
     background: white;
+    margin-right: 13px;
     border-radius: 12px;
 }
+canvas#myChart {
+	display: block;
+    box-sizing: border-box;
+    width: 100%;
+    margin-top: 10px;	
+}	
 
 @media (min-width: 362px) and (max-width: 561.98px) {
 	.db-row {

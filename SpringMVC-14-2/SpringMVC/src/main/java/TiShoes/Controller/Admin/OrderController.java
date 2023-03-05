@@ -10,7 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 import TiShoes.Service.Admin.aOrderService;
 import TiShoes.Service.Admin.aOrder_detailsSevice;
 import TiShoes.Service.Admin.aStatusService;
-import TiShoes.Service.User.SizeService;
 
 @Controller
 public class OrderController {
@@ -126,4 +125,6 @@ public class OrderController {
 		mv.addObject("orderdetails", "false");
 		return mv;
 	}
+	
+	
 }

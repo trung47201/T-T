@@ -10,8 +10,6 @@ import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
 import TiShoes.Model.Order_;
-import TiShoes.Model.Order_details;
-import TiShoes.Model.Product;
 import TiShoes.Model.Status;
 import TiShoes.Model.Voucher;
 import TiShoes.Repository.Admin.aOrderRepository;
@@ -49,10 +47,10 @@ public class aOrderService implements aOrderRepository{
 				voucher.setCode(rs.getString("code"));
 				voucher.setDiscount(rs.getInt("discount"));
 				voucher.setLimit(rs.getInt("limit"));
-				voucher.setStart_date(rs.getDate("start_date"));
-				voucher.setEnd_date(rs.getDate("end_date"));
-				voucher.setCreated_at(rs.getDate("created_at"));
-				voucher.setUpdated_at(rs.getDate("updated_at"));
+				voucher.setStart_date(rs.getTimestamp("start_date"));
+				voucher.setEnd_date(rs.getTimestamp("end_date"));
+				voucher.setCreated_at(rs.getTimestamp("created_at"));
+				voucher.setUpdated_at(rs.getTimestamp("updated_at"));
 				voucher.setDescription(rs.getString("description"));
 
 				order_.setId(rs.getInt("id"));

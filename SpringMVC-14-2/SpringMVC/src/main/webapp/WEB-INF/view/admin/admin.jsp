@@ -36,7 +36,7 @@
 										<p>Today's Revenue</p>
 									</div>
 									<div class="dashboard-row-parameter">
-										<p>$53k</p>
+										<p>$5,895.3</p>
 									</div>
 								</div>
 							</div>
@@ -44,7 +44,7 @@
 							<div class="dashboard-row-2">
 								<div class="compare">
 									<p>
-										<span class="green">+55%</span> than yesterday
+										<span class="green">+13%</span> than yesterday
 									</p>
 								</div>
 							</div>
@@ -63,7 +63,7 @@
 										<p>Today's Order</p>
 									</div>
 									<div class="dashboard-row-parameter">
-										<p>$53k</p>
+										<p>+78</p>
 									</div>
 								</div>
 							</div>
@@ -71,7 +71,7 @@
 							<div class="dashboard-row-2">
 								<div class="compare">
 									<p>
-										<span class="green">+55%</span> than yesterday
+										<span class="green">+5%</span> than yesterday
 									</p>
 								</div>
 							</div>
@@ -89,10 +89,10 @@
 								</div>
 								<div class="dashboard-col-text">
 									<div class="dashboard-row-title">
-										<p>Today's Customer</p>
+										<p>New Customer</p>
 									</div>
 									<div class="dashboard-row-parameter">
-										<p>$53k</p>
+										<p>+139</p>
 									</div>
 								</div>
 							</div>
@@ -100,7 +100,7 @@
 							<div class="dashboard-row-2">
 								<div class="compare">
 									<p>
-										<span class="green">+55%</span> than yesterday
+										<span class="red">-3%</span> than last week
 									</p>
 								</div>
 							</div>
@@ -116,10 +116,10 @@
 								</div>
 								<div class="dashboard-col-text">
 									<div class="dashboard-row-title">
-										<p>Today's Money</p>
+										<p>Month's Revenue</p>
 									</div>
 									<div class="dashboard-row-parameter">
-										<p>$53k</p>
+										<p>$59k</p>
 									</div>
 								</div>
 							</div>
@@ -127,7 +127,7 @@
 							<div class="dashboard-row-2">
 								<div class="compare">
 									<p>
-										<span class="green">+55%</span> than yesterday
+										<span class="green">+27%</span> than last month
 									</p>
 								</div>
 							</div>
@@ -146,10 +146,10 @@
 						<div class="chart-row-1">
 							<div class="text-row">
 								<div class="title-row">
-									<p>Website Views</p>
+									<p>Daily Sales</p>
 								</div>
 								<div class="content">
-									<p>Last Campaign Performance</p>
+									<p> <b>(+15%)</b> increase in today sales.</p>
 								</div>
 							</div>
 							<hr class="shadow-hr">
@@ -159,7 +159,7 @@
 										src="<c:url value="/assets/images/icons/icons8-time-machine-48.png"/>"
 										alt="icon-history">
 								</div>
-								<p>Campaign sent 2 days ago</p>
+								<p>Updated 4 min ago</p>
 							</div>
 						</div>
 					</div>
@@ -172,7 +172,7 @@
 						<div class="chart-row-1">
 							<div class="text-row">
 								<div class="title-row">
-									<p>Website Views</p>
+									<p>Revenue</p>
 								</div>
 								<div class="content">
 									<p>Last Campaign Performance</p>
@@ -211,7 +211,7 @@
 										src="<c:url value="/assets/images/icons/icons8-time-machine-48.png"/>"
 										alt="icon-history">
 								</div>
-								<p>Campaign sent 2 days ago</p>
+								<p>Just updated</p>
 							</div>
 						</div>
 					</div>
@@ -247,14 +247,13 @@
 	<script src="<c:url value="assets/js/chartjs.min.js"/>"></script>
 	
 	<script>
-        var xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
-        var yValues = [55, 49, 44, 24, 15];
+        var xValues = ["Italy", "France", "Spain", "USA"];
+        var yValues = [70, 49, 44, 14];
         var barColors = [
-            "#b91d47",
-            "#00aba9",
-            "#2b5797",
-            "#e8c3b9",
-            "#1e7145"
+            "#1a73e8",
+            "#43a047",
+            "#DA2868",
+            "#191919"
         ];
 
         new Chart("myChart", {
@@ -269,7 +268,7 @@
             options: {
                 title: {
                     display: true,
-                    text: "World Wide Wine Production 2018"
+                    text: "World Wide Wine Production 2023"
                 }
             }
         });
@@ -283,12 +282,12 @@
 				labels : [ "M", "T", "W", "T", "F", "S", "S" ],
 				datasets : [ {
 					label : "Sales",
-					tension : 0.4,
+					tension : 0.6,
 					borderWidth : 0,
 					borderRadius : 4,
 					borderSkipped : false,
 					backgroundColor : "rgba(255, 255, 255, .8)",
-					data : [ 50, 20, 10, 22, 50, 10, 40 ],
+					data : [ 75, 83, 69, 72, 65, 105, 57 ],
 					maxBarThickness : 6
 				}, ],
 			},
@@ -359,8 +358,7 @@
 		new Chart(ctx2, {
 			type : "line",
 			data : {
-				labels : [ "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct",
-						"Nov", "Dec" ],
+				labels : [ "Jan", "Feb", "Mar", "April", "May"],
 				datasets : [ {
 					label : "Mobile apps",
 					tension : 0,
@@ -373,7 +371,7 @@
 					borderWidth : 4,
 					backgroundColor : "transparent",
 					fill : true,
-					data : [ 50, 40, 300, 320, 500, 350, 200, 230, 500 ],
+					data : [ 59, 31, 153, 77, 94 ],
 					maxBarThickness : 6
 
 				} ],

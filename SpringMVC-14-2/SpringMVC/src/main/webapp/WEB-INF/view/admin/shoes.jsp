@@ -386,7 +386,7 @@
 								<td>${ liPCS.id }</td>
 								<td>${ liPCS.prod.title }</td>
 								<td><span class="td-color-product" style="background: ${ liPCS.color.rgb };"></span></td>
-								<td class="td-center">${ liPCS.size.id }</td>
+								<td class="td-center">${ liPCS.size.size_number }</td>
 								<td class="td-center">${ liPCS.quantity }</td>
 								<td class="td-action">
 									<button class="btn-edit-order" id="${ liPCS.id }">
@@ -904,7 +904,6 @@
 						"Successfully deleted!");
 				$('.ok-done').click(function() {
 					$(".message-done").addClass("none");
-					
 					location.reload();
 				});
 			});
@@ -915,6 +914,7 @@
 	<script>
 		$('.cancel').click(function() {
 			$(".message").addClass("none");
+			location.reload();
 		});
 	</script>
 

@@ -41,6 +41,11 @@
 				<li>Search</li>
 			</ul>
 		</a>
+		<a href="/SpringMVC/admin/voucher">
+			<ul class="sub-menu-ul">
+				<li>Voucher</li>
+			</ul>
+		</a>
 	</div>
 	<!-- SHOES -->
 	<ul>

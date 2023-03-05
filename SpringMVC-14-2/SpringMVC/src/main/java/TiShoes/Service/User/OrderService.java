@@ -22,6 +22,7 @@ public class OrderService implements OrderRepository {
 	private Order_ order_;
 	private Voucher voucher;
 	private Status status;
+	private MD5Service md5Service;
 
 	@Override
 	public List<Order_> getAllOrder() {
@@ -47,10 +48,10 @@ public class OrderService implements OrderRepository {
 				voucher.setCode(rs.getString("code"));
 				voucher.setDiscount(rs.getInt("discount"));
 				voucher.setLimit(rs.getInt("limit"));
-				voucher.setStart_date(rs.getDate("start_date"));
-				voucher.setEnd_date(rs.getDate("end_date"));
-				voucher.setCreated_at(rs.getDate("created_at"));
-				voucher.setUpdated_at(rs.getDate("updated_at"));
+				voucher.setStart_date(rs.getTimestamp("start_date"));
+				voucher.setEnd_date(rs.getTimestamp("end_date"));
+				voucher.setCreated_at(rs.getTimestamp("created_at"));
+				voucher.setUpdated_at(rs.getTimestamp("updated_at"));
 				voucher.setDescription(rs.getString("description"));
 
 				order_.setId(rs.getInt("id"));
@@ -81,7 +82,21 @@ public class OrderService implements OrderRepository {
 		try {
 			java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
 			connectService = new ConnectService();
+			md5Service = new MD5Service();
 			Connection conn = connectService.getConnect();
+			
+			if(!md5Service.decodeText(fullname).equals("")) {
+				fullname = md5Service.decodeText(fullname);
+			}
+			if(!md5Service.decodeText(address).equals("")) {
+				address = md5Service.decodeText(address);
+			}
+			if(!md5Service.decodeText(note).equals("")) {
+				note = md5Service.decodeText(note);
+			}
+			if(!md5Service.decodeText(method).equals("")) {
+				method = md5Service.decodeText(method);
+			}
 			String sql = "INSERT INTO `order_`(`fullname`, `email`, `phone_number`, `address`, `order_date`, `updated_at`, `voucher_id`, `note`, `status_id`, `method`, `bill`) "
 					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);

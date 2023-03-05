@@ -82,10 +82,10 @@ public class Order_detailsService implements Order_detailsRepository {
 				voucher.setCode(rs.getString("code"));
 				voucher.setDiscount(rs.getInt("discount"));
 				voucher.setLimit(rs.getInt("limit"));
-				voucher.setStart_date(rs.getDate("start_date"));
-				voucher.setEnd_date(rs.getDate("end_date"));
-				voucher.setCreated_at(rs.getDate("created_at"));
-				voucher.setUpdated_at(rs.getDate("updated_at"));
+				voucher.setStart_date(rs.getTimestamp("start_date"));
+				voucher.setEnd_date(rs.getTimestamp("end_date"));
+				voucher.setCreated_at(rs.getTimestamp("created_at"));
+				voucher.setUpdated_at(rs.getTimestamp("updated_at"));
 				voucher.setDescription(rs.getString("description"));
 
 				order_.setId(rs.getInt("order_id"));
