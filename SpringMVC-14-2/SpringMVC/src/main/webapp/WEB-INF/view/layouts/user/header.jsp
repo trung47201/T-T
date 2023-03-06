@@ -4,24 +4,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<c:set var="id_user" value="${ userID }" />
+<c:if test="${ userID != null }">
+	<c:set var="id_user" value="${ userID }" />
+</c:if>
 <div class="container-xl header-1 header-div">
 	<div class="logo-header">
 		<a href="/SpringMVC"><img class="img-fluid "
-		src="<c:url value="/assets/images/logo/result.png"/>"
-		alt="logo_UchihaShoes"></a> 
+			src="<c:url value="/assets/images/logo/result.png"/>"
+			alt="logo_UchihaShoes"></a>
 	</div>
-	
+
 	<div class="search-header-form">
 		<form action="/SpringMVC/products" method="post">
 			<div class="search-keys">
 				<c:if test="${ search != null }">
 					<input class="container-xl search key-search" type="text"
-					name="search" id="search" placeholder="Search..." value="${ search }">
+						name="search" id="search" placeholder="Search..."
+						value="${ search }">
 				</c:if>
 				<c:if test="${ search == null }">
 					<input class="container-xl search key-search" type="text"
-					name="search" id="search" placeholder="Search...">
+						name="search" id="search" placeholder="Search...">
 				</c:if>
 				<button type="button" class="search-triangle-btn">
 					<img class="search-triangle"
@@ -31,14 +34,16 @@
 						<p>People also search</p>
 						<div class="listkeys-span1">
 							<div class="keys-search-span">
-								<span class="keys-search-span" id="span_Id1" onclick="test('1');">New
-									shoes</span> <span class="keys-search-span" id="span_Id2"
-									onclick="test('2');">shoes</span> <span class="keys-search-span"
-									id="span_Id3" onclick="test('3');">boot</span> <span
-									class="keys-search-span" id="span_Id4" onclick="test('4');">sneaker</span>
-								<span class="keys-search-span" id="span_Id5" onclick="test('5');">nike</span>
-								<span class="keys-search-span" id="span_Id6" onclick="test('6');">adidas</span>
-								<span class="keys-search-span" id="span_Id7" onclick="test('7');">shoes
+								<span class="keys-search-span" id="span_Id1"
+									onclick="test('1');">New shoes</span> <span
+									class="keys-search-span" id="span_Id2" onclick="test('2');">shoes</span>
+								<span class="keys-search-span" id="span_Id3"
+									onclick="test('3');">boot</span> <span class="keys-search-span"
+									id="span_Id4" onclick="test('4');">sneaker</span> <span
+									class="keys-search-span" id="span_Id5" onclick="test('5');">nike</span>
+								<span class="keys-search-span" id="span_Id6"
+									onclick="test('6');">adidas</span> <span
+									class="keys-search-span" id="span_Id7" onclick="test('7');">shoes
 									adidas</span> <span class="keys-search-span" id="span_Id8"
 									onclick="test('8');">shoes nike</span> <span
 									class="keys-search-span" id="span_Id9" onclick="test('9');">shoes
@@ -48,13 +53,16 @@
 						</div>
 					</div>
 				</button>
-				<button type="button" class="search-link-icon" id="search-link-icon" style="background: none;"> <img class="search-icon"
-					src="<c:url value="/assets/images/icons/search48.png"/>"
-					alt="icon-search" width="32px"></button>
+				<button type="button" class="search-link-icon" id="search-link-icon"
+					style="background: none;">
+					<img class="search-icon"
+						src="<c:url value="/assets/images/icons/search48.png"/>"
+						alt="icon-search" width="32px">
+				</button>
 			</div>
 		</form>
 	</div>
-	
+
 	<div class="customer-support-content-header">
 		<div class="img-phone-header">
 			<img src="<c:url value="/assets/images/icons/smartphone48.png"/>"
@@ -62,38 +70,43 @@
 		</div>
 		<div class="customer-support-content">
 			<p>
-				Custormer Support<br> <a class="phone" href="#">0346 643 755</a>
+				Custormer Support<br> <a class="phone" href="#">0346 643
+					755</a>
 			</p>
 		</div>
 	</div>
 	<!--################################################## btn LOGIN ################################################################### -->
 	<div class="container-xl icon-user">
 		<c:if test="${ userID != null }">
-			<button type="button" class="icon-user btn none"
-				data-toggle="modal" data-target="#login">
+			<button type="button" class="icon-user btn none" data-toggle="modal"
+				data-target="#login">
 				<img class="icon-user"
 					src="<c:url value="/assets/images/users/${ avatar }"/>"
 					alt="icon-user">
 			</button>
-			<button type="button" class="icon-user-login dropdown-toggle"
+			<button type="button" class="icon-user-login drop-icon"
 				id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
 				aria-expanded="false">
 				<img class="icon-user-login"
 					src="<c:url value="/assets/images/users/${ avatar }"/>"
 					alt="icon-user">
 			</button>
-			<div class="img-dropdown-menu none">
-				<img src="<c:url value="/assets/images/icons/triangle-up.png"/>">
-			</div>
-			<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-				<a class="dropdown-item" href="/SpringMVC/order/${ id_user }">Order</a>
-				<a class="dropdown-item" href="#">Personal details</a> <a
-					class="dropdown-item" onclick="logout()">Logout</a>
+
+			<div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+				id="dropdown-menu">
+				<div class="img-dropdown-menu">
+					<img src="<c:url value="/assets/images/icons/triangle-up.png"/>">
+				</div>
+				<div>
+					<a class="dropdown-item" href="/SpringMVC/order/${ id_user }">Order</a>
+					<a class="dropdown-item" href="#">Personal details</a> <a
+						class="dropdown-item" onclick="logout()">Logout</a>
+				</div>
 			</div>
 		</c:if>
 		<c:if test="${ userID == null }">
-			<button type="button" class="icon-user btn"
-				data-toggle="modal" data-target="#login">
+			<button type="button" class="icon-user btn" data-toggle="modal"
+				data-target="#login">
 				<img class="icon-user"
 					src="<c:url value="/assets/images/icons/user48.png"/>"
 					alt="icon-user">
@@ -112,57 +125,50 @@
 						</button>
 					</div>
 					<div class="login_form_container" id="login_form_container">
-						<div class="login_form">
-							<h2>LOGIN</h2>
-							<div class="input_group">
+						<form action="/SpringMVC/" method="post">
+							<div class="login_form">
+								<h2>LOGIN</h2>
+								<div class="input_group">
 
-								<i class="fa fa-user"></i> <input type="text" id="username"
-									name="username" placeholder="Username" class="input_text"
-									autocomplete="off"
-									<c:if test="${ username != '' || username != null }">
-													value="${ username }"
-												</c:if> />
-							</div>
-							<div class="input_group">
-								<i class="fa fa-unlock-alt"></i> <input type="password"
-									id="password" name="password" placeholder="Password"
-									class="input_text" autocomplete="off"
-									<c:if test="${ password != '' || password != null }">
-													value="${ password }"
-												</c:if> />
-							</div>
+									<i class="fa fa-user"></i> <input type="text" id="username"
+										name="username" placeholder="Username" class="input_text"
+										autocomplete="off" />
+								</div>
+								<div class="input_group">
+									<i class="fa fa-unlock-alt"></i> <input type="password"
+										id="password" name="password" placeholder="Password"
+										class="input_text" autocomplete="off" />
+								</div>
 
-							<div class="error-login none">
-								<p id="msg-error">Username or password is not correct!</p>
-							</div>
+								<div class="error-login none">
+									<p id="msg-error">Username or password is not correct!</p>
+								</div>
 
-							<div class="form-check">
+								<div class="form-check">
 
-								<input class="form-check-input" type="checkbox"
-									name="rememberme" value="" id="flexCheckChecked"
-									<c:if test="${rememberme != null && rememberme=='true' }">
-											<c:out value="checked"></c:out>
-											</c:if>>
-								<label class="form-check-label" for="flexCheckChecked">
-									Remember me </label>
+									<input class="form-check-input" type="checkbox"
+										name="rememberme" value="" id="flexCheckChecked"> <label
+										class="form-check-label" for="flexCheckChecked">
+										Remember me </label>
+								</div>
+								<div class="button_group" id="login_button">
+									<input type="submit" name="login" id="login-btn" value="Login">
+								</div>
+								<div class="fotter">
+									<a>Forgot Password ?</a> <a href="/SpringMVC/sign-up">SignUp</a>
+								</div>
 							</div>
-							<div class="button_group" id="login_button">
-								<a onclick="login()">Login</a>
-							</div>
-							<div class="fotter">
-								<a>Forgot Password ?</a> <a href="/SpringMVC/sign-up">SignUp</a>
-							</div>
-						</div>
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
+
 	<!--################################################## btn Love Product ###################################################### -->
 	<div class="container-xl icon-heart">
-		<button type="button" class="icon-user btn"
-			data-toggle="modal" data-target="#heart">
+		<button type="button" class="icon-user btn" data-toggle="modal"
+			data-target="#heart">
 			<img class="icon-heart"
 				src="<c:url value="/assets/images/icons/heart.png"/>"
 				alt="icon-user">
@@ -181,7 +187,7 @@
 		</c:if>
 		<c:if test="${ userID != null }">
 			<a href="/SpringMVC/cart/${ userID }">
-				<button type="button" class="icon-user btn btn-primary">
+				<button type="button" class="icon-user btn">
 					<img class="icon-cart"
 						src="<c:url value="/assets/images/icons/cart48.png"/>"
 						alt="icon-user">
@@ -200,10 +206,8 @@
 				<li><c:if test="${ id_user != null }">
 						<a href="/SpringMVC/products/${ id_user }"
 							class="desktop-link menu"><b>Shoes</b></a>
-					</c:if>
-					<c:if test="${ id_user == null }">
-						<a href="/SpringMVC/products"
-							class="desktop-link menu"><b>Shoes</b></a>
+					</c:if> <c:if test="${ id_user == null }">
+						<a href="/SpringMVC/products" class="desktop-link menu"><b>Shoes</b></a>
 					</c:if>
 					<ul>
 						<c:forEach var="li_style" items="${ style }" varStatus="index">

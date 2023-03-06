@@ -9,6 +9,7 @@
 <link rel="stylesheet" href='<c:url value="/assets/css/bootstrap.css"/>'>
 <link rel="stylesheet" href='<c:url value="/assets/js/bootstrap.js"/>'>
 <link rel="stylesheet" href='<c:url value="/assets/css/index.css"/>'>
+<link rel="stylesheet" href='<c:url value="/assets/css/login-icon.css"/>'>
 <link rel="stylesheet"
 	href='<c:url value="/assets/css/bootstrap.min.css"/>'>
 <link rel="stylesheet"
@@ -27,7 +28,6 @@
 <link rel="stylesheet" href="<c:url value="/assets/css/home.css"/>">
 <style>
 
-
 /* end  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 .buy-now a:hover {
 	color: white !important;
@@ -40,17 +40,6 @@
 
 .none {
 	display: none;
-}
-
-.welcome {
-	position: absolute;
-	background: white;
-	color: #0086ff;
-	transform: translate(50%);
-	padding: 20px;
-	font-weight: bold !important;
-	z-index: 1000;
-	border-radius: 12px;
 }
 
 .search-link-icon:hover {
@@ -121,20 +110,13 @@
 </style>
 <body style="color: white;">
 
-	<c:if test="${ userID != null }">
-		<div class="welcome">
-			<h3>Welcome to Ti Shoes!</h3>
-			<div class="ok-btn">
-				<button>OK</button>
-			</div>
-		</div>
-	</c:if>
-
-	<c:if test="${ userID == null }">
-		<div class="welcome none">
-			<h3>Welcome to Ti Shoes!</h3>
-			<div class="ok-btn">
-				<button>OK</button>
+	<c:if test="${ message == 'true' }">
+		<div class="wrapper-wel" id="wrapper-wel">
+			<div class="welcome" id="welcome">
+				<h3>Welcome to Ti Shoes!</h3>
+				<div class="ok-btn">
+					<button>OK</button>
+				</div>
 			</div>
 		</div>
 	</c:if>
@@ -581,52 +563,22 @@
 	<script>
 	$(".ok-btn").click(function () {
 		$(".welcome").addClass("none");
+		$(".wrapper-wel").addClass("importantNone");
 	});
 	</script>
 
-	<script type="text/javascript">
-	$(document).ready(function(){
-		 $(".form-check-input").click(function(){
-			 var rememberme = this.checked;
-			  var xhr = new XMLHttpRequest();
-				xhr.open("GET",
-						"http://localhost:8888/SpringMVC/home?rememberme="+rememberme);
-				// What to do when server responds
-				xhr.onload = function() {
-					//window.location.assign("http://localhost:8888/SpringMVC/");
-				};
-				xhr.send();
-		  });
-		  
-	});
-</script>
 	<script>
-	
 	function logout() {
 		$(document).ready(function(){
 			var xhr = new XMLHttpRequest();
 			xhr.open("GET",
 					"http://localhost:8888/SpringMVC/home?logout=true");
-			// What to do when server responds
 			xhr.onload = function() {
 				window.location.assign("http://localhost:8888/SpringMVC/");
 			};
 			xhr.send();
 		});
 	}
-	</script>
-	<script>
-		$(document).ready(function(){
-		  $(".dropdown-toggle").click(function(){
-			  $(".img-dropdown-menu").toggleClass("none");
-		  });
-		  $(".dropdown-item").click(function(){
-			  $(".img-dropdown-menu").toggleClass("none");
-		  });
-		  $(".img-dropdown-menu").click(function(){
-			  $(".img-dropdown-menu").toggleClass("none");
-		  });
-		});
 	</script>
 	<script>
 		if(${userID == null }) {
@@ -660,26 +612,6 @@
 			});			
 		}
 	}
-		function login() {
-			var username = document.getElementById("username").value;
-			var password = document.getElementById("password").value;
-			if (username=="" || password=="") {
-				$(".error-login").removeClass("none");
-				document.getElementById("msg-error").innerHTML = "Username or password is empty!";  
-			} else {
-				var xhr = new XMLHttpRequest();
-				xhr.open("GET",
-						"http://localhost:8888/SpringMVC/home?username="
-								+ username +"&password="+password);
-				// What to do when server responds
-				xhr.onload = function() {
-					window.location.assign("http://localhost:8888/SpringMVC/");
-				};
-				xhr.send();
-			}
-			
-		}
-		
 	</script>
 	<script>
 		function test($a) {
@@ -771,6 +703,7 @@
 			}
 		});
 	</script>
+	
 	<script
 		src="<c:url value="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"/>"
 		integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"

@@ -14,7 +14,6 @@ import TiShoes.Repository.User.LoginRepository;
 
 public class LoginService implements LoginRepository{
 	private ConnectService connectService;
-	private UserService userService;
 	private User user;
 	private Role role;
 	private MD5Service md5Service;
@@ -62,8 +61,7 @@ public class LoginService implements LoginRepository{
 	
 	@Override
 	public boolean checkUserPass(String user, String pass) {
-		userService = new UserService();
-		List<User> li = userService.getAllUser();
+		List<User> li = getAllUser();
 		md5Service = new MD5Service();
 		for (User u : li) {
 			if ((u.getEmail().trim().equals(user) && u.getPassword().trim().equals(md5Service.StringToMD5(pass))) || (u.getEmail().trim().equals(user) && u.getPassword().trim().equals(pass))) {
@@ -77,8 +75,7 @@ public class LoginService implements LoginRepository{
 
 	@Override
 	public int getIdUser(String user, String pass) {
-		userService = new UserService();
-		List<User> li = userService.getAllUser();
+		List<User> li = getAllUser();
 		md5Service = new MD5Service();
 		int id_user=0;
 		for (User u : li) {
@@ -92,8 +89,7 @@ public class LoginService implements LoginRepository{
 	}
 	
 	public boolean checkStatucBlock(String user, String pass) {
-		userService = new UserService();
-		List<User> li = userService.getAllUser();
+		List<User> li = getAllUser();
 		md5Service = new MD5Service();
 		if (checkUserPass(user, pass)) {
 			for (User u : li) {
@@ -113,7 +109,7 @@ public class LoginService implements LoginRepository{
 	
 	public static void main(String[] args) {
 		LoginService l = new LoginService();
-		System.out.println(l.checkUserPass("0913913835", "267dca3062e07c065ecc9a4b8bc1f8a"));
+		System.out.println(l.checkUserPass("dovantrung47201@gmail.com", "26c92f48534c591674295d6e788f014b"));
 		
 		List<User> li = l.getAllUser();
 		for (User user : li) {

@@ -21,6 +21,7 @@
 <link rel="stylesheet" href="<c:url value="/assets/css/products.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/zoom-img.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/home.css"/>">
+<link rel="stylesheet" href='<c:url value="/assets/css/login-icon.css"/>'>
 
 <body style="color: white;">
 	<header class="container-xl header-content">

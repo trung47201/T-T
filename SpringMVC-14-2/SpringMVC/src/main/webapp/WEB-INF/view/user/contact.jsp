@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="<c:url value="/assets/css/slide.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/contact.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/home.css"/>">
+<link rel="stylesheet" href='<c:url value="/assets/css/login-icon.css"/>'>
 <body style="color: white;">
     <header class="container-xl header-content">
         <form method="post">

@@ -8,6 +8,7 @@
 <link rel="stylesheet" href='<c:url value="/assets/css/bootstrap.css"/>'>
 <link rel="stylesheet" href='<c:url value="/assets/js/bootstrap.js"/>'>
 <link rel="stylesheet" href='<c:url value="/assets/css/index.css"/>'>
+<link rel="stylesheet" href='<c:url value="/assets/css/login-icon.css"/>'>
 <link rel="stylesheet"
 	href='<c:url value="/assets/css/bootstrap.min.css"/>'>
 <link rel="stylesheet"

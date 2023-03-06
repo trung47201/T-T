@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="<c:url value="/assets/css/swiper-bundle.min.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/slide.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/favorite.css"/>">
+<link rel="stylesheet" href='<c:url value="/assets/css/login-icon.css"/>'>
 
 <body style="color: white;">
     <header class="container-xl header-content">

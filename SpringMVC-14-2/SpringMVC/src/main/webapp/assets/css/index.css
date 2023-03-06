@@ -243,11 +243,6 @@ img.icon-user:hover {
 	border-radius: 10px;
 }
 
-img.icon-user-login {
-	border-radius: 20px;
-	width: 40px;
-	height: 40px;
-}
 
 img.icon-user-login:hover {
 	border-radius: 20px;
@@ -308,14 +303,6 @@ button.icon-user-login:focus {
 	outline-style: none !important;
 }
 
-img.icon-user-login {
-	position: absolute;
-	margin-top: 0 !important;
-	margin-left: 0 !important;
-	width: 40px;
-	height: 40px;
-	border-radius: 20px;
-}
 
 img.icon-user-login:hover {
 	border-radius: 20px;
