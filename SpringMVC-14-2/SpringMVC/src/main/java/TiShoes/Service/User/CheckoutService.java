@@ -201,6 +201,13 @@ public class CheckoutService implements CheckoutRepository {
 		return s;
 	}
 
+	public double get_price_at (int quantity, String code, int id_prod) {
+		
+		
+		
+		return 0;
+	}
+	
 	public static void main(String[] args) {
 		//System.out.println(removeProductFromCartAfterCheckout(3, "3//4/3"));
 	}

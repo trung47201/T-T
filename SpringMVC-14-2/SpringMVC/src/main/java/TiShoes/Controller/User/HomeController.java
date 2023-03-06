@@ -6,17 +6,12 @@ import java.util.List;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import TiShoes.Service.User.CartService;
-import TiShoes.Service.User.Color_sizeService;
 import TiShoes.Service.User.LoginService;
-import TiShoes.Service.User.MD5Service;
 import TiShoes.Service.User.NewsService;
 import TiShoes.Service.User.ProductService;
 import TiShoes.Service.User.SlidesService;
@@ -31,9 +26,6 @@ public class HomeController {
 	private NewsService newsService;
 	private StyleService styleService;
 	private LoginService loginService;
-	private MD5Service md5Service;
-	private CartService cartService;
-	private Color_sizeService color_sizeService;
 	private UserService userService;
 	
 	@RequestMapping(value = {"/", "/home"})
@@ -45,16 +37,9 @@ public class HomeController {
 		newsService = new NewsService();
 		styleService = new StyleService();
 		loginService = new LoginService();
-		md5Service = new MD5Service();
-		color_sizeService = new Color_sizeService();
-		cartService = new CartService();
 		userService = new UserService();
 		
-		HttpSession session = request.getSession();
-		
 		List<String> li = null;
-		String txt="";
-		String addtocart = request.getParameter("add-to-cart");
 		String username = String.valueOf(request.getParameter("username"));
 		String password = String.valueOf(request.getParameter("password"));
 		String logout = String.valueOf(request.getParameter("logout"));
@@ -68,45 +53,11 @@ public class HomeController {
 				li.add(o.getName());
 			}
 		}
-		String userID = "";
-		if (arr != null) {
-			for (Cookie o : arr) {
-				if (o.getName().equals("userID")) {
-					userID = o.getValue();
-				}
-			}
-		}
-		if (!userID.equals("") && addtocart!=null) {
-			int id_prod = color_sizeService.firstColor_SizeById_Prod(Integer.parseInt(addtocart));
-			cartService.insertIntoCartDB(1, id_prod, Integer.valueOf(userID));
-			userID = "redirect: cart/"+userID;
-			return new ModelAndView(userID);
-		}
-		// add product into cart from home
-		if (arr != null) {
-			for (Cookie o : arr) {
-				if (o.getName().equals("addtocart")) {
-					if (addtocart != null) {
-						txt = o.getValue() + "/" + addtocart;
-						Cookie cart = new Cookie("addtocart", txt);
-						cart.setMaxAge(60*60*24);
-						response.addCookie(cart);
-						return new ModelAndView("redirect:/cart");
-					}
-				} else if (!li.contains("addtocart")) {
-					if (addtocart != null) {
-						Cookie cart = new Cookie("addtocart", addtocart);
-						cart.setMaxAge(60*60*24);
-						response.addCookie(cart);
-						return new ModelAndView("redirect:/cart");
-					}
-				}
-			}
-		}
-		
 		// login
 		String msg = "";
+		
 		if(!username.equals("null") && !password.equals("null")) {
+			String get_user_id = String.valueOf(loginService.getIdUser(username, password));
 			if(loginService.checkUserPass(username, password)) {
 				if(loginService.checkStatucBlock(username, password)) {
 					msg = "block";
@@ -114,14 +65,16 @@ public class HomeController {
 				} else {
 					msg = "true";
 					mv.addObject("message", msg);
-					mv.addObject("userID", String.valueOf(loginService.getIdUser(username, password)));
+					mv.addObject("userID", get_user_id);
 					if(rememberme != null) {
-						Cookie oUserId = new Cookie("userID", String.valueOf(loginService.getIdUser(username, password)));
+						Cookie oUserId = new Cookie("userID", get_user_id);
 						oUserId.setMaxAge(60*60*24*15);
 						response.addCookie(oUserId);
 						System.out.println("login true - remember");
 					} else {
-						session.setAttribute("userID", String.valueOf(loginService.getIdUser(username, password)));
+						Cookie oUserId = new Cookie("userID", get_user_id);
+						oUserId.setMaxAge(60*60*24);
+						response.addCookie(oUserId);
 						System.out.println("login true - not remember");
 					}
 					mv.addObject("avatar", userService.getAvatarByUserID(loginService.getIdUser(username, password)));
@@ -144,14 +97,6 @@ public class HomeController {
 			}
 		}
 		
-		if(session.getAttribute("userID") != null) {
-			String id = (String) session.getAttribute("userID");
-			mv.addObject("userID", id.trim());
-			if(!userService.getAvatarByUserID(Integer.parseInt(id.trim())).equals("")) {
-				mv.addObject("avatar", userService.getAvatarByUserID(Integer.parseInt(id.trim())));
-			}
-		}
-		
 		if(logout.equals("true")) {
 			if(arr!= null) {
 				for (Cookie o : arr) {
@@ -162,7 +107,6 @@ public class HomeController {
 					}
 				}
 			}
-			session.removeAttribute("userID");
 			mv.addObject("logout", "true");
 		}
 		//
@@ -172,7 +116,6 @@ public class HomeController {
 			}
 		}
 		
-
 		mv.addObject("style", styleService.getAllStyle());
 		mv.addObject("slides", slidesService.getAllSlides());
 		mv.addObject("listNewArrivals", productService.getNewArrivals());

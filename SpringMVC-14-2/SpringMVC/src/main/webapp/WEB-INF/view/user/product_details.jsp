@@ -448,7 +448,6 @@
 	<script>
 		$(document).ready(function() {
 			$(".btn-nav").hover(function() {
-
 				if (this.id == "btn-reviews") {
 					//show-hide border bottom nav
 					$(this).addClass("btn-effect-show");

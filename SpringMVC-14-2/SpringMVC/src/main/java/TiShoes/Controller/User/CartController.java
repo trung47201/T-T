@@ -29,16 +29,17 @@ public class CartController {
 	private Color_sizeService color_sizeService;
 	private ColorService colorService;
 	private UserService userService;
-	
+
 	@RequestMapping(value = { "/cart/{id}" })
-	public ModelAndView loadCartByUserID(@PathVariable String id,HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView loadCartByUserID(@PathVariable String id, HttpServletRequest request,
+			HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("user/cart");
-		
+
 		cartService = new CartService();
 		color_sizeService = new Color_sizeService();
 		colorService = new ColorService();
 		userService = new UserService();
-		
+
 //		String plus = String.valueOf(request.getParameter("plus"));
 //		String size = String.valueOf(request.getParameter("size"));
 //		String color = String.valueOf(request.getParameter("color"));
@@ -53,25 +54,24 @@ public class CartController {
 		HashMap<Product, Integer> hm = new LinkedHashMap<>();
 		HashMap<Integer, Integer> map_color = null;
 		HashMap<String, Integer> map_size = null;
-		String sColor = "", sSize ="";
+		String sColor = "", sSize = "";
 		List<Cart> li = cartService.getAllCart();
 		for (Cart cart : li) {
-			if(cart.getUser().getId() == Integer.parseInt(id)) {
+			if (cart.getUser().getId() == Integer.parseInt(id)) {
 				hm.put(cart.getColor_size().getProd(), cart.getpQuantity());
-				sColor += cart.getColor_size().getColor().getId() +"_" + cart.getColor_size().getProd().getId() + "/";
-				sSize += cart.getColor_size().getSize().getId() + "_"+cart.getColor_size().getColor().getId() +"_" + cart.getColor_size().getProd().getId() + "/";
-				
+				sColor += cart.getColor_size().getColor().getId() + "_" + cart.getColor_size().getProd().getId() + "/";
+				sSize += cart.getColor_size().getSize().getId() + "_" + cart.getColor_size().getColor().getId() + "_"
+						+ cart.getColor_size().getProd().getId() + "/";
+
 			}
 		}
-		
-	
+
 		map_color = cartService.getProd_Color_Size(sColor);
 		map_size = cartService.getProd_Color_Sizes(sSize);
-		
+
 		mv.addObject("listSize", map_size);
 		mv.addObject("listColor", map_color);
-		
-	
+
 		if (!colorService.getAllColor().isEmpty()) {
 			mv.addObject("listAllColor", colorService.getAllColor());
 		}
@@ -81,7 +81,7 @@ public class CartController {
 		if (!color_sizeService.getCS().isEmpty()) {
 			mv.addObject("hmProd_Color_Size", color_sizeService.getCS());
 		}
-		
+
 		mv.addObject("userID", id);
 		mv.addObject("avatar", userService.getAvatarByUserID(Integer.parseInt(id)));
 		return mv;
@@ -90,23 +90,19 @@ public class CartController {
 	@RequestMapping(value = { "/cart" })
 	public ModelAndView loadCart(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("user/cart");
-
 		Cookie arrO[] = request.getCookies();
 		List<String> li_color = null;
 		if (arrO != null) {
 			li_color = new ArrayList<>();
 			for (Cookie o : arrO) {
 				li_color.add(o.getName());
-				
+
 			}
 		}
-		
-		
 		color_sizeService = new Color_sizeService();
 		productService = new ProductService();
 		colorService = new ColorService();
 		cartService = new CartService();
-
 		String plus = String.valueOf(request.getParameter("plus"));
 		String size = String.valueOf(request.getParameter("size"));
 		String color = String.valueOf(request.getParameter("color"));
@@ -117,17 +113,11 @@ public class CartController {
 		String totalmoney = String.valueOf(request.getParameter("totalmoney"));
 		String addtocart = String.valueOf(request.getParameter("product"));
 		String continueShop = String.valueOf(request.getParameter("continueShopping"));
-
 		double totalPayment = 0;
-
 		HashMap<Product, Integer> hm = new HashMap<>();
 		HashMap<Integer, Integer> map_color = null;
 		HashMap<String, Integer> map_size = null;
-
-		
 		List<String> li_color_split = null;
-
-		
 
 		if (continueShop.equals("Continue Shopping")) {
 			return new ModelAndView("redirect:/products");
@@ -143,7 +133,6 @@ public class CartController {
 						mv.addObject("checkedAll", "true");
 					}
 				}
-
 			}
 		}
 
@@ -151,7 +140,6 @@ public class CartController {
 			totalPayment = cartService.totalProd(totalmoney);
 			mv.addObject("listProd_id", cartService.listProd_id(totalmoney));
 		}
-
 		for (Cookie cookie : arrO) {
 			if (cookie.getName().equals("addtocart")) {
 				if (!plus.equals("null")) {
@@ -188,12 +176,9 @@ public class CartController {
 						cookie.setMaxAge(60 * 60 * 24);
 						response.addCookie(cookie);
 					}
-
 				}
 			}
 		}
-
-		
 		if (arrO != null) {
 			li_color_split = new ArrayList<>();
 			for (Cookie o : arrO) {
@@ -203,10 +188,8 @@ public class CartController {
 						li_color_split.add(a[i]);
 					}
 				}
-
 			}
 		}
-
 		if (arrO != null) {
 			for (Cookie o : arrO) {
 				if (o.getName().equals("prod_color")) {
@@ -241,21 +224,18 @@ public class CartController {
 				}
 			}
 		}
-
 		for (Cookie o : arrO) {
 			if (o.getName().equals("prod_color")) {
-				System.out.println("prod_color"+o.getValue());
+				System.out.println("prod_color" + o.getValue());
 				map_color = cartService.getProd_Color_Size(o.getValue());
 			}
 		}
-
 		for (Cookie o : arrO) {
 			if (o.getName().equals("prod_size")) {
-				System.out.println("prod_size"+o.getValue());
+				System.out.println("prod_size" + o.getValue());
 				map_size = cartService.getProd_Color_Sizes(o.getValue());
 			}
 		}
-
 		if (!addtocart.equals("null")) {
 			StringBuilder strReverse = new StringBuilder(addtocart);
 			String arr[] = strReverse.reverse().toString().split("_");
@@ -304,16 +284,13 @@ public class CartController {
 			}
 		}
 		// System.out.println(size );
-
 		/*
 		 * for (Cookie o : o_color) { if(o.getName().equals("prod_color")) {
 		 * System.out.println(o.getValue()); } }
 		 */
+		mv.addObject("listSize", map_size);
+		mv.addObject("listColor", map_color);
 
-		
-			mv.addObject("listSize", map_size);
-			mv.addObject("listColor", map_color);
-		
 		if (!colorService.getAllColor().isEmpty()) {
 			mv.addObject("listAllColor", colorService.getAllColor());
 		}
@@ -323,13 +300,45 @@ public class CartController {
 		if (!hm.isEmpty()) {
 			mv.addObject("listProd", hm);
 		}
-
 		mv.addObject("totalPayment", totalPayment);
-		
-		
-		
-
 		return mv;
+	}
+
+	@RequestMapping(value = { "/add-to-cart/{id}" })
+	public void add_to_cart(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
+
+		cartService = new CartService();
+		color_sizeService = new Color_sizeService();
+		
+		Cookie arr[] = request.getCookies();
+		List<String> li = new ArrayList<>();
+		for (Cookie o : arr) {
+			li.add(o.getValue());
+		}
+		String txt = "";
+		String a[] = id.split("_");
+		if (a.length == 1) {
+			String id_prod = a[0];
+			if (arr != null) {
+				for (Cookie o : arr) {
+					if (o.getName().equals("addtocart")) {
+							txt = o.getValue() + "/" + id_prod;
+							o.setValue(txt);
+					} else if (!li.contains("addtocart")) {
+							Cookie cart = new Cookie("addtocart", id_prod);
+							cart.setMaxAge(60*60*24);
+							response.addCookie(cart);
+					}
+				}
+			}
+		} else if (a.length > 1) {
+			String id_user = a[0];
+			String id_prod = a[1];
+			int id_color_size = color_sizeService.firstColor_SizeById_Prod(Integer.parseInt(id_prod));
+			if(id_user != "" && id_prod != "") {
+				cartService.insertIntoCartDB(1, id_color_size, Integer.parseInt(id_user));
+			}
+		}
 	}
 
 }

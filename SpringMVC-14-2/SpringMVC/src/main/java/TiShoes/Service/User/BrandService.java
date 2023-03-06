@@ -38,4 +38,10 @@ public class BrandService implements BrandRepository{
 		}
 		return li;
 	}
+	
+	
+	
+	public static void main(String[] args) {
+		System.out.println("5".split("_").length);
+	}
 }

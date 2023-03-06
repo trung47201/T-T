@@ -628,10 +628,6 @@ public class Color_sizeService implements Color_sizeRepository {
 
 	public static void main(String[] args) {
 		Color_sizeService cls = new Color_sizeService();
-		HashMap<Integer, Integer> hm = cls.getSize_Quantity("32_123/33_150/34_300/35_400/36_500/37_500/38_400/39_400/40_300/41_200/42_100/43_50/44_50/45_50/46_50/47_50");
-		for (Integer i : hm.keySet()) {
-			System.out.println(i+ "=="+ hm.get(i));
-			
-		}
+		System.out.println(cls.firstColor_SizeById_Prod(3));
 	}
 }

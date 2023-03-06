@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -15,12 +16,14 @@ import TiShoes.Model.Color;
 import TiShoes.Model.Order_;
 import TiShoes.Model.Product;
 import TiShoes.Model.Sizes;
+import TiShoes.Model.User;
 import TiShoes.Service.User.CheckoutService;
 import TiShoes.Service.User.Color_sizeService;
 import TiShoes.Service.User.MD5Service;
 import TiShoes.Service.User.OrderService;
 import TiShoes.Service.User.Order_detailsService;
 import TiShoes.Service.User.ProductService;
+import TiShoes.Service.User.UserService;
 import TiShoes.Service.User.VoucherService;
 
 @Controller
@@ -33,140 +36,105 @@ public class CheckoutController {
 	private Order_ order_;
 	private Order_detailsService order_detailsService;
 	private OrderService orderService;
+	private UserService userService;
+	
+	@RequestMapping(value = { "cart/checkout/ok/{id}" })
+	public void checkout_ok(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
+		md5Service = new MD5Service();
+		
+		String fullname =  request.getParameter("fullname");
+		String phone_number = request.getParameter("phone");
+		String email = request.getParameter("email");
+		String city = request.getParameter("city");
+		String town = request.getParameter("town");
+		String village = request.getParameter("village");
+		String note =request.getParameter("note");
+		String method = request.getParameter("method");
+		String size = request.getParameter("size");
+		String color = request.getParameter("color");
+		String id_prod = request.getParameter("idprod");
+		String vccode = request.getParameter("vccode");
+		String quantity = request.getParameter("quantity");
+		
+		if (id_prod != null && vccode != null && size != null && color != null && city != null && town != null && village != null && fullname != null && phone_number  != null && email  != null) {
+			String address = md5Service.decodeText(city) + " - " + md5Service.decodeText(town) + " - " + md5Service.decodeText(village);
+		}
+	}
 
-	@RequestMapping(value = { "cart/checkout" })
-	public ModelAndView loadCheckout_buyNow(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = { "cart/checkout/{id}" })
+	public ModelAndView checkout_buy_now(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("user/buynow");
-
 		color_sizeService = new Color_sizeService();
 		productService = new ProductService();
 		checkoutService = new CheckoutService();
 		voucherService = new VoucherService();
-
-		int id_prod = Integer.parseInt(request.getParameter("id_prod"));
-		String voucher_code = String.valueOf(request.getParameter("voucher"));
-		String fullname = String.valueOf(request.getParameter("fullname"));
-		String phone = String.valueOf(request.getParameter("phone"));
-		String email = String.valueOf(request.getParameter("email"));
-		String city = String.valueOf(request.getParameter("city"));
-		String town = String.valueOf(request.getParameter("town"));
-		String village = String.valueOf(request.getParameter("village"));
-		String note = String.valueOf(request.getParameter("note"));
-		String order = String.valueOf(request.getParameter("order"));
-		String size = String.valueOf(request.getParameter("id_size"));
-		String quantity = String.valueOf(request.getParameter("quantity"));
-		String color = String.valueOf(request.getParameter("id_color"));
-		String method = String.valueOf(request.getParameter("method"));
-		String _name = "", _phone = "", _email = "", _phone_ = "", _email_ = "", _city = "", _town = "", _village = "";
-
-		int voucher = voucherService.getVoucherIdByCode(voucher_code);
-		int id_size = 0;
-		int id_color = 0;
-		if (!color.equals("null")) {
-
-			id_color = Integer.parseInt(color);
-			mv.addObject("listSize", color_sizeService.getAllColor_sizeById_prod(id_prod, id_color));
-			mv.addObject("color_id", id_color);
-
-			if (!size.equals("null")) {
-				id_size = Integer.parseInt(size);
-				mv.addObject("size_id", id_size);
-			} else if (size.equals("null")) {
-				mv.addObject("size_id", color_sizeService.firstSizeId(id_prod, id_color));
+		userService = new UserService();
+		
+		String voucher = request.getParameter("voucher");
+		if(voucher != null) {
+			if(voucherService.voucher_exists_by_code(voucher)) {
+				if(voucherService.expired_voucher_by_code(voucher)) {
+					mv.addObject("vcstatus", "outofdate");
+					System.out.println("het han");
+				} else {
+					if(voucherService.voucher_start_date_by_code(voucher)) {
+						mv.addObject("vcstatus", "notstartedyet");
+						System.out.println("not started yet");
+					} else {
+						int vch_discount = voucherService.get_discount_by_voucher_code(voucher);
+						mv.addObject("vcdiscount", vch_discount);
+						mv.addObject("vcstatus", "start");
+						System.out.println("start");
+					}
+				}
 			}
-		} else {
-			mv.addObject("listSize",
-					color_sizeService.getAllColor_sizeById_prod(id_prod, checkoutService.firstColor(id_prod)));
-			mv.addObject("color_id", checkoutService.firstColor(id_prod));
-		}
-
-		if (method.equals("null")) {
-			method = "COD";
-		}
-		if (fullname == "") {
-			_name = "Fullname is empty!";
-		} else if (phone == "") {
-			_phone = "Phone number is empty!";
-		} else if (!phone.matches("\\d+")) {
-			_phone_ = "Phone number must be alphanumeric!";
-		} else if (email == "") {
-			_email = "Email address is empty!";
-		} else if (!email.matches("\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b")) {
-			_email_ = "Invalidate!";
-		} else if (city == "") {
-			_city = "City is empty!";
-		} else if (town == "") {
-			_town = "Town is empty!";
-		} else if (village == "") {
-			_village = "Village is empty!";
-		} else {
-			if (order.equals("Order")) {
-				if (color.equals("null")) {
-					color = String.valueOf(color_sizeService.firstColorId(id_prod));
-				}
-				if (size.equals("null")) {
-					if (color.equals("null")) {
-						size = String.valueOf(
-								color_sizeService.firstSizeId(id_prod, color_sizeService.firstColorId(id_prod)));
-					} else {
-						size = String.valueOf(color_sizeService.firstSizeId(id_prod, Integer.parseInt(color)));
-						System.out.println(size);
-					}
-				}
-				String address = city + " " + town + " " + village;
-				// insert and update sql
-				if (voucher != 0) {
-					if (checkoutService.checkout_buynow(id_prod, Integer.valueOf(quantity), Integer.valueOf(size),
-							Integer.valueOf(color), fullname, email, phone, address, voucher, note, method,
-							(productService.getPriceByIdProd(id_prod, voucher) * Double.valueOf(quantity)))) {
-
-					} else {
-						System.out.println("unsuccess");
-					}
-				} else if (voucher == 0) {
-					if (checkoutService.checkout_buynow(id_prod, Integer.valueOf(quantity), Integer.valueOf(size),
-							Integer.valueOf(color), fullname, email, phone, address, 1, note, method,
-							(productService.getPriceByIdProd(id_prod, 1) * Double.valueOf(quantity)))) {
-
-					} else {
-						System.out.println("unsuccess");
-					}
-				}
-
-				return new ModelAndView("redirect:/sucess-buynow?id_prod=" + id_prod + "&id_color=" + color
-						+ "&id_size=" + size + "&quantity=" + quantity + "&fullname=" + fullname + "&phone_number="
-						+ phone + "&email=" + email + "&city=" + city + "&town=" + town + "&village=" + village
-						+ "&note=" + note);
-
+			else {
+				mv.addObject("vcstatus", "notexists");
+				System.out.println("not exists");
 			}
 		}
-
-		// msg error
-		mv.addObject("fullname", _name);
-		mv.addObject("phone", _phone);
-		mv.addObject("email", _email);
-		mv.addObject("phone_", _phone_);
-		mv.addObject("email_", _email_);
-		mv.addObject("city", _city);
-		mv.addObject("town", _town);
-		mv.addObject("village", _village);
-
-		// keep value on click submit
-		mv.addObject("value_name", fullname);
-		mv.addObject("value_phone", phone);
-		mv.addObject("value_email", email);
-		mv.addObject("value_city", city);
-		mv.addObject("value_town", town);
-		mv.addObject("value_village", village);
-		mv.addObject("value_note", note);
-		mv.addObject("value_quantity", quantity);
-
-		mv.addObject("back_home", "home");
-
-		mv.addObject("prod", productService.getProduct(id_prod));
-		mv.addObject("listRgb", checkoutService.getRgbById_prod(id_prod));
-
+		String id_prod = "";
+		String id_user = "";
+		String a[] = id.split("_");
+		if(a.length > 1) {
+			id_prod = a[1];
+			id_user = a[0];
+		} else if(a.length == 1){
+			id_prod = a[0];
+		}
+		if (!id_user.equals("")) {
+			User u = userService.get_user_by_id(Integer.parseInt(id_user));
+			if(u != null) {
+				mv.addObject("user", u);
+				String address = u.getAddress();
+				String city_value = address.split("-")[0];
+				String town_value = address.split("-")[1];
+				String village_value = address.split("-")[2];
+				mv.addObject("city", city_value.trim());
+				mv.addObject("town", town_value.trim());
+				mv.addObject("village", village_value.trim());
+			}
+		}
+		productService = new ProductService();
+		color_sizeService = new Color_sizeService();
+		
+		if (!color_sizeService.getAllSizeById_Prod(Integer.parseInt(id_prod)).isEmpty()) {
+			mv.addObject("listSize", color_sizeService.getAllSizeById_Prod(Integer.parseInt(id_prod)));
+		}
+		if (!color_sizeService.getAllColorById_prod(Integer.parseInt(id_prod)).isEmpty()) {
+			mv.addObject("listColor", color_sizeService.getAllColorById_prod(Integer.parseInt(id_prod)));
+		}
+		
+		mv.addObject("averageRating", productService.averageRating(Integer.parseInt(id_prod)));
+		mv.addObject("product", productService.getProduct(Integer.parseInt(id_prod)));
+		
+		mv.addObject("id", id);
+		mv.addObject("idprod", id_prod);
+		if(voucher != null) {
+			mv.addObject("vccode", voucher);
+		}
 		return mv;
+		
 
 	}
 

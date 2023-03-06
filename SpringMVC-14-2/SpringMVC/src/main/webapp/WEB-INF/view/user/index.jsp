@@ -9,7 +9,8 @@
 <link rel="stylesheet" href='<c:url value="/assets/css/bootstrap.css"/>'>
 <link rel="stylesheet" href='<c:url value="/assets/js/bootstrap.js"/>'>
 <link rel="stylesheet" href='<c:url value="/assets/css/index.css"/>'>
-<link rel="stylesheet" href='<c:url value="/assets/css/login-icon.css"/>'>
+<link rel="stylesheet"
+	href='<c:url value="/assets/css/login-icon.css"/>'>
 <link rel="stylesheet"
 	href='<c:url value="/assets/css/bootstrap.min.css"/>'>
 <link rel="stylesheet"
@@ -109,7 +110,9 @@
 }
 </style>
 <body style="color: white;">
-
+	<c:if test="${ userID != null }">
+		<c:set var="id_user" value="${ userID }" />
+	</c:if>
 	<c:if test="${ message == 'true' }">
 		<div class="wrapper-wel" id="wrapper-wel">
 			<div class="welcome" id="welcome">
@@ -122,11 +125,11 @@
 	</c:if>
 
 	<header class="container-xl header-content">
-	
+
 		<div class="back-header">
 			<jsp:include page="../layouts/user/header.jsp"></jsp:include>
 		</div>
-	
+
 		<div class="header-slide">
 			<div class="slider">
 				<div class="slides">
@@ -207,35 +210,65 @@
 
 				<c:forEach var="it" items="${ listNewArrivals }" varStatus="index">
 					<div class="products-el">
-						<c:if test="${ it.discount > 0 }">
-							<a
-								href="http://localhost:8888/SpringMVC/product-details?product-id=${ it.id }">
-								<div class="img-product-products zoom zoo" id="ex1"
-									name="${it.discount }%" style="">
-
-									<img
-										src="<c:url value="/assets/images/products/${ it.thumbnail }"/>"
-										alt="img-product">
-								</div>
-							</a>
+						<c:if test="${ userID == null }">
+							<c:if test="${ it.discount > 0 }">
+								<a
+									href="http://localhost:8888/SpringMVC/product-details?product-id=${ it.id }">
+									<div class="img-product-products zoom zoo" id="ex1"
+										name="${it.discount }%" style="">
+										<img
+											src="<c:url value="/assets/images/products/${ it.thumbnail }"/>"
+											alt="img-product">
+									</div>
+								</a>
+							</c:if>
+							<c:if test="${ it.discount <= 0 }">
+								<a
+									href="http://localhost:8888/SpringMVC/product-details?product-id=${ it.id }">
+									<div class="img-product-products zoom" id="ex1"
+										name="${it.discount }%" style="">
+										<img
+											src="<c:url value="/assets/images/products/${ it.thumbnail }"/>"
+											alt="img-product">
+									</div>
+								</a>
+							</c:if>
 						</c:if>
-						<c:if test="${ it.discount <= 0 }">
-							<a
-								href="http://localhost:8888/SpringMVC/product-details?product-id=${ it.id }">
-								<div class="img-product-products zoom" id="ex1"
-									name="${it.discount }%" style="">
-
-									<img
-										src="<c:url value="/assets/images/products/${ it.thumbnail }"/>"
-										alt="img-product">
-								</div>
-							</a>
+						<c:if test="${ userID != null }">
+							<c:if test="${ it.discount > 0 }">
+								<a
+									href="http://localhost:8888/SpringMVC/product-details/${ id_user }_${ it.id }">
+									<div class="img-product-products zoom zoo" id="ex1"
+										name="${it.discount }%" style="">
+										<img
+											src="<c:url value="/assets/images/products/${ it.thumbnail }"/>"
+											alt="img-product">
+									</div>
+								</a>
+							</c:if>
+							<c:if test="${ it.discount <= 0 }">
+								<a
+									href="http://localhost:8888/SpringMVC/product-details/${ id_user }_${ it.id }">
+									<div class="img-product-products zoom" id="ex1"
+										name="${it.discount }%" style="">
+										<img
+											src="<c:url value="/assets/images/products/${ it.thumbnail }"/>"
+											alt="img-product">
+									</div>
+								</a>
+							</c:if>
 						</c:if>
 						<div class="content-product-products">
 							<div class="brand-product-products">${ it.style.style_name }</div>
 							<div class="name-product-products">
-								<a
-									href="http://localhost:8888/SpringMVC/product-details?product-id=${ it.id }">${ it.title }</a>
+								<c:if test="${ userID != null }">
+									<a
+										href="http://localhost:8888/SpringMVC/product-details/${ id_user }_${ it.id }">${ it.title }</a>
+								</c:if>
+								<c:if test="${ userID == null }">
+									<a
+										href="http://localhost:8888/SpringMVC/product-details?product-id=${ it.id }">${ it.title }</a>
+								</c:if>
 							</div>
 							<div class="show-products">
 								<div class="price-product-products">
@@ -271,19 +304,13 @@
 												src="<c:url value="/assets/images/icons/favorite32.png"/>"
 												alt="favorite32">
 										</button>
-										<button type="submit" class="add-to-cart" name="add-to-cart"
-											value="${ it.id }">
+										<button type="button" class="add-to-cart" name="add-to-cart"
+											id="add-to-cart" value="${ it.id }">
 											<img class="shadow-2"
 												src="<c:url value="/assets/images/icons/addcart32.png"/>"
 												alt="addcart32">
 										</button>
-
-
-										<button class="buy-now" class="shadow-1">
-											<a
-												href="/SpringMVC/cart/checkout?177627f91af678a9b03e993f1a91917f&id_prod=${ it.id }">Buy
-												now</a>
-										</button>
+										<button class="buy-now" class="shadow-1" id="${ it.id }">Buy now</button>
 									</div>
 								</div>
 							</div>
@@ -319,25 +346,49 @@
 							varStatus="index">
 							<div class="swiper-slide">
 								<div class="effect">
-									<c:if test="${ item.discount > 0 }">
-										<a
-											href="http://localhost:8888/SpringMVC/product-details?product-id=${ item.id }">
-											<div class="zoom-most-loved zoo" id="ee${ index.getIndex() }"
-												name="${item.discount }%">
-												<img class="product-effect"
-													src="<c:url value="/assets/images/products/${ item.thumbnail }"/>" />
-											</div>
-										</a>
+									<c:if test="${ userID != null }">
+										<c:if test="${ item.discount > 0 }">
+											<a
+												href="http://localhost:8888/SpringMVC/product-details/${ id_user }_${ item.id }">
+												<div class="zoom-most-loved zoo"
+													id="ee${ index.getIndex() }" name="${item.discount }%">
+													<img class="product-effect"
+														src="<c:url value="/assets/images/products/${ item.thumbnail }"/>" />
+												</div>
+											</a>
+										</c:if>
+										<c:if test="${ item.discount <= 0 }">
+											<a
+												href="http://localhost:8888/SpringMVC/product-details/${ id_user }_${ item.id }">
+												<div class="zoom-most-loved" id="ee${ index.getIndex() }"
+													name="${item.discount }%">
+													<img class="product-effect"
+														src="<c:url value="/assets/images/products/${ item.thumbnail }"/>" />
+												</div>
+											</a>
+										</c:if>
 									</c:if>
-									<c:if test="${ item.discount <= 0 }">
-										<a
-											href="http://localhost:8888/SpringMVC/product-details?product-id=${ item.id }">
-											<div class="zoom-most-loved" id="ee${ index.getIndex() }"
-												name="${item.discount }%">
-												<img class="product-effect"
-													src="<c:url value="/assets/images/products/${ item.thumbnail }"/>" />
-											</div>
-										</a>
+									<c:if test="${ userID == null }">
+										<c:if test="${ item.discount > 0 }">
+											<a
+												href="http://localhost:8888/SpringMVC/product-details?product-id=${ item.id }">
+												<div class="zoom-most-loved zoo"
+													id="ee${ index.getIndex() }" name="${item.discount }%">
+													<img class="product-effect"
+														src="<c:url value="/assets/images/products/${ item.thumbnail }"/>" />
+												</div>
+											</a>
+										</c:if>
+										<c:if test="${ item.discount <= 0 }">
+											<a
+												href="http://localhost:8888/SpringMVC/product-details?product-id=${ item.id }">
+												<div class="zoom-most-loved" id="ee${ index.getIndex() }"
+													name="${item.discount }%">
+													<img class="product-effect"
+														src="<c:url value="/assets/images/products/${ item.thumbnail }"/>" />
+												</div>
+											</a>
+										</c:if>
 									</c:if>
 									<div class="content-effect">
 										<div class="details">
@@ -379,16 +430,13 @@
 																src="<c:url value="/assets/images/icons/favorite32.png"/>"
 																alt="favorite32">
 														</button>
-														<button class="add-to-cart-effect">
+														<button class="add-to-cart-effect" id="add-to-cart"
+															value="${ item.id }">
 															<img
 																src="<c:url value="/assets/images/icons/addcart32.png"/>"
 																alt="addcart32">
 														</button>
-														<button class="buy-effect">
-															<a
-																href="/SpringMVC/cart/checkout?177627f91af678a9b03e993f1a91917f&id_prod=${ item.id }">
-																Buy now</a>
-														</button>
+														<button class="buy-effect" id="${ item.id }">Buy now</button>
 													</div>
 												</div>
 											</div>
@@ -411,25 +459,53 @@
 			<div class="position-product container-xl">
 				<c:forEach var="it" items="${ listNewArrivals }" varStatus="">
 					<div class="products-el">
-
-						<c:if test="${ it.discount > 0 }">
-							<a
-								href="http://localhost:8888/SpringMVC/product-details?product-id=${ it.id }">
-								<div class="img-product-products zoom-same-price-product zoo"
-									id="exe${ index.getIndex() }" name="${ it.discount }%">
-									<img
-										src="<c:url value="/assets/images/products/${ it.thumbnail }"/>"
-										alt="">
-								</div>
-							</a>
+						<c:if test="${ userID == null }">
+							<c:if test="${ it.discount > 0 }">
+								<a
+									href="http://localhost:8888/SpringMVC/product-details?product-id=${ it.id }">
+									<div class="img-product-products zoom-same-price-product zoo"
+										id="exe${ index.getIndex() }" name="${ it.discount }%">
+										<img
+											src="<c:url value="/assets/images/products/${ it.thumbnail }"/>"
+											alt="">
+									</div>
+								</a>
+							</c:if>
+							<c:if test="${ it.discount <= 0 }">
+								<a
+									href="http://localhost:8888/SpringMVC/product-details/${ id_user }_${ it.id }">
+									<div class="img-product-products zoom-same-price-product"
+										id="exe${ index.getIndex() }">
+										<img
+											src="<c:url value="/assets/images/products/${ it.thumbnail }"/>"
+											alt="">
+									</div>
+								</a>
+							</c:if>
 						</c:if>
-						<c:if test="${ it.discount <= 0 }">
-							<div class="img-product-products zoom-same-price-product"
-								id="exe${ index.getIndex() }">
-								<img
-									src="<c:url value="/assets/images/products/${ it.thumbnail }"/>"
-									alt="">
-							</div>
+						<c:if test="${ userID != null }">
+							<c:if test="${ it.discount > 0 }">
+								<a
+									href="http://localhost:8888/SpringMVC/product-details/${ id_user }_${ it.id }">
+									<div class="img-product-products zoom-same-price-product zoo"
+										id="exe${ index.getIndex() }" name="${ it.discount }%">
+										<img
+											src="<c:url value="/assets/images/products/${ it.thumbnail }"/>"
+											alt="">
+									</div>
+								</a>
+							</c:if>
+							<c:if test="${ it.discount <= 0 }">
+								<a
+									href="http://localhost:8888/SpringMVC/product-details/${ id_user }_${ it.id }">
+									<div class="img-product-products zoom-same-price-product"
+										id="exe${ index.getIndex() }">
+										<img
+											src="<c:url value="/assets/images/products/${ it.thumbnail }"/>"
+											alt="">
+									</div>
+								</a>
+							</c:if>
 						</c:if>
 						<div class="content-product-products">
 							<div class="brand-product-products">${ it.style.style_name }</div>
@@ -467,15 +543,14 @@
 												src="<c:url value="/assets/images/icons/favorite32.png"/>"
 												alt="favorite32">
 										</button>
-										<button class="add-to-cart">
+										<button class="add-to-cart" id="add-to-cart"
+											value="${ it.id }">
 											<img class="shadow-2"
 												src="<c:url value="/assets/images/icons/addcart32.png"/>"
 												alt="addcart32">
 										</button>
-										<button class="buy-now" class="shadow-1">
-											<a
-												href="/SpringMVC/cart/checkout?177627f91af678a9b03e993f1a91917f&id_prod=${ it.id }">
-												Buy now</a>
+										<button class="buy-now" class="shadow-1" id="${ it.id }">
+											Buy now
 										</button>
 									</div>
 								</div>
@@ -547,7 +622,104 @@
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 
-
+	<script> // add to cart
+		var id_user = "";
+		if(${ id_user != null }) {
+			id_user = "${ id_user }";
+		}
+		if(id_user != "") {
+			$(".add-to-cart").click(function() {
+				var id_prod = $(this).val();
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET",
+						"http://localhost:8888/SpringMVC/add-to-cart/"+id_user+"_"+id_prod);
+				xhr.onload = function() {
+					window.location.assign("http://localhost:8888/SpringMVC/cart/"+id_user);
+				};
+				xhr.send();
+			});
+			$(".add-to-cart-effect").click(function() {
+				var id_prod = $(this).val();
+				xhr.open("GET",
+						"http://localhost:8888/SpringMVC/add-to-cart/"+id_user+"_"+id_prod);
+				xhr.onload = function() {
+					window.location.assign("http://localhost:8888/SpringMVC/cart/"+id_user);
+				};
+			});
+		} else {
+			$(".add-to-cart").click(function() {
+				var id_prod = $(this).val();
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET",
+						"http://localhost:8888/SpringMVC/add-to-cart/"+id_prod);
+				xhr.onload = function() {
+					window.location.assign("http://localhost:8888/SpringMVC/cart/"+id_user);
+				};
+				xhr.send();
+			});
+			$(".add-to-cart-effect").click(function() {
+				var id_prod = $(this).val();
+				xhr.open("GET",
+						"http://localhost:8888/SpringMVC/add-to-cart/"+id_prod);
+				xhr.onload = function() {
+					window.location.assign("http://localhost:8888/SpringMVC/cart/"+id_user);
+				};
+			});
+		}
+	</script>
+	<script> // buy now
+		var id_user = "";
+		if(${ id_user != null }) {
+			id_user = "${ id_user }";
+		}
+		if(id_user != "") {
+			$(".buy-now").click(function(e) {
+				var id_prod = e.target.id;
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET",
+						"http://localhost:8888/SpringMVC/cart/checkout/"+id_user+"_"+id_prod);
+				xhr.onload = function() {
+					window.location.assign("http://localhost:8888/SpringMVC/cart/checkout/"+id_user+"_"+id_prod);
+				};
+				xhr.send();
+			});
+			
+			$(".buy-effect").click(function(e) {
+				var id_prod = e.target.id;
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET",
+						"http://localhost:8888/SpringMVC/cart/checkout/"+id_user+"_"+id_prod);
+				xhr.onload = function() {
+					window.location.assign("http://localhost:8888/SpringMVC/cart/checkout/"+id_user+"_"+id_prod);
+				};
+				xhr.send();
+			});
+		} else {
+			$(".buy-now").click(function(e) {
+				var id_prod = e.target.id;
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET",
+						"http://localhost:8888/SpringMVC/cart/checkout/"+id_prod);
+				xhr.onload = function() {
+					window.location.assign("http://localhost:8888/SpringMVC/cart/checkout/"+id_prod);
+				};
+				xhr.send();
+			});
+			
+			$(".buy-effect").click(function(e) {
+				var id_prod = e.target.id;
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET",
+						"http://localhost:8888/SpringMVC/cart/checkout/"+id_prod);
+				xhr.onload = function() {
+					window.location.assign("http://localhost:8888/SpringMVC/cart/checkout/"+id_prod);
+				};
+				xhr.send();
+			});
+		}
+	</script>
+	
+	
 	<script type="text/javascript">
 	$(".search-link-icon").click(function () {
 		var txt = $('#search').val();
@@ -566,6 +738,8 @@
 		$(".wrapper-wel").addClass("importantNone");
 	});
 	</script>
+
+	
 
 	<script>
 	function logout() {
@@ -703,7 +877,7 @@
 			}
 		});
 	</script>
-	
+
 	<script
 		src="<c:url value="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"/>"
 		integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"

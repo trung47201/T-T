@@ -46,8 +46,8 @@ public class ProductDetailsController {
 		return mv;
 	}
 	
-	@RequestMapping(value = { "product-details/{id}" })
-	public ModelAndView loadProducts(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = { "product-details/{user_prod}" })
+	public ModelAndView loadProducts(@PathVariable String user_prod, HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("user/product_details");
 		
 		productService = new ProductService();
@@ -55,7 +55,8 @@ public class ProductDetailsController {
 		color_sizeService = new Color_sizeService();
 		userService = new UserService();
 		
-		String id_prod = String.valueOf(request.getParameter("product-id"));
+		String id_user = user_prod.split("_")[0];
+		String id_prod = user_prod.split("_")[1];
 		
 		if (!color_sizeService.getAllSizeById_Prod(Integer.parseInt(id_prod)).isEmpty()) {
 			mv.addObject("listSize", color_sizeService.getAllSizeById_Prod(Integer.parseInt(id_prod)));
@@ -69,8 +70,8 @@ public class ProductDetailsController {
 		
 		mv.addObject("averageRating", productService.averageRating(Integer.parseInt(id_prod)));
 		mv.addObject("product", productService.getProduct(Integer.parseInt(id_prod)));
-		mv.addObject("userID", id);
-		mv.addObject("avatar", userService.getAvatarByUserID(Integer.parseInt(id)));
+		mv.addObject("userID", id_user);
+		mv.addObject("avatar", userService.getAvatarByUserID(Integer.parseInt(id_user)));
 		
 		return mv;
 	}
