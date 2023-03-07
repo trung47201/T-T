@@ -115,7 +115,7 @@
 					<tr>
 						<td>${ liVoucher.id }</td>
 						<td>${ liVoucher.code }</td>
-						<td>${ liVoucher.discount }</td>
+						<td>${ liVoucher.vcdiscount }</td>
 						<td>${ liVoucher.limit }</td>
 						<td class="td-date">${ liVoucher.start_date }</td>
 						<td class="td-date">${ liVoucher.end_date }</td>

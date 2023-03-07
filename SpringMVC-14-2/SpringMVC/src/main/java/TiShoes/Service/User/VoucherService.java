@@ -31,8 +31,9 @@ public class VoucherService implements VoucherRepository {
 
 				voucher.setId(rs.getInt("id"));
 				voucher.setCode(rs.getString("code"));
-				voucher.setDiscount(rs.getInt("discount"));
+				voucher.setVcdiscount(rs.getInt("vcdiscount"));
 				voucher.setLimit(rs.getInt("limit"));
+				voucher.setApplyfor(rs.getInt("applyfor"));
 				voucher.setStart_date(rs.getTimestamp("start_date"));
 				voucher.setEnd_date(rs.getTimestamp("end_date"));
 				voucher.setCreated_at(rs.getTimestamp("created_at"));
@@ -54,7 +55,7 @@ public class VoucherService implements VoucherRepository {
 		List<Voucher> li = getAllVoucher();
 		for (Voucher voucher : li) {
 			if (voucher.getId() == voucher_id) {
-				discount = voucher.getDiscount();
+				discount = voucher.getVcdiscount();
 			}
 		}
 		return discount;
@@ -98,6 +99,7 @@ public class VoucherService implements VoucherRepository {
 		}
 		return false;
 	}
+	
 	public boolean voucher_start_date_by_code(String code) {
 		Timestamp datenow = new Timestamp(new java.util.Date().getTime());
 		Timestamp start_date_vch = null;
@@ -113,6 +115,17 @@ public class VoucherService implements VoucherRepository {
 			}
 		}
 		return false;
+	}
+	
+	public double get_apply_for_by_code(String code) {
+		List<Voucher> li = getAllVoucher();
+		int apply_for = 0;
+		for (Voucher vc : li) {
+			if(vc.getCode().equalsIgnoreCase(code)) {
+				apply_for = vc.getApplyfor();
+			}
+		}
+		return (double) apply_for;
 	}
 	
 	public int get_discount_by_voucher_code(String code) {

@@ -11,6 +11,7 @@ public class Order_ {
 	private Date order_date;
 	private Date updated_at;
 	private Voucher voucher;
+	private double discount_at;
 	private String note;
 	private Status status;
 	private String method;
@@ -67,6 +68,12 @@ public class Order_ {
 	}
 	public void setVoucher(Voucher voucher) {
 		this.voucher = voucher;
+	}
+	public double getDiscount_at() {
+		return discount_at;
+	}
+	public void setDiscount_at(double discount_at) {
+		this.discount_at = discount_at;
 	}
 	public String getNote() {
 		return note;

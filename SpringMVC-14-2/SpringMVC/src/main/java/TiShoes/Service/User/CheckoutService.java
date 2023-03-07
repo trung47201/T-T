@@ -11,6 +11,8 @@ import com.mysql.jdbc.Statement;
 
 import TiShoes.Model.Color;
 import TiShoes.Model.Color_size;
+import TiShoes.Model.Order_;
+import TiShoes.Model.Order_details;
 import TiShoes.Model.Product;
 import TiShoes.Model.Sizes;
 import TiShoes.Repository.User.CheckoutRepository;
@@ -19,6 +21,8 @@ public class CheckoutService implements CheckoutRepository {
 	private ConnectService connectService;
 	private OrderService orderService;
 	private Order_detailsService order_detailsService;
+	private ProductService productService;
+	private VoucherService voucherService;
 
 	@Override
 	public List<Color> getRgbById_prod(int id_prod) {
@@ -182,34 +186,94 @@ public class CheckoutService implements CheckoutRepository {
 		orderService = new OrderService();
 		order_detailsService = new Order_detailsService();
 
-		if (orderService.insertIntoOrder(fullname, email, phone_number, address, voucher_id, note, method) == true
+		if (orderService.insertIntoOrder_not_login(fullname, email, phone_number, address, voucher_id, note, method) == true
 				&& order_detailsService.insertIntoOrder_details(price_at, amount, id_prod, id_size, id_color) == true) {
 			return true;
 		} else {
 			return false;
 		}
 	}
-	
-	public String removeProductFromCartAfterCheckout(int id_prod,String txt) {
+
+	public String removeProductFromCartAfterCheckout(int id_prod, String txt) {
 		String s = "";
 		String a[] = txt.split("/");
 		for (String str : a) {
-			if(!str.equals(String.valueOf(id_prod)) && !str.equals("")) {
-				s += str+"/";
+			if (!str.equals(String.valueOf(id_prod)) && !str.equals("")) {
+				s += str + "/";
 			}
 		}
 		return s;
 	}
 
-	public double get_price_at (int quantity, String code, int id_prod) {
-		
-		
-		
-		return 0;
+	public double get_price_at(int quantity, String code, int id_prod) {
+		productService = new ProductService();
+		voucherService = new VoucherService();
+		Product p = productService.getProduct(id_prod);
+
+		double price = 0;
+		double total = 0;
+		int vc_discount = voucherService.get_discount_by_voucher_code(code);
+
+		if (vc_discount > 0) {
+			if (p.getDiscount() > 0) {
+				price = p.getPrice() * quantity - p.getPrice() * quantity * p.getDiscount() / 100;
+				total = price - price * vc_discount / 100;
+			} else {
+				price = p.getPrice() * quantity;
+				total = price - price * vc_discount / 100;
+			}
+		} else {
+			if (p.getDiscount() > 0) {
+				price = p.getPrice() * quantity - p.getPrice() * quantity * p.getDiscount() / 100;
+				total = price;
+			} else {
+				price = p.getPrice() * quantity;
+				total = price;
+			}
+		}
+		return total;
+	}
+
+	public boolean check_status_order_await(String phone, String email, double price_at, int quantity, int prod_id,
+			int size_id, int color_id) {
+		price_at = (double) Math.round(price_at*100)/100;
+		orderService = new OrderService();
+		order_detailsService = new Order_detailsService();
+		int order_id = orderService.get_order_id_by(phone, email);
+		List<Order_details> li = order_detailsService.getAllOrder_details();
+		for (Order_details o : li) {
+			if(o.getOrder_().getId() == order_id && o.getPrice_at()==price_at && o.getQuantity() == quantity && o.getProd().getId() == prod_id && o.getSize().getId() == size_id && o.getColor().getId() == color_id) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
+	public double get_discount_at(int quantity, String code, int id_prod) {
+		productService = new ProductService();
+		voucherService = new VoucherService();
+		Product p = productService.getProduct(id_prod);
+
+		double price = 0;
+		double discount_at = 0;
+		int vc_discount = voucherService.get_discount_by_voucher_code(code);
+
+		if (vc_discount > 0) {
+			if (p.getDiscount() > 0) {
+				price = p.getPrice() * quantity - p.getPrice() * quantity * p.getDiscount() / 100;
+				discount_at = price * vc_discount / 100;
+			} else {
+				price = p.getPrice() * quantity;
+				discount_at = price * vc_discount / 100;
+			}
+		}
+		return discount_at;
+	}
+
 	public static void main(String[] args) {
-		//System.out.println(removeProductFromCartAfterCheckout(3, "3//4/3"));
+		CheckoutService c = new CheckoutService();
+		System.out.println(c.get_discount_at(1, "TS666", 25));
+		// System.out.println(removeProductFromCartAfterCheckout(3, "3//4/3"));
 	}
 
 }

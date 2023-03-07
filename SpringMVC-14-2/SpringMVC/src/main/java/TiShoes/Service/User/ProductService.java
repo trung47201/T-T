@@ -993,9 +993,9 @@ public class ProductService implements ProductRepository {
 	}
 	public static void main(String[] args) {
 		ProductService p = new ProductService();
-		List<Product> li = p.get_all_product_by_search_keywords("nike duck low");
+		List<Product> li = p.getAllProducts();
 		for (Product pr : li) {
-			System.out.println(pr.getTitle());
+			System.out.println(pr.getTitle()+"-" + pr.getDiscount() + "+==" + pr.getId());
 		}
 		
 	}

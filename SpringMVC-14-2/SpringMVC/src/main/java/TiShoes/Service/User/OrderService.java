@@ -46,8 +46,9 @@ public class OrderService implements OrderRepository {
 
 				voucher.setId(rs.getInt("voucher_id"));
 				voucher.setCode(rs.getString("code"));
-				voucher.setDiscount(rs.getInt("discount"));
+				voucher.setVcdiscount(rs.getInt("vcdiscount"));
 				voucher.setLimit(rs.getInt("limit"));
+				voucher.setApplyfor(rs.getInt("applyfor"));
 				voucher.setStart_date(rs.getTimestamp("start_date"));
 				voucher.setEnd_date(rs.getTimestamp("end_date"));
 				voucher.setCreated_at(rs.getTimestamp("created_at"));
@@ -62,6 +63,7 @@ public class OrderService implements OrderRepository {
 				order_.setOrder_date(rs.getDate("order_date"));
 				order_.setUpdated_at(rs.getDate("updated_at"));
 				order_.setVoucher(voucher);
+				order_.setDiscount_at(rs.getDouble("discount_at"));
 				order_.setNote(rs.getString("note"));
 				order_.setStatus(status);
 				order_.setMethod(rs.getString("method"));
@@ -78,6 +80,55 @@ public class OrderService implements OrderRepository {
 
 	@Override
 	public boolean insertIntoOrder(String fullname, String email, String phone_number, String address, int voucher_id,
+			String note, String method, double discount_at) {
+		try {
+			java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
+			connectService = new ConnectService();
+			md5Service = new MD5Service();
+			Connection conn = connectService.getConnect();
+			
+			if(!md5Service.decodeText(fullname).equals("")) {
+				fullname = md5Service.decodeText(fullname);
+			}
+			if(!md5Service.decodeText(address).equals("")) {
+				address = md5Service.decodeText(address);
+			}
+			if(!md5Service.decodeText(note).equals("")) {
+				note = md5Service.decodeText(note);
+			}
+			if(!md5Service.decodeText(method).equals("")) {
+				method = md5Service.decodeText(method);
+			}
+			String sql = "INSERT INTO `order_`(`fullname`, `email`, `phone_number`, `address`, `order_date`, `updated_at`, `voucher_id`, `note`, `status_id`, `method`, `bill`, `discount_at`) "
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
+			preparedStmt.setString(1, fullname);
+			preparedStmt.setString(2, email);
+			preparedStmt.setString(3, phone_number);
+			preparedStmt.setString(4, address);
+			preparedStmt.setTimestamp(5, date);
+			preparedStmt.setTimestamp(6, date);
+			preparedStmt.setInt(7, voucher_id);
+			preparedStmt.setString(8, note);
+			preparedStmt.setInt(9, 1);
+			preparedStmt.setString(10, method);
+			preparedStmt.setString(11, get_invoice_code());
+			preparedStmt.setDouble(12,  discount_at);
+			preparedStmt.execute();
+			conn.close();
+			return true;
+		} catch (Exception e) {
+			System.err.println("Got an exception order service!");
+			// printStackTrace method
+			// prints line numbers + call stack
+			e.printStackTrace();
+			// Prints what exception has been thrown
+			System.out.println(e);
+		}
+		return false;
+	}
+	
+	public boolean insertIntoOrder_not_login(String fullname, String email, String phone_number, String address, int voucher_id,
 			String note, String method) {
 		try {
 			java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
@@ -110,12 +161,12 @@ public class OrderService implements OrderRepository {
 			preparedStmt.setString(8, note);
 			preparedStmt.setInt(9, 1);
 			preparedStmt.setString(10, method);
-			preparedStmt.setString(10, get_invoice_code());
+			preparedStmt.setString(11, get_invoice_code());
 			preparedStmt.execute();
 			conn.close();
 			return true;
 		} catch (Exception e) {
-			System.err.println("Got an exception!");
+			System.err.println("Got an exception order service!");
 			// printStackTrace method
 			// prints line numbers + call stack
 			e.printStackTrace();
@@ -162,7 +213,7 @@ public class OrderService implements OrderRepository {
 	
 	public int get_voucher_discount_by_order_id(int order_id) {
 		Order_ od = get_all_order_by_order_id(order_id);
-		return od.getVoucher().getDiscount();
+		return od.getVoucher().getVcdiscount();
 	}
 
 	public int get_number_random(int min, int max) {
@@ -203,11 +254,30 @@ public class OrderService implements OrderRepository {
 		return li;
 	}
 
-	public static void main(String[] args) {
-		OrderService os = new OrderService();
-		for (Order_ o : os.get_all_order_by_user_id(1)) {
-			System.out.println(o.getId());
+	
+	public int get_order_id_by(String phone, String email) {
+		List<Order_> li = getAllOrder();
+		int od = 0;
+		for (Order_ o : li) {
+			if(o.getStatus().getId() == 1) {
+				od = o.getId();
+			}
 		}
+		return od;
+	}
+	
+	public int get_status_id_by_order_id(int order_id) {
+		List<Order_> o = getAllOrder();
+		int status_id = 0; 
+		for (Order_ ord : o) {
+			if(ord.getId() == order_id) {
+				status_id = ord.getStatus().getId();
+			}
+		}
+		return status_id;
+	}
+	
+	public static void main(String[] args) {
 	}
 
 }

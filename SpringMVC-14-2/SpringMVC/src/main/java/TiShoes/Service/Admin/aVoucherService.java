@@ -31,7 +31,7 @@ public class aVoucherService implements aVoucherRepository {
 			Connection conn = connectService.getConnect();
 			Timestamp date = new Timestamp(new java.util.Date().getTime());
 			if (!exists_voucher_code(code)) {
-				String sql = "INSERT INTO `voucher`(`code`, `discount`, `limit`, `start_date`, `end_date`, `created_at`, `updated_at`, `description`) "
+				String sql = "INSERT INTO `voucher`(`code`, `vcdiscount`, `limit`, `start_date`, `end_date`, `created_at`, `updated_at`, `description`) "
 						+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 				PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
 				preparedStmt.setString(1, code);
@@ -91,7 +91,7 @@ public class aVoucherService implements aVoucherRepository {
 		List<Voucher> li = new LinkedList<>();
 		if (is_number(s)) {
 			for (Voucher vc : liVC) {
-				if (vc.getDiscount() == Integer.parseInt(s) || vc.getLimit() == Integer.parseInt(s)) {
+				if (vc.getVcdiscount() == Integer.parseInt(s) || vc.getLimit() == Integer.parseInt(s)) {
 					li.add(vc);
 				}
 			}

@@ -2,7 +2,10 @@
 <html lang="en">
 <title>Order :)</title>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <link rel="stylesheet"
 	href="<c:url value="/assets/css/buynow-thank.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/bootstrap.css"/>">
@@ -16,6 +19,11 @@
 <link rel="stylesheet"
 	href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />">
 
+<style>
+.none {
+display: none;
+}
+</style>
 <body>
 	<form>
 		<div class="nav">
@@ -34,43 +42,52 @@
 						alt="back-icon">Back</a>
 				</div>
 			</c:if>
-			<div class="avt">
-				<img src="<c:url value="/assets/images/icons/emiuuu.jpg"/>" alt="">
-			</div>
-			<div class="login">
-				<div class="container-xl icon-user">
-					<button type="button" class="icon-user btn btn-primary"
-						data-toggle="modal" data-target="#login">
-						<img class="icon-user"
-							src="<c:url value="/assets/images/icons/user48.png"/>"
-							alt="icon-user">
-					</button>
-					<div class="modal fade" id="login" tabindex="-1" role="dialog"
-						aria-labelledby="exampleModalLabel" aria-hidden="true">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<button type="button" class="btn btn-secondary close"
-									data-dismiss="modal">
-									<img class="close-login-icon"
-										src="<c:url value="/assets/images/icons/close48.png"/>"
-										alt="icon-close" width="32px">
-								</button>
-								<div class="login_form_container">
-									<div class="login_form">
-										<h2>Login</h2>
-										<div class="input_group">
-											<i class="fa fa-user"></i> <input type="text"
-												placeholder="Username" class="input_text" autocomplete="off" />
-										</div>
-										<div class="input_group">
-											<i class="fa fa-unlock-alt"></i> <input type="password"
-												placeholder="Password" class="input_text" autocomplete="off" />
-										</div>
-										<div class="button_group" id="login_button">
-											<a>Login</a>
-										</div>
-										<div class="fotter">
-											<a>Forgot Password ?</a> <a>SingUp</a>
+			<c:if test="${ userID != null }">
+				<div class="avt">
+					<img src="<c:url value="/assets/images/users/${ avatar }"/>" alt="">
+				</div>
+			</c:if>
+			<c:if test="${ userID == null }">
+				<div class="avt">
+					<img src="<c:url value="/assets/images/icons/emiuuu.jpg"/>" alt="">
+				</div>
+			</c:if>
+		    <c:if test="${ userID != null }">
+		    	<div class="login none">
+					<div class="container-xl icon-user">
+						<button type="button" class="icon-user btn btn-primary"
+							data-toggle="modal" data-target="#login">
+							<img class="icon-user"
+								src="<c:url value="/assets/images/icons/user48.png"/>"
+								alt="icon-user">
+						</button>
+						<div class="modal fade" id="login" tabindex="-1" role="dialog"
+							aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<button type="button" class="btn btn-secondary close"
+										data-dismiss="modal">
+										<img class="close-login-icon"
+											src="<c:url value="/assets/images/icons/close48.png"/>"
+											alt="icon-close" width="32px">
+									</button>
+									<div class="login_form_container">
+										<div class="login_form">
+											<h2>Login</h2>
+											<div class="input_group">
+												<i class="fa fa-user"></i> <input type="text"
+													placeholder="Username" class="input_text" autocomplete="off" />
+											</div>
+											<div class="input_group">
+												<i class="fa fa-unlock-alt"></i> <input type="password"
+													placeholder="Password" class="input_text" autocomplete="off" />
+											</div>
+											<div class="button_group" id="login_button">
+												<a>Login</a>
+											</div>
+											<div class="fotter">
+												<a>Forgot Password ?</a> <a>SingUp</a>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -78,7 +95,51 @@
 						</div>
 					</div>
 				</div>
-			</div>
+		    </c:if>
+		    <c:if test="${ userID == null }">
+		    	<div class="login">
+					<div class="container-xl icon-user">
+						<button type="button" class="icon-user btn btn-primary"
+							data-toggle="modal" data-target="#login">
+							<img class="icon-user"
+								src="<c:url value="/assets/images/icons/user48.png"/>"
+								alt="icon-user">
+						</button>
+						<div class="modal fade" id="login" tabindex="-1" role="dialog"
+							aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<button type="button" class="btn btn-secondary close"
+										data-dismiss="modal">
+										<img class="close-login-icon"
+											src="<c:url value="/assets/images/icons/close48.png"/>"
+											alt="icon-close" width="32px">
+									</button>
+									<div class="login_form_container">
+										<div class="login_form">
+											<h2>Login</h2>
+											<div class="input_group">
+												<i class="fa fa-user"></i> <input type="text"
+													placeholder="Username" class="input_text" autocomplete="off" />
+											</div>
+											<div class="input_group">
+												<i class="fa fa-unlock-alt"></i> <input type="password"
+													placeholder="Password" class="input_text" autocomplete="off" />
+											</div>
+											<div class="button_group" id="login_button">
+												<a>Login</a>
+											</div>
+											<div class="fotter">
+												<a>Forgot Password ?</a> <a>SingUp</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+		    </c:if>
 		</div>
 		<div class="checkout">
 			<!-- Consignee information -->
@@ -100,7 +161,7 @@
 						</tr>
 						<tr>
 							<td>${ fullname }-${ phone_number }</td>
-							<td>${ city }-${ town } - ${ village }</td>
+							<td>${ city }-${ town }-${ village }</td>
 						</tr>
 						<tr>
 							<td>${ email }</td>
@@ -122,11 +183,20 @@
 						</tr>
 					</table>
 				</div>
-				<div class="continue-shopping">
-					<a href="/SpringMVC/products"><input type="button"
-						name="continueShopping" id="continueShopping"
-						value="Continue Shopping"></a>
-				</div>
+				<c:if test="${ userID != null }">
+					<div class="continue-shopping">
+						<a href="/SpringMVC/products/${ userID }"><input type="button"
+							name="continueShopping" id="continueShopping"
+							value="Continue Shopping"></a>
+					</div>
+				</c:if>
+				<c:if test="${ userID == null }">
+					<div class="continue-shopping">
+						<a href="/SpringMVC/products"><input type="button"
+							name="continueShopping" id="continueShopping"
+							value="Continue Shopping"></a>
+					</div>
+				</c:if>
 			</div>
 
 			<!-- Order -->
@@ -138,8 +208,12 @@
 							src="<c:url value="/assets/images/products/${ product.thumbnail }"/>"
 							alt="">
 						<div class="name-product-checkout">${ product.title }</div>
-						<div class="price-product-checkout">$${ product.price-
-							product.price*product.discount/100 }</div>
+						<div class="price-product-checkout">
+							$
+							<fmt:formatNumber type="number" maxFractionDigits="2"
+								value="${ product.price-
+							product.price*product.discount/100 }" />
+						</div>
 					</div>
 				</div>
 				<div class="request-checkout">
@@ -167,18 +241,24 @@
 				</div>
 
 				<hr>
-				<div class="calculator" style="margin-top: 100px;">
+				<div class="calculator" style="margin-top: 88px;">
 					<table>
 						<tr>
 							<td class="txt">
 								<div class="total-products-cost">Total products cost</div>
 							</td>
+
 							<c:if test="${ product.discount <=0 }">
-								<td class="price"><b>$${ product.price*quantity }</b></td>
+								<td class="price"><b> $<fmt:formatNumber type="number"
+											maxFractionDigits="2" value="${ product.price*quantity }" />
+								</b></td>
 							</c:if>
 							<c:if test="${ product.discount > 0 }">
-								<td class="price"><b>$${ product.price*quantity -
-										product.price*quantity*product.discount/100 }</b></td>
+								<td class="price"><b> $<fmt:formatNumber type="number"
+											maxFractionDigits="2"
+											value="${ product.price*quantity -
+										product.price*quantity*product.discount/100 }" />
+								</b></td>
 							</c:if>
 						</tr>
 						<tr>
@@ -210,6 +290,15 @@
 								</tr>
 							</c:if>
 						</c:if>
+						<c:if test="${ discount != null && discount > 0 }">
+							<tr>
+								<td class="txt">
+									<div class="shipping-chargers">Voucher</div>
+								</td>
+								<td class="price" style="color: #ff6200;"><b>-$<fmt:formatNumber type="number" maxFractionDigits="2"
+								value="${ discount }" /></b></td>
+							</tr>
+						</c:if>
 						<tr>
 							<td colspan="2">
 								<hr>
@@ -222,24 +311,36 @@
 								</div>
 							</td>
 
-							<c:if test="${ product.discount <=0 }">
-								<c:if test="${ product.price*quantity >= 50 }">
-									<td class="price"><span class="total-payment"><b>$${
-												product.price*quantity }</b></span></td>
-								</c:if>
-								<c:if test="${ product.price*quantity < 50 }">
-									<td class="price"><span class="total-payment"><b>$${
-												product.price*quantity +11.0}</b></span></td>
-								</c:if>
+							<c:if test="${ price_at != null }">
+								<td class="price"><span class="total-payment"> <b>
+											$<fmt:formatNumber type="number" maxFractionDigits="2"
+												value="${price_at }" />
+									</b></span></td>
 							</c:if>
-							<c:if test="${ product.discount > 0 }">
-								<c:if test="${ (product.price*quantity - product.price*quantity*product.discount/100) < 50 }">
-									<td class="price"><span class="total-payment">
-										<b>$${ product.price*quantity - product.price*quantity*product.discount/100 + 11.00}</b></span></td>
+							<c:if test="${ price_at == null }">
+								<c:if test="${ product.discount <=0 }">
+									<c:if test="${ product.price*quantity >= 50 }">
+										<td class="price"><span class="total-payment"><b>$${
+													product.price*quantity }</b></span></td>
+									</c:if>
+									<c:if test="${ product.price*quantity < 50 }">
+										<td class="price"><span class="total-payment"><b>$${
+													product.price*quantity +11.0}</b></span></td>
+									</c:if>
 								</c:if>
-								<c:if test="${ (product.price*quantity - product.price*quantity*product.discount/100) >= 50 }">
-									<td class="price"><span class="total-payment">
-										<b>$${ product.price*quantity - product.price*quantity*product.discount/100}</b></span></td>
+								<c:if test="${ product.discount > 0 }">
+									<c:if
+										test="${ (product.price*quantity - product.price*quantity*product.discount/100) < 50 }">
+										<td class="price"><span class="total-payment"> <b>$${
+													product.price*quantity -
+													product.price*quantity*product.discount/100 + 11.00}</b></span></td>
+									</c:if>
+									<c:if
+										test="${ (product.price*quantity - product.price*quantity*product.discount/100) >= 50 }">
+										<td class="price"><span class="total-payment"> <b>$${
+													product.price*quantity -
+													product.price*quantity*product.discount/100}</b></span></td>
+									</c:if>
 								</c:if>
 							</c:if>
 						</tr>

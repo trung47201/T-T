@@ -21,7 +21,6 @@ public class MD5Service implements MD5Repository{
 			MessageDigest md = MessageDigest.getInstance("MD5");
 		    md.update(strs.getBytes(), 0 , strs.length());
 		    md5 = new BigInteger(1, md.digest()).toString(16);
-		    
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
@@ -71,5 +70,10 @@ public class MD5Service implements MD5Repository{
 			e.printStackTrace();
 		}
 		 return decoded;
+	}
+	
+	public static void main(String[] args) {
+		MD5Service m = new MD5Service();
+		System.out.println(m.decodeHTML("Đông Xuân-Sóc Sơn- Hà Nội"));
 	}
 }

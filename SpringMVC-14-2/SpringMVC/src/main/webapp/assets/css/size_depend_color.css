@@ -2,7 +2,10 @@
 	margin-left: 20px;
 	margin-top: 10px;
 }
-
+.checkout h4 {
+	margin-top: -50px !important;
+	padding-bottom: 10px;
+}
 .size-product-details {
 	margin-left: 20px;
 	margin-top: 5px;
@@ -14,6 +17,9 @@
 
 span.selected-color {
 	box-shadow: 0 0 10px #0086ff;
+}
+span.selected-color-important {
+	box-shadow: 0 0 10px #0086ff !important;
 }
 
 span.select-color {
@@ -179,7 +185,7 @@ h2.msg-h2 img {
     justify-content: center;
     align-items: center;
     top: 0;
-    left: 0;
+    left: 32.5%;
 }
 
 .shipping {
@@ -206,4 +212,12 @@ input#phone {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+span.select-color:hover {
+    cursor: pointer;
+}
+
+span.select-size:hover {
+	cursor: pointer;
 }

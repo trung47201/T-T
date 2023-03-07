@@ -24,6 +24,12 @@
 	margin-top: -50px !important;
 	padding-bottom: 10px;
 }
+.avt img {
+    width: 70px;
+    height: 70px;
+    border-radius: 100px;
+    margin-top: 10px;
+}
 </style>
 <body>
 	<form action="/SpringMVC/cart/checkout/ok/${ id }" method="post">
@@ -43,43 +49,59 @@
 						alt="back-icon">Back</a>
 				</div>
 			</c:if>
-			<div class="avt">
-				<img src="<c:url value="/assets/images/icons/user100.png"/>" alt="">
-			</div>
-			<div class="login">
-				<div class="container-xl icon-user">
-					<button type="button" class="icon-user btn btn-primary"
-						data-toggle="modal" data-target="#login">
-						<img class="icon-user"
-							src="<c:url value="/assets/images/icons/user48.png"/>"
-							alt="icon-user">
-					</button>
-					<div class="modal fade" id="login" tabindex="-1" role="dialog"
-						aria-labelledby="exampleModalLabel" aria-hidden="true">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<button type="button" class="btn btn-secondary close"
-									data-dismiss="modal">
-									<img class="close-login-icon"
-										src="<c:url value="/assets/images/icons/close48.png"/>"
-										alt="icon-close" width="32px">
-								</button>
-								<div class="login_form_container">
-									<div class="login_form">
-										<h2>Login</h2>
-										<div class="input_group">
-											<i class="fa fa-user"></i> <input type="text"
-												placeholder="Username" class="input_text" autocomplete="off" />
-										</div>
-										<div class="input_group">
-											<i class="fa fa-unlock-alt"></i> <input type="password"
-												placeholder="Password" class="input_text" autocomplete="off" />
-										</div>
-										<div class="button_group" id="login_button">
-											<a>Login</a>
-										</div>
-										<div class="fotter">
-											<a>Forgot Password ?</a> <a>SingUp</a>
+			<c:if test="${ userID != null }">
+				<c:if test="${ avatar != null }">
+					<div class="avt">
+						<img src="<c:url value="/assets/images/users/${ avatar }"/>" alt="">
+					</div>
+				</c:if>
+				<c:if test="${ avatar == null }">
+					<div class="avt">
+						<img src="<c:url value="/assets/images/users/avt-default.jpg"/>" alt="">
+					</div>
+				</c:if>
+			</c:if>
+			<c:if test="${ userID == null }">
+				<div class="avt">
+					<img src="<c:url value="/assets/images/users/avt-default.jpg"/>" alt="">
+				</div>
+			</c:if>
+			<c:if test="${ userID != null }">
+				<div class="login none">
+					<div class="container-xl icon-user">
+						<button type="button" class="icon-user btn btn-primary"
+							data-toggle="modal" data-target="#login">
+							<img class="icon-user"
+								src="<c:url value="/assets/images/icons/user48.png"/>"
+								alt="icon-user">
+						</button>
+						<div class="modal fade" id="login" tabindex="-1" role="dialog"
+							aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<button type="button" class="btn btn-secondary close"
+										data-dismiss="modal">
+										<img class="close-login-icon"
+											src="<c:url value="/assets/images/icons/close48.png"/>"
+											alt="icon-close" width="32px">
+									</button>
+									<div class="login_form_container">
+										<div class="login_form">
+											<h2>Login</h2>
+											<div class="input_group">
+												<i class="fa fa-user"></i> <input type="text"
+													placeholder="Username" class="input_text" autocomplete="off" />
+											</div>
+											<div class="input_group">
+												<i class="fa fa-unlock-alt"></i> <input type="password"
+													placeholder="Password" class="input_text" autocomplete="off" />
+											</div>
+											<div class="button_group" id="login_button">
+												<a>Login</a>
+											</div>
+											<div class="fotter">
+												<a>Forgot Password ?</a> <a>SingUp</a>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -87,7 +109,51 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</c:if>
+			<c:if test="${ userID == null }">
+				<div class="login">
+					<div class="container-xl icon-user">
+						<button type="button" class="icon-user btn btn-primary"
+							data-toggle="modal" data-target="#login">
+							<img class="icon-user"
+								src="<c:url value="/assets/images/icons/user48.png"/>"
+								alt="icon-user">
+						</button>
+						<div class="modal fade" id="login" tabindex="-1" role="dialog"
+							aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<button type="button" class="btn btn-secondary close"
+										data-dismiss="modal">
+										<img class="close-login-icon"
+											src="<c:url value="/assets/images/icons/close48.png"/>"
+											alt="icon-close" width="32px">
+									</button>
+									<div class="login_form_container">
+										<div class="login_form">
+											<h2>Login</h2>
+											<div class="input_group">
+												<i class="fa fa-user"></i> <input type="text"
+													placeholder="Username" class="input_text" autocomplete="off" />
+											</div>
+											<div class="input_group">
+												<i class="fa fa-unlock-alt"></i> <input type="password"
+													placeholder="Password" class="input_text" autocomplete="off" />
+											</div>
+											<div class="button_group" id="login_button">
+												<a>Login</a>
+											</div>
+											<div class="fotter">
+												<a>Forgot Password ?</a> <a>SingUp</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</c:if>
 		</div>
 		<div class="checkout">
 			<!-- Consignee information -->
@@ -95,31 +161,31 @@
 				<h4>Consignee information</h4>
 				<c:if test="${ user != null }">
 					<div class="name-customer">
-						<input type="text" id="fullname" name="fullname" value="${ user.fullname }"
-							placeholder="Full name">
+						<input type="text" id="fullname" name="fullname"
+							value="${ user.fullname }" placeholder="Full name">
 					</div>
 					<div class="phone-customer">
-							<input type="number" id="phone" name="phone" min="0" value="${ user.phone_number }"
-								placeholder="Phone number">
+						<input type="number" id="phone" name="phone" min="0"
+							value="${ user.phone_number }" placeholder="Phone number">
 					</div>
 					<div class="mail-customer">
-							<input type="text" id="email" name="email" value="${ user.email }"
-								placeholder="Email">
+						<input type="text" id="email" name="email" value="${ user.email }"
+							placeholder="Email">
 					</div>
 					<div class="city-customer">
-							<input type="text" id="city" name="city" value="${ city }"
-								placeholder="City">
+						<input type="text" id="city" name="city" value="${ city }"
+							placeholder="City">
 					</div>
 					<div class="town-customer">
-							<input type="text" id="town" name="town" value="${ town }"
-								placeholder="Town">
+						<input type="text" id="town" name="town" value="${ town }"
+							placeholder="Town">
 					</div>
 					<div class="village-customer">
-							<input type="text" id="village" name="village" value="${ village }"
-								placeholder="Village">
+						<input type="text" id="village" name="village"
+							value="${ village }" placeholder="Village">
 					</div>
 					<div class="note-customer">
-							<textarea id="note" name="note" placeholder="Note"></textarea>
+						<textarea id="note" name="note" placeholder="Note"></textarea>
 					</div>
 				</c:if>
 				<c:if test="${ user == null }">
@@ -128,27 +194,27 @@
 							placeholder="Full name">
 					</div>
 					<div class="phone-customer">
-							<input type="number" id="phone" name="phone" min="0" value=""
-								placeholder="Phone number">
+						<input type="number" id="phone" name="phone" min="0" value=""
+							placeholder="Phone number">
 					</div>
 					<div class="mail-customer">
-							<input type="text" id="email" name="email" value=""
-								placeholder="Email">
+						<input type="text" id="email" name="email" value=""
+							placeholder="Email">
 					</div>
 					<div class="city-customer">
-							<input type="text" id="city" name="city" value=""
-								placeholder="City">
+						<input type="text" id="city" name="city" value=""
+							placeholder="City">
 					</div>
 					<div class="town-customer">
-							<input type="text" id="town" name="town" value=""
-								placeholder="Town">
+						<input type="text" id="town" name="town" value=""
+							placeholder="Town">
 					</div>
 					<div class="village-customer">
-							<input type="text" id="village" name="village"
-								placeholder="Village">
+						<input type="text" id="village" name="village"
+							placeholder="Village">
 					</div>
 					<div class="note-customer">
-							<textarea id="note" name="note" placeholder="Note"></textarea>
+						<textarea id="note" name="note" placeholder="Note"></textarea>
 					</div>
 				</c:if>
 			</div>
@@ -224,8 +290,7 @@
 					</div>
 					<c:if test="${ prod_checkout.discount > 0 }">
 						<div class="price-product-checkout">
-							$
-							<fmt:formatNumber type="number" maxFractionDigits="2"
+							$<fmt:formatNumber type="number" maxFractionDigits="2"
 								value="${ prod_checkout.price - prod_checkout.price*prod_checkout.discount/100 }" />
 						</div>
 					</c:if>
@@ -242,7 +307,8 @@
 									<span class="select-color selected-color"
 										id="${ product.id }_${ liColor.color.id }"
 										style="background: ${ liColor.color.rgb }"></span>
-									<input type="hidden" name="color" id="color" value="${ liColor.color.id }">
+									<input type="hidden" name="color" id="color"
+										value="${ liColor.color.id }">
 								</c:if>
 								<c:if test="${ index.getIndex() != 0 }">
 									<span class="select-color"
@@ -252,51 +318,109 @@
 							</c:forEach>
 						</div>
 					</div>
-					<div class="size-product-details">
-						<div class="fit-guide-size">
-							<p>Size</p>
-							<a href="#"> Size & Fit guide</a>
+					<c:if test="${ size != null }">
+						<div class="size-product-details">
+							<div class="fit-guide-size">
+								<p>Size</p>
+								<a href="#"> Size & Fit guide</a>
+							</div>
+							<c:forEach var="liSize" items="${ listSize }" varStatus="index">
+								<c:set var="idProd_Size" value="${ product.id }_${ liSize.key }"></c:set>
+								<c:if test="${ index.getIndex() == 0 }">
+									<div class="list-size-product-details" id="${ idProd_Size }">
+										<c:forEach var="liSizeByColor" items="${ liSize.value }"
+											varStatus="indexS">
+											<c:if test="${ size == liSizeByColor.size.id }">
+												<span class="select-size selected-color"
+													id="${idProd_Size }_${ liSizeByColor.size.id }"
+													name="${ liSizeByColor.color.id }">${ liSizeByColor.size.size_number }</span>
+												<input type="hidden" name="size" id="size"
+													value="${ liSizeByColor.size.id }">
+											</c:if>
+											<c:if test="${  size != liSizeByColor.size.id  }">
+												<span class="select-size"
+													id="${idProd_Size }_${ liSizeByColor.size.id }"
+													name="${ liSizeByColor.color.id }">${ liSizeByColor.size.size_number }</span>
+											</c:if>
+										</c:forEach>
+									</div>
+								</c:if>
+								<c:if test="${ index.getIndex() != 0 }">
+									<div class="list-size-product-details none"
+										id="${ idProd_Size }">
+										<c:forEach var="liSizeByColor" items="${ liSize.value }"
+											varStatus="indexS">
+											<c:if test="${ indexS.getIndex() == 0 }">
+												<span class="select-size"
+													id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
+											</c:if>
+											<c:if test="${ indexS.getIndex() != 0 }">
+												<span class="select-size"
+													id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
+											</c:if>
+										</c:forEach>
+									</div>
+								</c:if>
+							</c:forEach>
 						</div>
-						<c:forEach var="liSize" items="${ listSize }" varStatus="index">
-							<c:set var="idProd_Size" value="${ product.id }_${ liSize.key }"></c:set>
-							<c:if test="${ index.getIndex() == 0 }">
-								<div class="list-size-product-details" id="${ idProd_Size }">
-									<c:forEach var="liSizeByColor" items="${ liSize.value }"
-										varStatus="indexS">
-										<c:if test="${ indexS.getIndex() == 0 }">
-											<span class="select-size selected-color"
-												id="${idProd_Size }_${ liSizeByColor.size.id }" name="${ liSizeByColor.color.id }">${ liSizeByColor.size.size_number }</span>
-											<input type="hidden" name="size" id="size" value="${ liSizeByColor.size.id }">
-										</c:if>
-										<c:if test="${ indexS.getIndex() != 0 }">
-											<span class="select-size"
-												id="${idProd_Size }_${ liSizeByColor.size.id }" name="${ liSizeByColor.color.id }">${ liSizeByColor.size.size_number }</span>
-										</c:if>
-									</c:forEach>
-								</div>
-							</c:if>
-							<c:if test="${ index.getIndex() != 0 }">
-								<div class="list-size-product-details none"
-									id="${ idProd_Size }">
-									<c:forEach var="liSizeByColor" items="${ liSize.value }"
-										varStatus="indexS">
-										<c:if test="${ indexS.getIndex() == 0 }">
-											<span class="select-size"
-												id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
-										</c:if>
-										<c:if test="${ indexS.getIndex() != 0 }">
-											<span class="select-size"
-												id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
-										</c:if>
-									</c:forEach>
-								</div>
-							</c:if>
-						</c:forEach>
-					</div>
+					</c:if>
+					<c:if test="${ size == null }">
+						<div class="size-product-details">
+							<div class="fit-guide-size">
+								<p>Size</p>
+								<a href="#"> Size & Fit guide</a>
+							</div>
+							<c:forEach var="liSize" items="${ listSize }" varStatus="index">
+								<c:set var="idProd_Size" value="${ product.id }_${ liSize.key }"></c:set>
+								<c:if test="${ index.getIndex() == 0 }">
+									<div class="list-size-product-details" id="${ idProd_Size }">
+										<c:forEach var="liSizeByColor" items="${ liSize.value }"
+											varStatus="indexS">
+											<c:if test="${ indexS.getIndex() == 0 }">
+												<span class="select-size selected-color"
+													id="${idProd_Size }_${ liSizeByColor.size.id }"
+													name="${ liSizeByColor.color.id }">${ liSizeByColor.size.size_number }</span>
+												<input type="hidden" name="size" id="size"
+													value="${ liSizeByColor.size.id }">
+											</c:if>
+											<c:if test="${ indexS.getIndex() != 0 }">
+												<span class="select-size"
+													id="${idProd_Size }_${ liSizeByColor.size.id }"
+													name="${ liSizeByColor.color.id }">${ liSizeByColor.size.size_number }</span>
+											</c:if>
+										</c:forEach>
+									</div>
+								</c:if>
+								<c:if test="${ index.getIndex() != 0 }">
+									<div class="list-size-product-details none"
+										id="${ idProd_Size }">
+										<c:forEach var="liSizeByColor" items="${ liSize.value }"
+											varStatus="indexS">
+											<c:if test="${ indexS.getIndex() == 0 }">
+												<span class="select-size"
+													id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
+											</c:if>
+											<c:if test="${ indexS.getIndex() != 0 }">
+												<span class="select-size"
+													id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
+											</c:if>
+										</c:forEach>
+									</div>
+								</c:if>
+							</c:forEach>
+						</div>
+					</c:if>
 					<div class="amount-checkout">
 						<input class="minus-plus" type="button" name="" id="minus1"
-							onclick="amount(this)" value="-"> <input class="input_Id"
-							type="text" name="quantity" id="input_Id1" value="1" readonly>
+							onclick="amount(this)" value="-">
+						<c:if test="${ quantity != null }">
+							<input class="input_Id" type="text" name="quantity"
+								id="input_Id1" value="${ quantity }" readonly>
+						</c:if>
+						<c:if test="${ quantity == null }">
+							<input class="input_Id" type="text" name="quantity"
+								id="input_Id1" value="1" readonly>
+						</c:if>
 						<input class="minus-plus" type="button" name="" id="plus1"
 							onclick="amount(this)" value="+">
 					</div>
@@ -319,13 +443,26 @@
 							<td class="txt">
 								<div class="total-products-cost">Total products cost</div>
 							</td>
-							<c:if test="${ prod_checkout.discount > 0 }">
-								<td class="price"><b>$<fmt:formatNumber type="number"
-											maxFractionDigits="2"
-											value="${ prod_checkout.price - prod_checkout.price*prod_checkout.discount/100 }" /></b></td>
+							<c:if test="${ quantity != null && quantity > 0 }">
+								<c:if test="${ prod_checkout.discount > 0 }">
+									<td class="price"><b>$<fmt:formatNumber type="number"
+												maxFractionDigits="2"
+												value="${ (prod_checkout.price - prod_checkout.price*prod_checkout.discount/100)*quantity }" /></b></td>
+								</c:if>
+								<c:if test="${ prod_checkout.discount <= 0 }">
+									<td class="price"><b>$${ prod_checkout.price*quantity
+											}</b></td>
+								</c:if>
 							</c:if>
-							<c:if test="${ prod_checkout.discount <= 0 }">
-								<td class="price"><b>$${ prod_checkout.price }</b></td>
+							<c:if test="${ quantity == null || quantity <= 0 }">
+								<c:if test="${ prod_checkout.discount > 0 }">
+									<td class="price"><b>$<fmt:formatNumber type="number"
+												maxFractionDigits="2"
+												value="${ prod_checkout.price - prod_checkout.price*prod_checkout.discount/100 }" /></b></td>
+								</c:if>
+								<c:if test="${ prod_checkout.discount <= 0 }">
+									<td class="price"><b>$${ prod_checkout.price }</b></td>
+								</c:if>
 							</c:if>
 						</tr>
 						<tr>
@@ -334,25 +471,52 @@
 							</td>
 							<td class="price"><b>$11.00</b></td>
 						</tr>
-						<c:if test="${ prod_checkout.discount > 0 }">
-							<c:if
-								test="${ (prod_checkout.price - prod_checkout.price * prod_checkout.discount/100) >= 50.0 }">
-								<tr>
-									<td class="txt">
-										<div class="shipping-chargers">Free Shipping</div>
-									</td>
-									<td class="price-free"><b>-$11.00</b></td>
-								</tr>
+						<c:if test="${ quantity != null && quantity > 0 }">
+							<!-- check free ship if quantity > 0 -->
+							<c:if test="${ prod_checkout.discount > 0 }">
+								<c:if
+									test="${ (prod_checkout.price * quantity - prod_checkout.price * quantity * prod_checkout.discount/100) >= 50.0 }">
+									<tr>
+										<td class="txt">
+											<div class="shipping-chargers">Free Shipping</div>
+										</td>
+										<td class="price-free"><b>-$11.00</b></td>
+									</tr>
+								</c:if>
+							</c:if>
+							<c:if test="${ prod_checkout.discount <= 0 }">
+								<c:if test="${ (prod_checkout.price * quantity) >= 50.0 }">
+									<tr>
+										<td class="txt">
+											<div class="shipping-chargers">Free Shipping</div>
+										</td>
+										<td class="price-free"><b>-$11.00</b></td>
+									</tr>
+								</c:if>
 							</c:if>
 						</c:if>
-						<c:if test="${ prod_checkout.discount <= 0 }">
-							<c:if test="${ (prod_checkout.price) >= 50.0 }">
-								<tr>
-									<td class="txt">
-										<div class="shipping-chargers">Free Shipping</div>
-									</td>
-									<td class="price-free"><b>-$11.00</b></td>
-								</tr>
+						<c:if test="${ quantity == null || quantity <= 0 }">
+							<!-- check free ship if quantity == 0 -->
+							<c:if test="${ prod_checkout.discount > 0 }">
+								<c:if
+									test="${ (prod_checkout.price - prod_checkout.price * prod_checkout.discount/100) >= 50.0 }">
+									<tr>
+										<td class="txt">
+											<div class="shipping-chargers">Free Shipping</div>
+										</td>
+										<td class="price-free"><b>-$11.00</b></td>
+									</tr>
+								</c:if>
+							</c:if>
+							<c:if test="${ prod_checkout.discount <= 0 }">
+								<c:if test="${ (prod_checkout.price) >= 50.0 }">
+									<tr>
+										<td class="txt">
+											<div class="shipping-chargers">Free Shipping</div>
+										</td>
+										<td class="price-free"><b>-$11.00</b></td>
+									</tr>
+								</c:if>
 							</c:if>
 						</c:if>
 						<c:set var="vccost" value="${ 0 }"></c:set>
@@ -363,21 +527,42 @@
 									<td class="txt">
 										<div class="shipping-chargers">Voucher</div>
 									</td>
-									<c:if test="${ vcdis > 0 }">
-										<c:if test="${ prod_checkout.discount > 0 }">
-											<c:set var="price"
-												value="${ prod_checkout.price - prod_checkout.price*prod_checkout.discount/100 }"></c:set>
-											<td class="price-free"><b>-$<fmt:formatNumber
-														type="number" maxFractionDigits="2"
-														value="${ price - price*vcdis/100 }" /></b></td>
-											<c:set var="vccost" value="${ price - price*vcdis/100 }"></c:set>
+									<c:if test="${ quantity != null && quantity > 0 }">
+										<c:if test="${ vcdis > 0 }">
+											<c:if test="${ prod_checkout.discount > 0 }">
+												<c:set var="price"
+													value="${ prod_checkout.price*quantity - prod_checkout.price*quantity*prod_checkout.discount/100 }"></c:set>
+												<td class="price-free"><b>-$<fmt:formatNumber
+															type="number" maxFractionDigits="2"
+															value="${ price*vcdis/100 }" /></b></td>
+												<c:set var="vccost" value="${ price*vcdis/100 }"></c:set>
+											</c:if>
+											<c:if test="${ prod_checkout.discount <= 0 }">
+												<td class="price-free"><b>-$<fmt:formatNumber
+															type="number" maxFractionDigits="2"
+															value="${ prod_checkout.price *quantity * vcdis/100 }" /></b></td>
+												<c:set var="vccost"
+													value="${ prod_checkout.price *quantity * vcdis/100 }"></c:set>
+											</c:if>
 										</c:if>
-										<c:if test="${ prod_checkout.discount <= 0 }">
-											<td class="price-free"><b>-$<fmt:formatNumber
-														type="number" maxFractionDigits="2"
-														value="${ prod_checkout.price * vcdis/100 }" /></b></td>
-											<c:set var="vccost"
-												value="${ prod_checkout.price * vcdis/100 }"></c:set>
+									</c:if>
+									<c:if test="${ quantity == null || quantity <= 0 }">
+										<c:if test="${ vcdis > 0 }">
+											<c:if test="${ prod_checkout.discount > 0 }">
+												<c:set var="price"
+													value="${ prod_checkout.price - prod_checkout.price*prod_checkout.discount/100 }"></c:set>
+												<td class="price-free"><b>-$<fmt:formatNumber
+															type="number" maxFractionDigits="2"
+															value="${ price*vcdis/100 }" /></b></td>
+												<c:set var="vccost" value="${ price*vcdis/100 }"></c:set>
+											</c:if>
+											<c:if test="${ prod_checkout.discount <= 0 }">
+												<td class="price-free"><b>-$<fmt:formatNumber
+															type="number" maxFractionDigits="2"
+															value="${ prod_checkout.price * vcdis/100 }" /></b></td>
+												<c:set var="vccost"
+													value="${ prod_checkout.price * vcdis/100 }"></c:set>
+											</c:if>
 										</c:if>
 									</c:if>
 								</tr>
@@ -396,59 +581,177 @@
 							</td>
 							<c:if test="${ vccost != 0 }">
 								<c:if test="${ prod_checkout.discount > 0 }">
-									<c:if
-										test="${ (prod_checkout.price - prod_checkout.price * prod_checkout.discount/100) < 50.0 }">
-										<td class="price"><span class="total-payment"><b>$<fmt:formatNumber
-														type="number" maxFractionDigits="2"
-														value="${prod_checkout.price - vccost - prod_checkout.price * prod_checkout.discount/100 + 11.00 }" />
-											</b></span></td>
+									<c:if test="${ quantity != null && quantity > 0 }">
+										<c:if
+											test="${ (prod_checkout.price *quantity - prod_checkout.price *quantity * prod_checkout.discount/100) < 50.0 }">
+											<td class="price"><span class="total-payment"> <c:if
+														test="${ quantity != null && quantity > 0 }">
+														<b>$<fmt:formatNumber type="number"
+																maxFractionDigits="2"
+																value="${ prod_checkout.price*quantity - vccost - prod_checkout.price *quantity * prod_checkout.discount/100 + 11.00 }" />
+														</b>
+													</c:if> <c:if test="${ quantity == null || quantity <= 0 }">
+														<b>$<fmt:formatNumber type="number"
+																maxFractionDigits="2"
+																value="${prod_checkout.price - vccost - prod_checkout.price * prod_checkout.discount/100 + 11.00 }" />
+														</b>
+													</c:if>
+											</span></td>
+										</c:if>
+										<c:if
+											test="${ (prod_checkout.price *quantity - prod_checkout.price *quantity * prod_checkout.discount/100) >= 50.0 }">
+											<td class="price"><span class="total-payment"> <c:if
+														test="${ quantity != null && quantity > 0 }">
+														<b>$<fmt:formatNumber type="number"
+																maxFractionDigits="2"
+																value="${prod_checkout.price *quantity - vccost - prod_checkout.price *quantity * prod_checkout.discount/100  }" />
+														</b>
+													</c:if> <c:if test="${ quantity == null || quantity <= 0 }">
+														<b>$<fmt:formatNumber type="number"
+																maxFractionDigits="2"
+																value="${prod_checkout.price - vccost - prod_checkout.price * prod_checkout.discount/100  }" />
+														</b>
+													</c:if>
+											</span></td>
+										</c:if>
 									</c:if>
-									<c:if
-										test="${ (prod_checkout.price - prod_checkout.price * prod_checkout.discount/100) >= 50.0 }">
-										<td class="price"><span class="total-payment"><b>$<fmt:formatNumber
-														type="number" maxFractionDigits="2"
-														value="${prod_checkout.price - vccost - prod_checkout.price * prod_checkout.discount/100  }" />
-											</b></span></td>
+									<c:if test="${ quantity == null || quantity <= 0 }">
+										<c:if
+											test="${ (prod_checkout.price - prod_checkout.price * prod_checkout.discount/100) < 50.0 }">
+											<td class="price"><span class="total-payment"> <c:if
+														test="${ quantity != null && quantity > 0 }">
+														<b>$<fmt:formatNumber type="number"
+																maxFractionDigits="2"
+																value="${ prod_checkout.price*quantity - vccost - prod_checkout.price *quantity * prod_checkout.discount/100 + 11.00 }" />
+														</b>
+													</c:if> <c:if test="${ quantity == null || quantity <= 0 }">
+														<b>$<fmt:formatNumber type="number"
+																maxFractionDigits="2"
+																value="${prod_checkout.price - vccost - prod_checkout.price * prod_checkout.discount/100 + 11.00 }" />
+														</b>
+													</c:if>
+											</span></td>
+										</c:if>
+										<c:if
+											test="${ (prod_checkout.price  - prod_checkout.price * prod_checkout.discount/100) >= 50.0 }">
+											<td class="price"><span class="total-payment"> <c:if
+														test="${ quantity != null && quantity > 0 }">
+														<b>$<fmt:formatNumber type="number"
+																maxFractionDigits="2"
+																value="${prod_checkout.price *quantity - vccost - prod_checkout.price *quantity * prod_checkout.discount/100  }" />
+														</b>
+													</c:if> <c:if test="${ quantity == null || quantity <= 0 }">
+														<b>$<fmt:formatNumber type="number"
+																maxFractionDigits="2"
+																value="${prod_checkout.price - vccost - prod_checkout.price * prod_checkout.discount/100  }" />
+														</b>
+													</c:if>
+											</span></td>
+										</c:if>
 									</c:if>
 								</c:if>
 								<c:if test="${ prod_checkout.discount <= 0 }">
-									<c:if test="${ (prod_checkout.price) >= 50.0 }">
-										<td class="price"><span class="total-payment"> <b>$<fmt:formatNumber
-														type="number" maxFractionDigits="2"
-														value="${prod_checkout.price - vccost }" /></b></span></td>
+									<c:if test="${ quantity != null && quantity > 0 }">
+										<c:if test="${ (prod_checkout.price * quantity) >= 50.0 }">
+											<td class="price"><span class="total-payment"> <b>$<fmt:formatNumber
+															type="number" maxFractionDigits="2"
+															value="${prod_checkout.price*quantity - vccost }" />
+												</b>
+											</span></td>
+										</c:if>
 									</c:if>
-									<c:if test="${ (prod_checkout.price) < 50.0 }">
-										<td class="price"><span class="total-payment"> <b>$<fmt:formatNumber
-														type="number" maxFractionDigits="2"
-														value="${prod_checkout.price + 11.00 - vccost }" /></b></span></td>
+									<c:if test="${ quantity == null || quantity <= 0 }">
+										<c:if test="${ (prod_checkout.price) >= 50.0 }">
+											<td class="price"><span class="total-payment"> <b>$<fmt:formatNumber
+															type="number" maxFractionDigits="2"
+															value="${prod_checkout.price - vccost }" />
+												</b>
+											</span></td>
+										</c:if>
+									</c:if>
+									<c:if test="${ quantity != null && quantity > 0 }">
+										<c:if test="${ (prod_checkout.price*quantity) < 50.0 }">
+											<td class="price"><span class="total-payment"> <b>$<fmt:formatNumber
+															type="number" maxFractionDigits="2"
+															value="${prod_checkout.price*quantity + 11.00 - vccost }" /></b></span></td>
+										</c:if>
+									</c:if>
+									<c:if test="${ quantity == null || quantity <= 0 }">
+										<c:if test="${ (prod_checkout.price) < 50.0 }">
+											<td class="price"><span class="total-payment"> <b>$<fmt:formatNumber
+															type="number" maxFractionDigits="2"
+															value="${prod_checkout.price + 11.00 - vccost }" /></b></span></td>
+										</c:if>
 									</c:if>
 								</c:if>
 							</c:if>
 							<c:if test="${ vccost == 0 }">
 								<c:if test="${ prod_checkout.discount > 0 }">
-									<c:if
-										test="${ (prod_checkout.price - prod_checkout.price * prod_checkout.discount/100) < 50.0 }">
-										<td class="price"><span class="total-payment"><b>$<fmt:formatNumber
-														type="number" maxFractionDigits="2"
-														value="${prod_checkout.price - prod_checkout.price * prod_checkout.discount/100 + 11.00 }" />
-											</b></span></td>
+									<c:if test="${ quantity != null && quantity > 0 }">
+										<c:if
+											test="${ (prod_checkout.price * quantity - prod_checkout.price * quantity * prod_checkout.discount/100) < 50.0 }">
+											<c:if test="${ quantity != null && quantity > 0 }">
+												<td class="price"><span class="total-payment"><b>$<fmt:formatNumber
+																type="number" maxFractionDigits="2"
+																value="${prod_checkout.price*quantity - prod_checkout.price*quantity * prod_checkout.discount/100 + 11.00 }" />
+													</b></span></td>
+											</c:if>
+										</c:if>
+										<c:if
+											test="${ (prod_checkout.price  * quantity  - prod_checkout.price  * quantity * prod_checkout.discount/100) >= 50.0 }">
+											<c:if test="${ quantity != null && quantity > 0 }">
+												<td class="price"><span class="total-payment"><b>$<fmt:formatNumber
+																type="number" maxFractionDigits="2"
+																value="${prod_checkout.price * quantity - prod_checkout.price * quantity * prod_checkout.discount/100  }" />
+													</b></span></td>
+											</c:if>
+										</c:if>
 									</c:if>
-									<c:if
-										test="${ (prod_checkout.price - prod_checkout.price * prod_checkout.discount/100) >= 50.0 }">
-										<td class="price"><span class="total-payment"><b>$<fmt:formatNumber
-														type="number" maxFractionDigits="2"
-														value="${prod_checkout.price - prod_checkout.price * prod_checkout.discount/100  }" />
-											</b></span></td>
+									<c:if test="${ quantity == null || quantity <= 0 }">
+										<c:if
+											test="${ (prod_checkout.price - prod_checkout.price * prod_checkout.discount/100) < 50.0 }">
+											<c:if test="${ quantity == null || quantity <= 0 }">
+												<td class="price"><span class="total-payment"><b>$<fmt:formatNumber
+																type="number" maxFractionDigits="2"
+																value="${prod_checkout.price - prod_checkout.price * prod_checkout.discount/100 + 11.00 }" />
+													</b></span></td>
+											</c:if>
+										</c:if>
+										<c:if
+											test="${ (prod_checkout.price - prod_checkout.price * prod_checkout.discount/100) >= 50.0 }">
+											<c:if test="${ quantity == null || quantity <= 0 }">
+												<td class="price"><span class="total-payment"><b>$<fmt:formatNumber
+																type="number" maxFractionDigits="2"
+																value="${prod_checkout.price - prod_checkout.price * prod_checkout.discount/100  }" />
+													</b></span></td>
+											</c:if>
+										</c:if>
 									</c:if>
 								</c:if>
 								<c:if test="${ prod_checkout.discount <= 0 }">
-									<c:if test="${ (prod_checkout.price) >= 50.0 }">
-										<td class="price"><span class="total-payment"><b>$${
-													prod_checkout.price }</b></span></td>
+									<c:if test="${ quantity != null && quantity > 0 }">
+										<c:if test="${ (prod_checkout.price) >= 50.0 }">
+											<td class="price"><span class="total-payment"><b>$${
+														prod_checkout.price * quantity }</b></span></td>
+										</c:if>
 									</c:if>
-									<c:if test="${ (prod_checkout.price) < 50.0 }">
-										<td class="price"><span class="total-payment"><b>$${
-													prod_checkout.price+11.00 }</b></span></td>
+									<c:if test="${ quantity == null || quantity <= 0 }">
+										<c:if test="${ (prod_checkout.price) >= 50.0 }">
+											<td class="price"><span class="total-payment"><b>$${
+														prod_checkout.price }</b></span></td>
+										</c:if>
+									</c:if>
+									<c:if test="${ quantity != null && quantity > 0 }">
+										<c:if test="${ (prod_checkout.price) < 50.0 }">
+											<td class="price"><span class="total-payment"><b>$${
+														prod_checkout.price * quantity +11.00 }</b></span></td>
+										</c:if>
+									</c:if>
+									<c:if test="${ quantity == null || quantity <= 0 }">
+										<c:if test="${ (prod_checkout.price) < 50.0 }">
+											<td class="price"><span class="total-payment"><b>$${
+														prod_checkout.price+11.00 }</b></span></td>
+										</c:if>
 									</c:if>
 								</c:if>
 							</c:if>
@@ -458,10 +761,10 @@
 
 			</div>
 		</div>
-		
+
 		<input type="hidden" name="vccode" id="vccode" value="${ vccode }">
 		<input type="hidden" name="idprod" id="idprod" value="${ idprod }">
-		
+
 		<div class="btn-order">
 			<input type="button" name="order" id="order" value="Order">
 		</div>
@@ -544,6 +847,14 @@
 				$("#message-notify").removeClass("none");
 				$("#content-msg-notify").text("Sorry! Voucher does not exist.");
 			}
+			if(status == "notenough") {
+				if(${ applyfor != null }) {
+					$("#wrapper").removeClass("importantNone");
+					$("#message-notify").removeClass("none");
+					var error = "Sorry! Voucher is only applicable for orders of ${ applyfor } or more.";
+					$("#content-msg-notify").text(error);
+				}
+			}
 		}
 	</script>
 
@@ -552,6 +863,8 @@
 		if(${ id != null }) {
 			id = "${id}";
 		}
+		var url = window.location.href;
+		var url_new = "";
 		$("#apply").click(function() {
 			var vch = $('#voucher_code').val();
 			if(vch == "" || vch == null) {
@@ -560,10 +873,28 @@
 				$("#content-msg-notify").text("You have not entered the voucher!");
 			} else {
 				if (id != "") {
+					if(url.includes("?")) {
+						if(url.includes("?voucher")) {
+							var arr1 = url.split("?")[1];
+							var arr2 = arr1.split("&")[0];
+							url_new = url.replace(arr2, "voucher="+vch);
+						} else if(url.includes("&voucher")) {
+							const arr1 = url.split("&");
+							for(let i=0; i<arr1.length; i++) {
+								if(arr1[i].includes("voucher")) {
+									url_new = url.replace(arr1[i], "voucher="+vch);
+								}
+							}
+						} else {
+							url_new = url+"&voucher="+vch;
+						}
+					} else {
+						url_new = url+"?voucher="+vch;
+					}
 					var xhr = new XMLHttpRequest();
 					xhr.open("GET", "");
 					xhr.onload = function() {
-						window.location.assign("http://localhost:8888/SpringMVC/cart/checkout/"+id+"?voucher="+vch);
+						window.location.assign(url_new);
 					};
 					xhr.send();
 				}
@@ -576,6 +907,8 @@
 	</script>
 
 	<script type="text/javascript"> // chosen size
+		var url = window.location.href;
+		var url_new = "";
 		var sizes = document.getElementsByClassName("select-size");
 		$(document).ready(function() {
 			$(".select-size").click(function() {
@@ -586,9 +919,42 @@
 						const arr = txt.split("_");
 						var size_id = arr[2];
 						document.getElementById("size").value = size_id;
+						if(url.includes("?")) {
+							if(url.includes("?size")) {
+								var arr1 = url.split("?")[1];
+								var arr2 = arr1.split("&")[0];
+								url_new = url.replace(arr2, "size="+size_id);
+							} else if(url.includes("&size")) {
+								const arr1 = url.split("&");
+								for(let i=0; i<arr1.length; i++) {
+									if(arr1[i].includes("size")) {
+										url_new = url.replace(arr1[i], "size="+size_id);
+									}
+								}
+							} else {
+								url_new = url+"&size="+size_id;
+							}
+						} else {
+							url_new = url+"?size="+size_id;
+						}
 					} else {
 						$(sizes[i]).removeClass("selected-color");
 					}
+				}
+				if(url_new != "") {
+					var xhr = new XMLHttpRequest();
+					xhr.open("GET", "");
+					xhr.onload = function() {
+						window.location.assign(url_new);
+					};
+					xhr.send();
+				} else {
+					var xhr = new XMLHttpRequest();
+					xhr.open("GET", "");
+					xhr.onload = function() {
+						window.location.assign(url);
+					};
+					xhr.send();
 				}
 				
 			});
@@ -656,19 +1022,66 @@
 	</script>
 
 	<script>
+		var url = window.location.href;
+		var url_new = "";
 		function amount(x) {
-			for (let i = 1; i <= 10; i++) {
-				if (x.id == ("plus" + i)) {
-					var input_txt = document.getElementById("input_Id" + i).value;
-					let a = parseInt(input_txt) + 1;
-					document.getElementById("input_Id" + i).value = a;
-				} else if (x.id == ("minus" + i)) {
-					var input_txt = document.getElementById("input_Id" + i).value;
-					if (parseInt(input_txt) > 1) {
-						let a = parseInt(input_txt) - 1;
-						document.getElementById("input_Id" + i).value = a;
+			if (x.id == "plus1") {
+				var input_txt = document.getElementById("input_Id1").value;
+				let a = parseInt(input_txt) + 1;
+				document.getElementById("input_Id1").value = a;
+				if(url.includes("?")) {
+					if(url.includes("?quantity")) {
+						var arr = url.split("?")[1];
+						var arr1 = arr.split("&")[0];
+						url_new = url.replace(arr1, "quantity="+a);
+					} else if(url.includes("&quantity")) {
+						const arr = url.split("&");
+						for(let i=0; i<arr.length; i++) {
+							if(arr[i].includes("quantity")) {
+								url_new = url.replace(arr[i], "quantity="+a);
+							}
+						}
+					} else {
+						url_new = url+"&quantity="+a;
+					}
+				} else {
+					url_new = url+"?quantity="+a;
+				}
+			} else if (x.id == "minus1") {
+				var input_txt = document.getElementById("input_Id1").value;
+				if (parseInt(input_txt) > 1) {
+					let a = parseInt(input_txt) - 1;
+					document.getElementById("input_Id1").value = a;
+					if(url.includes("?quantity")) {
+						var arr = url.split("?")[1];
+						var arr1 = arr.split("&")[0];
+						url_new = url.replace(arr1, "quantity="+a);
+					} else if(url.includes("&quantity")) {
+						const arr = url.split("&");
+						for(let i=0; i<arr.length; i++) {
+							if(arr[i].includes("quantity")) {
+								url_new = url.replace(arr[i], "quantity="+a);
+							}
+						}
+					} else {
+						url_new = url+"&quantity="+a;
 					}
 				}
+			}
+			if(url_new != "") {
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", "");
+				xhr.onload = function() {
+					window.location.assign(url_new);
+				};
+				xhr.send();
+			} else {
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", "");
+				xhr.onload = function() {
+					window.location.assign(url);
+				};
+				xhr.send();
 			}
 		}
 	</script>

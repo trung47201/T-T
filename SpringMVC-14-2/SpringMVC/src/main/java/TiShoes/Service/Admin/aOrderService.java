@@ -45,8 +45,9 @@ public class aOrderService implements aOrderRepository{
 
 				voucher.setId(rs.getInt("voucher_id"));
 				voucher.setCode(rs.getString("code"));
-				voucher.setDiscount(rs.getInt("discount"));
+				voucher.setVcdiscount(rs.getInt("vcdiscount"));
 				voucher.setLimit(rs.getInt("limit"));
+				voucher.setApplyfor(rs.getInt("applyfor"));
 				voucher.setStart_date(rs.getTimestamp("start_date"));
 				voucher.setEnd_date(rs.getTimestamp("end_date"));
 				voucher.setCreated_at(rs.getTimestamp("created_at"));
@@ -61,6 +62,7 @@ public class aOrderService implements aOrderRepository{
 				order_.setOrder_date(rs.getDate("order_date"));
 				order_.setUpdated_at(rs.getDate("updated_at"));
 				order_.setVoucher(voucher);
+				order_.setDiscount_at(rs.getDouble("discount_at"));
 				order_.setNote(rs.getString("note"));
 				order_.setStatus(status);
 				order_.setMethod(rs.getString("method"));
@@ -80,7 +82,7 @@ public class aOrderService implements aOrderRepository{
 			java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
 			connectService = new ConnectService();
 			Connection conn = connectService.getConnect();
-			String sql = "INSERT INTO `order_`(`fullname`, `email`, `phone_number`, `address`, `order_date`, `updated_at`, `voucher_id`, `note`, `status`, `method`) "
+			String sql = "INSERT INTO `order_`(`fullname`, `email`, `phone_number`, `address`, `order_date`, `updated_at`, `voucher_id`, `note`, `status`, `method` , `discount_at`) "
 					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
 			preparedStmt.setString(1, fullname);

@@ -80,8 +80,9 @@ public class Order_detailsService implements Order_detailsRepository {
 
 				voucher.setId(rs.getInt("voucher_id"));
 				voucher.setCode(rs.getString("code"));
-				voucher.setDiscount(rs.getInt("discount"));
+				voucher.setVcdiscount(rs.getInt("vcdiscount"));
 				voucher.setLimit(rs.getInt("limit"));
+				voucher.setApplyfor(rs.getInt("applyfor"));
 				voucher.setStart_date(rs.getTimestamp("start_date"));
 				voucher.setEnd_date(rs.getTimestamp("end_date"));
 				voucher.setCreated_at(rs.getTimestamp("created_at"));
@@ -96,6 +97,7 @@ public class Order_detailsService implements Order_detailsRepository {
 				order_.setOrder_date(rs.getDate("order_date"));
 				order_.setUpdated_at(rs.getDate("updated_at"));
 				order_.setVoucher(voucher);
+				order_.setDiscount_at(rs.getDouble("discount_at"));
 				order_.setNote(rs.getString("note"));
 				order_.setStatus(status);
 				order_.setMethod(rs.getString("method"));
@@ -177,7 +179,7 @@ public class Order_detailsService implements Order_detailsRepository {
 					+ "VALUES (?, ?, ?, ?, ?, ?)";
 			PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
 			preparedStmt.setInt(1, orderService.getLastOrderId());
-			preparedStmt.setDouble(2, price_at);
+			preparedStmt.setDouble(2, (double) Math.round(price_at*100)/100);
 			preparedStmt.setInt(3, quantity);
 			preparedStmt.setInt(4, prod_id);
 			preparedStmt.setInt(5, size_id);
@@ -205,38 +207,28 @@ public class Order_detailsService implements Order_detailsRepository {
 		}
 		return li;
 	}
-	
+
 	public double total_order_by_id_order(int order_id) {
 		List<Order_details> li = get_all_order_details_by_order_id(order_id);
-		double total=0;
+		double total = 0;
 		for (Order_details o : li) {
-			
+
 			total += o.getPrice_at();
 		}
 		System.out.println(total);
-		return (double) Math.round(total*100)/100;
+		return (double) Math.round(total * 100) / 100;
 	}
-	
+
 	public double price_when_apply_voucher_by_order_id(int order_id) {
 		orderService = new OrderService();
 		int discount = orderService.get_voucher_discount_by_order_id(order_id);
 		double total = total_order_by_id_order(order_id);
-		double rs = (double) discount*total/100;
-		return (double) Math.round(rs*100)/100;
+		double rs = (double) discount * total / 100;
+		return (double) Math.round(rs * 100) / 100;
 	}
 
-	public double total_paid_by_order_id(int order_id) {
-		double total = total_order_by_id_order(order_id);
-		double voucher = price_when_apply_voucher_by_order_id(order_id);
-		double rs = 0;
-		if(total > 50) {
-			rs = total - 11.0 - voucher;
-		} else {
-			rs = total - voucher;
-		}
-		return rs;
-	}
 	
+
 	public List<Order_details> get_all_order_details_by_user_id(int user_id) {
 		orderService = new OrderService();
 		List<Order_details> li = new LinkedList<>();
@@ -248,12 +240,24 @@ public class Order_detailsService implements Order_detailsRepository {
 		return li;
 	}
 
+	public boolean exist_order_details(double price_at, int quantity, int prod_id, int size_id, int color_id) {
+		List<Order_details> li = getAllOrder_details();
+		for (Order_details o : li) {
+			if (o.getPrice_at() == price_at && o.getQuantity() == quantity && o.getProd().getId() == prod_id
+					&& o.getSize().getId() == size_id && o.getColor().getId() == color_id) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public static void main(String[] args) {
 		Order_detailsService o = new Order_detailsService();
 //		for (Order_details od : o.get_all_order_details_by_user_id(1)) {
 //			System.out.println(od.getOrder_().getId());
 //		}
-		System.out.println(o.price_when_apply_voucher_by_order_id(1));
-		
+		for (Order_details od : o.get_all_order_details_by_order_id(7)) {
+			System.out.println(od.getOrder_().getId() +"==" + od.getPrice_at() +"="+od.getProd().getDiscount());
+		}
 	}
 }

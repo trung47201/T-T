@@ -1,5 +1,6 @@
 package TiShoes.Controller.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -37,74 +38,166 @@ public class CheckoutController {
 	private Order_detailsService order_detailsService;
 	private OrderService orderService;
 	private UserService userService;
-	
+
 	@RequestMapping(value = { "cart/checkout/ok/{id}" })
-	public void checkout_ok(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView checkout_ok(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
 		md5Service = new MD5Service();
-		
-		String fullname =  request.getParameter("fullname");
+		order_detailsService = new Order_detailsService();
+		orderService = new OrderService();
+		productService = new ProductService();
+		checkoutService = new CheckoutService();
+		userService = new UserService();
+
+		String fullname = request.getParameter("fullname");
 		String phone_number = request.getParameter("phone");
 		String email = request.getParameter("email");
 		String city = request.getParameter("city");
 		String town = request.getParameter("town");
 		String village = request.getParameter("village");
-		String note =request.getParameter("note");
+		String note = request.getParameter("note");
 		String method = request.getParameter("method");
 		String size = request.getParameter("size");
 		String color = request.getParameter("color");
 		String id_prod = request.getParameter("idprod");
 		String vccode = request.getParameter("vccode");
 		String quantity = request.getParameter("quantity");
-		
-		if (id_prod != null && vccode != null && size != null && color != null && city != null && town != null && village != null && fullname != null && phone_number  != null && email  != null) {
-			String address = md5Service.decodeText(city) + " - " + md5Service.decodeText(town) + " - " + md5Service.decodeText(village);
+
+		List<String> li = new ArrayList<>();
+		Cookie arrO[] = request.getCookies();
+		if (arrO != null) {
+			for (Cookie o : arrO) {
+				li.add(o.getName());
+			}
 		}
+
+		String arr[] = id.split("_");
+		String user = "";
+		if (arr.length > 1) {
+			user = arr[0];
+		}
+
+		int vc_id = 1;
+		if (vccode != null) {
+			vc_id = voucherService.getVoucherIdByCode(vccode);
+		}
+
+		if (note == null) {
+			note = "";
+		}
+		if (method == null) {
+			method = "COD";
+		}
+
+		if (id_prod != null && vccode != null && size != null && color != null && city != null && town != null
+				&& village != null && fullname != null && phone_number != null && email != null) {
+			double dis = checkoutService.get_discount_at(Integer.parseInt(quantity), vccode,
+					Integer.parseInt(id_prod));
+			double price_at = checkoutService.get_price_at(Integer.parseInt(quantity), vccode,
+					Integer.parseInt(id_prod));
+			String address = md5Service.decodeText(city) + " - " + md5Service.decodeText(town) + " - "
+					+ md5Service.decodeText(village);
+			if (checkoutService.check_status_order_await(phone_number, email, price_at, Integer.parseInt(quantity),
+					Integer.parseInt(id_prod), Integer.parseInt(size), Integer.parseInt(color))) {
+				System.out.println("Awaiting confirmation");
+			} else {
+				if (orderService.insertIntoOrder(fullname, email, phone_number, address, vc_id, note, method, dis)
+						&& order_detailsService.insertIntoOrder_details(price_at, Integer.parseInt(quantity),
+								Integer.parseInt(id_prod), Integer.parseInt(size), Integer.parseInt(color))) {
+					System.out.println("buy now success");
+					return new ModelAndView("redirect: /SpringMVC/sucess-buynow?id_prod=" + id_prod + "&id_color=" + color
+							+ "&id_size=" + size + "&quantity=" + quantity + "&fullname=" + fullname + "&phone_number="
+							+ phone_number + "&email=" + email + "&city=" + city + "&town=" + town + "&village=" + village
+							+ "&note=" + note +"&voucher="+vc_id+"&priceat=" + price_at +"&user="+user);
+				} else {
+					System.out.println("buy now unsuccess");
+					return new ModelAndView("redirect: /SpringMVC/cart/checkout/" + id);
+				}
+			}
+		}
+		return new ModelAndView("redirect: /SpringMVC/");
 	}
 
 	@RequestMapping(value = { "cart/checkout/{id}" })
-	public ModelAndView checkout_buy_now(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView checkout_buy_now(@PathVariable String id, HttpServletRequest request,
+			HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("user/buynow");
 		color_sizeService = new Color_sizeService();
 		productService = new ProductService();
 		checkoutService = new CheckoutService();
 		voucherService = new VoucherService();
 		userService = new UserService();
-		
+		productService = new ProductService();
+		color_sizeService = new Color_sizeService();
+
 		String voucher = request.getParameter("voucher");
-		if(voucher != null) {
-			if(voucherService.voucher_exists_by_code(voucher)) {
-				if(voucherService.expired_voucher_by_code(voucher)) {
+		String quantity = request.getParameter("quantity");
+		String size = request.getParameter("size");
+
+		String id_prod = "";
+		String id_user = "";
+		String a[] = id.split("_");
+		if (a.length > 1) {
+			id_prod = a[1];
+			id_user = a[0];
+		} else if (a.length == 1) {
+			id_prod = a[0];
+		}
+
+		if (voucher != null) {
+			if (voucherService.voucher_exists_by_code(voucher)) {
+				if (voucherService.expired_voucher_by_code(voucher)) {
 					mv.addObject("vcstatus", "outofdate");
 					System.out.println("het han");
 				} else {
-					if(voucherService.voucher_start_date_by_code(voucher)) {
+					if (voucherService.voucher_start_date_by_code(voucher)) {
 						mv.addObject("vcstatus", "notstartedyet");
 						System.out.println("not started yet");
 					} else {
-						int vch_discount = voucherService.get_discount_by_voucher_code(voucher);
-						mv.addObject("vcdiscount", vch_discount);
-						mv.addObject("vcstatus", "start");
-						System.out.println("start");
+						if (quantity != null) {
+							Product p = productService.getProduct(Integer.parseInt(id_prod));
+							double price_at = 0;
+							if (p.getDiscount() > 0) {
+								price_at = p.getPrice() * Integer.parseInt(quantity)
+										- p.getPrice() * Integer.parseInt(quantity) * p.getDiscount() / 100;
+							} else {
+								price_at = p.getPrice() * Integer.parseInt(quantity);
+							}
+							double applyfor = voucherService.get_apply_for_by_code(voucher);
+							if (price_at < applyfor && price_at != 0) {
+								mv.addObject("vcstatus", "notenough");
+								System.out.println("notenough");
+								mv.addObject("applyfor", applyfor);
+							} else {
+								int vch_discount = voucherService.get_discount_by_voucher_code(voucher);
+								mv.addObject("vcdiscount", vch_discount);
+								mv.addObject("vcstatus", "start");
+								System.out.println("start");
+							}
+						} else {
+							double price_at = checkoutService.get_price_at(1, voucher, Integer.parseInt(id_prod));
+							double applyfor = voucherService.get_apply_for_by_code(voucher);
+							if (price_at < applyfor) {
+								mv.addObject("vcstatus", "notenough");
+								mv.addObject("applyfor", applyfor);
+								System.out.println("notenough");
+							} else {
+								int vch_discount = voucherService.get_discount_by_voucher_code(voucher);
+								mv.addObject("vcdiscount", vch_discount);
+								mv.addObject("vcstatus", "start");
+								System.out.println("start");
+							}
+						}
 					}
 				}
-			}
-			else {
+			} else {
 				mv.addObject("vcstatus", "notexists");
 				System.out.println("not exists");
 			}
 		}
-		String id_prod = "";
-		String id_user = "";
-		String a[] = id.split("_");
-		if(a.length > 1) {
-			id_prod = a[1];
-			id_user = a[0];
-		} else if(a.length == 1){
-			id_prod = a[0];
-		}
+
 		if (!id_user.equals("")) {
 			User u = userService.get_user_by_id(Integer.parseInt(id_user));
-			if(u != null) {
+			if (u != null) {
 				mv.addObject("user", u);
 				String address = u.getAddress();
 				String city_value = address.split("-")[0];
@@ -115,26 +208,37 @@ public class CheckoutController {
 				mv.addObject("village", village_value.trim());
 			}
 		}
-		productService = new ProductService();
-		color_sizeService = new Color_sizeService();
-		
+
+		if (quantity != null) {
+			mv.addObject("quantity", quantity);
+		}
+		if (size != null) {
+			mv.addObject("size", size);
+		}
+
 		if (!color_sizeService.getAllSizeById_Prod(Integer.parseInt(id_prod)).isEmpty()) {
 			mv.addObject("listSize", color_sizeService.getAllSizeById_Prod(Integer.parseInt(id_prod)));
 		}
 		if (!color_sizeService.getAllColorById_prod(Integer.parseInt(id_prod)).isEmpty()) {
 			mv.addObject("listColor", color_sizeService.getAllColorById_prod(Integer.parseInt(id_prod)));
 		}
-		
+
 		mv.addObject("averageRating", productService.averageRating(Integer.parseInt(id_prod)));
 		mv.addObject("product", productService.getProduct(Integer.parseInt(id_prod)));
-		
+
 		mv.addObject("id", id);
 		mv.addObject("idprod", id_prod);
-		if(voucher != null) {
+		if (voucher != null) {
 			mv.addObject("vccode", voucher);
 		}
+		if (id_user != null) {
+			String avt = userService.getAvatarByUserID(Integer.parseInt(id_user));
+			mv.addObject("avatar", avt);
+			mv.addObject("userID", id_user);
+
+		}
+
 		return mv;
-		
 
 	}
 
@@ -214,10 +318,10 @@ public class CheckoutController {
 
 				String adr = city + " " + town + " " + village;
 				String arr1[] = process.split("/");
-				if (voucher != 0 ) {
-					orderService.insertIntoOrder(fullname, email, phone_number, adr, voucher, note, method);
+				if (voucher != 0) {
+					orderService.insertIntoOrder_not_login(fullname, email, phone_number, adr, voucher, note, method);
 				} else {
-					orderService.insertIntoOrder(fullname, email, phone_number, adr, 1, note, method);
+					orderService.insertIntoOrder_not_login(fullname, email, phone_number, adr, 1, note, method);
 				}
 				Cookie orr[] = request.getCookies();
 				for (String s : arr1) {
@@ -227,22 +331,21 @@ public class CheckoutController {
 					String size = arr[2];
 					String quantity = arr[3];
 					// insert and update sql
-					//System.out.println(id_prod);
+					// System.out.println(id_prod);
 
 					order_detailsService.insertIntoOrder_details(productService.getProduct(id_prod).getPrice(),
 							Integer.parseInt(quantity), id_prod, Integer.parseInt(size), Integer.parseInt(color));
-					
+
 					for (Cookie o : orr) {
 						if (o.getName().equals("addtocart")) {
 							String li_prod_txt = checkoutService.removeProductFromCartAfterCheckout(id_prod,
 									o.getValue());
-							
-							
-								System.out.println(o.getValue() + "==" + li_prod_txt);
-								Cookie addtocart_new = new Cookie("addtocart", li_prod_txt);
-								addtocart_new.setMaxAge(60*60*24*15);
-								response.addCookie(addtocart_new);
-							
+
+							System.out.println(o.getValue() + "==" + li_prod_txt);
+							Cookie addtocart_new = new Cookie("addtocart", li_prod_txt);
+							addtocart_new.setMaxAge(60 * 60 * 24 * 15);
+							response.addCookie(addtocart_new);
+
 						}
 					}
 

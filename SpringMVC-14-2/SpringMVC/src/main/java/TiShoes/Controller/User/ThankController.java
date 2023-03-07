@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -17,6 +18,8 @@ import TiShoes.Service.User.CheckoutService;
 import TiShoes.Service.User.ColorService;
 import TiShoes.Service.User.ProductService;
 import TiShoes.Service.User.SizeService;
+import TiShoes.Service.User.UserService;
+import TiShoes.Service.User.VoucherService;
 
 @Controller
 public class ThankController {
@@ -24,6 +27,8 @@ public class ThankController {
 	private ColorService colorService;
 	private SizeService sizeService;
 	private ProductService productService;
+	private VoucherService voucherService;
+	private UserService userService;
 	
 	@RequestMapping(value = {"sucess-buynow"})
 	public ModelAndView loadOrder(HttpServletRequest request, HttpServletResponse response){
@@ -32,6 +37,8 @@ public class ThankController {
 		checkoutService = new CheckoutService();
 		colorService = new ColorService();
 		sizeService = new SizeService();
+		voucherService = new VoucherService();
+		userService = new UserService();
 		
 		String id_prod = request.getParameter("id_prod");
 		String id_color = request.getParameter("id_color");
@@ -44,7 +51,31 @@ public class ThankController {
 		String town = request.getParameter("town");
 		String village = request.getParameter("village");
 		String note = request.getParameter("note");
-	
+		String price_at = request.getParameter("priceat");
+		String voucher = request.getParameter("voucher");
+		String userID = request.getParameter("user");
+		
+		if(userID != null) {
+			mv.addObject("userID", userID);
+			System.out.println(userID);
+			String avatar = userService.getAvatarByUserID(Integer.parseInt(userID));
+			mv.addObject("avatar", avatar);
+		}
+		
+		Product p = productService.getProduct(Integer.parseInt(id_prod));
+		if(voucher != null) {
+			double discount = (double) voucherService.getDiscountById_Voucher(Integer.parseInt(voucher));
+			
+			if(p.getDiscount() > 0) {
+				discount = (p.getPrice()* Integer.parseInt(quantity) - p.getPrice() * Integer.parseInt(quantity) * p.getDiscount()/100) * discount/100;
+			} else {
+				discount = (p.getPrice()* Integer.parseInt(quantity)) * discount/100;
+			}
+			mv.addObject("discount", discount);
+		}
+		
+		
+		mv.addObject("price_at", price_at);
 		mv.addObject("id_prod", id_prod);
 		mv.addObject("id_color", id_color);
 		mv.addObject("id_size", id_size);

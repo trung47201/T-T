@@ -25,34 +25,14 @@
 <link rel="stylesheet" href="<c:url value="/assets/css/home.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/order_details.css"/>">
 <style>
-
-.track-order {
-    display: flex;
-    margin: 0 18%;
-    margin-bottom: 20px;
-    
+.hr-bg-half {
+	background: linear-gradient(to right, blue 50%, gray 50%) !important;
 }
-.form-prod-col3 p {
-    font-style: italic;
-    height: 100%;
-    align-items: center;
-    display: flex;
+.hr-bg-process {
+	background: gray !important;
 }
-
-.row2 {
-    display: flex;
-    float: right;
-}
-.order-list-product {
-    border: 1px solid purple;
-    height: 150px;
-    margin-left: 7%;
-    margin-right: 7%;
-    margin-bottom: 30px;
-    border-radius: 10px;
-}
-.track-order-form {
-    width: 100%;
+.strike-dot {
+    margin: 16.5px 0px !important;
 }
 </style>
 <body style="color: white;">
@@ -92,14 +72,51 @@
                     <div class="track-order">
 	                            <div class="track-order-form">
 	                               <div class="order-form-status">
-	                                    <div class="dot"><span><img src="<c:url value="/assets/images/icons/icons8-checkmark-64.png"/>" alt=""></span> </div>
-	                                    <hr class="strike-dot">
-	                                    <div class="dot"><span><img src="<c:url value="/assets/images/icons/icons8-checkmark-64.png"/>" alt=""></span> </div>
-	                                    <hr class="strike-dot">
-	                                    <div class="dot"><span><img src="<c:url value="/assets/images/icons/icons8-checkmark-64.png"/>" alt=""></span> </div>
-	                                    <hr class="strike-dot-sub-left">
-	                                    <hr class="strike-dot-sub-right">
-	                                    <div class="dot"><span><span class="being"></span></span> </div>
+	                                   	<c:if test="${ status != null && status == 1 }">
+	                                   		<div class="dot"><span class="hr-bg-process"><span class="being  hr-bg-process"></span></span> </div>
+	                                    		<hr class="strike-dot hr-bg-process">
+	                                    	<div class="dot"><span class="hr-bg-process"><span class="being  hr-bg-process"></span></span> </div>
+	                                    		<hr class="strike-dot hr-bg-process">
+	                                    	<div class="dot"><span class="hr-bg-process"><span class="being  hr-bg-process"></span></span> </div>
+	                                    		<hr class="strike-dot hr-bg-process">
+	                                    	<div class="dot"><span class="hr-bg-process"><span class="being  hr-bg-process"></span></span> </div>
+	                                   	</c:if>
+	                                   	<c:if test="${ status != null && status == 2 }">
+	                                   		<div class="dot"><span><img src="<c:url value="/assets/images/icons/icons8-checkmark-64.png"/>" alt=""></span> </div>
+	                                    		<hr class="strike-dot hr-bg-half">
+	                                    	<div class="dot"><span class="hr-bg-process"><span class="being  hr-bg-process"></span></span> </div>
+	                                    		<hr class="strike-dot hr-bg-process">
+	                                    	<div class="dot"><span class="hr-bg-process"><span class="being  hr-bg-process"></span></span> </div>
+	                                    		<hr class="strike-dot hr-bg-process">
+	                                    	<div class="dot"><span class="hr-bg-process"><span class="being  hr-bg-process"></span></span> </div>
+	                                   	</c:if>
+	                                   	<c:if test="${ status != null && status == 3 }">
+	                                   		<div class="dot"><span><img src="<c:url value="/assets/images/icons/icons8-checkmark-64.png"/>" alt=""></span> </div>
+	                                    		<hr class="strike-dot">
+	                                    	<div class="dot"><span><img src="<c:url value="/assets/images/icons/icons8-checkmark-64.png"/>" alt=""></span> </div>
+	                                    		<hr class="strike-dot hr-bg-half">
+	                                    	<div class="dot"><span class="hr-bg-process"><span class="being  hr-bg-process"></span></span> </div>
+	                                    		<hr class="strike-dot hr-bg-process">
+	                                    	<div class="dot"><span class="hr-bg-process"><span class="being  hr-bg-process"></span></span> </div>
+	                                   	</c:if>
+	                                   	<c:if test="${ status != null && status == 4 }">
+	                                   		<div class="dot"><span><img src="<c:url value="/assets/images/icons/icons8-checkmark-64.png"/>" alt=""></span> </div>
+	                                    		<hr class="strike-dot">
+	                                    	<div class="dot"><span><img src="<c:url value="/assets/images/icons/icons8-checkmark-64.png"/>" alt=""></span> </div>
+	                                    		<hr class="strike-dot">
+	                                    	<div class="dot"><span><img src="<c:url value="/assets/images/icons/icons8-checkmark-64.png"/>" alt=""></span> </div>
+	                                    		<hr class="strike-dot hr-bg-half">
+	                                    	<div class="dot"><span class="hr-bg-process"><span class="being  hr-bg-process"></span></span> </div>
+	                                   	</c:if>
+	                                   	<c:if test="${ status != null && status == 5 }">
+	                                   		<div class="dot"><span><img src="<c:url value="/assets/images/icons/icons8-checkmark-64.png"/>" alt=""></span> </div>
+	                                    		<hr class="strike-dot">
+	                                    	<div class="dot"><span><img src="<c:url value="/assets/images/icons/icons8-checkmark-64.png"/>" alt=""></span> </div>
+	                                    		<hr class="strike-dot">
+	                                    	<div class="dot"><span><img src="<c:url value="/assets/images/icons/icons8-checkmark-64.png"/>" alt=""></span> </div>
+	                                    		<hr class="strike-dot">
+	                                    	<div class="dot"><span><img src="<c:url value="/assets/images/icons/icons8-checkmark-64.png"/>" alt=""></span> </div>
+	                                   	</c:if>
 	                                </div>
 	                                <div class="order-form-status-text">
 	                                    <div class="dot">PROCESSED</div>
@@ -126,8 +143,8 @@
 	                                        <p>x${ liOrder_details.quantity }</p>
 	                                        
 	                                    </div>
-	                                    <p class="p-price">$<fmt:formatNumber type = "number" 
-         									maxFractionDigits = "2" value = "${ liOrder_details.price_at }" /></p>
+	                                    	<p class="p-price">$<fmt:formatNumber type = "number" 
+         										maxFractionDigits = "2" value = "${ liOrder_details.price_at }" /></p>
 	                                </div>
 	                                
 	                            </div>
@@ -136,24 +153,16 @@
                     </c:forEach>
                     
                     <div class="prod_details">
-                        <div class="total-prod">
-                            <p>Total:</p>
-                            <p class="money">$<fmt:formatNumber type = "number" maxFractionDigits = "2" value = "${ total }" /></p>
-                        </div>
-                        <div class="total-prod">
-                            <p>Shipping charges:</p>
-                            <p class="money">$11.00</p>
-                        </div>
                         <c:if test="${ total > 50 }">
                         	<div class="total-prod">
 	                            <p>Free:</p>
-	                            <p class="money">-$11.00</p>
+	                            <p class="money">$11.00</p>
 	                        </div>
                         </c:if>
-                        <c:if test="${ voucher > 0 }">
+                        <c:if test="${ order.discount_at > 0 }">
                         	<div class="total-prod">
 	                            <p>Voucher:</p>
-	                            <p class="money">-$${ voucher }</p>
+	                            <p class="money">$${ order.discount_at }</p>
 	                        </div>
                         </c:if>
                         

@@ -7,8 +7,9 @@ public class Voucher {
 	
 	private int id;
 	private String code;
-	private int discount;
+	private int vcdiscount;
 	private int limit;
+	private int applyfor;
 	private Timestamp start_date;
 	private Timestamp end_date;
 	private Timestamp created_at;
@@ -29,18 +30,23 @@ public class Voucher {
 	public void setCode(String code) {
 		this.code = code;
 	}
-	public int getDiscount() {
-		return discount;
+	public int getVcdiscount() {
+		return vcdiscount;
 	}
-	public void setDiscount(int discount) {
-		this.discount = discount;
+	public void setVcdiscount(int vcdiscount) {
+		this.vcdiscount = vcdiscount;
 	}
-	
 	public int getLimit() {
 		return limit;
 	}
 	public void setLimit(int limit) {
 		this.limit = limit;
+	}
+	public int getApplyfor() {
+		return applyfor;
+	}
+	public void setApplyfor(int applyfor) {
+		this.applyfor = applyfor;
 	}
 	public Timestamp getStart_date() {
 		return start_date;
