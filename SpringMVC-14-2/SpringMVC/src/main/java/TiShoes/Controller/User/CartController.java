@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import TiShoes.Model.Cart;
+import TiShoes.Model.Color;
+import TiShoes.Model.Color_size;
 import TiShoes.Model.Product;
 import TiShoes.Service.User.CartService;
 import TiShoes.Service.User.ColorService;
@@ -33,56 +35,56 @@ public class CartController {
 	@RequestMapping(value = { "/cart/{id}" })
 	public ModelAndView loadCartByUserID(@PathVariable String id, HttpServletRequest request,
 			HttpServletResponse response) {
-		ModelAndView mv = new ModelAndView("user/cart");
+		ModelAndView mv = new ModelAndView("user/cart-user");
 
 		cartService = new CartService();
 		color_sizeService = new Color_sizeService();
 		colorService = new ColorService();
 		userService = new UserService();
 
-//		String plus = String.valueOf(request.getParameter("plus"));
-//		String size = String.valueOf(request.getParameter("size"));
+		String plus = request.getParameter("plus");
+//		String size = request.getParameter("size");
 //		String color = String.valueOf(request.getParameter("color"));
-//		String minus = String.valueOf(request.getParameter("minus"));
-//		String remove = String.valueOf(request.getParameter("remove"));
-//		String del_prod = String.valueOf(request.getParameter("deleleProduct"));
-//		String checkedAll = String.valueOf(request.getParameter("checkedAll"));
-//		String totalmoney = String.valueOf(request.getParameter("totalmoney"));
-//		String addtocart = String.valueOf(request.getParameter("product"));
-//		String continueShop = String.valueOf(request.getParameter("continueShopping"));
+		String minus = request.getParameter("minus");
+		String del_prod = request.getParameter("delete");
 
-		HashMap<Product, Integer> hm = new LinkedHashMap<>();
-		HashMap<Integer, Integer> map_color = null;
-		HashMap<String, Integer> map_size = null;
-		String sColor = "", sSize = "";
-		List<Cart> li = cartService.getAllCart();
-		for (Cart cart : li) {
-			if (cart.getUser().getId() == Integer.parseInt(id)) {
-				hm.put(cart.getColor_size().getProd(), cart.getpQuantity());
-				sColor += cart.getColor_size().getColor().getId() + "_" + cart.getColor_size().getProd().getId() + "/";
-				sSize += cart.getColor_size().getSize().getId() + "_" + cart.getColor_size().getColor().getId() + "_"
-						+ cart.getColor_size().getProd().getId() + "/";
-
+		if(plus != null) {
+			if(cartService.plus_product_in_cart_by_cart_id(Integer.parseInt(plus))) { 
+				System.out.println("plus: "+ plus);
+			}
+ 		}
+		if(minus != null) {
+			if(cartService.minus_product_in_cart_by_cart_id(Integer.parseInt(minus))) { 
+				System.out.println("minus: "+ minus);
+			}
+		}	
+		if(del_prod != null) {
+			if(cartService.delete_cart_by_cart_id(Integer.parseInt(del_prod))) { 
+				System.out.println("delete: "+ del_prod);
 			}
 		}
-
-		map_color = cartService.getProd_Color_Size(sColor);
-		map_size = cartService.getProd_Color_Sizes(sSize);
-
-		mv.addObject("listSize", map_size);
-		mv.addObject("listColor", map_color);
-
+		// information to display in cart
+		List<Cart> li = cartService.getAllCart();
+		List<Cart> li_c = new ArrayList<>();
+		for (Cart cart : li) {
+			if (cart.getUser().getId() == Integer.parseInt(id)) {
+				li_c.add(cart);
+			}
+		}
+		if(li_c.size() > 0) {
+			mv.addObject("cart", li_c);
+		}
 		if (!colorService.getAllColor().isEmpty()) {
 			mv.addObject("listAllColor", colorService.getAllColor());
-		}
-		if (!hm.isEmpty()) {
-			mv.addObject("listProd", hm);
 		}
 		if (!color_sizeService.getCS().isEmpty()) {
 			mv.addObject("hmProd_Color_Size", color_sizeService.getCS());
 		}
-
-		mv.addObject("userID", id);
+		
+		int id_ = Integer.parseInt(id);
+		
+		mv.addObject("userID", id_);
+		mv.addObject("user_id", id_);
 		mv.addObject("avatar", userService.getAvatarByUserID(Integer.parseInt(id)));
 		return mv;
 	}

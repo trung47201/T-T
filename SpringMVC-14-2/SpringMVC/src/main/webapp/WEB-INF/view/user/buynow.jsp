@@ -318,7 +318,7 @@
 							</c:forEach>
 						</div>
 					</div>
-					<c:if test="${ size != null }">
+					<c:if test="${ size != null && size != '' }">
 						<div class="size-product-details">
 							<div class="fit-guide-size">
 								<p>Size</p>
@@ -364,7 +364,7 @@
 							</c:forEach>
 						</div>
 					</c:if>
-					<c:if test="${ size == null }">
+					<c:if test="${ size == null || size == '' }">
 						<div class="size-product-details">
 							<div class="fit-guide-size">
 								<p>Size</p>
@@ -413,11 +413,11 @@
 					<div class="amount-checkout">
 						<input class="minus-plus" type="button" name="" id="minus1"
 							onclick="amount(this)" value="-">
-						<c:if test="${ quantity != null }">
+						<c:if test="${ quantity != null &&  quantity != ''}">
 							<input class="input_Id" type="text" name="quantity"
 								id="input_Id1" value="${ quantity }" readonly>
 						</c:if>
-						<c:if test="${ quantity == null }">
+						<c:if test="${ quantity == null || quantity == ''}">
 							<input class="input_Id" type="text" name="quantity"
 								id="input_Id1" value="1" readonly>
 						</c:if>

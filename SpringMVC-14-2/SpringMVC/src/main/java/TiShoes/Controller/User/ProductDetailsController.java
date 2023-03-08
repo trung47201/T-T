@@ -70,8 +70,13 @@ public class ProductDetailsController {
 		
 		mv.addObject("averageRating", productService.averageRating(Integer.parseInt(id_prod)));
 		mv.addObject("product", productService.getProduct(Integer.parseInt(id_prod)));
-		mv.addObject("userID", id_user);
+		
+		if(id_user != null) {
+			mv.addObject("userID", Integer.parseInt(id_user));
+		}
+		
 		mv.addObject("avatar", userService.getAvatarByUserID(Integer.parseInt(id_user)));
+		mv.addObject("user_prod", user_prod);
 		
 		return mv;
 	}

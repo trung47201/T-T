@@ -46,7 +46,7 @@ public class CartService implements CartRepository {
 				role.setDescription(rs.getString("description"));
 				role.setCreated_at(rs.getDate("created_at"));
 				role.setUpdated_at(rs.getDate("updated_at"));
-				
+
 				user.setId(rs.getInt("user_id"));
 				user.setFullname(rs.getString("fullname"));
 				user.setEmail(rs.getString("email"));
@@ -57,7 +57,7 @@ public class CartService implements CartRepository {
 				user.setRole(role);
 
 				cart.setId(rs.getInt("id"));
-				cart.setpQuantity(rs.getInt("quantity"));
+				cart.setQuantity(rs.getInt("quantity"));
 				cart.setColor_size(color_sizeService.getByIdCS(rs.getInt("color_size_id")));
 				cart.setUser(user);
 				cart.setCreated_at(rs.getDate("created_at"));
@@ -184,10 +184,10 @@ public class CartService implements CartRepository {
 		for (int i = 0; i < arr.length; i++) {
 			if (!arr[i].equals("null")) {
 				String arr1[] = arr[i].split("_");
-				if(arr1.length > 1) {
+				if (arr1.length > 1) {
 					map.put(Integer.parseInt(arr1[1]), Integer.parseInt(arr1[0]));
 				} else {
-					if(!arr1[0].equals("")) {
+					if (!arr1[0].equals("")) {
 						map.put(1, Integer.parseInt(arr1[0]));
 					}
 				}
@@ -202,10 +202,10 @@ public class CartService implements CartRepository {
 		for (int i = 0; i < arr.length; i++) {
 			if (!arr[i].equals("null")) {
 				String arr1[] = arr[i].split("_");
-				if(arr1.length > 2) {
+				if (arr1.length > 2) {
 					map.put(arr1[1] + "_" + arr1[2], Integer.parseInt(arr1[0]));
 				}
-				
+
 			}
 		}
 		return map;
@@ -297,8 +297,83 @@ public class CartService implements CartRepository {
 		return false;
 	}
 
+	public boolean plus_product_in_cart_by_cart_id(int id) {
+		try {
+			connectService = new ConnectService();
+			Connection conn = connectService.getConnect();
+			String query = "UPDATE `cart` SET `quantity`= `quantity` + 1 WHERE id = ?";
+			PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(query);
+			preparedStmt.setInt(1, id);
+			preparedStmt.executeUpdate();
+			conn.close();
+			return true;
+		} catch (Exception e) {
+			System.err.println("Got an exception!");
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		return false;
+	}
+
+	public boolean minus_product_in_cart_by_cart_id(int id) {
+		try {
+			connectService = new ConnectService();
+			Connection conn = connectService.getConnect();
+			if (get_quantity_by_cart_id(id) > 1) {
+				String query = "UPDATE `cart` SET `quantity`= `quantity` - 1 WHERE id = ?";
+				PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(query);
+				preparedStmt.setInt(1, id);
+				preparedStmt.executeUpdate();
+				conn.close();
+				return true;
+			} else {
+				if(delete_cart_by_cart_id(id)) {
+					return true;
+				}
+			}
+
+		} catch (Exception e) {
+			System.err.println("Got an exception!");
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		return false;
+	}
+
+	public boolean delete_cart_by_cart_id(int id) {
+		try {
+			connectService = new ConnectService();
+			Connection conn = connectService.getConnect();
+
+			String query = "DELETE FROM `cart` WHERE id = ?";
+			PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(query);
+			preparedStmt.setInt(1, id);
+			preparedStmt.executeUpdate();
+			conn.close();
+			return true;
+
+		} catch (Exception e) {
+			System.err.println("Got an exception!");
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		return false;
+	}
+
+	public int get_quantity_by_cart_id(int id) {
+		int rs = 0;
+		List<Cart> li = getAllCart();
+		for (Cart cart : li) {
+			if (cart.getId() == id) {
+				rs = cart.getQuantity();
+			}
+		}
+		return rs;
+	}
+
 	public static void main(String[] args) {
-//		CartService c = new CartService();
+		CartService c = new CartService();
 //		c.insertIntoCartDB(1, 1, 3);
+c.delete_cart_by_cart_id(7);
 	}
 }

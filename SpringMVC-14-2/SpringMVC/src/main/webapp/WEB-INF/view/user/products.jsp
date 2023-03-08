@@ -510,12 +510,7 @@
 														src="<c:url value="/assets/images/icons/addcart32.png"/>"
 														alt="addcart32">
 												</button>
-
-												<button class="buy-now" class="shadow-1">
-													<a
-														href="/SpringMVC/cart/checkout?177627f91af678a9b03e993f1a91917f&id_prod=${ listProd.id }">Buy
-														now</a>
-												</button>
+												<button class="buy-now" class="shadow-1" id="${ listProd.id }">Buy now</button>
 											</div>
 										</div>
 									</div>
@@ -581,11 +576,7 @@
 													src="<c:url value="/assets/images/icons/addcart32.png"/>"
 													alt="addcart32">
 											</button>
-											<button class="buy-now" class="shadow-1">
-												<a
-													href="/SpringMVC/cart/checkout?177627f91af678a9b03e993f1a91917f&id_prod=${ listProd.id }">Buy
-													now</a>
-											</button>
+											<button class="buy-now" class="shadow-1" id="${ listProd.id }">Buy now</button>
 										</div>
 									</div>
 								</div>
@@ -653,11 +644,7 @@
 										alt="addcart32">
 								</button>
 
-								<button class="buy-now" class="shadow-1">
-									<a
-										href="/SpringMVC/cart/checkout?177627f91af678a9b03e993f1a91917f&id_prod=${ listProd.id }">Buy
-										now</a>
-								</button>
+								<button class="buy-now" class="shadow-1" id="${ listProd.id }">Buy now</button>
 							</div>
 						</div>
 					</div>
@@ -707,6 +694,104 @@
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+		<script> // add to cart
+		var id_user = "";
+		if(${ userID != null }) {
+			id_user = "${ userID }";
+		}
+		if(id_user != "") {
+			$(".add-to-cart").click(function() {
+				var id_prod = $(this).val();
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET",
+						"http://localhost:8888/SpringMVC/add-to-cart/"+id_user+"_"+id_prod);
+				xhr.onload = function() {
+					window.location.assign("http://localhost:8888/SpringMVC/cart/"+id_user);
+				};
+				xhr.send();
+			});
+			$(".add-to-cart-effect").click(function() {
+				var id_prod = $(this).val();
+				xhr.open("GET",
+						"http://localhost:8888/SpringMVC/add-to-cart/"+id_user+"_"+id_prod);
+				xhr.onload = function() {
+					window.location.assign("http://localhost:8888/SpringMVC/cart/"+id_user);
+				};
+			});
+		} else {
+			$(".add-to-cart").click(function() {
+				var id_prod = $(this).val();
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET",
+						"http://localhost:8888/SpringMVC/add-to-cart/"+id_prod);
+				xhr.onload = function() {
+					window.location.assign("http://localhost:8888/SpringMVC/cart");
+				};
+				xhr.send();
+			});
+			$(".add-to-cart-effect").click(function() {
+				var id_prod = $(this).val();
+				xhr.open("GET",
+						"http://localhost:8888/SpringMVC/add-to-cart/"+id_prod);
+				xhr.onload = function() {
+					window.location.assign("http://localhost:8888/SpringMVC/cart");
+				};
+			});
+		}
+	</script>
+
+	<script> // buy now
+		var id_user = "";
+		if(${ userID != null }) {
+			id_user = "${ userID }";
+		}
+		if(id_user != "") {
+			$(".buy-now").click(function(e) {
+				var id_prod = e.target.id;
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET",
+						"http://localhost:8888/SpringMVC/cart/checkout/"+id_user+"_"+id_prod);
+				xhr.onload = function() {
+					window.location.assign("http://localhost:8888/SpringMVC/cart/checkout/"+id_user+"_"+id_prod);
+				};
+				xhr.send();
+			});
+			
+			$(".buy-effect").click(function(e) {
+				var id_prod = e.target.id;
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET",
+						"http://localhost:8888/SpringMVC/cart/checkout/"+id_user+"_"+id_prod);
+				xhr.onload = function() {
+					window.location.assign("http://localhost:8888/SpringMVC/cart/checkout/"+id_user+"_"+id_prod);
+				};
+				xhr.send();
+			});
+		} else {
+			$(".buy-now").click(function(e) {
+				var id_prod = e.target.id;
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET",
+						"http://localhost:8888/SpringMVC/cart/checkout/"+id_prod);
+				xhr.onload = function() {
+					window.location.assign("http://localhost:8888/SpringMVC/cart/checkout/"+id_prod);
+				};
+				xhr.send();
+			});
+			
+			$(".buy-effect").click(function(e) {
+				var id_prod = e.target.id;
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET",
+						"http://localhost:8888/SpringMVC/cart/checkout/"+id_prod);
+				xhr.onload = function() {
+					window.location.assign("http://localhost:8888/SpringMVC/cart/checkout/"+id_prod);
+				};
+				xhr.send();
+			});
+		}
+	</script>
 
 	<script type="text/javascript">
 		//search

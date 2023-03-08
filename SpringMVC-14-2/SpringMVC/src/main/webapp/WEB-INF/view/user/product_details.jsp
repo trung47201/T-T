@@ -117,6 +117,7 @@
 									<c:forEach var="liSizeByColor"  items="${ liSize.value }" varStatus="indexS">
 										<c:if test="${ indexS.getIndex() == 0 }">
 											<span class="select-size selected-color" id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span> 
+											<input type="hidden" name="size" id="size" value="${ liSizeByColor.size.id }">
 										</c:if>
 										<c:if test="${ indexS.getIndex() != 0 }">
 											<span class="select-size" id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span> 
@@ -137,18 +138,19 @@
 								</div>
 							</c:if>
 						</c:forEach>
+						
 					</div>
 					<div class="amount-product-details">
 						<input class="minus-plus" type="button" name="" id=""
 							onclick="amount(this)" value="-"> <input
 							class="input_amount" type="text" name="input_amount"
-							id="input_amount" value="1"> <input class="minus-plus"
+							id="input_amount" value="1" readonly> <input class="minus-plus"
 							type="button" name="" id="" onclick="amount(this)" value="+">
 					</div>
 					<div class="btn-add-buy">
 						<div class="btn-add-to-cart">
 							<input type="button" name="" id="add-to-cart-input"
-								value="Add to cart" onclick="addtocart()">
+								value="Add to cart">
 						</div>
 						<div class="btn-buy-now btn-add-to-cart-effect">
 							<input type="button" name="" id="buy-now-input" value="Buy now" onclick="buynow()">
@@ -349,6 +351,10 @@
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		
 	<script type="text/javascript">
+	var user_prod = "";
+	if(${ user_prod != null }) {
+		user_prod = "${ user_prod }";
+	}
 	function buynow () {
 		var size = document.getElementsByClassName("select-size");
 		var amount = document.getElementById("input_amount").value;
@@ -361,44 +367,108 @@
 		if (txt_size == "") {
 			alert("You haven't chosen a size yet");
 		} else {
-			const myarr = txt_size.split("_");
-			var xhr = new XMLHttpRequest();
-	      	xhr.open("GET", "http://localhost:8888/SpringMVC/cart/checkout?id_prod="+myarr[0]+"&id_color="+myarr[1]+"&id_size="+myarr[2]);
-	      	xhr.onload = function () { 
-	      		window.location.assign("http://localhost:8888/SpringMVC/cart/checkout?id_prod="+myarr[0]+"&id_color="+myarr[1]+"&id_size="+myarr[2]);
-	      	};
-	      	xhr.send();
-		}
-	}
-	function addtocart () {
-		var size = document.getElementsByClassName("select-size");
-		var amount = document.getElementById("input_amount").value;
-		var txt_size = "";
-		for (let i=0; i<size.length; i++) {
-			if (size[i].className == "select-size selected-color") {
-				txt_size = size[i].id;
+			if(user_prod != "") {
+				const myarr = txt_size.split("_");
+				var xhr = new XMLHttpRequest();
+		      	xhr.open("GET", "");
+		      	xhr.onload = function () {
+		      		var val = document.getElementById("size").value;
+		      		var quantity = document.getElementById("input_amount").value;
+		      		if(val != null || quantity != null) {
+		      			window.location.assign("http://localhost:8888/SpringMVC/cart/checkout/"+user_prod + "?size="+val + "&quantity="+quantity);
+		      		} else {
+		      			window.location.assign("http://localhost:8888/SpringMVC/cart/checkout/"+user_prod);
+		      		}
+		      	};
+		      	xhr.send();
+			} else {
+				const myarr = txt_size.split("_");
+				var xhr = new XMLHttpRequest();
+		      	xhr.open("GET", "");
+		      	xhr.onload = function () { 
+		      		window.location.assign("http://localhost:8888/SpringMVC/cart/checkout?id_prod="+myarr[0]+"&id_color="+myarr[1]+"&id_size="+myarr[2]);
+		      	};
+		      	xhr.send();
 			}
-		}
-		if (txt_size == "") {
-			alert("You haven't chosen a size yet");
-		} else {
-			var xhr = new XMLHttpRequest();
-	      	xhr.open("GET", "http://localhost:8888/SpringMVC/cart?product="+txt_size);
-	      	xhr.onload = function () { 
-	      		window.location.assign("http://localhost:8888/SpringMVC/cart");
-	      	};
-	      	xhr.send();
+			
 		}
 	}
+	
 	</script>
-		
-	<script type="text/javascript">
+	
+	
+	<c:if test="${ userID != null }">
+		<c:set var="id_user" value="${ userID }"></c:set>
+	</c:if>
+	
+	
+	<script> // add to cart
+		var id_user = "";
+		var id_prod = "";
+		var user_prod = "";
+		if(${ user_prod != null }) {
+			user_prod = "${ user_prod }";
+			id_user = user_prod.split("_")[0];
+		}
+		if(${ product != null }) {
+			id_prod = "${ product.id }";
+		}
+		if(id_user != "") {
+			$("#add-to-cart-input").click(function() {
+				var id_prod = $(this).val();
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET",
+						"http://localhost:8888/SpringMVC/add-to-cart/"+id_user+"_"+id_prod);
+				xhr.onload = function() {
+					window.location.assign("http://localhost:8888/SpringMVC/cart/"+id_user);
+				};
+				xhr.send();
+			});
+		} else {
+			$("#add-to-cart-input").click(function() {
+				var id_prod = $(this).val();
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET",
+						"http://localhost:8888/SpringMVC/add-to-cart/"+id_prod);
+				xhr.onload = function() {
+					window.location.assign("http://localhost:8888/SpringMVC/cart/"+id_user);
+				};
+				xhr.send();
+				
+					var size = document.getElementsByClassName("select-size");
+					var amount = document.getElementById("input_amount").value;
+					var txt_size = "";
+					for (let i=0; i<size.length; i++) {
+						if (size[i].className == "select-size selected-color") {
+							txt_size = size[i].id;
+						}
+					}
+					if (txt_size == "") {
+						alert("You haven't chosen a size yet");
+					} else {
+						var xhr = new XMLHttpRequest();
+				      	xhr.open("GET", "http://localhost:8888/SpringMVC/cart?product="+txt_size);
+				      	xhr.onload = function () { 
+				      		window.location.assign("http://localhost:8888/SpringMVC/cart");
+				      	};
+				      	xhr.send();
+					}
+				
+			});
+		}
+	</script>
+	<script type="text/javascript"> <!-- select size  -->
 		var sizes = document.getElementsByClassName("select-size");
 		$(document).ready(function() {
 			$(".select-size").click(function() {
 				for (let i=0; i<sizes.length; i++) {
 					if (sizes[i].id == this.id) {
 						$(this).addClass("selected-color");
+						var txt = this.id;
+						const arr = txt.split("_");
+						if (arr.length > 1) {
+							document.getElementById("size").value = arr[2];
+						}
 					} else {
 						$(sizes[i]).removeClass("selected-color");
 					}
@@ -407,7 +477,7 @@
 			});
 		});
 	</script>
-	<script type="text/javascript">
+	<script type="text/javascript"> <!-- select color  -->
 		var size = document.getElementsByClassName("list-size-product-details");
 		var color = document.getElementsByClassName("select-color");
 		var sizes = document.getElementsByClassName("select-size");

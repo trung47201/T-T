@@ -5,7 +5,7 @@ import java.sql.Date;
 public class Cart {
 	private int id;
 	private Color_size color_size;
-	private int pQuantity;
+	private int Quantity;
 	private User user;
 	private Date created_at;
 	private Date updated_at;
@@ -19,11 +19,12 @@ public class Cart {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getpQuantity() {
-		return pQuantity;
+	
+	public int getQuantity() {
+		return Quantity;
 	}
-	public void setpQuantity(int pQuantity) {
-		this.pQuantity = pQuantity;
+	public void setQuantity(int quantity) {
+		Quantity = quantity;
 	}
 	public Color_size getColor_size() {
 		return color_size;

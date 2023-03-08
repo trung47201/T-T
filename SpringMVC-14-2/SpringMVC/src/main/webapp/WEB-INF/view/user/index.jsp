@@ -653,7 +653,7 @@
 				xhr.open("GET",
 						"http://localhost:8888/SpringMVC/add-to-cart/"+id_prod);
 				xhr.onload = function() {
-					window.location.assign("http://localhost:8888/SpringMVC/cart/"+id_user);
+					window.location.assign("http://localhost:8888/SpringMVC/cart");
 				};
 				xhr.send();
 			});
@@ -662,7 +662,7 @@
 				xhr.open("GET",
 						"http://localhost:8888/SpringMVC/add-to-cart/"+id_prod);
 				xhr.onload = function() {
-					window.location.assign("http://localhost:8888/SpringMVC/cart/"+id_user);
+					window.location.assign("http://localhost:8888/SpringMVC/cart");
 				};
 			});
 		}
