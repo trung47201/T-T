@@ -43,21 +43,38 @@ public class CartController {
 		userService = new UserService();
 
 		String plus = request.getParameter("plus");
-//		String size = request.getParameter("size");
-//		String color = String.valueOf(request.getParameter("color"));
+		String size = request.getParameter("size");
+		String color = request.getParameter("color");
 		String minus = request.getParameter("minus");
 		String del_prod = request.getParameter("delete");
+		String delete = request.getParameter("minusdelete");
 
+		if(size != null) {
+			if(cartService.update_size_in_cart_by_string(size)) {
+				System.out.println("size: "+size);
+			}
+ 		}
+		
+		if(color != null) {
+			if(cartService.update_color_in_cart_by_string(color)) {
+				System.out.println("color: "+color);
+			}
+ 		}
+		
 		if(plus != null) {
 			if(cartService.plus_product_in_cart_by_cart_id(Integer.parseInt(plus))) { 
 				System.out.println("plus: "+ plus);
 			}
  		}
-		if(minus != null) {
+		if(minus != null && delete == null) {
 			if(cartService.minus_product_in_cart_by_cart_id(Integer.parseInt(minus))) { 
 				System.out.println("minus: "+ minus);
 			}
-		}	
+		} else if (minus != null && delete != null) {
+			if(cartService.minus_product_in_cart_by_cart_id(Integer.parseInt(minus))) { 
+				System.out.println("minus: "+ minus);
+			}
+		}
 		if(del_prod != null) {
 			if(cartService.delete_cart_by_cart_id(Integer.parseInt(del_prod))) { 
 				System.out.println("delete: "+ del_prod);

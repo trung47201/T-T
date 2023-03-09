@@ -35,7 +35,7 @@ public class OrderService implements OrderRepository {
 			stmt = (Statement) con.createStatement();
 			ResultSet rs = stmt
 					.executeQuery("select * from order_ " + "Inner join voucher on order_.voucher_id = voucher.id "
-							+ "Inner join status on order_.status_id = status.id ");
+							+ "Inner join status on order_.status_id = status.id order by order_.id");
 			while (rs.next()) {
 				order_ = new Order_();
 				voucher = new Voucher();
@@ -86,21 +86,21 @@ public class OrderService implements OrderRepository {
 			connectService = new ConnectService();
 			md5Service = new MD5Service();
 			Connection conn = connectService.getConnect();
-			
-			if(!md5Service.decodeText(fullname).equals("")) {
+
+			if (!md5Service.decodeText(fullname).equals("")) {
 				fullname = md5Service.decodeText(fullname);
 			}
-			if(!md5Service.decodeText(address).equals("")) {
+			if (!md5Service.decodeText(address).equals("")) {
 				address = md5Service.decodeText(address);
 			}
-			if(!md5Service.decodeText(note).equals("")) {
+			if (!md5Service.decodeText(note).equals("")) {
 				note = md5Service.decodeText(note);
 			}
-			if(!md5Service.decodeText(method).equals("")) {
+			if (!md5Service.decodeText(method).equals("")) {
 				method = md5Service.decodeText(method);
 			}
 			String sql = "INSERT INTO `order_`(`fullname`, `email`, `phone_number`, `address`, `order_date`, `updated_at`, `voucher_id`, `note`, `status_id`, `method`, `bill`, `discount_at`) "
-					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
 			preparedStmt.setString(1, fullname);
 			preparedStmt.setString(2, email);
@@ -113,7 +113,7 @@ public class OrderService implements OrderRepository {
 			preparedStmt.setInt(9, 1);
 			preparedStmt.setString(10, method);
 			preparedStmt.setString(11, get_invoice_code());
-			preparedStmt.setDouble(12,  discount_at);
+			preparedStmt.setDouble(12, discount_at);
 			preparedStmt.execute();
 			conn.close();
 			return true;
@@ -127,25 +127,25 @@ public class OrderService implements OrderRepository {
 		}
 		return false;
 	}
-	
-	public boolean insertIntoOrder_not_login(String fullname, String email, String phone_number, String address, int voucher_id,
-			String note, String method) {
+
+	public boolean insertIntoOrder_not_login(String fullname, String email, String phone_number, String address,
+			int voucher_id, String note, String method) {
 		try {
 			java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
 			connectService = new ConnectService();
 			md5Service = new MD5Service();
 			Connection conn = connectService.getConnect();
-			
-			if(!md5Service.decodeText(fullname).equals("")) {
+
+			if (!md5Service.decodeText(fullname).equals("")) {
 				fullname = md5Service.decodeText(fullname);
 			}
-			if(!md5Service.decodeText(address).equals("")) {
+			if (!md5Service.decodeText(address).equals("")) {
 				address = md5Service.decodeText(address);
 			}
-			if(!md5Service.decodeText(note).equals("")) {
+			if (!md5Service.decodeText(note).equals("")) {
 				note = md5Service.decodeText(note);
 			}
-			if(!md5Service.decodeText(method).equals("")) {
+			if (!md5Service.decodeText(method).equals("")) {
 				method = md5Service.decodeText(method);
 			}
 			String sql = "INSERT INTO `order_`(`fullname`, `email`, `phone_number`, `address`, `order_date`, `updated_at`, `voucher_id`, `note`, `status_id`, `method`, `bill`) "
@@ -177,8 +177,12 @@ public class OrderService implements OrderRepository {
 	}
 
 	public int getLastOrderId() {
-		int size = getAllOrder().size();
-		int order_id = getAllOrder().get(size - 1).getId();
+		List<Order_> li = getAllOrder();
+		int order_id = 0;
+		for (Order_ o : li) {
+			order_id = o.getId();
+			System.out.println(o.getId());
+		}
 		return order_id;
 	}
 
@@ -210,7 +214,7 @@ public class OrderService implements OrderRepository {
 		}
 		return od;
 	}
-	
+
 	public int get_voucher_discount_by_order_id(int order_id) {
 		Order_ od = get_all_order_by_order_id(order_id);
 		return od.getVoucher().getVcdiscount();
@@ -254,30 +258,56 @@ public class OrderService implements OrderRepository {
 		return li;
 	}
 
-	
 	public int get_order_id_by(String phone, String email) {
 		List<Order_> li = getAllOrder();
 		int od = 0;
 		for (Order_ o : li) {
-			if(o.getStatus().getId() == 1) {
+			if (o.getStatus().getId() == 1) {
 				od = o.getId();
 			}
 		}
 		return od;
 	}
-	
+
+	public boolean check_voucher_used_by_user_id(int id, String code) {
+		userService = new UserService();
+		User u = userService.get_user_by_id(id);
+		List<Order_> li = getAllOrder();
+		for (Order_ o : li) {
+			if (o.getPhone_number().equals(u.getPhone_number().trim()) && o.getEmail().equals(u.getEmail().trim())
+					&& o.getVoucher().getCode().trim().equals(code.trim())) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	public int get_status_id_by_order_id(int order_id) {
 		List<Order_> o = getAllOrder();
-		int status_id = 0; 
+		int status_id = 0;
 		for (Order_ ord : o) {
-			if(ord.getId() == order_id) {
+			if (ord.getId() == order_id) {
 				status_id = ord.getStatus().getId();
 			}
 		}
 		return status_id;
 	}
 	
+	public int get_last_order_id_by(String phone_number, String email) {
+		List<Order_> o = getAllOrder();
+		int id = 0;
+		for (Order_ ord : o) {
+			if (ord.getEmail().trim().equals(email.trim()) && ord.getPhone_number().trim().equals(phone_number.trim())) {
+				id = ord.getId();
+			}
+		}
+		return id;
+	}
+
 	public static void main(String[] args) {
+		OrderService c = new OrderService();
+		System.out.println(c.check_voucher_used_by_user_id(4, "TISHOESTET2023"));
+
 	}
 
 }

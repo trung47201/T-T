@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.mysql.jdbc.PreparedStatement;
@@ -327,7 +328,7 @@ public class CartService implements CartRepository {
 				conn.close();
 				return true;
 			} else {
-				if(delete_cart_by_cart_id(id)) {
+				if (delete_cart_by_cart_id(id)) {
 					return true;
 				}
 			}
@@ -371,9 +372,104 @@ public class CartService implements CartRepository {
 		return rs;
 	}
 
+	public boolean update_color_in_cart_by_string(String s) { // string = "{colorid}_{prodid}_{cartid}"
+		try {
+			connectService = new ConnectService();
+			Connection conn = connectService.getConnect();
+			color_sizeService = new Color_sizeService();
+			String arr[] = s.split("_");
+			int size_id = 0;
+			int color_id = 0;
+			int prod_id = 0;
+			int cart_id = 0;
+			int color_size_id = 0;
+			if (arr.length > 1) {
+				color_id = Integer.parseInt(arr[0]);
+				prod_id = Integer.parseInt(arr[1]);
+				cart_id = Integer.parseInt(arr[2]);
+				size_id = color_sizeService.firstSizeId(prod_id, color_id);
+				color_size_id = color_sizeService.get_Color_size_id(size_id, color_id, prod_id);
+			}
+
+			String query = "UPDATE `cart` SET `color_size_id`= ? WHERE id = ?";
+			PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(query);
+			preparedStmt.setInt(1,color_size_id);
+			preparedStmt.setInt(2, cart_id);
+			preparedStmt.executeUpdate();
+			conn.close();
+			return true;
+		} catch (Exception e) {
+			System.err.println("Got an exception!");
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		return false;
+	}
+	
+	public boolean update_size_in_cart_by_string(String s) { // string = "{sizeid}_{colorid}_{prodid}_{cartid}"
+		try {
+			connectService = new ConnectService();
+			Connection conn = connectService.getConnect();
+			color_sizeService = new Color_sizeService();
+			String arr[] = s.split("_");
+			int size_id = 0;
+			int color_id = 0;
+			int prod_id = 0;
+			int cart_id = 0;
+			int color_size_id = 0;
+			if (arr.length > 2) {
+				size_id = Integer.parseInt(arr[0]);
+				color_id = Integer.parseInt(arr[1]);
+				prod_id = Integer.parseInt(arr[2]);
+				cart_id = Integer.parseInt(arr[3]);
+				color_size_id = color_sizeService.get_Color_size_id(size_id, color_id, prod_id);
+			}
+			String query = "UPDATE `cart` SET `color_size_id`= ? WHERE id = ?";
+			PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(query);
+			preparedStmt.setInt(1,color_size_id);
+			preparedStmt.setInt(2, cart_id);
+			preparedStmt.executeUpdate();
+			conn.close();
+			return true;
+		} catch (Exception e) {
+			System.err.println("Got an exception!");
+			e.printStackTrace();
+			System.out.println(e);
+		}
+		return false;
+	}
+	
+	public Cart get_cart_by_cart_id(int id) {
+		List<Cart> liAll = getAllCart();
+		for (Cart c : liAll) {
+			if(c.getId() == id) {
+				return c;
+			}
+		}
+		return null;
+	}
+	
+	public List<Cart> get_all_cart_by_string(String id) { // string = {cartid}_{cartid}_{cartid} ...
+		List<Cart> li = new LinkedList<>();
+		String arr[] = id.split("_");
+		if(arr.length > 0) {
+			for (String s : arr) {
+				if(s != null) {
+					li.add(get_cart_by_cart_id(Integer.parseInt(s)));
+				}
+			}
+		}
+		return li;
+	}
+
 	public static void main(String[] args) {
 		CartService c = new CartService();
 //		c.insertIntoCartDB(1, 1, 3);
-c.delete_cart_by_cart_id(7);
+		
+		List<Cart> li = c.get_all_cart_by_string("5_6");
+		for (Cart cart : li) {
+			System.out.println(cart.getId() + "="+cart.getUser().getId());
+		}
+		
 	}
 }

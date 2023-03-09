@@ -352,6 +352,17 @@ display: none;
 		</div>
 
 	</form>
+	
+	<script type="text/javascript">
+		if (window.performance && window.performance.navigation.type == window.performance.navigation.TYPE_BACK_FORWARD) {
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", "");
+			xhr.onload = function() {
+				window.location.assign("http://localhost:8888/SpringMVC/");
+			};
+			xhr.send();
+		}
+	</script>
 
 	<script src="js/login.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

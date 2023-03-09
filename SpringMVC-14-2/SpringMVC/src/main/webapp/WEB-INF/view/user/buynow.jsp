@@ -829,6 +829,7 @@
 			}
 		});
 	</script>
+	
 	<script type="text/javascript"> //message voucher status
 		if(${vcstatus != null}) {
 			var status = "${ vcstatus }";
@@ -854,6 +855,11 @@
 					var error = "Sorry! Voucher is only applicable for orders of ${ applyfor } or more.";
 					$("#content-msg-notify").text(error);
 				}
+			}
+			if(status == "used" ) {
+				$("#wrapper").removeClass("importantNone");
+				$("#message-notify").removeClass("none");
+				$("#content-msg-notify").text("Sorry! You have used this voucher.");
 			}
 		}
 	</script>

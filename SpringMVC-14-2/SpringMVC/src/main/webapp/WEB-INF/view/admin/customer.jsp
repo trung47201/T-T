@@ -21,6 +21,18 @@
 <link rel="stylesheet" href="<c:url value='/assets/css/customer.css'/>">
 <link rel="stylesheet" href="<c:url value='/assets/css/admin-login.css'/>">
 
+<style>
+* {
+font-family: unset !important;
+}
+img.eye-show-hide, img.eye-show-hide-pw {
+    right: 7% !important;
+}
+.sl-role {
+    width: 97.7% !important;
+}
+</style>
+
 <body>
 <jsp:include page="../layouts/admin/login.jsp"></jsp:include>
 	<jsp:include page="../layouts/admin/header.jsp"></jsp:include>

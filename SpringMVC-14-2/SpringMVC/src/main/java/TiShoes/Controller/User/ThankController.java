@@ -12,10 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import TiShoes.Model.Color;
+import TiShoes.Model.Order_;
+import TiShoes.Model.Order_details;
 import TiShoes.Model.Product;
 import TiShoes.Model.Sizes;
 import TiShoes.Service.User.CheckoutService;
 import TiShoes.Service.User.ColorService;
+import TiShoes.Service.User.OrderService;
+import TiShoes.Service.User.Order_detailsService;
 import TiShoes.Service.User.ProductService;
 import TiShoes.Service.User.SizeService;
 import TiShoes.Service.User.UserService;
@@ -29,6 +33,8 @@ public class ThankController {
 	private ProductService productService;
 	private VoucherService voucherService;
 	private UserService userService;
+	private OrderService orderService;
+	private Order_detailsService order_detailsService;
 	
 	@RequestMapping(value = {"sucess-buynow"})
 	public ModelAndView loadOrder(HttpServletRequest request, HttpServletResponse response){
@@ -137,6 +143,41 @@ public class ThankController {
 		mv.addObject("listSize", li_size);
 		mv.addObject("listAmount", li_amount);
 		mv.addObject("totalPayment", totalPayment);
+		mv.addObject("back_home", "home");
+		
+		return mv;
+	}
+	
+	@RequestMapping(value = {"thank/{id}"})
+	public ModelAndView loadSucessCart_user(@PathVariable String id, HttpServletRequest request, HttpServletResponse response){
+		ModelAndView mv = new ModelAndView("user/thank");
+		
+		orderService = new OrderService();
+		order_detailsService = new Order_detailsService();
+		
+		Order_ o = orderService.get_all_order_by_order_id(Integer.parseInt(id));
+
+		double vch = o.getDiscount_at();
+		String fullname = o.getFullname();
+		String phone_number = o.getPhone_number();
+		String email = o.getEmail();
+		String address = o.getAddress();
+		String note = o.getNote();
+		
+		List<Order_details> li = order_detailsService.get_all_order_details_by_order_id(Integer.parseInt(id));
+		double totalProd = 0;
+		for (Order_details o_details : li) {
+			totalProd += o_details.getPrice_at();
+		}
+		
+		mv.addObject("totalProd", totalProd);
+		mv.addObject("voucher", vch);
+		mv.addObject("listOrder", li);
+		mv.addObject("fullname", fullname);
+		mv.addObject("phone_number", phone_number);
+		mv.addObject("email", email);
+		mv.addObject("address", address);
+		mv.addObject("note", note);
 		mv.addObject("back_home", "home");
 		
 		return mv;

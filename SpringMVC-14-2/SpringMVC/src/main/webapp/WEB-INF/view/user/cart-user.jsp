@@ -21,11 +21,16 @@
 <link rel="stylesheet" href="<c:url value="/assets/css/slide.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/cart.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/home.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/message.css"/>">
 <link rel="stylesheet"
 	href='<c:url value="/assets/css/login-icon.css"/>'>
 <style>
 .size {
 	display: none;
+}
+
+.flex {
+	display: flex;
 }
 </style>
 <body style="color: white;">
@@ -69,12 +74,12 @@
 								<td>
 									<div class="checkbox-cart">
 										<c:if test="${ item.color_size.prod.discount <= 0 }">
-											<input type="checkbox" class="foo" name="foo"
+											<input type="checkbox" class="foo" name="${ item.id }"
 												id="${ item.quantity }"
 												value="${ item.color_size.prod.price }">
 										</c:if>
 										<c:if test="${ item.color_size.prod.discount > 0 }">
-											<input type="checkbox" class="foo" name="foo"
+											<input type="checkbox" class="foo" name="${ item.id }"
 												id="${ item.quantity }"
 												value="${ item.color_size.prod.price - item.color_size.prod.price * item.color_size.prod.discount/100 }">
 										</c:if>
@@ -96,7 +101,7 @@
 														<c:forEach var="colorName" items="${ listAllColor }">
 															<c:if test="${ it_color.key == colorName.id }">
 																<option style="background: ${ colorName.rgb };"
-																	value="${ it_color.key }_${ item.color_size.prod.id }"
+																	value="${ it_color.key }_${ item.color_size.prod.id }_${ item.id }"
 																	<c:if test="${colorName.id==item.color_size.color.id }">
 																			<c:out value="selected"></c:out>
 																	</c:if>>
@@ -110,12 +115,13 @@
 												<c:forEach var="it_color" items="${ it.value }">
 													<c:set var="sKey"
 														value="${ it_color.key }_${ item.color_size.prod.id }"></c:set>
-													<select id="${ it_color.key }_${ item.color_size.prod.id }"
+													<select
+														id="${ it_color.key }_${ item.color_size.prod.id }_${ item.id }"
 														class="size" name="size" onchange="size_select(this)">
 														<option value="" style="display: none;" disabled selected>Choose
 															size</option>
 														<c:forEach var="it_size" items="${ it_color.value }">
-															<option value="${ item.id }_${ it_size.id }"
+															<option value="${ it_size.id }"
 																<c:if test="${ item.color_size.size.id==it_size.id }">
 																	<c:out value="selected"></c:out>
 																</c:if>>
@@ -129,14 +135,18 @@
 									</div>
 									<div class="price-cart">
 										<c:if test="${ item.color_size.prod.discount > 0 }">
-											<div>
+											<div class="flex">
 												$
-												<fmt:formatNumber type="number" maxFractionDigits="2"
-													value="${ item.color_size.prod.price - item.color_size.prod.price * item.color_size.prod.discount/100 }" />
+												<div class="price${ item.id }" id="${ item.color_size.prod.price - item.color_size.prod.price * item.color_size.prod.discount/100 }"><fmt:formatNumber type="number" maxFractionDigits="2"
+														value="${ item.color_size.prod.price - item.color_size.prod.price * item.color_size.prod.discount/100 }" />
+												</div>
 											</div>
 										</c:if>
 										<c:if test="${ item.color_size.prod.discount <= 0 }">
-											<div>$${ item.color_size.prod.price }</div>
+											<div class="flex">
+												$
+												<div class="price${ item.id }" id="${ item.color_size.prod.price }">${ item.color_size.prod.price }</div>
+											</div>
 										</c:if>
 									</div>
 									<div class="amount-cart">
@@ -151,22 +161,23 @@
 									</div>
 									<div class="total-money-cart">
 										<c:if test="${ item.color_size.prod.discount > 0 }">
-											<div>
+											<div class="flex">
 												$
-												<fmt:formatNumber type="number" maxFractionDigits="2"
-													value="${ item.color_size.prod.price * item.quantity - item.color_size.prod.price * item.quantity * item.color_size.prod.discount/100 }" />
+												<div class="total${ item.id }" id="${ item.id }">
+													<fmt:formatNumber type="number" maxFractionDigits="2"
+														value="${ item.color_size.prod.price * item.quantity - item.color_size.prod.price * item.quantity * item.color_size.prod.discount/100 }" />
+												</div>
 											</div>
 										</c:if>
 										<c:if test="${ item.color_size.prod.discount <= 0 }">
-											<div class="total${ item.id }"
-												id="${ item.color_size.prod.price }">$${
-												item.color_size.prod.price * item.quantity }</div>
-
+											<div class="flex">
+												$
+												<div class="total${ item.id }" id="${ item.id }">${ item.color_size.prod.price * item.quantity }</div>
+											</div>
 										</c:if>
 									</div>
 									<div class="del-product-cart">
-										<input type="button" id="del_prod"
-											name="${ item.id }"
+										<input type="button" id="del_prod" name="${ item.id }"
 											value="x" onclick="delete_prod(this)">
 									</div>
 								</td>
@@ -190,8 +201,7 @@
 							id="continue-shopping" value="Continue Shopping">
 					</div>
 					<div class="btn-buy-cart">
-						<input type="button" onclick="checkoutAll(this)"
-							name="checkoutCart" id="checkoutCart" value="Buy">
+						<input type="button" name="checkoutCart" id="checkoutCart" value="Buy">
 					</div>
 				</div>
 			</c:if>
@@ -210,6 +220,27 @@
 			<button id="ok" name="ok" onclick="OK(this)">OK</button>
 		</div>
 	</div>
+	
+	<div class="message msg-order message-notify none" id="message-notify">
+		<h2 class="msg-h2">
+			Message
+			<img alt="" src="<c:url value="/assets/images/icons/icons8-notification-100-msg.png"/>"></h2>
+		<p class="content-msg content-msg-notify"></p>
+		<div class="btn-ok-cancel">
+			<input class="cancel" id="cancel" type="button" value="Cancel"> <input
+				class="ok" id="ok-notify" type="button" value="OK">
+		</div>
+	</div>
+	<div class="message msg-order message-done none" id="message-done">
+		<h2 class="msg-h2">
+			Message
+			<img alt="" src="<c:url value="/assets/images/icons/icons8-notification-100-msg.png"/>"></h2>
+		<p class="content-msg content-msg-done" id="content-msg-done"></p>
+		<div class="btn-ok-cancel">
+			<input
+				class="ok" id="ok-done" type="button" value="OK">
+		</div>
+	</div>
 
 	<!--  FOOTER -->
 	<jsp:include page="../layouts/user/footer.jsp"></jsp:include>
@@ -218,47 +249,100 @@
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-<script type="text/javascript">
-function delete_prod(x) {
-	var url = window.location.href;
-	if (confirm("Are you sure to remove the order from the cart?")) {
-		var xhr = new XMLHttpRequest();
-		xhr.open("GET", url+"?delete="+x.name);
-		// What to do when server responds
-		xhr.onload = function() {
-			window.location.assign(url);
-		};
-		xhr.send();		
+	<script type="text/javascript">
+		var url = window.location.href;
+		$("#checkoutCart").click(function() {
+			var arr = document.querySelectorAll('.checkbox-cart input[type=checkbox]:checked');
+			if(arr.length==0) {
+				$("#message-done").removeClass("none");
+				$("#content-msg-done").text("You must select at least one product for payment.");
+			} else {
+				var process = "";
+				for(let i=0; i<arr.length; i++) {
+					if(i==0) {
+						process += arr[i].name;
+					} else {
+						process += "_" + arr[i].name;
+					}
+				}
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", "");
+				// What to do when server responds
+				xhr.onload = function() {
+					window.location.assign("http://localhost:8888/SpringMVC/cart/checkout-cart/"+process);
+				};
+				xhr.send();
+			}
+		});
+	</script>
+	
+	<script type="text/javascript">
+		$("#ok-done").click(function() {
+			$("#message-done").addClass("none");
+		});
+		$("#cancel").click(function() {
+			$("#message-notify").addClass("none");
+		});
+	</script>
+
+	<script type="text/javascript">
+	function delete_prod(x) {
+		var url = window.location.href;
+		if (confirm("Are you sure to remove the order from the cart?")) {
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", url+"?delete="+x.name);
+			// What to do when server responds
+			xhr.onload = function() {
+				window.location.assign(url);
+			};
+			xhr.send();		
+		}
 	}
-}
-</script>
+	</script>
 
 
 	<script type="text/javascript">
 		$(".foo").click(function() {
 			var total = 0.0;
-			var arr = document.querySelectorAll('input[name="foo"]:checked');
+			var arrQty = document.querySelectorAll('.input_Id');
+			var arr = document.querySelectorAll('.checkbox-cart input[type=checkbox]:checked');
+			var arr1 = document.querySelectorAll('.checkbox-cart input[type=checkbox]');
+			var all = document.querySelector('#checkbox-all');
+			if (arr.length==arr1.length) {
+				all.checked = true;
+			} else {
+				all.checked = false;
+			}
 			for (let i=0; i<arr.length; i++) {
-				total += parseFloat(arr[i].value)*parseFloat(arr[i].id);
-				alert(total);
+				for(let j =0; j<arrQty.length; j++) {
+					if(arrQty[j].name == arr[i].name) {
+						total += parseFloat(arr[i].value)*parseFloat(arrQty[j].value);
+					}
+				}
 			}
 			$("#payment").text(Math.round(total*100)/100);
 			$("#total-count-product-cart").text("("+arr.length+")");
 		});
-		$("#checkbox-all").click(function() {
+		
+		$("#checkbox-all").click(function() { // price check box all
+			var arrQty = document.querySelectorAll('.input_Id');
 			if(this.checked == true) {
-				var arr = document.querySelectorAll('input[name="foo"]');
+				var arr = document.querySelectorAll('.checkbox-cart input[type=checkbox]');
 				for(let i=0; i<arr.length; i++) {
 					arr[i].checked = true;
 				}
 				var total = 0.0;
 				for (let i=0; i<arr.length; i++) {
-					total += parseFloat(arr[i].value)*parseFloat(arr[i].id);
+					for(let j =0; j<arrQty.length; j++) {
+						if(arrQty[j].name == arr[i].name) {
+							total += parseFloat(arr[i].value)*parseFloat(arrQty[j].value);
+						}
+					}
 				}
 				$("#payment").text(Math.round(total*100)/100);
 				$("#total-count-product-cart").text("("+arr.length+")");
 			} else {
-				var arr = document.querySelectorAll('input[name="foo"]');
+				var arr = document.querySelectorAll('.checkbox-cart input[type=checkbox]');
 				for(let i=0; i<arr.length; i++) {
 					arr[i].checked = false;
 				}
@@ -269,42 +353,58 @@ function delete_prod(x) {
 	</script>
 
 	<script type="text/javascript">
+		
 		var url = window.location.href;
 		if(${user_id != null && user_id != ''}) {
 			function amount(x) {
 				var n = document.getElementsByClassName("input_Id");
 				for (let i = 0; i <= n.length; i++) {
 					if (x.id == ("plus" + i)) {
+						//amount interface update when users click plus
 						var input_txt = document.getElementById("input_Id" + i).value;
 						let a = parseInt(input_txt) + 1;
 						document.getElementById("input_Id" + i).value = a;
 						var value_amount = document.getElementById("input_Id" + i);
+						
+						//price total interface when users click plus
+						var arrP = document.querySelector('.price'+x.name);
+						var price = arrP.id;
+						var quantity = value_amount.value;
+						var total = parseFloat(Math.round(price * quantity * 100)/100);
+						$(".total"+x.name).text(total);
+						
+						//amount update in DB when users click plus
 						var xhr = new XMLHttpRequest();
 						xhr.open("GET", url+"?plus="+value_amount.name);
-						// What to do when server responds
-						xhr.onload = function() {
-						};
+						xhr.onload = function() {};
 						xhr.send(); 
-						return false;
 					} else if (x.id == ("minus" + i)) {
 						var input_txt = document.getElementById("input_Id" + i).value;
 						if (parseInt(input_txt) > 1) {
+							//amount interface update when users click minus
 							let a = parseInt(input_txt) - 1;
 							document.getElementById("input_Id" + i).value = a;
 							var value_amount = document.getElementById("input_Id" + i);
+							
+							//price total interface when users click minus
+							var arrP = document.querySelector('.price'+x.name);
+							var price = arrP.id;
+							var quantity = value_amount.value;
+							var total = parseFloat(Math.round(price * quantity * 100)/100);
+							$(".total"+x.name).text(total);
+							
+							//amount update in DB when users click minus
 							var xhr = new XMLHttpRequest();
 							xhr.open("GET", url+"?minus="+value_amount.name);
-							// What to do when server responds
 							xhr.onload = function() {
 							};
 							xhr.send(); 
-							return false;
 						} else if (parseInt(input_txt) == 1) {
 							var value_amount = document.getElementById("input_Id" + i);
 							var u_id = "${ user_id}";
 							if (confirm("Are you sure to remove the order from the cart?")) {
 								var xhr = new XMLHttpRequest();
-								xhr.open("GET", url+"?minus="+value_amount.name);
+								xhr.open("GET", url+"?minus="+value_amount.name+"&minusdelate="+value_amount.name);
 								// What to do when server responds
 								xhr.onload = function() {
 									window.location.assign(url);
@@ -315,6 +415,19 @@ function delete_prod(x) {
 						}
 					}
 				}
+				// load price total checked
+				var total_ = 0.0;
+				var arrQty = document.querySelectorAll('.input_Id');
+				var arrC = document.querySelectorAll('.checkbox-cart input[type=checkbox]:checked');
+				for (let i=0; i<arrC.length; i++) {
+					for(let j =0; j<arrQty.length; j++) {
+						if(arrQty[j].name == arrC[i].name) {
+							total_ += parseFloat(arrC[i].value)*parseFloat(arrQty[j].value);
+						}
+					}
+				}
+				$("#payment").text(Math.round(total_*100)/100);
+				$("#total-count-product-cart").text("("+arrC.length+")");
 			}
 			
 			var user_id = "${ user_id}";
@@ -329,12 +442,12 @@ function delete_prod(x) {
 			});
 		}
 	</script>
-	
-	
+
+
 
 	<c:forEach var="abc" items="${ cart }">
 		<script> // remove display none in select option color when start
-			var selected_s = "${abc.color_size.color.id}"+"_" +"${abc.color_size.prod.id}";
+			var selected_s = "${abc.color_size.color.id}"+"_" +"${abc.color_size.prod.id}"+"_"+"${ abc.id }";
 			//alert(selected_s);
 			document.getElementById(selected_s).classList.remove('size');
 		</script>
@@ -352,23 +465,19 @@ function delete_prod(x) {
 		<script>
 			var url = window.location.href;
 			function size_select(x) {
-				var size = x.value + "_"+x.id; // size = idcart_idsize_idcolor_idprod
+				// x.id  = idsize_idcolor_idprod
+				//x.value = idcart
+				// size = idcart_idsize_idcolor_idprod
+				var size = x.value + "_"+x.id; 
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
 						url+"?size="+size);
 				xhr.onload = function() {
 				};
+				xhr.send();
 			}
 			function color_select(x) {
-				var color=x.value;
-				alert(color);
-				/* var xhr = new XMLHttpRequest();
-				xhr.open("GET",
-						"http://localhost:8888/SpringMVC/cart?color="+color);
-				// What to do when server responds
-				xhr.onload = function() {
-				};
-				xhr.send();*/
+				var color = x.value; // color = colorid_ prodid_cartid
 		 	   	let selectElement = document.querySelectorAll('[name=size]');
 		 	   	for (let i=0; i<selectElement.length; i++) {
 		 		   	if(selectElement[i].id == x.value) {
@@ -381,6 +490,12 @@ function delete_prod(x) {
 		 			  	}
 		 		   	}
 		 	   	} 
+		 	   	var xhr = new XMLHttpRequest();
+				xhr.open("GET",
+						url+"?color="+color);
+				xhr.onload = function() {
+				};
+				xhr.send();
 			}
 		</script>
 	</c:if>

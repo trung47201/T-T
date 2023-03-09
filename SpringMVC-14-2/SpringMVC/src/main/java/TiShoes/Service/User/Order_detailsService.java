@@ -170,7 +170,7 @@ public class Order_detailsService implements Order_detailsRepository {
 	}
 
 	@Override
-	public boolean insertIntoOrder_details(double price_at, int quantity, int prod_id, int size_id, int color_id) {
+	public boolean insertIntoOrder_details(double price_at, int quantity, int prod_id, int size_id, int color_id, String phone_number, String email) {
 		try {
 			orderService = new OrderService();
 			connectService = new ConnectService();
@@ -178,7 +178,7 @@ public class Order_detailsService implements Order_detailsRepository {
 			String sql = "INSERT INTO `order_details`(`order_id`, `price_at`, `quantity`, `prod_id`, `size_id`, `color_id`) "
 					+ "VALUES (?, ?, ?, ?, ?, ?)";
 			PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
-			preparedStmt.setInt(1, orderService.getLastOrderId());
+			preparedStmt.setInt(1, orderService.get_last_order_id_by(phone_number, email));
 			preparedStmt.setDouble(2, (double) Math.round(price_at*100)/100);
 			preparedStmt.setInt(3, quantity);
 			preparedStmt.setInt(4, prod_id);

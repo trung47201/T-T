@@ -617,7 +617,6 @@ public class Color_sizeService implements Color_sizeRepository {
 	}
 
 	public boolean checkColor_size(int size_id, int color_id, int prod_id) {
-
 		for (Color_size i : getAllProduct_Color_Size()) {
 			if (i.getSize().getId() == size_id && i.getColor().getId() == color_id && i.getProd().getId() == prod_id) {
 				return true;
@@ -625,9 +624,19 @@ public class Color_sizeService implements Color_sizeRepository {
 		}
 		return false;
 	}
+	
+	public int get_Color_size_id(int size_id, int color_id, int prod_id) {
+		int rs = 0;
+		for (Color_size i : getAllProduct_Color_Size()) {
+			if (i.getSize().getId() == size_id && i.getColor().getId() == color_id && i.getProd().getId() == prod_id) {
+				rs = i.getId();
+			}
+		}
+		return rs;
+	}
 
 	public static void main(String[] args) {
 		Color_sizeService cls = new Color_sizeService();
-		System.out.println(cls.firstColor_SizeById_Prod(3));
+		System.out.println(cls.get_Color_size_id(4,4,2));
 	}
 }

@@ -123,6 +123,15 @@
 			</div>
 		</div>
 	</c:if>
+	
+	<div class="wrapper-wel importantNone" id="wrapper-search">
+		<div class="welcome none" id="welcome-search">
+			<h3>Welcome to Ti Shoes!</h3>
+			<div class="ok-btn">
+				<button>OK</button>
+			</div>
+		</div>
+	</div>
 
 	<header class="container-xl header-content">
 
@@ -720,12 +729,13 @@
 	</script>
 	
 	
-	<script type="text/javascript">
+	<script type="text/javascript"> // msg search input empty
 	$(".search-link-icon").click(function () {
 		var txt = $('#search').val();
 		if(txt == "") {
-			$(".welcome").removeClass("none");
-			$(".welcome h3").html("You have not entered search information!");
+			$("#wrapper-search").removeClass("importantNone");
+			$("#welcome-search").removeClass("none");
+			$("#welcome-search h3").html("You have not entered search information!");
 		} else {
 			$("#search-link-icon").attr("type", "submit");
 		}

@@ -187,7 +187,7 @@ public class CheckoutService implements CheckoutRepository {
 		order_detailsService = new Order_detailsService();
 
 		if (orderService.insertIntoOrder_not_login(fullname, email, phone_number, address, voucher_id, note, method) == true
-				&& order_detailsService.insertIntoOrder_details(price_at, amount, id_prod, id_size, id_color) == true) {
+				&& order_detailsService.insertIntoOrder_details(price_at, amount, id_prod, id_size, id_color, phone_number, email) == true) {
 			return true;
 		} else {
 			return false;
@@ -269,7 +269,7 @@ public class CheckoutService implements CheckoutRepository {
 		}
 		return discount_at;
 	}
-
+	
 	public static void main(String[] args) {
 		CheckoutService c = new CheckoutService();
 		System.out.println(c.get_discount_at(1, "TS666", 25));
