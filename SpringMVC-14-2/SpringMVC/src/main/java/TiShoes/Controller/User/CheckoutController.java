@@ -142,6 +142,27 @@ public class CheckoutController {
 		if (a.length > 1) {
 			id_prod = a[1];
 			id_user = a[0];
+
+			Product p = productService.getProduct(Integer.parseInt(id_prod));
+			double total = 0;
+			if (quantity != null) {
+				if (p.getDiscount() > 0) {
+					total = p.getPrice() * Integer.parseInt(quantity)
+							- p.getPrice() * Integer.parseInt(quantity) * p.getDiscount() / 100;
+				} else {
+					total = p.getPrice() * Integer.parseInt(quantity);
+				}
+			} else {
+				if (p.getDiscount() > 0) {
+					total = p.getPrice()- p.getPrice() * p.getDiscount() / 100;
+				} else {
+					total = p.getPrice();
+				}
+			}
+			if(total < 50) {
+				total += 11.00;
+			}
+			mv.addObject("total", total);
 		} else if (a.length == 1) {
 			id_prod = a[0];
 		}
@@ -174,6 +195,7 @@ public class CheckoutController {
 								int vch_discount = voucherService.get_discount_by_voucher_code(voucher);
 								mv.addObject("vcdiscount", vch_discount);
 								mv.addObject("vcstatus", "start");
+								mv.addObject("vchprice", price_at*vch_discount/100);
 								System.out.println("start");
 							}
 						} else {
@@ -188,7 +210,9 @@ public class CheckoutController {
 									int vch_discount = voucherService.get_discount_by_voucher_code(voucher);
 									mv.addObject("vcdiscount", vch_discount);
 									mv.addObject("vcstatus", "start");
+									mv.addObject("vchprice", price_at*vch_discount/100);
 									System.out.println("start");
+									
 								} else {
 									mv.addObject("vcstatus", "used");
 									System.out.println("used");
@@ -580,7 +604,7 @@ public class CheckoutController {
 				}
 				int order_id = orderService.get_last_order_id_by(phone_number, email);
 				System.out.println("buy cart success");
-			
+
 				return new ModelAndView("redirect: /SpringMVC/thanks/" + order_id);
 
 			} else {

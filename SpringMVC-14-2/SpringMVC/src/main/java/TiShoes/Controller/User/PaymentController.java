@@ -55,15 +55,16 @@ public class PaymentController {
 	@RequestMapping(value = { "/authorize_payment" })
 	public void load_payment_paypal(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, PayPalRESTException {
-		String product = request.getParameter("product");
-		String subtotal = request.getParameter("subtotal");
-		String shipping = request.getParameter("shipping");
-		String tax = request.getParameter("tax");
+		String product = request.getParameter("product"); // product = {id_prod}_{id_prod}_{id_prod}...
+		String voucher = request.getParameter("voucher");
 		String total = request.getParameter("total");
 
+		if(voucher == null) {
+			voucher="15";
+		}
+		System.out.println( product + "-" + voucher +"-"+total);
 		PaypalService paymentServices = new PaypalService();
-		String approvalLink = paymentServices.authorizePayment(product, Float.parseFloat(subtotal),
-				Float.parseFloat(shipping), Float.parseFloat(tax), Float.parseFloat(total));
+		String approvalLink = paymentServices.authorizePayment(product, Float.parseFloat(voucher), Float.parseFloat(total));
 		response.sendRedirect(approvalLink);
 	}
 }

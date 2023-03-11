@@ -30,9 +30,23 @@
     border-radius: 100px;
     margin-top: 10px;
 }
+.bank img {
+    height: 50px;
+    margin-left: 5px;
+}
+.content-bank {
+    height: 80px;
+}
+
+#radio2:hover {
+cursor: pointer;
+} 
+#radio3:hover {
+cursor: pointer;
+} 
 </style>
 <body>
-	<form action="/SpringMVC/cart/checkout/ok/${ id }" method="post">
+	<form action="/SpringMVC/cart/checkout/ok/${ id }" method="post" id="myform">
 		<div class="nav">
 			<c:set var="item" value="${ back_home }"></c:set>
 			<c:if test="${ item == 'home'}">
@@ -222,7 +236,7 @@
 			<!-- Payment methods -->
 			<div class="payment-method">
 				<h4>Shipping methods</h4>
-				<div class="shipping" id="radio1" onclick="radio(this)">
+				<div class="shipping" id="radio1">
 					<input type="radio" name="Delivery" id="rad1" checked>
 					<div>&emsp;Delivery to your place</div>
 					<div>&emsp;&emsp;&emsp;$11.00</div>
@@ -230,6 +244,7 @@
 				<div class="content-sm" id="content-sm">Buy products over $50
 					will get free shipping</div>
 				<h4 class="pm">Payment methods</h4>
+				
 				<div class="shipping" id="radio2" onclick="radio(this)">
 					<input type="radio" name="paymentmethods" id="rad2" value="cod"
 						checked>
@@ -239,8 +254,8 @@
 							alt="">
 					</div>
 				</div>
-				<div class="content-pm" id="content-pm">You only have to pay
-					when you receive the goods.</div>
+				<div class="content-pm none" id="content-pm" style="visibility: visible;">You only have to pay when you receive the goods.</div>
+					
 				<div class="shipping" id="radio3" onclick="radio(this)">
 					<input type="radio" name="paymentmethods" id="rad3"
 						value="payByCard">
@@ -250,26 +265,11 @@
 							alt="">
 					</div>
 				</div>
-				<div class="content-bank" id="content-bank">
-					<div>Choose a bank</div>
+				<div class="content-bank none" id="content-bank" style="visibility: visible;">
+					<div>Choose a</div>
 					<div class="bank">
-						<div class="bank" id="visa" onclick="bank(this)">
-							<img src="<c:url value="/assets/images/icons/visa.png"/>" alt="">
-						</div>
-						<div class="bank" id="mastercard" onclick="bank(this)">
-							<img src="<c:url value="/assets/images/icons/mc-logo.png"/>"
-								alt="">
-						</div>
-						<div class="bank" id="amex" onclick="bank(this)">
-							<img src="<c:url value="/assets/images/icons/amex.png"/>" alt="">
-						</div>
-						<div class="bank" id="discover" onclick="bank(this)">
-							<img src="<c:url value="/assets/images/icons/discover.jpg"/>"
-								alt="">
-						</div>
-						<div class="bank" id="maestro" onclick="bank(this)">
-							<img src="<c:url value="/assets/images/icons/maestro.png"/>"
-								alt="">
+						<div class="bank" id="Paypal" onclick="bank(this)">
+							<img src="<c:url value="/assets/images/icons/icons8-paypal-96.png"/>" alt="">
 						</div>
 					</div>
 				</div>
@@ -586,12 +586,12 @@
 											test="${ (prod_checkout.price *quantity - prod_checkout.price *quantity * prod_checkout.discount/100) < 50.0 }">
 											<td class="price"><span class="total-payment"> <c:if
 														test="${ quantity != null && quantity > 0 }">
-														<b>$<fmt:formatNumber type="number"
+														<b id="total-payment">$<fmt:formatNumber type="number"
 																maxFractionDigits="2"
 																value="${ prod_checkout.price*quantity - vccost - prod_checkout.price *quantity * prod_checkout.discount/100 + 11.00 }" />
 														</b>
 													</c:if> <c:if test="${ quantity == null || quantity <= 0 }">
-														<b>$<fmt:formatNumber type="number"
+														<b id="total-payment">$<fmt:formatNumber type="number"
 																maxFractionDigits="2"
 																value="${prod_checkout.price - vccost - prod_checkout.price * prod_checkout.discount/100 + 11.00 }" />
 														</b>
@@ -602,12 +602,12 @@
 											test="${ (prod_checkout.price *quantity - prod_checkout.price *quantity * prod_checkout.discount/100) >= 50.0 }">
 											<td class="price"><span class="total-payment"> <c:if
 														test="${ quantity != null && quantity > 0 }">
-														<b>$<fmt:formatNumber type="number"
+														<b id="total-payment">$<fmt:formatNumber type="number"
 																maxFractionDigits="2"
 																value="${prod_checkout.price *quantity - vccost - prod_checkout.price *quantity * prod_checkout.discount/100  }" />
 														</b>
 													</c:if> <c:if test="${ quantity == null || quantity <= 0 }">
-														<b>$<fmt:formatNumber type="number"
+														<b id="total-payment">$<fmt:formatNumber type="number"
 																maxFractionDigits="2"
 																value="${prod_checkout.price - vccost - prod_checkout.price * prod_checkout.discount/100  }" />
 														</b>
@@ -620,12 +620,12 @@
 											test="${ (prod_checkout.price - prod_checkout.price * prod_checkout.discount/100) < 50.0 }">
 											<td class="price"><span class="total-payment"> <c:if
 														test="${ quantity != null && quantity > 0 }">
-														<b>$<fmt:formatNumber type="number"
+														<b id="total-payment">$<fmt:formatNumber type="number"
 																maxFractionDigits="2"
 																value="${ prod_checkout.price*quantity - vccost - prod_checkout.price *quantity * prod_checkout.discount/100 + 11.00 }" />
 														</b>
 													</c:if> <c:if test="${ quantity == null || quantity <= 0 }">
-														<b>$<fmt:formatNumber type="number"
+														<b id="total-payment">$<fmt:formatNumber type="number"
 																maxFractionDigits="2"
 																value="${prod_checkout.price - vccost - prod_checkout.price * prod_checkout.discount/100 + 11.00 }" />
 														</b>
@@ -636,12 +636,12 @@
 											test="${ (prod_checkout.price  - prod_checkout.price * prod_checkout.discount/100) >= 50.0 }">
 											<td class="price"><span class="total-payment"> <c:if
 														test="${ quantity != null && quantity > 0 }">
-														<b>$<fmt:formatNumber type="number"
+														<b id="total-payment">$<fmt:formatNumber type="number"
 																maxFractionDigits="2"
 																value="${prod_checkout.price *quantity - vccost - prod_checkout.price *quantity * prod_checkout.discount/100  }" />
 														</b>
 													</c:if> <c:if test="${ quantity == null || quantity <= 0 }">
-														<b>$<fmt:formatNumber type="number"
+														<b id="total-payment">$<fmt:formatNumber type="number"
 																maxFractionDigits="2"
 																value="${prod_checkout.price - vccost - prod_checkout.price * prod_checkout.discount/100  }" />
 														</b>
@@ -653,7 +653,7 @@
 								<c:if test="${ prod_checkout.discount <= 0 }">
 									<c:if test="${ quantity != null && quantity > 0 }">
 										<c:if test="${ (prod_checkout.price * quantity) >= 50.0 }">
-											<td class="price"><span class="total-payment"> <b>$<fmt:formatNumber
+											<td class="price"><span class="total-payment"> <b id="total-payment">$<fmt:formatNumber
 															type="number" maxFractionDigits="2"
 															value="${prod_checkout.price*quantity - vccost }" />
 												</b>
@@ -662,7 +662,7 @@
 									</c:if>
 									<c:if test="${ quantity == null || quantity <= 0 }">
 										<c:if test="${ (prod_checkout.price) >= 50.0 }">
-											<td class="price"><span class="total-payment"> <b>$<fmt:formatNumber
+											<td class="price"><span class="total-payment"> <b id="total-payment">$<fmt:formatNumber
 															type="number" maxFractionDigits="2"
 															value="${prod_checkout.price - vccost }" />
 												</b>
@@ -671,14 +671,14 @@
 									</c:if>
 									<c:if test="${ quantity != null && quantity > 0 }">
 										<c:if test="${ (prod_checkout.price*quantity) < 50.0 }">
-											<td class="price"><span class="total-payment"> <b>$<fmt:formatNumber
+											<td class="price"><span class="total-payment"> <b id="total-payment">$<fmt:formatNumber
 															type="number" maxFractionDigits="2"
 															value="${prod_checkout.price*quantity + 11.00 - vccost }" /></b></span></td>
 										</c:if>
 									</c:if>
 									<c:if test="${ quantity == null || quantity <= 0 }">
 										<c:if test="${ (prod_checkout.price) < 50.0 }">
-											<td class="price"><span class="total-payment"> <b>$<fmt:formatNumber
+											<td class="price"><span class="total-payment"> <b id="total-payment">$<fmt:formatNumber
 															type="number" maxFractionDigits="2"
 															value="${prod_checkout.price + 11.00 - vccost }" /></b></span></td>
 										</c:if>
@@ -691,7 +691,7 @@
 										<c:if
 											test="${ (prod_checkout.price * quantity - prod_checkout.price * quantity * prod_checkout.discount/100) < 50.0 }">
 											<c:if test="${ quantity != null && quantity > 0 }">
-												<td class="price"><span class="total-payment"><b>$<fmt:formatNumber
+												<td class="price"><span class="total-payment"><b id="total-payment">$<fmt:formatNumber
 																type="number" maxFractionDigits="2"
 																value="${prod_checkout.price*quantity - prod_checkout.price*quantity * prod_checkout.discount/100 + 11.00 }" />
 													</b></span></td>
@@ -700,7 +700,7 @@
 										<c:if
 											test="${ (prod_checkout.price  * quantity  - prod_checkout.price  * quantity * prod_checkout.discount/100) >= 50.0 }">
 											<c:if test="${ quantity != null && quantity > 0 }">
-												<td class="price"><span class="total-payment"><b>$<fmt:formatNumber
+												<td class="price"><span class="total-payment"><b id="total-payment">$<fmt:formatNumber
 																type="number" maxFractionDigits="2"
 																value="${prod_checkout.price * quantity - prod_checkout.price * quantity * prod_checkout.discount/100  }" />
 													</b></span></td>
@@ -711,7 +711,7 @@
 										<c:if
 											test="${ (prod_checkout.price - prod_checkout.price * prod_checkout.discount/100) < 50.0 }">
 											<c:if test="${ quantity == null || quantity <= 0 }">
-												<td class="price"><span class="total-payment"><b>$<fmt:formatNumber
+												<td class="price"><span class="total-payment"><b id="total-payment">$<fmt:formatNumber
 																type="number" maxFractionDigits="2"
 																value="${prod_checkout.price - prod_checkout.price * prod_checkout.discount/100 + 11.00 }" />
 													</b></span></td>
@@ -720,7 +720,7 @@
 										<c:if
 											test="${ (prod_checkout.price - prod_checkout.price * prod_checkout.discount/100) >= 50.0 }">
 											<c:if test="${ quantity == null || quantity <= 0 }">
-												<td class="price"><span class="total-payment"><b>$<fmt:formatNumber
+												<td class="price"><span class="total-payment"><b id="total-payment">$<fmt:formatNumber
 																type="number" maxFractionDigits="2"
 																value="${prod_checkout.price - prod_checkout.price * prod_checkout.discount/100  }" />
 													</b></span></td>
@@ -731,25 +731,25 @@
 								<c:if test="${ prod_checkout.discount <= 0 }">
 									<c:if test="${ quantity != null && quantity > 0 }">
 										<c:if test="${ (prod_checkout.price) >= 50.0 }">
-											<td class="price"><span class="total-payment"><b>$${
+											<td class="price"><span class="total-payment"><b id="total-payment">$${
 														prod_checkout.price * quantity }</b></span></td>
 										</c:if>
 									</c:if>
 									<c:if test="${ quantity == null || quantity <= 0 }">
 										<c:if test="${ (prod_checkout.price) >= 50.0 }">
-											<td class="price"><span class="total-payment"><b>$${
+											<td class="price"><span class="total-payment"><b id="total-payment">$${
 														prod_checkout.price }</b></span></td>
 										</c:if>
 									</c:if>
 									<c:if test="${ quantity != null && quantity > 0 }">
 										<c:if test="${ (prod_checkout.price) < 50.0 }">
-											<td class="price"><span class="total-payment"><b>$${
+											<td class="price"><span class="total-payment"><b id="total-payment">$${
 														prod_checkout.price * quantity +11.00 }</b></span></td>
 										</c:if>
 									</c:if>
 									<c:if test="${ quantity == null || quantity <= 0 }">
 										<c:if test="${ (prod_checkout.price) < 50.0 }">
-											<td class="price"><span class="total-payment"><b>$${
+											<td class="price"><span class="total-payment"><b id="total-payment">$${
 														prod_checkout.price+11.00 }</b></span></td>
 										</c:if>
 									</c:if>
@@ -761,9 +761,14 @@
 
 			</div>
 		</div>
-
+		
+		<input type="hidden" name="total" id="total" value="${ total }">
 		<input type="hidden" name="vccode" id="vccode" value="${ vccode }">
 		<input type="hidden" name="idprod" id="idprod" value="${ idprod }">
+		
+		<c:if test="${ vchprice != null }">
+			<input type="hidden" name="vchprice" id="vchprice" value="${ vchprice }">
+		</c:if>
 
 		<div class="btn-order">
 			<input type="button" name="order" id="order" value="Order">
@@ -788,6 +793,23 @@
 
 
 
+
+	<script>
+	$("#content-pm").removeClass("none");
+	function radio(x) {
+		if(x.id == "radio2") {
+			document.getElementById("rad2").checked = true;
+			$("#content-pm").removeClass("none");
+			$("#content-bank").addClass("none");
+		} else if(x.id == "radio3") {
+			document.getElementById("rad3").checked = true;
+			$("#content-pm").addClass("none");
+			$("#content-bank").removeClass("none");
+		}
+		
+	}
+	</script>
+	
 	<script type="text/javascript">
 		const validateEmail = (email) => {
 		  	return email.match(
@@ -802,6 +824,9 @@
 			var city = $("#city").val();
 			var town = $("#town").val();
 			var village = $("#village").val();
+			var quantity = $("#input_Id1").val();
+			var id_prod = 	$("#id_prod").val();
+			var method = document.getElementById("rad3").checked;
 			
 			var error = "";
 			if(fullname == "") {
@@ -821,7 +846,13 @@
 			} 
 			
 			if (error == "") {
-				$(get).attr("type", "submit");
+				if(method == true) {
+					var product = id_prod+"_"+quantity;
+					$('#myform').attr('action', "/SpringMVC/authorize_payment?product="+product);
+					$(get).attr("type", "submit");
+				} else {
+					//$(get).attr("type", "submit");
+				}
 			} else {
 				$("#wrapper").removeClass("importantNone");
 				$("#message-notify").removeClass("none");
@@ -997,35 +1028,8 @@
 		});
 	</script>
 
-	<script>
-		var a = document.getElementById("rad2");
-		if (a.checked == true) {
-			document.getElementById("content-pm").style.visibility = "visible";
-			document.getElementById("radio3").style.marginTop = "30px";
-		}
-		function bank(x) {
-			alert(x.id);
-		}
-	</script>
 
-	<script>
-		function radio(x) {
-			for (let i = 1; i < 4; i++) {
-				if (x.id == ("radio" + i)) {
-					document.getElementById("rad" + i).checked = true;
-				}
-			}
-			if (x.id == "radio2") {
-				document.getElementById("content-pm").style.visibility = "visible";
-				document.getElementById("content-bank").style.visibility = "hidden";
-				document.getElementById("radio3").style.marginTop = "30px";
-			} else if (x.id == "radio3") {
-				document.getElementById("content-pm").style.visibility = "hidden";
-				document.getElementById("content-bank").style.visibility = "visible";
-				document.getElementById("radio3").style.marginTop = "-40px";
-			}
-		}
-	</script>
+
 
 	<script>
 		var url = window.location.href;

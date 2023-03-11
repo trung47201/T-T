@@ -336,6 +336,9 @@ public class CartController {
 		}
 		String txt = "";
 		String a[] = id.split("_");
+
+		System.out.println(a[1]);
+
 		if (a.length == 1) {
 			String id_prod = a[0];
 			if (arr != null) {

@@ -415,7 +415,6 @@
 		}
 		if(id_user != "") {
 			$("#add-to-cart-input").click(function() {
-				var id_prod = $(this).val();
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
 						"http://localhost:8888/SpringMVC/add-to-cart/"+id_user+"_"+id_prod);
@@ -426,7 +425,6 @@
 			});
 		} else {
 			$("#add-to-cart-input").click(function() {
-				var id_prod = $(this).val();
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
 						"http://localhost:8888/SpringMVC/add-to-cart/"+id_prod);

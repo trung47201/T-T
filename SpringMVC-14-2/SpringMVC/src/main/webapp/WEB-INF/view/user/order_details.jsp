@@ -155,7 +155,7 @@
                     <div class="prod_details">
                         <c:if test="${ total > 50 }">
                         	<div class="total-prod">
-	                            <p>Free:</p>
+	                            <p>Free shipping:</p>
 	                            <p class="money">$11.00</p>
 	                        </div>
                         </c:if>
