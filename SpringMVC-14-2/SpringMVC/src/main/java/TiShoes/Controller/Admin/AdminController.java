@@ -34,9 +34,10 @@ public class AdminController {
 			if(aUserService.check_login(username, pw) != 0) {
 				adminID = aUserService.check_login(username, pw);
 				session.setAttribute("adminID", adminID);
-				System.out.println(adminID);
+				session.setAttribute("login_t", true);
 			} else {
 				session.setAttribute("adminID", 0);
+				session.setAttribute("login_t", false);
 			}
 		}
 		return new ModelAndView("redirect: /SpringMVC/admin");

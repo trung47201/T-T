@@ -14,7 +14,8 @@
 			<div class="caixa__login-input">
 				<input type="password" id="password" name="password" required /> <label>Password</label>
 			</div>
-			<a href="javascript:{}" onclick="document.getElementById('my_form').submit();"> <span></span> <span></span> <span></span> <span></span>
+			<p class="none" id="msg-login-admin"></p>
+			<a onclick="login()"> <span></span> <span></span> <span></span> <span></span>
 				Acessar
 			</a>
 		</form>

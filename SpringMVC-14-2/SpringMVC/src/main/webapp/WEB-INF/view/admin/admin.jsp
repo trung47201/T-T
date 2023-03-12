@@ -12,6 +12,14 @@
 	href="<c:url value='/assets/css/admin-login.css'/>">
 <link rel="stylesheet" href="<c:url value='/assets/css/dashboard.css'/>">
 
+<style>
+#msg-login-admin {
+	color: red;
+	text-align: center;
+	font-size: 13px;
+}
+</style>
+
 <body>
 	<jsp:include page="../layouts/admin/login.jsp"></jsp:include>
 
@@ -149,7 +157,9 @@
 									<p>Daily Sales</p>
 								</div>
 								<div class="content">
-									<p> <b>(+15%)</b> increase in today sales.</p>
+									<p>
+										<b>(+15%)</b> increase in today sales.
+									</p>
 								</div>
 							</div>
 							<hr class="shadow-hr">
@@ -216,17 +226,15 @@
 						</div>
 					</div>
 				</div>
-				
-				 <div class="infor-table">
-			        <div class="table-row">
-			            <div class="table-col col2">
-			
-			            </div>
-			            <div class="table-col col1">
-			                <canvas id="myChart"></canvas>
-			            </div>
-			        </div>
-			    </div>
+
+				<div class="infor-table">
+					<div class="table-row">
+						<div class="table-col col2"></div>
+						<div class="table-col col1">
+							<canvas id="myChart"></canvas>
+						</div>
+					</div>
+				</div>
 			</div>
 		</section>
 	</div>
@@ -245,35 +253,64 @@
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="<c:url value="assets/js/chartjs.min.js"/>"></script>
-	
-	<script>
-        var xValues = ["Italy", "France", "Spain", "USA"];
-        var yValues = [70, 49, 44, 14];
-        var barColors = [
-            "#1a73e8",
-            "#43a047",
-            "#DA2868",
-            "#191919"
-        ];
 
-        new Chart("myChart", {
-            type: "pie",
-            data: {
-                labels: xValues,
-                datasets: [{
-                    backgroundColor: barColors,
-                    data: yValues
-                }]
-            },
-            options: {
-                title: {
-                    display: true,
-                    text: "World Wide Wine Production 2023"
-                }
-            }
-        });
-    </script>
-    
+	<script type="text/javascript">
+	$('#password').keydown(function(event) {
+	    // enter has keyCode = 13, change it if you want to use another button
+	    if (event.keyCode == 13) {
+	      	this.form.submit();
+	      	return false;
+	    }
+	});
+	</script>
+
+	<c:if test="${ sessionScope.login == false}">
+		<script type="text/javascript">
+			$("#msg-login-admin").removeClass("none");
+			$("#msg-login-admin").text("User name or password is not correct!");
+		</script>
+	</c:if>
+
+	<script type="text/javascript">
+		function login() {
+			var username = $("#username").val();
+			var password = $("#password").val();
+			if (username == "") {
+				$("#msg-login-admin").removeClass("none");
+				$("#msg-login-admin").text("User name is empty!");
+			} else if (password == "") {
+				$("#msg-login-admin").removeClass("none");
+				$("#msg-login-admin").text("Password is empty!");
+			} else {
+				 $('#my_form').attr('action', '/SpringMVC/admin/login');
+				 document.getElementById('my_form').submit();
+			}
+		}
+	</script>
+
+	<script>
+		var xValues = [ "Italy", "France", "Spain", "USA" ];
+		var yValues = [ 70, 49, 44, 14 ];
+		var barColors = [ "#1a73e8", "#43a047", "#DA2868", "#191919" ];
+
+		new Chart("myChart", {
+			type : "pie",
+			data : {
+				labels : xValues,
+				datasets : [ {
+					backgroundColor : barColors,
+					data : yValues
+				} ]
+			},
+			options : {
+				title : {
+					display : true,
+					text : "World Wide Wine Production 2023"
+				}
+			}
+		});
+	</script>
+
 	<script>
 		var ctx = document.getElementById("chart-bars").getContext("2d");
 		new Chart(ctx, {
@@ -358,7 +395,7 @@
 		new Chart(ctx2, {
 			type : "line",
 			data : {
-				labels : [ "Jan", "Feb", "Mar", "April", "May"],
+				labels : [ "Jan", "Feb", "Mar", "April", "May" ],
 				datasets : [ {
 					label : "Mobile apps",
 					tension : 0,
