@@ -791,9 +791,6 @@ cursor: pointer;
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-
-
-
 	<script>
 	$("#content-pm").removeClass("none");
 	function radio(x) {
@@ -851,7 +848,7 @@ cursor: pointer;
 					$('#myform').attr('action', "/SpringMVC/authorize_payment?product="+product);
 					$(get).attr("type", "submit");
 				} else {
-					//$(get).attr("type", "submit");
+					$(get).attr("type", "submit");
 				}
 			} else {
 				$("#wrapper").removeClass("importantNone");

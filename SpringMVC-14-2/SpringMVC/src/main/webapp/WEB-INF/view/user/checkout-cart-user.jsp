@@ -50,7 +50,8 @@ input#phone {
 }
 </style>
 <body>
-	<form action="/SpringMVC/cart/checkout/user-cart/${ id }" method="post">
+	<form action="/SpringMVC/cart/checkout/user-cart/${ id }" method="post"
+		id="myform">
 		<div class="nav">
 			<c:set var="item" value="${ back_home }"></c:set>
 			<c:if test="${ item == 'home'}">
@@ -208,7 +209,7 @@ input#phone {
 			<!-- Payment methods -->
 			<div class="payment-method">
 				<h4>Shipping methods</h4>
-				<div class="shipping" id="radio1" onclick="radio(this)">
+				<div class="shipping" id="radio1">
 					<input type="radio" name="Delivery" id="rad1" checked>
 					<div>&emsp;Delivery to your place</div>
 					<div>&emsp;&emsp;&emsp;$11.00</div>
@@ -227,8 +228,8 @@ input#phone {
 							alt="">
 					</div>
 				</div>
-				<div class="content-pm" id="content-pm">You only have to pay
-					when you receive the goods.</div>
+				<div class="content-pm" id="content-pm" style="visibility: visible;">You
+					only have to pay when you receive the goods.</div>
 				<div class="shipping" id="radio3" onclick="radio(this)">
 					<input type="radio" name="paymentmethods" id="rad3"
 						value="payByCard">
@@ -238,25 +239,13 @@ input#phone {
 							alt="">
 					</div>
 				</div>
-				<div class="content-bank" id="content-bank">
-					<div>Choose a bank</div>
+				<div class="content-bank none" id="content-bank"
+					style="visibility: visible;">
+					<div>Choose a</div>
 					<div class="bank">
-						<div class="bank" id="visa" onclick="bank(this)">
-							<img src="<c:url value="/assets/images/icons/visa.png"/>" alt="">
-						</div>
-						<div class="bank" id="mastercard" onclick="bank(this)">
-							<img src="<c:url value="/assets/images/icons/mc-logo.png"/>"
-								alt="">
-						</div>
-						<div class="bank" id="amex" onclick="bank(this)">
-							<img src="<c:url value="/assets/images/icons/amex.png"/>" alt="">
-						</div>
-						<div class="bank" id="discover" onclick="bank(this)">
-							<img src="<c:url value="/assets/images/icons/discover.jpg"/>"
-								alt="">
-						</div>
-						<div class="bank" id="maestro" onclick="bank(this)">
-							<img src="<c:url value="/assets/images/icons/maestro.png"/>"
+						<div class="bank" id="Paypal" onclick="bank(this)">
+							<img
+								src="<c:url value="/assets/images/icons/icons8-paypal-96.png"/>"
 								alt="">
 						</div>
 					</div>
@@ -302,14 +291,16 @@ input#phone {
 								</tr>
 							</table>
 						</div>
+						<input type="hidden" class="prod-id"
+							id="${ cart.color_size.prod.id }" name="${ cart.quantity }">
 					</c:forEach>
 				</div>
 
 
 				<div class="voucher">
 					<div class="input-voucher">
-						<input type="text" name="vccode" id="voucher_code" value="${ voucher }"
-							placeholder="Voucher">
+						<input type="text" name="vccode" id="voucher_code"
+							value="${ voucher }" placeholder="Voucher">
 					</div>
 					<div class="apply-voucher">
 						<input type="button" name="apply" id="apply" value="Apply">
@@ -366,7 +357,8 @@ input#phone {
 							</td>
 							<c:if test="${ vcdiscount != null }">
 								<td class="price"><span class="total-payment"> <b>$<fmt:formatNumber
-												type="number" maxFractionDigits="2" value="${ total + fee - vcdiscount }" />
+												type="number" maxFractionDigits="2"
+												value="${ total + fee - vcdiscount }" />
 									</b>
 								</span></td>
 							</c:if>
@@ -379,12 +371,23 @@ input#phone {
 						</tr>
 					</table>
 				</div>
-
 			</div>
+			<!--  end div class order -->
 		</div>
+		<!--  end div class checkout -->
 		<div class="btn-order">
 			<input type="button" name="order" id="order" value="Order">
 		</div>
+
+		<input type="hidden" name="total" id="total" value="${ total }">
+
+		<c:if test="${ vchprice != null }">
+			<input type="hidden" name="vchprice" id="vchprice"
+				value="${ vchprice }">
+		</c:if>
+		<c:if test="${ vchprice == null }">
+			<input type="hidden" name="vchprice" id="vchprice" value="0">
+		</c:if>
 	</form>
 
 	<div class="message msg-order message-notify none" id="message-notify">
@@ -408,7 +411,7 @@ input#phone {
 			<input class="ok" id="ok-done" type="button" value="OK">
 		</div>
 	</div>
-	
+
 	<div class="wrapper importantNone" id="wrapper">
 		<div class="message message-notify none" id="message-notify">
 			<h2 class="msg-h2">
@@ -434,22 +437,19 @@ input#phone {
 	</script>
 
 	<script>
-		function radio(x) {
-			for (let i = 1; i < 4; i++) {
-				if (x.id == ("radio" + i)) {
-					document.getElementById("rad" + i).checked = true;
-				}
-			}
-			if (x.id == "radio2") {
-				document.getElementById("content-pm").style.visibility = "visible";
-				document.getElementById("content-bank").style.visibility = "hidden";
-				document.getElementById("radio3").style.marginTop = "30px";
-			} else if (x.id == "radio3") {
-				document.getElementById("content-pm").style.visibility = "hidden";
-				document.getElementById("content-bank").style.visibility = "visible";
-				document.getElementById("radio3").style.marginTop = "-40px";
-			}
+	$("#content-pm").removeClass("none");
+	function radio(x) {
+		if(x.id == "radio2") {
+			document.getElementById("rad2").checked = true;
+			$("#content-pm").removeClass("none");
+			$("#content-bank").addClass("none");
+		} else if(x.id == "radio3") {
+			document.getElementById("rad3").checked = true;
+			$("#content-pm").addClass("none");
+			$("#content-bank").removeClass("none");
 		}
+		
+	}
 	</script>
 
 	<script
@@ -467,7 +467,7 @@ input#phone {
 			$("#message-notify").addClass("none");
 		});
 	</script>
-	
+
 	<script type="text/javascript"> //message voucher status
 		if(${vcstatus != null}) {
 			var status = "${ vcstatus }";
@@ -502,7 +502,7 @@ input#phone {
 			
 		}
 	</script>
-	
+
 	<script type="text/javascript">
 		const validateEmail = (email) => {
 		  	return email.match(
@@ -517,6 +517,7 @@ input#phone {
 			var city = $("#city").val();
 			var town = $("#town").val();
 			var village = $("#village").val();
+			var method = document.getElementById("rad3").checked;
 			
 			var error = "";
 			if(fullname == "") {
@@ -533,9 +534,25 @@ input#phone {
 				error = "Town is empty!";
 			} else if(village == "") {
 				error = "Village is empty!";
-			} 
+			}
 			if (error == "") {
-				$(get).attr("type", "submit");
+				if(method == true) {
+					var product = "";
+					var liArr = document.querySelectorAll('.prod-id');
+					for(let i=0; i<liArr.length; i++) {
+						if(i==0) {
+							product += liArr[i].id +"_"+liArr[i].name;
+						} else {
+							product += "/"+liArr[i].id +"_"+liArr[i].name;
+						}
+					}
+					if(product != "") {
+						$('#myform').attr('action', "/SpringMVC/authorize_payment?product="+product);
+						$(get).attr("type", "submit");
+					}
+				} else {
+					$(get).attr("type", "submit");
+				}
 			} else {
 				$("#wrapper").removeClass("importantNone");
 				$("#wrapper #message-notify").removeClass("none");

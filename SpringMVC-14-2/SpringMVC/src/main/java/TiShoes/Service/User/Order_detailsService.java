@@ -240,16 +240,6 @@ public class Order_detailsService implements Order_detailsRepository {
 		return li;
 	}
 
-	public boolean exist_order_details(double price_at, int quantity, int prod_id, int size_id, int color_id) {
-		List<Order_details> li = getAllOrder_details();
-		for (Order_details o : li) {
-			if (o.getPrice_at() == price_at && o.getQuantity() == quantity && o.getProd().getId() == prod_id
-					&& o.getSize().getId() == size_id && o.getColor().getId() == color_id) {
-				return true;
-			}
-		}
-		return false;
-	}
 
 	public static void main(String[] args) {
 		Order_detailsService o = new Order_detailsService();

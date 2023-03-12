@@ -118,7 +118,7 @@ public class OrderService implements OrderRepository {
 			conn.close();
 			return true;
 		} catch (Exception e) {
-			System.err.println("Got an exception order service!");
+			System.err.println("Got an exception order service! (121)");
 			// printStackTrace method
 			// prints line numbers + call stack
 			e.printStackTrace();
@@ -166,7 +166,7 @@ public class OrderService implements OrderRepository {
 			conn.close();
 			return true;
 		} catch (Exception e) {
-			System.err.println("Got an exception order service!");
+			System.err.println("Got an exception order service! (169)");
 			// printStackTrace method
 			// prints line numbers + call stack
 			e.printStackTrace();

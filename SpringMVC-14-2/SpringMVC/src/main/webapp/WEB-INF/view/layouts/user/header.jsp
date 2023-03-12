@@ -258,16 +258,19 @@
 
 			</ul>
 		</div>
-		<div class="nav-search" id="nav-search">
-			<input class="container-xl search-nav" type="text" name="search-nav"
-				id="search-nav" placeholder="Search..."> <img
-				class="search-triangle-nav-icon"
-				src="<c:url value="/assets/images/icons/triangle32.png"/>"
-				alt="icon-triangle"> <a href="#" class="search-nav-link-icon">
-				<img class="search-nav-icon"
-				src="<c:url value="/assets/images/icons/search48.png"/>"
-				alt="icon-search" width="32px">
-			</a>
-		</div>
+		<form action="/SpringMVC/products" method="post">
+			<div class="nav-search" id="nav-search">
+				<input class="container-xl search-nav" type="text" name="search-nav"
+					id="search-nav" placeholder="Search..."> <img
+					class="search-triangle-nav-icon"
+					src="<c:url value="/assets/images/icons/triangle32.png"/>"
+					alt="icon-triangle"> 
+				<button class="nav-btn-search" type="button" id="nav-btn-search">
+					<img class="search-nav-icon" id="search-nav-icon"
+						src="<c:url value="/assets/images/icons/search48.png"/>"
+						alt="icon-search" width="32px">
+				</button>
+			</div>
+		</form>
 	</nav>
 </div>

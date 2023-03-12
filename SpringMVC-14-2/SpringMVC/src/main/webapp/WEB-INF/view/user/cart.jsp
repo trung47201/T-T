@@ -21,11 +21,22 @@
 <link rel="stylesheet" href="<c:url value="/assets/css/slide.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/cart.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/home.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/navscroll.css"/>">
 <link rel="stylesheet"
 	href='<c:url value="/assets/css/login-icon.css"/>'>
 <style>
 .size {
 	display: none;
+}
+.ok-btn button {
+    border: 1px solid;
+    background: #0086ff;
+    color: white;
+    font-size: 20px;
+    box-shadow: 0 0 5px #666;
+}
+.welcome {
+    box-shadow: 0px 5px 15px;
 }
 </style>
 <body style="color: white;">
@@ -208,6 +219,8 @@
 
 	<!--  FOOTER -->
 	<jsp:include page="../layouts/user/footer.jsp"></jsp:include>
+
+	<jsp:include page="../layouts/user/search.jsp"></jsp:include>
 
 
 	<script
@@ -537,6 +550,7 @@
 	<script
 		src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 	<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+	
 </body>
 
 </html>

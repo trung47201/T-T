@@ -253,6 +253,8 @@ public class ProductController {
 		}
 
 		mv.addObject("userID", id);
+		int id_user = Integer.parseInt(id);
+		mv.addObject("id_user", id_user);
 		mv.addObject("avatar", userService.getAvatarByUserID(Integer.parseInt(id)));
 
 		return mv;

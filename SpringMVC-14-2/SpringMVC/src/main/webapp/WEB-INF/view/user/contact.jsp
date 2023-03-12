@@ -15,6 +15,18 @@
 <link rel="stylesheet" href="<c:url value="/assets/css/contact.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/home.css"/>">
 <link rel="stylesheet" href='<c:url value="/assets/css/login-icon.css"/>'>
+<style>
+.ok-btn button {
+    border: 1px solid;
+    background: #0086ff;
+    color: white;
+    font-size: 20px;
+    box-shadow: 0 0 5px #666;
+}
+.welcome {
+    box-shadow: 0px 5px 15px;
+}
+</style>
 <body style="color: white;">
     <header class="container-xl header-content">
         <form method="post">
@@ -89,6 +101,8 @@
 
 
    <jsp:include page="../layouts/user/footer.jsp"></jsp:include>
+   
+   <jsp:include page="../layouts/user/search.jsp"></jsp:include>
 
     <script>
         function test($a) {

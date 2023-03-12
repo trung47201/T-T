@@ -16,7 +16,7 @@ import com.paypal.api.payments.ShippingAddress;
 import com.paypal.api.payments.Transaction;
 import com.paypal.base.rest.PayPalRESTException;
 
-import TiShoes.Service.User.PaypalService;
+import TiShoes.Service.User.PaymentService;
 
 @Controller
 public class PaymentController {
@@ -34,7 +34,7 @@ public class PaymentController {
 		String payerId = request.getParameter("PayerID");
 
 		try {
-			PaypalService paymentServices = new PaypalService();
+			PaymentService paymentServices = new PaymentService();
 			Payment payment = paymentServices.getPaymentDetails(paymentId);
 
 			PayerInfo payerInfo = payment.getPayer().getPayerInfo();
@@ -56,14 +56,14 @@ public class PaymentController {
 	public void load_payment_paypal(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, PayPalRESTException {
 		String product = request.getParameter("product"); // product = {id_prod}_{id_prod}_{id_prod}...
-		String voucher = request.getParameter("voucher");
+		String voucher = request.getParameter("vchprice");
 		String total = request.getParameter("total");
 
 		if(voucher == null) {
-			voucher="15";
+			voucher="0";
 		}
 		System.out.println( product + "-" + voucher +"-"+total);
-		PaypalService paymentServices = new PaypalService();
+		PaymentService paymentServices = new PaymentService();
 		String approvalLink = paymentServices.authorizePayment(product, Float.parseFloat(voucher), Float.parseFloat(total));
 		response.sendRedirect(approvalLink);
 	}

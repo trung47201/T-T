@@ -1,0 +1,19 @@
+.back-header {
+    position: sticky;
+    top: -96px;
+    z-index: 100;
+}
+
+button.nav-btn-search {
+    margin-left: 515px;
+    background: none;
+    border: 0;
+    margin-top: 4px;
+}
+button.nav-btn-search:hover {
+	cursor: pointer;
+}
+
+button.nav-btn-search:focus {
+	outline-style: none;
+}

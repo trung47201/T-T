@@ -27,8 +27,8 @@
 	href='<c:url value="/assets/css/add-to-cart.css"/>'>
 <link rel="stylesheet" href="<c:url value="/assets/css/zoom-img.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/home.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/navscroll.css"/>">
 <style>
-
 /* end  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 .buy-now a:hover {
 	color: white !important;
@@ -439,7 +439,7 @@
 																src="<c:url value="/assets/images/icons/favorite32.png"/>"
 																alt="favorite32">
 														</button>
-														<button class="add-to-cart-effect" id="add-to-cart"
+														<button class="add-to-cart-effect" id="add-to-cart-effect"
 															value="${ item.id }">
 															<img
 																src="<c:url value="/assets/images/icons/addcart32.png"/>"
@@ -630,7 +630,6 @@
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-
 	<script> // add to cart
 		var id_user = "";
 		if(${ id_user != null }) {
@@ -649,11 +648,13 @@
 			});
 			$(".add-to-cart-effect").click(function() {
 				var id_prod = $(this).val();
+				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
 						"http://localhost:8888/SpringMVC/add-to-cart/"+id_user+"_"+id_prod);
 				xhr.onload = function() {
 					window.location.assign("http://localhost:8888/SpringMVC/cart/"+id_user);
 				};
+				xhr.send();
 			});
 		} else {
 			$(".add-to-cart").click(function() {
@@ -668,11 +669,13 @@
 			});
 			$(".add-to-cart-effect").click(function() {
 				var id_prod = $(this).val();
+				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
 						"http://localhost:8888/SpringMVC/add-to-cart/"+id_prod);
 				xhr.onload = function() {
 					window.location.assign("http://localhost:8888/SpringMVC/cart");
 				};
+				xhr.send();
 			});
 		}
 	</script>
@@ -730,7 +733,7 @@
 	
 	
 	<script type="text/javascript"> // msg search input empty
-	$(".search-link-icon").click(function () {
+	$("#search-link-icon").click(function () {
 		var txt = $('#search').val();
 		if(txt == "") {
 			$("#wrapper-search").removeClass("importantNone");

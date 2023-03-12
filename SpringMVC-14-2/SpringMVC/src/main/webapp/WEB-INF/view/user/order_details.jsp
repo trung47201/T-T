@@ -34,6 +34,16 @@
 .strike-dot {
     margin: 16.5px 0px !important;
 }
+.ok-btn button {
+    border: 1px solid;
+    background: #0086ff;
+    color: white;
+    font-size: 20px;
+    box-shadow: 0 0 5px #666;
+}
+.welcome {
+    box-shadow: 0px 5px 15px;
+}
 </style>
 <body style="color: white;">
 	<header class="container-xl header-content">
@@ -153,10 +163,14 @@
                     </c:forEach>
                     
                     <div class="prod_details">
+                       	<div class="total-prod">
+	                        <p>Shipping charges:</p>
+	                        <p class="money">$11.00</p>
+	                    </div>
                         <c:if test="${ total > 50 }">
                         	<div class="total-prod">
-	                            <p>Free shipping:</p>
-	                            <p class="money">$11.00</p>
+	                            <p>Free:</p>
+	                            <p class="money">-$11.00</p>
 	                        </div>
                         </c:if>
                         <c:if test="${ order.discount_at > 0 }">
@@ -173,11 +187,12 @@
                         <span>$${ totalPaid }</span>
                     </div>
                 </div>
-                
             </div>
 		</form>
 	</header>
 	<jsp:include page="../layouts/user/footer.jsp"></jsp:include>
+
+	<jsp:include page="../layouts/user/search.jsp"></jsp:include>
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>

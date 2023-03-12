@@ -98,25 +98,18 @@ public class CheckoutController {
 			double price_at = checkoutService.get_price_at(Integer.parseInt(quantity), vccode,
 					Integer.parseInt(id_prod));
 			String address = city + " - " + town + " - " + village;
-			if (checkoutService.check_status_order_await(phone_number, email, price_at, Integer.parseInt(quantity),
-					Integer.parseInt(id_prod), Integer.parseInt(size), Integer.parseInt(color))) {
-				System.out.println("Awaiting confirmation");
+			if (orderService.insertIntoOrder(fullname, email, phone_number, address, vc_id, note, method, dis)
+					&& order_detailsService.insertIntoOrder_details(price_at, Integer.parseInt(quantity),
+							Integer.parseInt(id_prod), Integer.parseInt(size), Integer.parseInt(color), phone_number,
+							email)) {
+				System.out.println("buy now success");
+				return new ModelAndView("redirect: /SpringMVC/sucess-buynow?id_prod=" + id_prod + "&id_color=" + color
+						+ "&id_size=" + size + "&quantity=" + quantity + "&fullname=" + fullname + "&phone_number="
+						+ phone_number + "&email=" + email + "&city=" + city + "&town=" + town + "&village=" + village
+						+ "&note=" + note + "&voucher=" + vc_id + "&priceat=" + price_at + "&user=" + user);
 			} else {
-				//
-				if (orderService.insertIntoOrder(fullname, email, phone_number, address, vc_id, note, method, dis)
-						&& order_detailsService.insertIntoOrder_details(price_at, Integer.parseInt(quantity),
-								Integer.parseInt(id_prod), Integer.parseInt(size), Integer.parseInt(color),
-								phone_number, email)) {
-					System.out.println("buy now success");
-					return new ModelAndView("redirect: /SpringMVC/sucess-buynow?id_prod=" + id_prod + "&id_color="
-							+ color + "&id_size=" + size + "&quantity=" + quantity + "&fullname=" + fullname
-							+ "&phone_number=" + phone_number + "&email=" + email + "&city=" + city + "&town=" + town
-							+ "&village=" + village + "&note=" + note + "&voucher=" + vc_id + "&priceat=" + price_at
-							+ "&user=" + user);
-				} else {
-					System.out.println("buy now unsuccess");
-					return new ModelAndView("redirect: /SpringMVC/cart/checkout/" + id);
-				}
+				System.out.println("buy now unsuccess");
+				return new ModelAndView("redirect: /SpringMVC/cart/checkout/" + id);
 			}
 		}
 		return new ModelAndView("redirect: /SpringMVC/");
@@ -131,6 +124,7 @@ public class CheckoutController {
 		checkoutService = new CheckoutService();
 		voucherService = new VoucherService();
 		userService = new UserService();
+		orderService = new OrderService();
 
 		String voucher = request.getParameter("voucher");
 		String quantity = request.getParameter("quantity");
@@ -154,12 +148,12 @@ public class CheckoutController {
 				}
 			} else {
 				if (p.getDiscount() > 0) {
-					total = p.getPrice()- p.getPrice() * p.getDiscount() / 100;
+					total = p.getPrice() - p.getPrice() * p.getDiscount() / 100;
 				} else {
 					total = p.getPrice();
 				}
 			}
-			if(total < 50) {
+			if (total < 50) {
 				total += 11.00;
 			}
 			mv.addObject("total", total);
@@ -192,11 +186,16 @@ public class CheckoutController {
 								System.out.println("notenough");
 								mv.addObject("applyfor", applyfor);
 							} else {
-								int vch_discount = voucherService.get_discount_by_voucher_code(voucher);
-								mv.addObject("vcdiscount", vch_discount);
-								mv.addObject("vcstatus", "start");
-								mv.addObject("vchprice", price_at*vch_discount/100);
-								System.out.println("start");
+								if (orderService.check_voucher_used_by_user_id(Integer.parseInt(id_user), voucher)) {
+									int vch_discount = voucherService.get_discount_by_voucher_code(voucher);
+									mv.addObject("vcdiscount", vch_discount);
+									mv.addObject("vcstatus", "start");
+									mv.addObject("vchprice", price_at * vch_discount / 100);
+									System.out.println("start");
+								} else {
+									mv.addObject("vcstatus", "used");
+									System.out.println("used");
+								}
 							}
 						} else {
 							double price_at = checkoutService.get_price_at(1, voucher, Integer.parseInt(id_prod));
@@ -207,12 +206,12 @@ public class CheckoutController {
 								System.out.println("notenough");
 							} else {
 								if (orderService.check_voucher_used_by_user_id(Integer.parseInt(id_user), voucher)) {
+									System.out.println("a");
 									int vch_discount = voucherService.get_discount_by_voucher_code(voucher);
 									mv.addObject("vcdiscount", vch_discount);
 									mv.addObject("vcstatus", "start");
-									mv.addObject("vchprice", price_at*vch_discount/100);
+									mv.addObject("vchprice", price_at * vch_discount / 100);
 									System.out.println("start");
-									
 								} else {
 									mv.addObject("vcstatus", "used");
 									System.out.println("used");
@@ -432,6 +431,7 @@ public class CheckoutController {
 	public ModelAndView loadCheckout_cart_with_user_id(@PathVariable String id, HttpServletRequest request,
 			HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("user/checkout-cart-user");
+		System.out.println("checkout cart -> order with user id");
 
 		userService = new UserService();
 		cartService = new CartService();
@@ -463,7 +463,6 @@ public class CheckoutController {
 					total += cart.getColor_size().getProd().getPrice() * cart.getQuantity();
 				}
 			}
-			System.out.println(total);
 			mv.addObject("total", total);
 			mv.addObject("listCart", li);
 		}
@@ -509,7 +508,8 @@ public class CheckoutController {
 										int vch_discount = voucherService.get_discount_by_voucher_code(voucher);
 										mv.addObject("vcdiscount", (double) Math.round(vch_discount * total) / 100);
 										mv.addObject("vcstatus", "start");
-										System.out.println("start");
+										System.out.println("vcstart");
+										mv.addObject("vchprice", (double) Math.round(vch_discount * total) / 100);
 									} else {
 										mv.addObject("vcstatus", "used");
 										System.out.println("used");
@@ -587,6 +587,9 @@ public class CheckoutController {
 		if (city != null && town != null && village != null && fullname != null && phone_number != null
 				&& email != null) {
 			String address = city + " - " + town + " - " + village;
+			if(vc_id == 0) {
+				vc_id=1;
+			}
 			if (orderService.insertIntoOrder(fullname, email, phone_number, address, vc_id, note, method, dis)) {
 				for (Cart cart : liCart) {
 					double price_at = 0;
@@ -603,12 +606,12 @@ public class CheckoutController {
 					}
 				}
 				int order_id = orderService.get_last_order_id_by(phone_number, email);
-				System.out.println("buy cart success");
+				System.out.println("buy cart success this");
 
-				return new ModelAndView("redirect: /SpringMVC/thanks/" + order_id);
+				return new ModelAndView("redirect: /SpringMVC/thank/" + order_id);
 
 			} else {
-				System.out.println("buy cart unsuccess");
+				System.out.println("buy cart unsuccess this");
 				return new ModelAndView("redirect: /SpringMVC/cart/checkout-cart/" + id);
 			}
 		}

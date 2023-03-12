@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.paypal.api.payments.Amount;
+import com.paypal.api.payments.Details;
 import com.paypal.api.payments.Item;
 import com.paypal.api.payments.ItemList;
 import com.paypal.api.payments.Links;
@@ -18,7 +19,7 @@ import com.paypal.base.rest.PayPalRESTException;
 
 import TiShoes.Model.Product;
 
-public class PaypalService {
+public class PaymentService {
 	private static final String CLIENT_ID = "Ab9hEluU0ckPAwAbNLhpJAzb3rvKFtHxQOnoF2wRk-IwScOcTK4g7aIVx6xIx6kM2STn2N_1dyBQR8mM";
 	private static final String CLIENT_SECRET = "EG72j2PAsKci7RrsNgGTKhkbspj4Zl1pGNwaXMIo1ighuZUrxkFY6j3zCB71_lm8V8OKqk1IbgxTGr2q";
 	private static final String MODE = "sandbox";
@@ -64,6 +65,8 @@ public class PaypalService {
 		if(voucher > 0) {
 			total = total - voucher;
 		}
+		
+		
 	    Amount amount = new Amount();
 	    amount.setCurrency("USD");
 	    amount.setTotal(String.format("%.2f", total));

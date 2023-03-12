@@ -648,6 +648,7 @@
 											});
 						});
 	</script>
+	
 	<script>
 		function amount(x) {
 			let txt = x.value;
@@ -665,7 +666,8 @@
 			}
 		}
 	</script>
-	<script type="text/javascript">
+	
+	<script type="text/javascript"> // scroll display search
 		window.addEventListener("scroll", function() {
 			var div = document.getElementById('nav-search');
 			var div1 = document.getElementsByClassName('hidden-poster2');
@@ -682,12 +684,7 @@
 		})
 	</script>
 
-
-
 	<!-- Initialize Swiper -->
-
-
-
 	<script>
 		function bigImg(x) {
 			var listkeys = document.getElementById("listkeys");
@@ -700,13 +697,18 @@
 		}
 	</script>
 
-
-
 	<script src="<c:url value="js/login.js"/>"></script>
 	<script
 		src="<c:url value="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"/>"></script>
 	<script
 		src="<c:url value="https://kit.fontawesome.com/a076d05399.js"/>"></script>
+	<!-- drop avt login -->
+	<script
+		src="<c:url value="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"/>"></script>
+	<!-- drop avt login -->
+	<script
+		src="<c:url value="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"/>"></script>
+
 
 </body>
 

@@ -24,7 +24,7 @@
 <link rel="stylesheet" href="<c:url value="/assets/css/home.css"/>">
 <link rel="stylesheet"
 	href='<c:url value="/assets/css/login-icon.css"/>'>
-
+<link rel="stylesheet" href="<c:url value="/assets/css/navscroll.css"/>">
 <body style="color: white;">
 	<c:if test="${ userID != null}">
 		<c:set var="id_user" value="${ userID }" />
@@ -510,7 +510,8 @@
 														src="<c:url value="/assets/images/icons/addcart32.png"/>"
 														alt="addcart32">
 												</button>
-												<button class="buy-now" class="shadow-1" id="${ listProd.id }">Buy now</button>
+												<button class="buy-now" class="shadow-1"
+													id="${ listProd.id }">Buy now</button>
 											</div>
 										</div>
 									</div>
@@ -576,7 +577,8 @@
 													src="<c:url value="/assets/images/icons/addcart32.png"/>"
 													alt="addcart32">
 											</button>
-											<button class="buy-now" class="shadow-1" id="${ listProd.id }">Buy now</button>
+											<button class="buy-now" class="shadow-1"
+												id="${ listProd.id }">Buy now</button>
 										</div>
 									</div>
 								</div>
@@ -644,7 +646,8 @@
 										alt="addcart32">
 								</button>
 
-								<button class="buy-now" class="shadow-1" id="${ listProd.id }">Buy now</button>
+								<button class="buy-now" class="shadow-1" id="${ listProd.id }">Buy
+									now</button>
 							</div>
 						</div>
 					</div>
@@ -692,13 +695,17 @@
 
 	<jsp:include page="../layouts/user/footer.jsp"></jsp:include>
 
+
+
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
-		<script> // add to cart
+	<jsp:include page="../layouts/user/search.jsp"></jsp:include>
+
+	<script> // add to cart
 		var id_user = "";
-		if(${ userID != null }) {
-			id_user = "${ userID }";
+		if(${ id_user != null }) {
+			id_user = "${ id_user }";
 		}
 		if(id_user != "") {
 			$(".add-to-cart").click(function() {
@@ -711,14 +718,6 @@
 				};
 				xhr.send();
 			});
-			$(".add-to-cart-effect").click(function() {
-				var id_prod = $(this).val();
-				xhr.open("GET",
-						"http://localhost:8888/SpringMVC/add-to-cart/"+id_user+"_"+id_prod);
-				xhr.onload = function() {
-					window.location.assign("http://localhost:8888/SpringMVC/cart/"+id_user);
-				};
-			});
 		} else {
 			$(".add-to-cart").click(function() {
 				var id_prod = $(this).val();
@@ -729,14 +728,6 @@
 					window.location.assign("http://localhost:8888/SpringMVC/cart");
 				};
 				xhr.send();
-			});
-			$(".add-to-cart-effect").click(function() {
-				var id_prod = $(this).val();
-				xhr.open("GET",
-						"http://localhost:8888/SpringMVC/add-to-cart/"+id_prod);
-				xhr.onload = function() {
-					window.location.assign("http://localhost:8888/SpringMVC/cart");
-				};
 			});
 		}
 	</script>
@@ -793,8 +784,7 @@
 		}
 	</script>
 
-	<script type="text/javascript">
-		//search
+	<script type="text/javascript"> //check search input
 		$(".search-link-icon").click(
 				function() {
 					var txt = $('#search').val();
@@ -808,90 +798,83 @@
 				});
 	</script>
 
-	<script>
-		// click name style
-		$(document)
-				.ready(
-						function() {
-							$("div.brand-product-products")
-									.click(
-											function() {
-												var id_style = this.id;
-												var xhr = new XMLHttpRequest();
-												xhr.open("GET",
-														"http://localhost:8888/SpringMVC/products?stylename="
-																+ id_style);
-												xhr.onload = function() {
-													window.location
-															.assign("http://localhost:8888/SpringMVC/products?stylename="
-																	+ id_style);
-												};
-												xhr.send();
-											});
-						});
+	<script> // click name style in product
+		var id_user = 0;
+		if(${ id_user != null }) {
+			id_user = "${ id_user }";
+		}
+		$("div.brand-product-products").click(
+			function() {
+				
+				var id_style = this.id;
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", "");
+				xhr.onload = function() {
+					if(id_user == 0) {
+						window.location.assign("http://localhost:8888/SpringMVC/products?stylename="+ id_style);
+					} else {
+						window.location.assign("http://localhost:8888/SpringMVC/products/"+id_user+"?stylename="+ id_style);
+					}
+					
+				};
+				xhr.send();
+			});
 	</script>
-	
-	 
-								
-	<script>
+
+	<script> // click name product
 		var id_user = "";
 		if(${userID != null }) {
 			id_user = "${ id_user }";
 		}
-		$(document)
-				.ready(
-						function() {
-							$("div.name-product-products")
-									.click(
-											function() {
-												var id_prod = this.id;
-												var xhr = new XMLHttpRequest();
-												if(id_user != "") {
-													xhr.open("GET",
-															"http://localhost:8888/SpringMVC/product-details/"+id_user+"_"+ id_prod);
-													xhr.onload = function() {
-														window.location
-																.assign("http://localhost:8888/SpringMVC/product-details/"+id_user+"_"+ id_prod);
-													};
-												} else {
-													xhr.open("GET",
-															"http://localhost:8888/SpringMVC/product-details?product-id="
-																	+ id_prod);
-													xhr.onload = function() {
-														window.location
-																.assign("http://localhost:8888/SpringMVC/product-details?product-id="
-																		+ id_prod);
-													};
-												}
-												xhr.send();
-											});
-							$("div.img-product-products")
-									.click(
-											function() {
-												var id_prod = this.id;
-												var xhr = new XMLHttpRequest();
-												if(id_user != "") {
-													xhr.open("GET",
-															"http://localhost:8888/SpringMVC/product-details/"+id_user+"_"+ id_prod);
-													xhr.onload = function() {
-														window.location
-																.assign("http://localhost:8888/SpringMVC/product-details/"+id_user+"_"+ id_prod);
-													};
-												} else {
-													xhr.open("GET",
-															"http://localhost:8888/SpringMVC/product-details?product-id="
-																	+ id_prod);
-													xhr.onload = function() {
-														window.location
-																.assign("http://localhost:8888/SpringMVC/product-details?product-id="
-																		+ id_prod);
-													};
-												}
-												xhr.send();
-											});
-						});
+		$("div.name-product-products").click(
+			function() {
+				var id_prod = this.id;
+				var xhr = new XMLHttpRequest();
+				if(id_user != "") {
+					xhr.open("GET",
+							"http://localhost:8888/SpringMVC/product-details/"+id_user+"_"+ id_prod);
+					xhr.onload = function() {
+						window.location
+								.assign("http://localhost:8888/SpringMVC/product-details/"+id_user+"_"+ id_prod);
+					};
+				} else {
+					xhr.open("GET",
+							"http://localhost:8888/SpringMVC/product-details?product-id="
+									+ id_prod);
+					xhr.onload = function() {
+						window.location
+								.assign("http://localhost:8888/SpringMVC/product-details?product-id="
+										+ id_prod);
+					};
+				}
+				xhr.send();
+			});
+		// click image style
+		$("div.img-product-products").click(function() {
+			var id_prod = this.id;
+			var xhr = new XMLHttpRequest();
+			if(id_user != "") {
+				xhr.open("GET",
+						"http://localhost:8888/SpringMVC/product-details/"+id_user+"_"+ id_prod);
+				xhr.onload = function() {
+					window.location
+							.assign("http://localhost:8888/SpringMVC/product-details/"+id_user+"_"+ id_prod);
+				};
+			} else {
+				xhr.open("GET",
+						"http://localhost:8888/SpringMVC/product-details?product-id="
+								+ id_prod);
+				xhr.onload = function() {
+					window.location
+							.assign("http://localhost:8888/SpringMVC/product-details?product-id="
+									+ id_prod);
+				};
+			}
+			xhr.send();
+		});
 	</script>
-	<script>
+	
+	<script> // click + more size
 		$(document).ready(function() {
 			$("span.moreSize").click(function() {
 				$("span.more-Size").toggleClass("none");
@@ -899,7 +882,8 @@
 			});
 		});
 	</script>
-	<script>
+	
+	<script> // click + more color
 		$(document).ready(function() {
 			$("div.btn-more").click(function() {
 				$("div.lmc").toggleClass("more-color");
@@ -907,14 +891,16 @@
 			});
 		});
 	</script>
-	<script>
+	
+	<script> // click ok to hidden error interface
 		$(document).ready(function() {
 			$(".okey-error").click(function() {
 				$(".error").toggleClass("none-error");
 			});
 		});
 	</script>
-	<script type="text/javascript">
+	
+	<script type="text/javascript"> // click gender in menu
 		function getGender(x) {
 			let txt = window.location.href;
 			if (txt.includes("gender")) {
@@ -929,7 +915,7 @@
 							}
 						}
 					}
-				} else {
+				} else { // include(?gender)
 					const arr1 = txt.split("?");
 					const arr = arr1[1].split("&");
 					for (let i = 0; i < arr.length; i++) {
@@ -946,7 +932,7 @@
 						}
 					}
 				}
-			} else if (txt.includes("products?") && !txt.includes("gender")) {
+			} else if (txt.includes("?") && !txt.includes("gender")) {
 				txt += "&gender=" + x.id;
 			} else {
 				txt += "?gender=" + x.id;
@@ -958,7 +944,7 @@
 			};
 			xhr.send();
 		}
-		function getRate(x) {
+		function getRate(x) { // select rate in menu
 			let txt = window.location.href;
 			if (txt.includes("rate")) {
 				if (txt.includes("&rate")) {
@@ -989,7 +975,7 @@
 						}
 					}
 				}
-			} else if (txt.includes("products?") && !txt.includes("rate")) {
+			} else if (txt.includes("?") && !txt.includes("rate")) {
 				txt += "&rate=" + x.id;
 			} else {
 				txt += "?rate=" + x.id;
@@ -1002,15 +988,15 @@
 			xhr.send();
 
 		}
-		function getSize(x) {
+		function getSize(x) {  // select size in menu
 			$(document).ready(function() {
 				$(x).toggleClass("active");
 			});
 			let txt = window.location.href;
 			if (txt.includes("size")) {
 				//edit
-				if (txt.includes("products?size")) {
-					const arr = txt.split("products?");
+				if (txt.includes("?size")) {
+					const arr = txt.split("?");
 					for (let i = 0; i < arr.length; i++) {
 						const arr1 = arr[i].split("&");
 						if (arr1[0].includes("size")) {
@@ -1087,7 +1073,7 @@
 				}
 			} else {
 				//not allowed edit
-				if (txt.includes("products?")) {
+				if (txt.includes("?")) { // inlucde ? not include "size"
 					txt = window.location.href + "&size=" + x.id;
 				} else {
 					txt = window.location.href + "?size=" + x.id;
@@ -1101,12 +1087,12 @@
 			xhr.send();
 
 		}
-		function getColor(x) {
+		function getColor(x) { // select color in menu
 			let txt = window.location.href;
 			if (txt.includes("color")) {
 				//edit
-				if (txt.includes("products?color")) {
-					const arr = txt.split("products?");
+				if (txt.includes("?color")) { // inlucde ?, include "color"
+					const arr = txt.split("?");
 					for (let i = 0; i < arr.length; i++) {
 						const arr1 = arr[i].split("&");
 						if (arr1[0].includes("color")) {
@@ -1146,7 +1132,7 @@
 							}
 						}
 					}
-				} else {
+				} else { // inlucde &, include "color"
 					const arr = txt.split("&");
 					for (let i = 0; i < arr.length; i++) {
 						if (arr[i].includes("color")) {
@@ -1183,9 +1169,9 @@
 				}
 			} else {
 				//not allowed edit
-				if (txt.includes("products?")) {
+				if (txt.includes("?")) { // inlucde ?, not include "color"
 					txt = window.location.href + "&color=" + x.id;
-				} else {
+				} else { // not inlucde ?, not include "color"
 					txt = window.location.href + "?color=" + x.id;
 				}
 			}
@@ -1197,22 +1183,17 @@
 			xhr.send();
 
 		}
-		function goPrice() {
+		function goPrice() {  // enter price in input
 			let a = document.getElementById('priceMin').value;
 			let b = document.getElementById('priceMax').value;
 			if (a > b) {
-				$(document)
-						.ready(
-								function() {
-									$(".error").toggleClass("none-error");
-									document.getElementById("content-error").innerHTML = "Min price must be less than max price";
-
-								});
+				$(".error").toggleClass("none-error");
+				document.getElementById("content-error").innerHTML = "Min price must be less than max price";
 			} else if (a <= b) {
 				let x = a + "_" + b;
 				let txt = window.location.href;
-				if (txt.includes("price")) {
-					if (txt.includes("products?price")) {
+				if (txt.includes("price")) { 
+					if (txt.includes("?price")) { // inlucde ?, include "price"
 						const arr = txt.split("?");
 						for (let i = 0; i < arr.length; i++) {
 							if (arr[i].includes("price")) {
@@ -1220,8 +1201,7 @@
 								txt = txt.replace(arr1[0], "price=" + x);
 							}
 						}
-
-					} else {
+					} else { // inlucde &, include "price"
 						const arr = txt.split("&");
 						for (let i = 0; i < arr.length; i++) {
 							if (arr[i].includes("price")) {
@@ -1229,10 +1209,10 @@
 							}
 						}
 					}
-				} else {
-					if (txt.includes("products?")) {
+				} else { // not include "price"
+					if (txt.includes("?")) { // not include "price", include ?
 						txt = window.location.href + "&price=" + x;
-					} else {
+					} else { // not include "price", not include ?
 						txt = window.location.href + "?price=" + x;
 					}
 				}
@@ -1246,11 +1226,11 @@
 		}
 	</script>
 
-	<script>
+	<script> // select price in menu
 		function price(x) {
 			let txt = window.location.href;
-			if (txt.includes("price")) {
-				if (txt.includes("products?price")) {
+			if (txt.includes("price")) { // include "price"
+				if (txt.includes("?price")) { // include ?
 					const arr = txt.split("?");
 					for (let i = 0; i < arr.length; i++) {
 						if (arr[i].includes("price")) {
@@ -1258,8 +1238,7 @@
 							txt = txt.replace(arr1[0], "price=" + x.value);
 						}
 					}
-
-				} else {
+				} else { //include "price", not include ?
 					const arr = txt.split("&");
 					for (let i = 0; i < arr.length; i++) {
 						if (arr[i].includes("price")) {
@@ -1267,10 +1246,10 @@
 						}
 					}
 				}
-			} else {
-				if (txt.includes("products?")) {
+			} else { // not include "price"
+				if (txt.includes("?")) { // include ?
 					txt = window.location.href + "&price=" + x.value;
-				} else {
+				} else { // not include ?
 					txt = window.location.href + "?price=" + x.value;
 				}
 			}
@@ -1281,45 +1260,13 @@
 			};
 			xhr.send();
 		}
-		function stylename(x) {
-			let txt = window.location.href;
-			if (txt.includes("stylename")) {
-				if (txt.includes("products?stylename")) {
-					const arr = txt.split("?");
-					for (let i = 0; i < arr.length; i++) {
-						if (arr[i].includes("stylename")) {
-							const arr1 = arr[i].split("&");
-							txt = txt.replace(arr1[0], "stylename=" + x.id);
-						}
-					}
-
-				} else {
-					const arr = txt.split("&");
-					for (let i = 0; i < arr.length; i++) {
-						if (arr[i].includes("stylename")) {
-							txt = txt.replace(arr[i], "stylename=" + x.id);
-						}
-					}
-				}
-			} else {
-				if (txt.includes("products?")) {
-					txt = window.location.href + "&stylename=" + x.id;
-				} else {
-					txt = window.location.href + "?stylename=" + x.id;
-				}
-			}
-			var xhr = new XMLHttpRequest();
-			xhr.open("GET", txt);
-			xhr.onload = function() {
-				window.location.assign(txt);
-			};
-			xhr.send();
-
-		}
-		function sortby(x) {
+	</script>
+	
+	<script type="text/javascript"> // chosen sort by
+		function sortby(x) { // chosen sort 
 			let txt = window.location.href;
 			if (txt.includes("sortby")) {
-				if (txt.includes("products?sortby")) {
+				if (txt.includes("?sortby")) {
 					const arr = txt.split("?");
 					for (let i = 0; i < arr.length; i++) {
 						if (arr[i].includes("sortby")) {
@@ -1327,7 +1274,6 @@
 							txt = txt.replace(arr1[0], "sortby=" + x.value);
 						}
 					}
-
 				} else {
 					const arr = txt.split("&");
 					for (let i = 0; i < arr.length; i++) {
@@ -1337,7 +1283,7 @@
 					}
 				}
 			} else {
-				if (txt.includes("products?")) {
+				if (txt.includes("?")) {
 					txt = window.location.href + "&sortby=" + x.value;
 				} else {
 					txt = window.location.href + "?sortby=" + x.value;
@@ -1350,12 +1296,59 @@
 			};
 			xhr.send();
 		}
+	</script>
+	
+	<script type="text/javascript"> // click name style
+		function stylename(x) { 
+			let txt = window.location.href;
+			if (txt.includes("stylename")) {
+				if (txt.includes("?stylename")) {
+					const arr = txt.split("?");
+					for (let i = 0; i < arr.length; i++) {
+						if (arr[i].includes("stylename")) {
+							const arr1 = arr[i].split("&");
+							txt = txt.replace(arr1[0], "stylename=" + x.id);
+						}
+					}
+				} else {
+					const arr = txt.split("&");
+					for (let i = 0; i < arr.length; i++) {
+						if (arr[i].includes("stylename")) {
+							txt = txt.replace(arr[i], "stylename=" + x.id);
+						}
+					}
+				}
+			} else {
+				if (txt.includes("?")) {
+					txt = window.location.href + "&stylename=" + x.id;
+				} else {
+					txt = window.location.href + "?stylename=" + x.id;
+				}
+			}
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", txt);
+			xhr.onload = function() {
+				window.location.assign(txt);
+			};
+			xhr.send();
+		}
+	</script>
+	
+	<script type="text/javascript"> // reset menu
+		var id_user = "";
+		if(${userID != null }) {
+			id_user = "${ id_user }";
+		}
 		function resetAll() {
 			var xhr = new XMLHttpRequest();
-			xhr.open("GET", "http://localhost:8888/SpringMVC/products");
+			xhr.open("GET", "");
 			xhr.onload = function() {
-				window.location
-						.assign("http://localhost:8888/SpringMVC/products");
+				if(id_user != 0) {
+					window.location.assign("http://localhost:8888/SpringMVC/products/"+id_user);
+				} else {
+					window.location.assign("http://localhost:8888/SpringMVC/products");
+				}
+				
 			};
 			xhr.send();
 		}

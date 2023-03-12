@@ -25,6 +25,16 @@
 <link rel="stylesheet" href="<c:url value="/assets/css/home.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/view_order.css"/>">
 <style>
+.ok-btn button {
+    border: 1px solid;
+    background: #0086ff;
+    color: white;
+    font-size: 20px;
+    box-shadow: 0 0 5px #666;
+}
+.welcome {
+    box-shadow: 0px 5px 15px;
+}
 </style>
 <body style="color: white;">
 <c:set var="id_user" value="${ userID }"></c:set>
@@ -84,6 +94,7 @@
 	</header>
 	<jsp:include page="../layouts/user/footer.jsp"></jsp:include>
 
+	<jsp:include page="../layouts/user/search.jsp"></jsp:include>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>

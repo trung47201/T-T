@@ -178,22 +178,7 @@ public class CheckoutService implements CheckoutRepository {
 		}
 		return t;
 	}
-
-//	@Override
-	public boolean checkout_buynow(int id_prod, int amount, int id_size, int id_color, String fullname, String email,
-			String phone_number, String address, int voucher_id, String note, String method, double price_at) {
-
-		orderService = new OrderService();
-		order_detailsService = new Order_detailsService();
-
-		if (orderService.insertIntoOrder_not_login(fullname, email, phone_number, address, voucher_id, note, method) == true
-				&& order_detailsService.insertIntoOrder_details(price_at, amount, id_prod, id_size, id_color, phone_number, email) == true) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
+	
 	public String removeProductFromCartAfterCheckout(int id_prod, String txt) {
 		String s = "";
 		String a[] = txt.split("/");
@@ -234,21 +219,6 @@ public class CheckoutService implements CheckoutRepository {
 		return total;
 	}
 
-	public boolean check_status_order_await(String phone, String email, double price_at, int quantity, int prod_id,
-			int size_id, int color_id) {
-		price_at = (double) Math.round(price_at*100)/100;
-		orderService = new OrderService();
-		order_detailsService = new Order_detailsService();
-		int order_id = orderService.get_order_id_by(phone, email);
-		List<Order_details> li = order_detailsService.getAllOrder_details();
-		for (Order_details o : li) {
-			if(o.getOrder_().getId() == order_id && o.getPrice_at()==price_at && o.getQuantity() == quantity && o.getProd().getId() == prod_id && o.getSize().getId() == size_id && o.getColor().getId() == color_id) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
 	public double get_discount_at(int quantity, String code, int id_prod) {
 		productService = new ProductService();
 		voucherService = new VoucherService();
