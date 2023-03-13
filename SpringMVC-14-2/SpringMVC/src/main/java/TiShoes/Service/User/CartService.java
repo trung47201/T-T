@@ -454,7 +454,7 @@ public class CartService implements CartRepository {
 		String arr[] = id.split("_");
 		if(arr.length > 0) {
 			for (String s : arr) {
-				if(s != null) {
+				if(s != null && !s.equals("")) {
 					li.add(get_cart_by_cart_id(Integer.parseInt(s)));
 				}
 			}

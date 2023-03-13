@@ -60,6 +60,7 @@ public class ThankController {
 		String price_at = request.getParameter("priceat");
 		String voucher = request.getParameter("voucher");
 		String userID = request.getParameter("user");
+		String method = request.getParameter("method");
 		
 		if(userID != null) {
 			mv.addObject("userID", userID);
@@ -80,7 +81,7 @@ public class ThankController {
 			mv.addObject("discount", discount);
 		}
 		
-		
+		mv.addObject("method", method);
 		mv.addObject("price_at", price_at);
 		mv.addObject("id_prod", id_prod);
 		mv.addObject("id_color", id_color);
@@ -163,6 +164,7 @@ public class ThankController {
 		String email = o.getEmail();
 		String address = o.getAddress();
 		String note = o.getNote();
+		String method = o.getMethod();
 		
 		List<Order_details> li = order_detailsService.get_all_order_details_by_order_id(Integer.parseInt(id));
 		double totalProd = 0;
@@ -178,6 +180,7 @@ public class ThankController {
 		mv.addObject("email", email);
 		mv.addObject("address", address);
 		mv.addObject("note", note);
+		mv.addObject("method", method);
 		mv.addObject("back_home", "home");
 		
 		return mv;

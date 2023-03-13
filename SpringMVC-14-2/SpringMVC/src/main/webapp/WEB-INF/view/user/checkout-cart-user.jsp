@@ -378,9 +378,11 @@ input#phone {
 		<div class="btn-order">
 			<input type="button" name="order" id="order" value="Order">
 		</div>
-
+		<input type="hidden" name="cartid" value="${ id }">
+		
 		<input type="hidden" name="total" id="total" value="${ total }">
-
+		<input type="hidden" name="userid" id="userid" value="${ user_id }">
+		
 		<c:if test="${ vchprice != null }">
 			<input type="hidden" name="vchprice" id="vchprice"
 				value="${ vchprice }">
@@ -536,22 +538,33 @@ input#phone {
 				error = "Village is empty!";
 			}
 			if (error == "") {
-				if(method == true) {
-					var product = "";
-					var liArr = document.querySelectorAll('.prod-id');
-					for(let i=0; i<liArr.length; i++) {
-						if(i==0) {
-							product += liArr[i].id +"_"+liArr[i].name;
-						} else {
-							product += "/"+liArr[i].id +"_"+liArr[i].name;
+				var status = "${ vcstatus }";
+				if(status == "start" || status == null || status == "") {
+					if(method == true) {
+						var product = "";
+						var liArr = document.querySelectorAll('.prod-id');
+						for(let i=0; i<liArr.length; i++) {
+							if(i==0) {
+								product += liArr[i].id +"_"+liArr[i].name;
+							} else {
+								product += "/"+liArr[i].id +"_"+liArr[i].name;
+							}
 						}
-					}
-					if(product != "") {
-						$('#myform').attr('action', "/SpringMVC/authorize_payment?product="+product);
+						if(product != "") {
+							$('#myform').attr('action', "/SpringMVC/authorize_payment?product="+product);
+							$(get).attr("type", "submit");
+						}
+					} else {
 						$(get).attr("type", "submit");
 					}
 				} else {
-					$(get).attr("type", "submit");
+					var url = window.location.href;
+					var xhr = new XMLHttpRequest();
+					xhr.open("GET", "");
+					xhr.onload = function() {
+						window.location.assign(url.split("?")[0]);
+					};
+					xhr.send();
 				}
 			} else {
 				$("#wrapper").removeClass("importantNone");

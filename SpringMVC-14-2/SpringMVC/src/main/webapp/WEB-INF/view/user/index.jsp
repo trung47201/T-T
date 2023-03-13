@@ -30,6 +30,9 @@
 <link rel="stylesheet" href="<c:url value="/assets/css/navscroll.css"/>">
 <style>
 /* end  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+.modal-backdrop {
+	z-index: 10 !important;
+}
 .buy-now a:hover {
 	color: white !important;
 }

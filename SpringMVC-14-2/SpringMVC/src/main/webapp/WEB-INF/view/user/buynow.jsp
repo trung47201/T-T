@@ -83,40 +83,85 @@ cursor: pointer;
 			<c:if test="${ userID != null }">
 				<div class="login none">
 					<div class="container-xl icon-user">
-						<button type="button" class="icon-user btn btn-primary"
-							data-toggle="modal" data-target="#login">
-							<img class="icon-user"
-								src="<c:url value="/assets/images/icons/user48.png"/>"
-								alt="icon-user">
-						</button>
+						<c:if test="${ userID != null }">
+							<button type="button" class="icon-user btn none" data-toggle="modal"
+								data-target="#login">
+								<img class="icon-user"
+									src="<c:url value="/assets/images/users/${ avatar }"/>"
+									alt="icon-user">
+							</button>
+							<button type="button" class="icon-user-login drop-icon"
+								id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="false">
+								<img class="icon-user-login"
+									src="<c:url value="/assets/images/users/${ avatar }"/>"
+									alt="icon-user">
+							</button>
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+								id="dropdown-menu">
+								<div class="img-dropdown-menu">
+									<img src="<c:url value="/assets/images/icons/triangle-up.png"/>">
+								</div>
+								<div>
+									<a class="dropdown-item" href="/SpringMVC/order/${ id_user }">Order</a>
+									<a class="dropdown-item" href="#">Personal details</a> <a
+										class="dropdown-item" onclick="logout()">Logout</a>
+								</div>
+							</div>
+						</c:if>
+						<c:if test="${ userID == null }">
+							<button type="button" class="icon-user btn" data-toggle="modal"
+								data-target="#login">
+								<img class="icon-user"
+									src="<c:url value="/assets/images/icons/user48.png"/>"
+									alt="icon-user">
+							</button>
+						</c:if>
 						<div class="modal fade" id="login" tabindex="-1" role="dialog"
 							aria-labelledby="exampleModalLabel" aria-hidden="true">
 							<div class="modal-dialog" role="document">
 								<div class="modal-content">
-									<button type="button" class="btn btn-secondary close"
-										data-dismiss="modal">
-										<img class="close-login-icon"
-											src="<c:url value="/assets/images/icons/close48.png"/>"
-											alt="icon-close" width="32px">
-									</button>
-									<div class="login_form_container">
-										<div class="login_form">
-											<h2>Login</h2>
-											<div class="input_group">
-												<i class="fa fa-user"></i> <input type="text"
-													placeholder="Username" class="input_text" autocomplete="off" />
+									<div class="btn-close-login">
+										<button type="button" class="btn btn-secondary close"
+											data-dismiss="modal">
+											<img class="close-login-icon"
+												src="<c:url value="/assets/images/icons/close48.png"/>"
+												alt="icon-close" width="32px">
+										</button>
+									</div>
+									<div class="login_form_container" id="login_form_container">
+											<div class="login_form">
+												<h2>LOGIN</h2>
+												<div class="input_group">
+				
+													<i class="fa fa-user"></i> <input type="text" id="username"
+														name="username" placeholder="Username" class="input_text"
+														autocomplete="off" />
+												</div>
+												<div class="input_group">
+													<i class="fa fa-unlock-alt"></i> <input type="password"
+														id="password" name="password" placeholder="Password"
+														class="input_text" autocomplete="off" />
+												</div>
+				
+												<div class="error-login none">
+													<p id="msg-error">Username or password is not correct!</p>
+												</div>
+				
+												<div class="form-check">
+				
+													<input class="form-check-input" type="checkbox"
+														name="rememberme" value="" id="flexCheckChecked"> <label
+														class="form-check-label" for="flexCheckChecked">
+														Remember me </label>
+												</div>
+												<div class="button_group" id="login_button">
+													<input type="submit" name="login" id="login-btn" value="Login">
+												</div>
+												<div class="fotter">
+													<a>Forgot Password ?</a> <a href="/SpringMVC/sign-up">SignUp</a>
+												</div>
 											</div>
-											<div class="input_group">
-												<i class="fa fa-unlock-alt"></i> <input type="password"
-													placeholder="Password" class="input_text" autocomplete="off" />
-											</div>
-											<div class="button_group" id="login_button">
-												<a>Login</a>
-											</div>
-											<div class="fotter">
-												<a>Forgot Password ?</a> <a>SingUp</a>
-											</div>
-										</div>
 									</div>
 								</div>
 							</div>
@@ -155,7 +200,7 @@ cursor: pointer;
 													placeholder="Password" class="input_text" autocomplete="off" />
 											</div>
 											<div class="button_group" id="login_button">
-												<a>Login</a>
+													<input type="button" name="login" id="login-btn" value="Login">
 											</div>
 											<div class="fotter">
 												<a>Forgot Password ?</a> <a>SingUp</a>
@@ -246,33 +291,62 @@ cursor: pointer;
 				<h4 class="pm">Payment methods</h4>
 				
 				<div class="shipping" id="radio2" onclick="radio(this)">
-					<input type="radio" name="paymentmethods" id="rad2" value="cod"
-						checked>
+					<c:if test="${ method == 'cod' ||  method == null }">
+						<input type="radio" name="paymentmethods" id="rad2" value="cod"
+							checked>
+					</c:if>
+					<c:if test="${ method != 'cod' &&  method != null }">
+						<input type="radio" name="paymentmethods" id="rad2" value="cod">
+					</c:if>
 					<div class="icon-cod">
 						&emsp;Payment on delivery (COD) <img
 							src="<c:url value="/assets/images/icons/cash-on-delivery.png"/>"
 							alt="">
 					</div>
 				</div>
-				<div class="content-pm none" id="content-pm" style="visibility: visible;">You only have to pay when you receive the goods.</div>
-					
-				<div class="shipping" id="radio3" onclick="radio(this)">
-					<input type="radio" name="paymentmethods" id="rad3"
-						value="payByCard">
-					<div class="icon-credit">
-						&emsp; Pay by credit card <img
-							src="<c:url value="/assets/images/icons/credit-card.png"/>"
-							alt="">
+				
+				<c:if test="${ method == 'cod' ||  method == null }">
+					<div class="content-pm" id="content-pm" style="visibility: visible;">
+						You only have to pay when you receive the goods.
 					</div>
-				</div>
-				<div class="content-bank none" id="content-bank" style="visibility: visible;">
-					<div>Choose a</div>
-					<div class="bank">
-						<div class="bank" id="Paypal" onclick="bank(this)">
-							<img src="<c:url value="/assets/images/icons/icons8-paypal-96.png"/>" alt="">
+				</c:if>
+				
+				<c:if test="${ method != 'cod' &&  method != null }">
+					<div class="content-pm none" id="content-pm" style="visibility: visible;">
+						You only have to pay when you receive the goods.
+					</div>
+				</c:if>
+				
+					<div class="shipping" id="radio3" onclick="radio(this)">
+						<c:if test="${ method == 'card' }">
+							<input type="radio" name="paymentmethods" id="rad3"
+								value="payByCard" checked>
+						</c:if>
+						<c:if test="${ method != 'card' }">
+							<input type="radio" name="paymentmethods" id="rad3"
+								value="payByCard">
+						</c:if>
+						<div class="icon-credit">
+							&emsp; Pay by credit card <img
+								src="<c:url value="/assets/images/icons/credit-card.png"/>"
+								alt="">
 						</div>
 					</div>
-				</div>
+					<c:if test="${ method != 'card' }">
+							<div class="content-bank none" id="content-bank" style="visibility: visible;">
+					</c:if>
+					<c:if test="${ method == 'card' }">
+							<div class="content-bank" id="content-bank" style="visibility: visible;">
+					</c:if>
+						<div>Choose a</div>
+						<div class="bank">
+							<div class="bank" id="Paypal" onclick="bank(this)">
+								<img src="<c:url value="/assets/images/icons/icons8-paypal-96.png"/>" alt="">
+							</div>
+						</div>
+					</div>
+				
+				
 			</div>
 
 			<!-- Order -->
@@ -303,17 +377,33 @@ cursor: pointer;
 					<div class="color-product-details">
 						<div class="list-color-product-details">
 							<c:forEach var="liColor" items="${ listColor }" varStatus="index">
-								<c:if test="${ index.getIndex() == 0 }">
-									<span class="select-color selected-color"
-										id="${ product.id }_${ liColor.color.id }"
-										style="background: ${ liColor.color.rgb }"></span>
-									<input type="hidden" name="color" id="color"
-										value="${ liColor.color.id }">
+								<c:if test="${ color != null }">
+									<c:if test="${ color == liColor.color.id }">
+										<span class="select-color selected-color"
+											id="${ product.id }_${ liColor.color.id }"
+											style="background: ${ liColor.color.rgb }"></span>
+										<input type="hidden" name="color" id="color"
+											value="${ liColor.color.id }">
+									</c:if>
+									<c:if test="${ color != liColor.color.id }">
+										<span class="select-color"
+											id="${ product.id }_${ liColor.color.id }"
+											style="background: ${ liColor.color.rgb }"></span>
+									</c:if>
 								</c:if>
-								<c:if test="${ index.getIndex() != 0 }">
-									<span class="select-color"
-										id="${ product.id }_${ liColor.color.id }"
-										style="background: ${ liColor.color.rgb }"></span>
+								<c:if test="${ color == null }">
+									<c:if test="${ index.getIndex() == 0 }">
+										<span class="select-color selected-color"
+											id="${ product.id }_${ liColor.color.id }"
+											style="background: ${ liColor.color.rgb }"></span>
+										<input type="hidden" name="color" id="color"
+											value="${ liColor.color.id }">
+									</c:if>
+									<c:if test="${ index.getIndex() != 0 }">
+										<span class="select-color"
+											id="${ product.id }_${ liColor.color.id }"
+											style="background: ${ liColor.color.rgb }"></span>
+									</c:if>
 								</c:if>
 							</c:forEach>
 						</div>
@@ -326,40 +416,79 @@ cursor: pointer;
 							</div>
 							<c:forEach var="liSize" items="${ listSize }" varStatus="index">
 								<c:set var="idProd_Size" value="${ product.id }_${ liSize.key }"></c:set>
-								<c:if test="${ index.getIndex() == 0 }">
-									<div class="list-size-product-details" id="${ idProd_Size }">
-										<c:forEach var="liSizeByColor" items="${ liSize.value }"
-											varStatus="indexS">
-											<c:if test="${ size == liSizeByColor.size.id }">
-												<span class="select-size selected-color"
-													id="${idProd_Size }_${ liSizeByColor.size.id }"
-													name="${ liSizeByColor.color.id }">${ liSizeByColor.size.size_number }</span>
-												<input type="hidden" name="size" id="size"
-													value="${ liSizeByColor.size.id }">
-											</c:if>
-											<c:if test="${  size != liSizeByColor.size.id  }">
-												<span class="select-size"
-													id="${idProd_Size }_${ liSizeByColor.size.id }"
-													name="${ liSizeByColor.color.id }">${ liSizeByColor.size.size_number }</span>
-											</c:if>
-										</c:forEach>
-									</div>
+								<c:if test="${ color != null }">
+									<c:if test="${ color == liSize.key }">
+										<div class="list-size-product-details" id="${ idProd_Size }">
+											<c:forEach var="liSizeByColor" items="${ liSize.value }"
+												varStatus="indexS">
+												<c:if test="${ size == liSizeByColor.size.id }">
+													<span class="select-size selected-color"
+														id="${idProd_Size }_${ liSizeByColor.size.id }"
+														name="${ liSizeByColor.color.id }">${ liSizeByColor.size.size_number }</span>
+													<input type="hidden" name="size" id="size"
+														value="${ liSizeByColor.size.id }">
+												</c:if>
+												<c:if test="${  size != liSizeByColor.size.id  }">
+													<span class="select-size"
+														id="${idProd_Size }_${ liSizeByColor.size.id }"
+														name="${ liSizeByColor.color.id }">${ liSizeByColor.size.size_number }</span>
+												</c:if>
+											</c:forEach>
+										</div>
+									</c:if>
+									<c:if test="${ color != liSize.key }">
+										<div class="list-size-product-details none"
+											id="${ idProd_Size }">
+											<c:forEach var="liSizeByColor" items="${ liSize.value }"
+												varStatus="indexS">
+												<c:if test="${ indexS.getIndex() == 0 }">
+													<span class="select-size"
+														id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
+												</c:if>
+												<c:if test="${ indexS.getIndex() != 0 }">
+													<span class="select-size"
+														id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
+												</c:if>
+											</c:forEach>
+										</div>
+									</c:if>
 								</c:if>
-								<c:if test="${ index.getIndex() != 0 }">
-									<div class="list-size-product-details none"
-										id="${ idProd_Size }">
-										<c:forEach var="liSizeByColor" items="${ liSize.value }"
-											varStatus="indexS">
-											<c:if test="${ indexS.getIndex() == 0 }">
-												<span class="select-size"
-													id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
-											</c:if>
-											<c:if test="${ indexS.getIndex() != 0 }">
-												<span class="select-size"
-													id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
-											</c:if>
-										</c:forEach>
-									</div>
+								<c:if test="${ color == null }">
+									<c:if test="${ index.getIndex() == 0 }">
+										<div class="list-size-product-details" id="${ idProd_Size }">
+											<c:forEach var="liSizeByColor" items="${ liSize.value }"
+												varStatus="indexS">
+												<c:if test="${ size == liSizeByColor.size.id }">
+													<span class="select-size selected-color"
+														id="${idProd_Size }_${ liSizeByColor.size.id }"
+														name="${ liSizeByColor.color.id }">${ liSizeByColor.size.size_number }</span>
+													<input type="hidden" name="size" id="size"
+														value="${ liSizeByColor.size.id }">
+												</c:if>
+												<c:if test="${  size != liSizeByColor.size.id  }">
+													<span class="select-size"
+														id="${idProd_Size }_${ liSizeByColor.size.id }"
+														name="${ liSizeByColor.color.id }">${ liSizeByColor.size.size_number }</span>
+												</c:if>
+											</c:forEach>
+										</div>
+									</c:if>
+									<c:if test="${ index.getIndex() != 0 }">
+										<div class="list-size-product-details none"
+											id="${ idProd_Size }">
+											<c:forEach var="liSizeByColor" items="${ liSize.value }"
+												varStatus="indexS">
+												<c:if test="${ indexS.getIndex() == 0 }">
+													<span class="select-size"
+														id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
+												</c:if>
+												<c:if test="${ indexS.getIndex() != 0 }">
+													<span class="select-size"
+														id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
+												</c:if>
+											</c:forEach>
+										</div>
+									</c:if>
 								</c:if>
 							</c:forEach>
 						</div>
@@ -426,15 +555,17 @@ cursor: pointer;
 					</div>
 				</div>
 
-				<div class="voucher">
-					<div class="input-voucher">
-						<input type="text" name="voucher_code" id="voucher_code"
-							placeholder="Voucher">
+				<c:if test="${ userID != null }">
+					<div class="voucher">
+						<div class="input-voucher">
+							<input type="text" name="voucher_code" id="voucher_code"
+								placeholder="Voucher">
+						</div>
+						<div class="apply-voucher">
+							<input type="button" name="apply" id="apply" value="Apply">
+						</div>
 					</div>
-					<div class="apply-voucher">
-						<input type="button" name="apply" id="apply" value="Apply">
-					</div>
-				</div>
+				</c:if>
 
 				<hr>
 				<div class="calculator">
@@ -766,6 +897,10 @@ cursor: pointer;
 		<input type="hidden" name="vccode" id="vccode" value="${ vccode }">
 		<input type="hidden" name="idprod" id="idprod" value="${ idprod }">
 		
+		<input type="hidden" name="userid" id="userid" value="${ id_user }">
+		
+		<input type="hidden" name="cartid" value="${ cartid }">
+		
 		<c:if test="${ vchprice != null }">
 			<input type="hidden" name="vchprice" id="vchprice" value="${ vchprice }">
 		</c:if>
@@ -792,18 +927,45 @@ cursor: pointer;
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 	<script>
-	$("#content-pm").removeClass("none");
 	function radio(x) {
+		var url = window.location.href;
+		var url_new = "";
+		var method = x.id;
 		if(x.id == "radio2") {
 			document.getElementById("rad2").checked = true;
 			$("#content-pm").removeClass("none");
 			$("#content-bank").addClass("none");
+			method = "cod";
 		} else if(x.id == "radio3") {
 			document.getElementById("rad3").checked = true;
 			$("#content-pm").addClass("none");
 			$("#content-bank").removeClass("none");
+			method = "card";
 		}
-		
+		if(url.includes("?")) {
+			if(url.includes("?method")) {
+				var arr1 = url.split("?")[1];
+				var arr2 = arr1.split("&")[0];
+				url_new = url.replace(arr2, "method="+method);
+			} else if(url.includes("&method")) {
+				const arr1 = url.split("&");
+				for(let i=0; i<arr1.length; i++) {
+					if(arr1[i].includes("method")) {
+						url_new = url.replace(arr1[i], "method="+method);
+					}
+				}
+			} else {
+				url_new = url+"&method="+method;
+			}
+		} else {
+			url_new = url+"?method="+method;
+		}
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", "");
+		xhr.onload = function() {
+			window.location.assign(url_new);
+		};
+		xhr.send();
 	}
 	</script>
 	
@@ -892,7 +1054,7 @@ cursor: pointer;
 		}
 	</script>
 
-	<script type="text/javascript">
+	<script type="text/javascript"> //aplly voucher
 		var id="";
 		if(${ id != null }) {
 			id = "${id}";
@@ -995,6 +1157,8 @@ cursor: pointer;
 		});
 	</script>
 	<script type="text/javascript"> // chosen color
+		var url = window.location.href;
+		var url_new = "";
 		var size = document.getElementsByClassName("list-size-product-details");
 		var color = document.getElementsByClassName("select-color");
 		var sizes = document.getElementsByClassName("select-size");
@@ -1007,6 +1171,40 @@ cursor: pointer;
 						const arr = txt.split("_");
 						var color_id = arr[1];
 						document.getElementById("color").value = color_id;
+						// keep color when choose in url
+						if(url.includes("?")) {
+							if(url.includes("?color")) {
+								var arr1 = url.split("?")[1];
+								var arr2 = arr1.split("&")[0];
+								url_new = url.replace(arr2, "color="+color_id);
+							} else if(url.includes("&color")) {
+								const arr1 = url.split("&");
+								for(let i=0; i<arr1.length; i++) {
+									if(arr1[i].includes("color")) {
+										url_new = url.replace(arr1[i], "color="+color_id);
+									}
+								}
+							} else {
+								url_new = url+"&color="+color_id;
+							}
+						} else {
+							url_new = url+"?color="+color_id;
+						}
+						if(url_new != "") {
+							var xhr = new XMLHttpRequest();
+							xhr.open("GET", "");
+							xhr.onload = function() {
+								window.location.assign(url_new);
+							};
+							xhr.send();
+						} else {
+							var xhr = new XMLHttpRequest();
+							xhr.open("GET", "");
+							xhr.onload = function() {
+								window.location.assign(url);
+							};
+							xhr.send();
+						}
 					} else {
 						$(color[i]).removeClass("selected-color");
 						for (let j=0; j<sizes.length; j++) {

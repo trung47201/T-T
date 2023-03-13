@@ -52,50 +52,7 @@ display: none;
 					<img src="<c:url value="/assets/images/icons/emiuuu.jpg"/>" alt="">
 				</div>
 			</c:if>
-		    <c:if test="${ userID != null }">
-		    	<div class="login none">
-					<div class="container-xl icon-user">
-						<button type="button" class="icon-user btn btn-primary"
-							data-toggle="modal" data-target="#login">
-							<img class="icon-user"
-								src="<c:url value="/assets/images/icons/user48.png"/>"
-								alt="icon-user">
-						</button>
-						<div class="modal fade" id="login" tabindex="-1" role="dialog"
-							aria-labelledby="exampleModalLabel" aria-hidden="true">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-									<button type="button" class="btn btn-secondary close"
-										data-dismiss="modal">
-										<img class="close-login-icon"
-											src="<c:url value="/assets/images/icons/close48.png"/>"
-											alt="icon-close" width="32px">
-									</button>
-									<div class="login_form_container">
-										<div class="login_form">
-											<h2>Login</h2>
-											<div class="input_group">
-												<i class="fa fa-user"></i> <input type="text"
-													placeholder="Username" class="input_text" autocomplete="off" />
-											</div>
-											<div class="input_group">
-												<i class="fa fa-unlock-alt"></i> <input type="password"
-													placeholder="Password" class="input_text" autocomplete="off" />
-											</div>
-											<div class="button_group" id="login_button">
-												<a>Login</a>
-											</div>
-											<div class="fotter">
-												<a>Forgot Password ?</a> <a>SingUp</a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-		    </c:if>
+		    
 		    <c:if test="${ userID == null }">
 		    	<div class="login">
 					<div class="container-xl icon-user">
@@ -172,7 +129,12 @@ display: none;
 							<th>Shipping method</th>
 						</tr>
 						<tr>
-							<td>Payment on delivery (COD)</td>
+							<c:if test="${ method == 'COD' }">
+								<td>Payment on delivery (COD)</td>
+							</c:if>
+							<c:if test="${ method == 'Credit card'}">
+								<td>Payment by Credit card</td>
+							</c:if>
 							<td>Delivery to your place</td>
 						</tr>
 						<tr>
