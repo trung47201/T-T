@@ -4,11 +4,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <link rel="stylesheet" href='<c:url value="/assets/css/bootstrap.css"/>'>
 <link rel="stylesheet" href='<c:url value="/assets/js/bootstrap.js"/>'>
 <link rel="stylesheet" href='<c:url value="/assets/css/index.css"/>'>
-<link rel="stylesheet" href='<c:url value="/assets/css/login-icon.css"/>'>
+<link rel="stylesheet"
+	href='<c:url value="/assets/css/login-icon.css"/>'>
 <link rel="stylesheet"
 	href='<c:url value="/assets/css/bootstrap.min.css"/>'>
 <link rel="stylesheet"
@@ -23,6 +25,7 @@
 <link rel="stylesheet"
 	href='<c:url value="/assets/css/btn-effect.css"/>'>
 <link rel="stylesheet" href="<c:url value="/assets/css/home.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/navscroll.css"/>">
 <body style="color: white;">
 	<header class="container-xl header-content">
 		<form method="post">
@@ -39,14 +42,17 @@
 						<c:forEach var="listGallery" items="${ gallery }"
 							varStatus="index">
 							<c:if test="${ index.getIndex() == 0 }">
-								<div class="img-hover first-hover" id="${ listGallery.thumbnail }">
-									<img src="<c:url value="/assets/images/products/${ listGallery.thumbnail }"/>"
+								<div class="img-hover first-hover"
+									id="${ listGallery.thumbnail }">
+									<img
+										src="<c:url value="/assets/images/products/${ listGallery.thumbnail }"/>"
 										alt="image">
 								</div>
 							</c:if>
 							<c:if test="${ index.getIndex() != 0 }">
 								<div class="img-hover" id="${ listGallery.thumbnail }">
-									<img src="<c:url value="/assets/images/products/${ listGallery.thumbnail }"/>"
+									<img
+										src="<c:url value="/assets/images/products/${ listGallery.thumbnail }"/>"
 										alt="image">
 								</div>
 							</c:if>
@@ -80,7 +86,8 @@
 
 						<c:if test="${ product.discount > 0 }">
 							<h2>
-								$<fmt:formatNumber type="number" maxFractionDigits="2"
+								$
+								<fmt:formatNumber type="number" maxFractionDigits="2"
 									value="${ product.price - product.price * product.discount/100 }" />
 							</h2>
 							<p>$${ product.price }</p>
@@ -97,10 +104,16 @@
 						<div class="list-color-product-details">
 							<c:forEach var="liColor" items="${ listColor }" varStatus="index">
 								<c:if test="${ index.getIndex() == 0 }">
-									<span class="select-color selected-color" id="${ product.id }_${ liColor.color.id }" style="background: ${ liColor.color.rgb }"></span>
+									<span class="select-color selected-color"
+										id="${ product.id }_${ liColor.color.id }"
+										style="background: ${ liColor.color.rgb }"></span>
+										<input type="hidden" name="color" id="color"
+												value="${ liColor.color.id }">
 								</c:if>
 								<c:if test="${ index.getIndex() != 0 }">
-									<span class="select-color" id="${ product.id }_${ liColor.color.id }" style="background: ${ liColor.color.rgb }"></span>
+									<span class="select-color"
+										id="${ product.id }_${ liColor.color.id }"
+										style="background: ${ liColor.color.rgb }"></span>
 								</c:if>
 							</c:forEach>
 						</div>
@@ -114,46 +127,56 @@
 							<c:set var="idProd_Size" value="${ product.id }_${ liSize.key }"></c:set>
 							<c:if test="${ index.getIndex() == 0 }">
 								<div class="list-size-product-details" id="${ idProd_Size }">
-									<c:forEach var="liSizeByColor"  items="${ liSize.value }" varStatus="indexS">
+									<c:forEach var="liSizeByColor" items="${ liSize.value }"
+										varStatus="indexS">
 										<c:if test="${ indexS.getIndex() == 0 }">
-											<span class="select-size selected-color" id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span> 
-											<input type="hidden" name="size" id="size" value="${ liSizeByColor.size.id }">
+											<span class="select-size selected-color"
+												id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
+											<input type="hidden" name="size" id="size"
+												value="${ liSizeByColor.size.id }">
 										</c:if>
 										<c:if test="${ indexS.getIndex() != 0 }">
-											<span class="select-size" id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span> 
+											<span class="select-size"
+												id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
 										</c:if>
 									</c:forEach>
 								</div>
 							</c:if>
 							<c:if test="${ index.getIndex() != 0 }">
-								<div class="list-size-product-details none" id="${ idProd_Size }">
-									<c:forEach var="liSizeByColor"  items="${ liSize.value }" varStatus="indexS">
+								<div class="list-size-product-details none"
+									id="${ idProd_Size }">
+									<c:forEach var="liSizeByColor" items="${ liSize.value }"
+										varStatus="indexS">
 										<c:if test="${ indexS.getIndex() == 0 }">
-											<span class="select-size" id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span> 
+											<span class="select-size"
+												id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
 										</c:if>
 										<c:if test="${ indexS.getIndex() != 0 }">
-											<span class="select-size" id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span> 
+											<span class="select-size"
+												id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
 										</c:if>
 									</c:forEach>
 								</div>
 							</c:if>
 						</c:forEach>
-						
+
 					</div>
 					<div class="amount-product-details">
 						<input class="minus-plus" type="button" name="" id=""
 							onclick="amount(this)" value="-"> <input
 							class="input_amount" type="text" name="input_amount"
-							id="input_amount" value="1" readonly> <input class="minus-plus"
-							type="button" name="" id="" onclick="amount(this)" value="+">
+							id="input_amount" value="1" readonly> <input
+							class="minus-plus" type="button" name="" id=""
+							onclick="amount(this)" value="+">
 					</div>
 					<div class="btn-add-buy">
 						<div class="btn-add-to-cart">
-							<input type="button" name="" id="add-to-cart-input"
-								value="Add to cart">
+							<input type="button" name="${ product.id }"
+								id="add-to-cart-input" value="Add to cart">
 						</div>
 						<div class="btn-buy-now btn-add-to-cart-effect">
-							<input type="button" name="" id="buy-now-input" value="Buy now" onclick="buynow()">
+							<input type="button" name="" id="buy-now-input" value="Buy now"
+								onclick="buynow()">
 						</div>
 					</div>
 
@@ -243,7 +266,8 @@
 							<div class="customer-reviews">
 								<div class="infor-customoer-reviews">
 									<div class="avt-customoer-reviews">
-										<img src="<c:url value="/assets/images/users/avt-default.jpg"/>"
+										<img
+											src="<c:url value="/assets/images/users/avt-default.jpg"/>"
 											alt="image">
 									</div>
 									<div class="name-customoer-reviews">
@@ -306,41 +330,42 @@
 								</div>
 							</div>
 						</div>
-					<div class="details-content none" id="">
-						<div class="description-product-details" id="">
-							<div class="des-title">
-								<p>Description</p>
+						<div class="details-content none" id="">
+							<div class="description-product-details" id="">
+								<div class="des-title">
+									<p>Description</p>
+								</div>
+								<div class="des-content">&emsp;&nbsp;Lace up and feel the
+									legacy with the Nike Air Max 90 LTR. An iconic Waffle outsole
+									and moulded plastic accents help these kicks stay true to their
+									roots, while Max Air cushioning adds comfort to your every
+									step. Crisp leather and soft, textured suede bring a premium
+									look and feel to this classic sneaker.</div>
 							</div>
-							<div class="des-content">&emsp;&nbsp;Lace up and feel the
-								legacy with the Nike Air Max 90 LTR. An iconic Waffle outsole
-								and moulded plastic accents help these kicks stay true to their
-								roots, while Max Air cushioning adds comfort to your every step.
-								Crisp leather and soft, textured suede bring a premium look and
-								feel to this classic sneaker.</div>
-						</div>
-						<div class="features-product-details" id="">
-							<div class="features-title">
-								<p>Features</p>
-							</div>
-							<div class="features-content">
-								<li>Hypoknit upper designed to provide strategic areas of
-									stretch and support</li>
-								<li>Nylon outsole designed specifically for firm ground use</li>
-								<li>Firm ground studs</li>
-								<li>Off-set lacing with cored-out canopy to increase strike
-									zone and provide lockdown</li>
-								<li>Hypoknit mesh collar for a lightweight and breathable
-									feel</li>
-								<li>3D tongue tab for added grip</li>
-								<li>Flying NB wrap-around logo with multi-tone heel graphic</li>
-								<li>Designed for athlete Bukayo Saka</li>
+							<div class="features-product-details" id="">
+								<div class="features-title">
+									<p>Features</p>
+								</div>
+								<div class="features-content">
+									<li>Hypoknit upper designed to provide strategic areas of
+										stretch and support</li>
+									<li>Nylon outsole designed specifically for firm ground
+										use</li>
+									<li>Firm ground studs</li>
+									<li>Off-set lacing with cored-out canopy to increase
+										strike zone and provide lockdown</li>
+									<li>Hypoknit mesh collar for a lightweight and breathable
+										feel</li>
+									<li>3D tongue tab for added grip</li>
+									<li>Flying NB wrap-around logo with multi-tone heel
+										graphic</li>
+									<li>Designed for athlete Bukayo Saka</li>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="recomment-product"></div>
-
+				<div class="recomment-product"></div>
 		</form>
 	</header>
 
@@ -349,7 +374,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		
+
 	<script type="text/javascript">
 	var user_prod = "";
 	if(${ user_prod != null }) {
@@ -395,13 +420,13 @@
 	}
 	
 	</script>
-	
-	
+
+
 	<c:if test="${ userID != null }">
 		<c:set var="id_user" value="${ userID }"></c:set>
 	</c:if>
-	
-	
+
+
 	<script> // add to cart
 		var id_user = "";
 		var id_prod = "";
@@ -425,14 +450,6 @@
 			});
 		} else {
 			$("#add-to-cart-input").click(function() {
-				var xhr = new XMLHttpRequest();
-				xhr.open("GET",
-						"http://localhost:8888/SpringMVC/add-to-cart/"+id_prod);
-				xhr.onload = function() {
-					window.location.assign("http://localhost:8888/SpringMVC/cart/"+id_user);
-				};
-				xhr.send();
-				
 					var size = document.getElementsByClassName("select-size");
 					var amount = document.getElementById("input_amount").value;
 					var txt_size = "";
@@ -445,13 +462,13 @@
 						alert("You haven't chosen a size yet");
 					} else {
 						var xhr = new XMLHttpRequest();
-				      	xhr.open("GET", "http://localhost:8888/SpringMVC/cart?product="+txt_size);
-				      	xhr.onload = function () { 
-				      		window.location.assign("http://localhost:8888/SpringMVC/cart");
-				      	};
-				      	xhr.send();
+						xhr.open("GET",
+								"http://localhost:8888/SpringMVC/cart?id="+id_prod+"&process="+txt_size+"&amount="+amount);
+						xhr.onload = function() {
+							window.location.assign("http://localhost:8888/SpringMVC/cart");
+						};
+						xhr.send();
 					}
-				
 			});
 		}
 	</script>
@@ -501,7 +518,7 @@
 			});
 		});
 	</script>
-		
+
 	<script>
 		function test($a) {
 			for (let i = 1; i <= 10; i++) {
@@ -512,7 +529,7 @@
 			}
 		}
 	</script>
-	
+
 	<script>
 		$(document).ready(function() {
 			$(".btn-nav").hover(function() {
@@ -648,7 +665,7 @@
 											});
 						});
 	</script>
-	
+
 	<script>
 		function amount(x) {
 			let txt = x.value;
@@ -666,7 +683,7 @@
 			}
 		}
 	</script>
-	
+
 	<script type="text/javascript"> // scroll display search
 		window.addEventListener("scroll", function() {
 			var div = document.getElementById('nav-search');

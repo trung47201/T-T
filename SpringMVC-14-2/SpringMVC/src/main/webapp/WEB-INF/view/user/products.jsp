@@ -723,7 +723,7 @@
 				var id_prod = $(this).val();
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"http://localhost:8888/SpringMVC/add-to-cart/"+id_prod);
+						"http://localhost:8888/SpringMVC/cart?id="+id_prod);
 				xhr.onload = function() {
 					window.location.assign("http://localhost:8888/SpringMVC/cart");
 				};

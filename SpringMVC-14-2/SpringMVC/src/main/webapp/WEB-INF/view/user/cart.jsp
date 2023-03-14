@@ -21,10 +21,14 @@
 <link rel="stylesheet" href="<c:url value="/assets/css/slide.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/cart.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/home.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/message.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/navscroll.css"/>">
 <link rel="stylesheet"
 	href='<c:url value="/assets/css/login-icon.css"/>'>
 <style>
+.flex {
+    display: flex;
+}
 .size {
 	display: none;
 }
@@ -41,16 +45,17 @@
 </style>
 <body style="color: white;">
 	<header class="container-xl header-content">
-		<form method="post">
-			<jsp:include page="../layouts/user/header.jsp"></jsp:include>
+		
+		<jsp:include page="../layouts/user/header.jsp"></jsp:include>
 			<!--######################################################################################################### -->
+		<form method="post" action="/SpringMVC/" id="myform">
 			<div class="title-page">
 				<h3>Cart</h3>
 				<span><a href="/SpringMVC/">Home</a> / <a
 					href="cart">Cart</a></span>
 			</div>
 			<c:set var="getProdCountCart" value="${ 0 }"></c:set>
-			<c:forEach var="item" items="${ listProd }" varStatus="index">
+			<c:forEach var="item" items="${ listCart }" varStatus="index">
 				<c:set var="getProdCountCart" value="${ index.getCount() }"></c:set>
 			</c:forEach>
 			<c:if test="${ getProdCountCart==0 }">
@@ -77,20 +82,29 @@
 						</tr>
 						<tr>
 
-							<c:forEach var="item" items="${ listProd }" varStatus="index">
+							<c:forEach var="item" items="${ listCart }" varStatus="index">
 								<td>
 									<div class="checkbox-cart">
-										<input type="checkbox" class="foo" name="foo" id="${ item.value }" value="${ item.key.price }">
+										<c:if test="${ item.key.prod.discount <= 0 }">
+											<input type="checkbox" class="foo" name="${ item.key.id }"
+												id="${ item.value }"
+												value="${ item.key.prod.price }">
+										</c:if>
+										<c:if test="${ item.key.prod.discount > 0 }">
+											<input type="checkbox" class="foo" name="${ item.key.id }"
+												id="${ item.value }"
+												value="${ item.key.prod.price - item.key.prod.price * item.key.prod.discount/100 }">
+										</c:if>
 									</div>
 									<div class="product-cart">
 										<img
-											src="<c:url value="/assets/images/products/${ item.key.thumbnail }"/>"
+											src="<c:url value="/assets/images/products/${ item.key.prod.thumbnail }"/>"
 											alt="product-img">
-										<div class="name-product-cart">${ item.key.title }</div>
+										<div class="name-product-cart">${ item.key.prod.title }</div>
 									</div>
 									<div class="classify-cart">
 										<c:forEach var="it" items="${ hmProd_Color_Size }">
-											<c:if test="${ item.key.id == it.key }">
+											<c:if test="${ item.key.prod.id == it.key }">
 												<select id="${ it.key }" name="color${ it.key }"
 													onchange="color_select(this)" class="color">
 													<option value="" style="display: none;" disabled selected>Choose
@@ -99,32 +113,30 @@
 														<c:forEach var="colorName" items="${ listAllColor }">
 															<c:if test="${ it_color.key == colorName.id }">
 																<option style="background: ${ colorName.rgb };"
-																	value="${ it_color.key }_${ item.key.id }"
-																	<c:forEach var="li_color_1" items="${ listColor }">
-															<c:if test="${ li_color_1.value == it_color.key && li_color_1.key==item.key.id }">
-															<c:out value="selected"></c:out>
-															</c:if>
-															</c:forEach>>
+																	value="${ it_color.key }_${ item.key.prod.id }_${ item.key.id }"
+																	<c:if test="${colorName.id==item.key.color.id }">
+																			<c:out value="selected"></c:out>
+																	</c:if>>
 																	${colorName.color_name }</option>
 															</c:if>
 														</c:forEach>
 													</c:forEach>
 												</select>
 
+
 												<c:forEach var="it_color" items="${ it.value }">
 													<c:set var="sKey"
-														value="${ it_color.key }_${ item.key.id }"></c:set>
-													<select id="${ it_color.key }_${ item.key.id }"
+														value="${ it_color.key }_${ item.key.prod.id }"></c:set>
+													<select
+														id="${ it_color.key }_${ item.key.prod.id }_${ item.key.id }"
 														class="size" name="size" onchange="size_select(this)">
 														<option value="" style="display: none;" disabled selected>Choose
 															size</option>
 														<c:forEach var="it_size" items="${ it_color.value }">
 															<option value="${ it_size.id }"
-																<c:forEach var="i_size_" items="${ listSize }">
-														<c:if test="${ i_size_.key == sKey && i_size_.value==it_size.id }">
-														<c:out value="selected"></c:out>
-														</c:if>
-													</c:forEach>>
+																<c:if test="${ item.key.size.id==it_size.id }">
+																	<c:out value="selected"></c:out>
+																</c:if>>
 																${ it_size.size_number }</option>
 														</c:forEach>
 
@@ -134,45 +146,46 @@
 										</c:forEach>
 									</div>
 									<div class="price-cart">
-										<c:if test="${ item.key.discount > 0 }">
-											<div>
-												$
-												<fmt:formatNumber type="number" maxFractionDigits="2"
-													value="${ item.key.price - item.key.price * item.key.discount/100 }" />
+										<c:if test="${ item.key.prod.discount > 0 }">
+											<div class="flex">
+												$<div class="price${ item.key.id }" id="${ item.key.prod.price - item.key.prod.price * item.key.prod.discount/100 }"><fmt:formatNumber type="number" maxFractionDigits="2"
+														value="${ item.key.prod.price - item.key.prod.price * item.key.prod.discount/100 }" />
+												</div>
 											</div>
 										</c:if>
-										<c:if test="${ item.key.discount <= 0 }">
-											<div>$${ item.key.price }</div>
+										<c:if test="${ item.key.prod.discount <= 0 }">
+											<div class="flex">
+												$<div class="price${ item.key.id }" id="${ item.key.prod.price }">${ item.key.prod.price }</div>
+											</div>
 										</c:if>
 									</div>
 									<div class="amount-cart">
 										<input class="minus-plus" type="button"
-											name="${ item.key.id }_${ item.value }"
-											id="minus${ index.getIndex() }" onclick="amount(this)"
-											value="-"> <input class="input_Id" type="text"
-											name="${ item.key.id }" id="input_Id${ index.getIndex() }"
-											value="${ item.value }" readonly> <input
-											class="minus-plus" type="button"
-											name="${ item.key.id }_${ item.value }"
-											id="plus${ index.getIndex() }" onclick="amount(this)"
-											value="+">
+											name="${ item.key.id }"
+											id="minus" onclick="amount(this)"
+											value="-"> <input class="input_Id" type="text" id="input_Id${ item.key.id }" name="${ item.key.id }"
+											value="${ item.value }" readonly> <input class="minus-plus"
+											type="button" name="${ item.key.id }" id="plus"
+											onclick="amount(this)" value="+">
 									</div>
 									<div class="total-money-cart">
-										<c:if test="${ item.key.discount > 0 }">
-											<div>
-												$
-												<fmt:formatNumber type="number" maxFractionDigits="2"
-													value="${ item.key.price * item.value - item.key.price * item.value * item.key.discount/100 }" />
+										<c:if test="${ item.key.prod.discount > 0 }">
+											<div class="flex">
+												$<div class="total${ item.key.id }" id="${ item.key.id }">
+													<fmt:formatNumber type="number" maxFractionDigits="2"
+														value="${ item.key.prod.price * item.value - item.key.prod.price * item.value * item.key.prod.discount/100 }" />
+												</div>
 											</div>
 										</c:if>
-										<c:if test="${ item.key.discount <= 0 }">
-											<div>$${ item.key.price * item.value }</div>
+										<c:if test="${ item.key.prod.discount <= 0 }">
+											<div class="flex">
+												$<div class="total${ item.key.id }" id="${ item.key.id }">${ item.key.prod.price * item.value }</div>
+											</div>
 										</c:if>
 									</div>
 									<div class="del-product-cart">
-										<input type="button" id="del_prod"
-											name="${ item.key.id }_${ item.value }" value="x"
-											onclick="amount(this)">
+										<input type="button" id="del_prod" name="${ item.key.id }"
+											value="x" onclick="delete_prod(this)">
 									</div>
 								</td>
 
@@ -192,11 +205,11 @@
 				</div>
 				<div class="btn-buy-continue">
 					<div class="btn-continue">
-						<input type="submit" name="continueShopping" id="continue-shopping"
+						<input type="button" name="continueShopping" id="continue-shopping"
 							value="Continue Shopping">
 					</div>
 					<div class="btn-buy-cart">
-						<input type="button" onclick="checkoutAll(this)"
+						<input type="button"
 							name="checkoutCart" id="checkoutCart" value="Buy">
 					</div>
 				</div>
@@ -216,6 +229,27 @@
 			<button id="ok" name="ok" onclick="OK(this)">OK</button>
 		</div>
 	</div>
+	
+	<div class="message msg-order message-notify none" id="message-notify">
+		<h2 class="msg-h2">
+			Message
+			<img alt="" src="<c:url value="/assets/images/icons/icons8-notification-100-msg.png"/>"></h2>
+		<p class="content-msg content-msg-notify" id="content-msg-notify"></p>
+		<div class="btn-ok-cancel">
+			<input class="cancel" id="cancel" type="button" value="Cancel"> <input
+				class="ok" id="ok-notify" type="button" value="OK">
+		</div>
+	</div>
+	<div class="message msg-order message-done none" id="message-done">
+		<h2 class="msg-h2">
+			Message
+			<img alt="" src="<c:url value="/assets/images/icons/icons8-notification-100-msg.png"/>"></h2>
+		<p class="content-msg content-msg-done" id="content-msg-done"></p>
+		<div class="btn-ok-cancel">
+			<input
+				class="ok" id="ok-done" type="button" value="OK">
+		</div>
+	</div>
 
 	<!--  FOOTER -->
 	<jsp:include page="../layouts/user/footer.jsp"></jsp:include>
@@ -225,31 +259,96 @@
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		$("#checkoutCart").click(function() {
+			var arr = document.querySelectorAll('.checkbox-cart input[type=checkbox]:checked');
+			if(arr.length==0) {
+				$("#message-done").removeClass("none");
+				$("#content-msg-done").text("Please select at least one product!");
+			} else {
+				var txt = "";
+				for(let i=0; i<arr.length; i++) {
+					if(i==0) {
+						var qty = document.getElementById("input_Id"+arr[i].name).value;
+						txt += arr[i].name +"_" + qty;
+					} else {
+						var qty = document.getElementById("input_Id"+arr[i].name).value;
+						txt += "/" + arr[i].name +"_" + qty;
+					}
+				}
+				if(txt != "") {
+					var xhr = new XMLHttpRequest();
+					xhr.open("GET", "");
+					xhr.onload = function() {
+						window.location.assign("http://localhost:8888/SpringMVC/checkout-cart?process="+txt);
+					};
+					xhr.send();
+				}
+			}
+		});
+	</script>
+		
+	<script type="text/javascript">
+		$("#continue-shopping").click(function () {
+			var url = window.location.origin;
+			$("#myform").attr("action", url + "/SpringMVC/products");
+			$(this).attr('type', 'submit');
+		});
+	</script>
 
+	<script type="text/javascript">
+		$("#ok-done").click(function() {
+			$("#message-done").addClass("none");
+		});
+		$("#cancel").click(function() {
+			$("#message-notify").addClass("none");
+		});
+	</script>
+	
 	<script type="text/javascript">
 		$(".foo").click(function() {
 			var total = 0.0;
-			var arr = document.querySelectorAll('input[name="foo"]:checked');
+			var arrQty = document.querySelectorAll('.input_Id');
+			var arr = document.querySelectorAll('.checkbox-cart input[type=checkbox]:checked');
+			var arr1 = document.querySelectorAll('.checkbox-cart input[type=checkbox]');
+			var all = document.querySelector('#checkbox-all');
+			
+			if (arr.length==arr1.length) {
+				all.checked = true;
+			} else {
+				all.checked = false;
+			}
 			for (let i=0; i<arr.length; i++) {
-				total += parseFloat(arr[i].value)*parseFloat(arr[i].id);
+				for(let j =0; j<arrQty.length; j++) {
+					if(arrQty[j].name == arr[i].name) {
+						total += parseFloat(arr[i].value)*parseFloat(arrQty[j].value);
+					}
+				}
 			}
 			$("#payment").text(Math.round(total*100)/100);
 			$("#total-count-product-cart").text("("+arr.length+")");
 		});
-		$("#checkbox-all").click(function() {
+		
+		$("#checkbox-all").click(function() { // price check box all
+			var arrQty = document.querySelectorAll('.input_Id');
 			if(this.checked == true) {
-				var arr = document.querySelectorAll('input[name="foo"]');
+				var arr = document.querySelectorAll('.checkbox-cart input[type=checkbox]');
 				for(let i=0; i<arr.length; i++) {
 					arr[i].checked = true;
 				}
 				var total = 0.0;
 				for (let i=0; i<arr.length; i++) {
-					total += parseFloat(arr[i].value)*parseFloat(arr[i].id);
+					for(let j =0; j<arrQty.length; j++) {
+						
+						if(arrQty[j].name == arr[i].name) {
+							total += parseFloat(arr[i].value)*parseFloat(arrQty[j].value);
+						}
+					}
 				}
 				$("#payment").text(Math.round(total*100)/100);
 				$("#total-count-product-cart").text("("+arr.length+")");
 			} else {
-				var arr = document.querySelectorAll('input[name="foo"]');
+				var arr = document.querySelectorAll('.checkbox-cart input[type=checkbox]');
 				for(let i=0; i<arr.length; i++) {
 					arr[i].checked = false;
 				}
@@ -258,90 +357,15 @@
 			}
 		});
 	</script>
-
-	<script type="text/javascript">
-		var url = window.location.href;
-		if(${user_id != null && user_id != ''}) {
-			function amount(x) {
-				var n = document.getElementsByClassName("input_Id");
-				for (let i = 0; i <= n.length; i++) {
-					if (x.id == ("plus" + i)) {
-						var input_txt = document.getElementById("input_Id" + i).value;
-						let a = parseInt(input_txt) + 1;
-						document.getElementById("input_Id" + i).value = a;
-						var value_amount = document.getElementById("input_Id" + i);
-						var xhr = new XMLHttpRequest();
-						xhr.open("GET", url+"?plus="+value_amount.name);
-						// What to do when server responds
-						xhr.onload = function() {
-						};
-						xhr.send(); 
-						return false;
-					} else if (x.id == ("minus" + i)) {
-						var input_txt = document.getElementById("input_Id" + i).value;
-						if (parseInt(input_txt) > 1) {
-							let a = parseInt(input_txt) - 1;
-							document.getElementById("input_Id" + i).value = a;
-							var value_amount = document.getElementById("input_Id" + i);
-							var xhr = new XMLHttpRequest();
-							xhr.open("GET", url+"?minus="+value_amount.name);
-							// What to do when server responds
-							xhr.onload = function() {
-							};
-							xhr.send(); 
-							return false;
-						} else if (parseInt(input_txt) == 1) {
-							if (confirm("Are you sure to remove the order from the cart?")) {
-								var xhr = new XMLHttpRequest();
-								/* xhr.open("GET",
-										"http://localhost:8888/SpringMVC/cart?remove="
-												+ x.name);
-								// What to do when server responds
-								xhr.onload = function() {
-									window.location.assign("http://localhost:8888/SpringMVC/cart");
-								};
-								xhr.send(); */
-								return false;
-							}
-						}
-					}
-					if (x.id == "del_prod") {
-						if (confirm("Are you sure to remove the order from the cart?")) {
-							/* var xhr = new XMLHttpRequest();
-							xhr.open("GET",
-									"http://localhost:8888/SpringMVC/cart?deleleProduct="
-											+ x.name);
-							// What to do when server responds
-							xhr.onload = function() {
-								window.location.assign("http://localhost:8888/SpringMVC/cart");
-							};
-							xhr.send(); */
-							
-							break;
-						}
-					}
-				}
-			}
-			var user_id = "${ user_id}";
-			$("#continue-shopping").click(function () {
-				var xhr = new XMLHttpRequest();
-				xhr.open("GET","");
-				// What to do when server responds
-				xhr.onload = function() {
-					window.location.assign("http://localhost:8888/SpringMVC/products/"+user_id);
-				};
-				xhr.send(); 
-			});
-		}
-	</script>
-
-	<c:forEach var="abc" items="${ listColor }">
-		<script>
-			var selected_s = "${abc.value}"+"_" +"${abc.key}";
+	
+	<c:forEach var="abc" items="${ listCart }">
+		<script> // remove display none in select option color when start
+			var selected_s = "${abc.key.color.id}"+"_" +"${abc.key.prod.id}"+"_"+"${ abc.key.id }";
 			//alert(selected_s);
 			document.getElementById(selected_s).classList.remove('size');
 		</script>
 	</c:forEach>
+	
 	<script type="text/javascript">
 			function OK(x) {
 				document.getElementById("box-msg").classList.add('box-msg');
@@ -399,74 +423,89 @@
 
 		<script>
 		function amount(x) {
-			var n = document.getElementsByClassName("input_Id");
-			for (let i = 0; i <= n.length; i++) {
-				if (x.id == ("plus" + i)) {
-					var input_txt = document.getElementById("input_Id" + i).value;
-					let a = parseInt(input_txt) + 1;
-					document.getElementById("input_Id" + i).value = a;
-					var value_amount = document.getElementById("input_Id" + i).value;
-					var xhr = new XMLHttpRequest();
-					xhr.open("GET",
-							"http://localhost:8888/SpringMVC/cart?plus="
-									+ x.name);
-					// What to do when server responds
-					xhr.onload = function() {
-						window.location.assign("http://localhost:8888/SpringMVC/cart");
-					};
-					xhr.send();
+			if(x.id == 'plus') {
+				var val = document.getElementById("input_Id"+x.name).value;
+				document.getElementById("input_Id"+x.name).value = parseInt(val) + 1;
+				var qty = document.getElementById("input_Id"+x.name).value;
+
+				//price total interface when users click plus
+				var value_amount = document.getElementById("input_Id" + x.name);
+				var arrP = document.querySelector('.price'+x.name);
+				var price = arrP.id;
+				var quantity = value_amount.value;
+				var total = parseFloat(Math.round(price * quantity * 100)/100);
+				$(".total"+x.name).text(total);
+				
+				//amount update in DB when users click plus
+				var url = window.location.href;
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", url+"?plus="+x.name);
+				xhr.onload = function() {};
+				xhr.send(); 
+			}
+			if(x.id == 'minus') {
+				var val = document.getElementById("input_Id"+x.name).value;
+				if(parseInt(val) == 1) {
+					var value_amount = document.getElementById("input_Id" + x.name);
+					$("#message-notify").removeClass("none");
+					$("#content-msg-notify").text("Are you sure to remove the order from the cart?");
+					$("#ok-notify").click(function() {
+						$("#message-notify").addClass("none");
+						$("#message-done").removeClass("none");
+						$("#content-msg-done").text("Delete successfully!");
+						var url = window.location.href;
+						var xhr = new XMLHttpRequest();
+						xhr.open("GET", url+"?minusdelete="+x.name);
+						xhr.onload = function() {
+							window.location.assign(url);
+						};
+						xhr.send();
+					});
 					return false;
-				} else if (x.id == ("minus" + i)) {
-					var input_txt = document.getElementById("input_Id" + i).value;
-					if (parseInt(input_txt) > 1) {
-						let a = parseInt(input_txt) - 1;
-						document.getElementById("input_Id" + i).value = a;
-						var value_amount = document.getElementById("input_Id" + i).value;
-						var xhr = new XMLHttpRequest();
-						xhr.open("GET",
-								"http://localhost:8888/SpringMVC/cart?minus="
-										+ x.name);
-						// What to do when server responds
-						xhr.onload = function() {
-							window.location.assign("http://localhost:8888/SpringMVC/cart");
-						};
-						xhr.send();
-						return false;
-					} else if (parseInt(input_txt) == 1) {
-						if (confirm("Are you sure to remove the order from the cart?")) {
-							var xhr = new XMLHttpRequest();
-							xhr.open("GET",
-									"http://localhost:8888/SpringMVC/cart?remove="
-											+ x.name);
-							// What to do when server responds
-							xhr.onload = function() {
-								window.location.assign("http://localhost:8888/SpringMVC/cart");
-							};
-							xhr.send();
-							return false;
-						}
-					}
-				}
-				if (x.id == "del_prod") {
-					if (confirm("Are you sure to remove the order from the cart?")) {
-						var xhr = new XMLHttpRequest();
-						xhr.open("GET",
-								"http://localhost:8888/SpringMVC/cart?deleleProduct="
-										+ x.name);
-						// What to do when server responds
-						xhr.onload = function() {
-							window.location.assign("http://localhost:8888/SpringMVC/cart");
-						};
-						xhr.send();
-						
-						break;
-					}
+				} else {
+					document.getElementById("input_Id"+x.name).value = parseInt(val) - 1;
+					var qty = document.getElementById("input_Id"+x.name).value;
+
+					//price total interface when users click minus
+					var value_amount = document.getElementById("input_Id" + x.name);
+					var arrP = document.querySelector('.price'+x.name);
+					var price = arrP.id;
+					var quantity = value_amount.value;
+					var total = parseFloat(Math.round(price * quantity * 100)/100);
+					$(".total"+x.name).text(total);
+					
+					//amount update in DB when users click minus
+					var url = window.location.href;
+					var xhr = new XMLHttpRequest();
+					xhr.open("GET", url+"?minus="+x.name);
+					xhr.onload = function() {
+					};
+					xhr.send(); 
 				}
 			}
-
 		}
 	</script>
 	</c:if>
+	
+	<script>
+		function delete_prod(x) {
+			$("#message-notify").removeClass("none");
+			$("#content-msg-notify").text("Are you sure to remove the order from the cart?");
+			$("#ok-notify").click(function() {
+				$("#message-notify").addClass("none");
+				$("#message-done").removeClass("none");
+				$("#content-msg-done").text("Delete successfully!");
+				var url = window.location.href;
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", url+"?delete="+x.name);
+				xhr.onload = function() {
+					window.location.assign(url);
+				};
+				xhr.send();	
+			});	
+			return false;
+		}
+	</script>
 
 	<script>
 		function test($a) {

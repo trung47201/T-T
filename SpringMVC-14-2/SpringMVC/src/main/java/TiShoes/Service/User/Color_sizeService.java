@@ -634,9 +634,36 @@ public class Color_sizeService implements Color_sizeRepository {
 		}
 		return rs;
 	}
+	
+	public HashMap<Color_size, Integer> get_list_color_size_by_string(String t) { // format = {csid}/{csid}/{csid}...
+		HashMap<Integer, Integer> hm = new HashMap<>();
+		String arr[] = t.split("/");
+		if(arr.length > 0) {
+			for (String s : arr) {
+				if(!s.equals("")) {
+					if(hm.containsKey(Integer.parseInt(s))) {
+						hm.put(Integer.parseInt(s), hm.get(Integer.parseInt(s)) + 1);
+					} else {
+						hm.put(Integer.parseInt(s), 1);
+					}
+				}
+			}
+		}
+		HashMap<Color_size, Integer> hmcs = new LinkedHashMap<>();
+		for (Integer c : hm.keySet()) {
+			hmcs.put(getByIdCS(c), hm.get(c));
+		}
+		return hmcs;
+	}
+	
+	public int get_Color_size_id_by_prodid_color_id (int prod_id, int color_id) {
+		int size_id = firstSizeId(prod_id, color_id);
+		int id = get_Color_size_id(size_id, color_id, prod_id);
+		return id;
+	}
 
 	public static void main(String[] args) {
 		Color_sizeService cls = new Color_sizeService();
-		System.out.println(cls.get_Color_size_id(4,4,2));
+		System.out.println(cls.get_Color_size_id_by_prodid_color_id(6, 8));
 	}
 }

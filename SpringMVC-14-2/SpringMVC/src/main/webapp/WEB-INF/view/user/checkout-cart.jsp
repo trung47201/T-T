@@ -4,7 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <link rel="stylesheet"
 	href="<c:url value="/assets/css/checkoutcart.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/bootstrap.css"/>">
@@ -15,11 +16,42 @@
 	href="<c:url value="/assets/js/bootstrap.min.js"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/login.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/color.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/message.css"/>">
 <link rel="stylesheet"
 	href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />">
 
+<style>
+.none {
+	display: none;
+}
+
+.importantNone {
+	display: none !important;
+}
+input.ok {
+    width: 120px;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+.calculator table {
+    margin-top: 60px;
+}
+.products-checkout {
+    max-height: 240px;
+}
+</style>
+
+
 <body>
-	<form action="" method="post">
+	<form action="/SpringMVC/checkout-cart/ok?process=${ process }" method="post">
 		<div class="nav">
 			<c:set var="item" value="${ back_home }"></c:set>
 			<c:if test="${ item == 'home'}">
@@ -87,107 +119,32 @@
 			<div class="customer-info">
 				<h4>Consignee information</h4>
 				<div class="name-customer">
-
-					<c:if test="${ value_name != 'null' }">
-						<input type="text" id="fullname" name="fullname"
-							value="${ value_name }" placeholder="Full name">
-					</c:if>
-					<c:if test="${ value_name == 'null' }">
-						<input type="text" id="fullname" name="fullname" value=""
-							placeholder="Full name">
-					</c:if>
+					<input type="text" id="fullname" name="fullname"
+						value="" placeholder="Full name">
 				</div>
-				<c:set var="fullname_error" value="${ fullname }"></c:set>
-				<p class="error-name">${ fullname_error }</p>
-
 				<div class="phone-customer">
-					<c:set var="_phone" value="${ value_phone }"></c:set>
-					<c:if test="${ _phone != 'null' }">
-						<input type="text" id="phone" name="phone" value="${ _phone }"
-							placeholder="Phone number">
-					</c:if>
-					<c:if test="${ _phone == 'null' }">
-						<input type="text" id="phone" name="phone" value=""
-							placeholder="Phone number">
-					</c:if>
+					<input type="number" id="phone" name="phone"
+						value="" placeholder="Phone number" min="0">
 				</div>
-				<c:set var="phone_error" value="${ phone }"></c:set>
-				<p class="error-name">${ phone_error }</p>
-
-				<c:if test="${ value_phone != 'null' }">
-					<p class="error-name">${ phone_ }</p>
-				</c:if>
-
 				<div class="mail-customer">
-					<c:set var="_email" value="${ value_email }"></c:set>
-					<c:if test="${ _email != 'null' }">
-						<input type="text" id="email" name="email" value="${ _email }"
-							placeholder="Email">
-					</c:if>
-					<c:if test="${ _email == 'null' }">
-						<input type="text" id="email" name="email" value=""
-							placeholder="Email">
-					</c:if>
+					<input type="text" id="email" name="email" value=""
+						placeholder="Email">
 				</div>
-				<c:set var="email_error" value="${ email }"></c:set>
-				<p class="error-name">${ email_error }</p>
-
-				<c:if test="${ _email != 'null' }">
-					<p class="error-name">${ email_ }</p>
-				</c:if>
 				<div class="city-customer">
-					<c:set var="_city" value="${ value_city }"></c:set>
-					<c:if test="${ _city != 'null' }">
-						<input type="text" id="city" name="city" value="${ value_city }"
-							placeholder="City">
-					</c:if>
-					<c:if test="${ _city == 'null' }">
-						<input type="text" id="city" name="city" value=""
-							placeholder="City">
-					</c:if>
+					<input type="text" id="city" name="city" value=""
+						placeholder="City">
 				</div>
-				<c:set var="city_error" value="${ city }"></c:set>
-				<p class="error-name">${ city_error }</p>
-
 				<div class="town-customer">
-					<c:set var="_town" value="${ value_town }"></c:set>
-					<c:if test="${ _town != 'null' }">
-						<input type="text" id="town" name="town" value="${ value_town }"
-							placeholder="Town">
-					</c:if>
-					<c:if test="${ _town == 'null' }">
-						<input type="text" id="town" name="town" value=""
-							placeholder="Town">
-					</c:if>
+					<input type="text" id="town" name="town" value=""
+						placeholder="Town">
 				</div>
-				<c:set var="town_error" value="${ town }"></c:set>
-				<p class="error-name">${ town_error }</p>
-
 				<div class="village-customer">
-					<c:set var="_village" value="${ value_village }"></c:set>
-					<c:if test="${ _village != 'null' }">
-						<input type="text" id="village" name="village"
-							value="${ value_village }" placeholder="Village">
-					</c:if>
-					<c:if test="${ _village == 'null' }">
-						<input type="text" id="village" name="village"
-							placeholder="Village">
-					</c:if>
+					<input type="text" id="village" name="village" value=""
+						placeholder="Village">
 				</div>
-				<c:set var="village_error" value="${ village }"></c:set>
-				<p class="error-name">${ village_error }</p>
-
 				<div class="note-customer">
-					<c:set var="_note" value="${ value_note }"></c:set>
-					<c:if test="${ _note != 'null' }">
-						<textarea id="note" name="note" placeholder="Note">${ value_note }</textarea>
-					</c:if>
-					<c:if test="${ _note == 'null' }">
-						<textarea id="note" name="note" placeholder="Note"></textarea>
-					</c:if>
+					<textarea id="note" name="note" placeholder="Note"></textarea>
 				</div>
-				<c:set var="note_error" value="${ note }"></c:set>
-				<p class="error-name">${ note_error }</p>
 			</div>
 
 			<!-- Payment methods -->
@@ -197,10 +154,11 @@
 					<input type="radio" name="Delivery" id="rad1" checked>
 					<div>&emsp;Delivery to your place</div>
 					<div>&emsp;&emsp;&emsp;$11.00</div>
-					
+
 				</div>
-				<div class="content-sm" id="content-sm">Buy products over $50 will get free shipping</div>
-					
+				<div class="content-sm" id="content-sm">Buy products over $50
+					will get free shipping</div>
+
 				<h4 class="pm">Payment methods</h4>
 				<div class="shipping" id="radio2" onclick="radio(this)">
 					<input type="radio" name="paymentmethods" id="rad2" value="cod"
@@ -213,116 +171,55 @@
 				</div>
 				<div class="content-pm" id="content-pm">You only have to pay
 					when you receive the goods.</div>
-				<div class="shipping" id="radio3" onclick="radio(this)">
-					<input type="radio" name="paymentmethods" id="rad3"
-						value="payByCard">
-					<div class="icon-credit">
-						&emsp; Pay by credit card <img
-							src="<c:url value="/assets/images/icons/credit-card.png"/>"
-							alt="">
-					</div>
-				</div>
-				<div class="content-bank" id="content-bank">
-					<div>Choose a bank</div>
-					<div class="bank">
-						<div class="bank" id="visa" onclick="bank(this)">
-							<img src="<c:url value="/assets/images/icons/visa.png"/>" alt="">
-						</div>
-						<div class="bank" id="mastercard" onclick="bank(this)">
-							<img src="<c:url value="/assets/images/icons/mc-logo.png"/>"
-								alt="">
-						</div>
-						<div class="bank" id="amex" onclick="bank(this)">
-							<img src="<c:url value="/assets/images/icons/amex.png"/>" alt="">
-						</div>
-						<div class="bank" id="discover" onclick="bank(this)">
-							<img src="<c:url value="/assets/images/icons/discover.jpg"/>"
-								alt="">
-						</div>
-						<div class="bank" id="maestro" onclick="bank(this)">
-							<img src="<c:url value="/assets/images/icons/maestro.png"/>"
-								alt="">
-						</div>
-					</div>
-				</div>
 			</div>
 
 			<!-- Order -->
 			<div class="order">
-
 				<input type="hidden" name="id_prod" id="id_prod"
 					value="${ prod_checkout.id }">
 				<h4>Order information</h4>
-
 				<div class="products-checkout">
-					<c:forEach var="prod_checkout" items="${ listProd }">
-						<c:forEach var="color_checkout" items="${ listColor }">
-							<c:if test="${ color_checkout.key == prod_checkout.id}">
-								<c:forEach var="size_checkout" items="${ listSize }">
-									<c:if test="${ size_checkout.key == prod_checkout.id}">
-										<c:forEach var="amount_checkout" items="${ listAmount }">
-											<c:if test="${ amount_checkout.key == prod_checkout.id}">
-												<div class="list_prod_checkout">
-													<div class="img-product-checkout">
-														<img
-															src="<c:url value="/assets/images/products/${ prod_checkout.thumbnail }"/>"
-															alt="">
-													</div>
-													<table>
-														<tr>
-															<th colspan="2">${ prod_checkout.title }</th>
-														</tr>
-														<tr>
-															<td colspan="2">${ color_checkout.value.color_name }-${ size_checkout.value.size_number }</td>
-														</tr>
-														<tr>
-															<c:if test="${ prod_checkout.discount > 0 }">
-																<th class="price">
-																	<b>
-																		$<fmt:formatNumber type="number" maxFractionDigits="2"
-																		value="${ prod_checkout.price - prod_checkout.price * prod_checkout.discount/100 }" />
-																	</b>
-																</th>
-															</c:if>
-															<c:if test="${ prod_checkout.discount <= 0 }">
-																<th class="price">
-																	<b>
-																		$<fmt:formatNumber type="number" maxFractionDigits="2"
-																		value="${ prod_checkout.price }" />
-																	</b>
-																</th>
-															</c:if>
-															<td class="amount"><i>x${amount_checkout.value }</i></td>
-														</tr>
-													</table>
-												</div>
-											</c:if>
-										</c:forEach>
+					<c:forEach var="it" items="${ listCart }">
+						<div class="list_prod_checkout">
+							<div class="img-product-checkout">
+								<img
+									src="<c:url value="/assets/images/products/${ it.key.prod.thumbnail }"/>"
+									alt="">
+							</div>
+							<table>
+								<tr>
+									<th colspan="2">${ it.key.prod.title }</th>
+								</tr>
+								<tr>
+									<td colspan="2">${ it.key.color.color_name }-${ it.key.size.size_number }</td>
+								</tr>
+								<tr>
+									<c:if test="${ it.key.prod.discount > 0 }">
+										<th class="price"><b> $<fmt:formatNumber type="number"
+													maxFractionDigits="2"
+													value="${ it.key.prod.price - it.key.prod.price * it.key.prod.discount/100 }" />
+										</b></th>
 									</c:if>
-								</c:forEach>
-							</c:if>
-						</c:forEach>
+									<c:if test="${ it.key.prod.discount <= 0 }">
+										<th class="price"><b> $<fmt:formatNumber type="number"
+													maxFractionDigits="2" value="${ it.key.prod.price }" />
+										</b></th>
+									</c:if>
+									<td class="amount"><i>x${it.value }</i></td>
+								</tr>
+							</table>
+						</div>
 					</c:forEach>
 				</div>
 
-
-				<div class="voucher">
-					<div class="input-voucher">
-						<input type="text" name="voucher_code" id="voucher_code" placeholder="Voucher">
-					</div>
-					<div class="apply-voucher">
-						<input type="button" onclick="apply(this);" name="applyvoucher" id="applyvouchers" value="Apply" >
-					</div>
-				</div>
-				<hr>
 				<div class="calculator">
 					<table>
 						<tr>
 							<td class="txt">
 								<div class="total-products-cost">Total products cost</div>
 							</td>
-							<td class="price"><b>$<fmt:formatNumber type="number" maxFractionDigits="2"
-												value="${ totalPayment }" /></b></td>
+							<td class="price"><b>$<fmt:formatNumber type="number"
+										maxFractionDigits="2" value="${ totalPayment }" /></b></td>
 						</tr>
 						<tr>
 							<td class="txt">
@@ -333,7 +230,7 @@
 						<c:if test="${ totalPayment >= 50.0 }">
 							<tr>
 								<td class="txt">
-									<div class="shipping-chargers">Voucher free ship</div>
+									<div class="shipping-chargers">Free ship</div>
 								</td>
 								<td class="price-free"><b>-$11.00</b></td>
 							</tr>
@@ -355,13 +252,11 @@
 									<span class="txt-total-payment">Total payment</span>
 								</div>
 							</td>
-							<td class="price">
-								<span class="total-payment">
-									<b>$<fmt:formatNumber type="number" maxFractionDigits="2"
-										value="${ totalPayment + fee }" />
-									</b>
-								</span>
-							</td>
+							<td class="price"><span class="total-payment"> <b>$<fmt:formatNumber
+											type="number" maxFractionDigits="2"
+											value="${ totalPayment + fee }" />
+								</b>
+							</span></td>
 						</tr>
 					</table>
 				</div>
@@ -369,9 +264,44 @@
 			</div>
 		</div>
 		<div class="btn-order">
-			<input type="submit" name="order" id="order" value="Order">
+			<input type="button" name="order" id="order" value="Order">
 		</div>
 	</form>
+
+	<div class="message msg-order message-notify none" id="message-notify">
+		<h2 class="msg-h2">
+			Message <img alt=""
+				src="<c:url value="/assets/images/icons/icons8-notification-100-msg.png"/>">
+		</h2>
+		<p class="content-msg content-msg-notify"></p>
+		<div class="btn-ok-cancel">
+			<input class="cancel" id="cancel" type="button" value="Cancel">
+			<input class="ok" id="ok-notify" type="button" value="OK">
+		</div>
+	</div>
+	<div class="message msg-order message-done none" id="message-done">
+		<h2 class="msg-h2">
+			Message <img alt=""
+				src="<c:url value="/assets/images/icons/icons8-notification-100-msg.png"/>">
+		</h2>
+		<p class="content-msg content-msg-done" id="content-msg-done"></p>
+		<div class="btn-ok-cancel">
+			<input class="ok" id="ok-done" type="button" value="OK">
+		</div>
+	</div>
+
+	<div class="wrapper importantNone" id="wrapper">
+		<div class="message message-notify none" id="message-notify">
+			<h2 class="msg-h2">
+				Message <img alt=""
+					src="<c:url value="/assets/images/icons/icons8-notification-100-msg.png"/>">
+			</h2>
+			<p class="content-msg" id="content-msg-notify"></p>
+			<div class="btn-ok-cancel">
+				<input class="ok hover-btn" id="ok-voucher" type="button" value="OK">
+			</div>
+		</div>
+	</div>
 
 	<script>
 		var a = document.getElementById("rad2");
@@ -420,49 +350,61 @@
 			}
 		}
 	</script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
-<script type="text/javascript">
-function apply (x) {
-	var voucher = document.getElementById("voucher_code").value;
-	var urlCurrent = window.location.href;
-	var xhr = new XMLHttpRequest();
-  	xhr.open("GET", urlCurrent+"&voucher="+voucher);
-  	// What to do when server responds
-  	xhr.onload = function () { 
-  		window.location.assign(urlCurrent+"&voucher="+voucher) 
-  	};
-  	xhr.send();
-  	// (C) PREVENT HTML FORM SUBMIT
-  	return false;	
-}
-</script>
 	<script type="text/javascript">
-	    function ajaxget (x) {	    		    	
-	      	var xhr = new XMLHttpRequest();	      	
-	      	xhr.open("GET", "http://localhost:8888/SpringMVC/cart/checkout?177627f91af678a9b03e993f1a91917f&id_prod="+${prod_checkout.id}+"&id_color=" + x.id);
-	      	// What to do when server responds
-	      	xhr.onload = function () { 
-	      		window.location.assign("http://localhost:8888/SpringMVC/cart/checkout?177627f91af678a9b03e993f1a91917f&id_prod="+${prod_checkout.id}+"&id_color=" + x.id) 
-	      	};
-	      	xhr.send();	
-	      	// (C) PREVENT HTML FORM SUBMIT
-	      	return false;	
-	    }
-		function size (x) {	    		    	
-	      	var xhr = new XMLHttpRequest();
-	      	xhr.open("GET", "http://localhost:8888/SpringMVC/cart/checkout?177627f91af678a9b03e993f1a91917f&id_prod="+${prod_checkout.id}+"&id_color="+${color_id}+"&id_size=" + x.id);
-	      	// What to do when server responds
-	      	xhr.onload = function () { 
-	      		window.location.assign("http://localhost:8888/SpringMVC/cart/checkout?177627f91af678a9b03e993f1a91917f&id_prod="+${prod_checkout.id}+"&id_color="+${color_id}+"&id_size=" + x.id) 
-	      	};
-	      	xhr.send();
-	      	// (C) PREVENT HTML FORM SUBMIT
-	      	return false;	
-	    }
-		
-    </script>
-    
+		$("#ok-done").click(function() {
+			$("#message-done").addClass("none");
+		});
+		$("#ok-voucher").click(function() {
+			$("#wrapper #message-notify").addClass("none");
+		});
+		$("#cancel").click(function() {
+			$("#message-notify").addClass("none");
+		});
+	</script>
+	<script type="text/javascript">
+		const validateEmail = (email) => {
+		  	return email.match(
+		    	/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+		  	);
+		};
+		$("#order").click(function() {
+			var get = $(this);
+			var fullname = $("#fullname").val();
+			var email = $("#email").val();
+			var phone = $("#phone").val();
+			var city = $("#city").val();
+			var town = $("#town").val();
+			var village = $("#village").val();
+			
+			var error = "";
+			if(fullname == "") {
+				error = "Full name is empty!";
+			} else if(phone == "") {
+				error = "Phone number is empty!";
+			} else if(email == "") {
+				error = "Email address is empty!";
+			} else if(!validateEmail(email)) {
+				error = "Invalid email format!";
+			} else if(city == "") {
+				error = "City is empty!";
+			} else if(town == "") {
+				error = "Town is empty!";
+			} else if(village == "") {
+				error = "Village is empty!";
+			}
+			if (error == "") {
+				$(get).attr("type", "submit");
+			} else {
+				$("#wrapper").removeClass("importantNone");
+				$("#wrapper #message-notify").removeClass("none");
+				$("#wrapper #content-msg-notify").text(error);
+			}
+		});
+	</script>
+	
 	<script src="<c:url value="/assets/js/color.js" />" defer></script>
 	<script src="js/login.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

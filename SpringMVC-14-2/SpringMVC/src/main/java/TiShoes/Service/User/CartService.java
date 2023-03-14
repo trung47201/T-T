@@ -12,6 +12,7 @@ import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
 import TiShoes.Model.Cart;
+import TiShoes.Model.Color_size;
 import TiShoes.Model.Product;
 import TiShoes.Model.Role;
 import TiShoes.Model.User;
@@ -99,7 +100,7 @@ public class CartService implements CartRepository {
 	public String getTextHM(String s, int num) {
 		String str = "";
 		for (int i = 0; i < num; i++) {
-			str += s + "/";
+				str +=   s+"/";
 		}
 		return str;
 	}
@@ -123,6 +124,26 @@ public class CartService implements CartRepository {
 		}
 		return newListProd;
 	}
+	
+	public String Minus_Prod_Card(String id_prod, String list_prod) {
+		color_sizeService = new Color_sizeService();
+		String newListProd = "";
+		HashMap<Color_size, Integer> map = color_sizeService.get_list_color_size_by_string(list_prod);
+		for (Color_size i : map.keySet()) {
+			if (String.valueOf(i.getId()).equals(id_prod)) {
+				if (map.get(i) - 1 == 0) {
+					map.remove(i);
+				} else {
+					map.put(i, map.get(i) - 1);
+				}
+			}
+		}
+		for (Color_size i : map.keySet()) {
+			newListProd += getTextHM(String.valueOf(i.getId()), map.get(i));
+		}
+		return newListProd;
+	}
+	
 
 	@Override
 	public String DelProdCard(String id_prod, String list_prod) {
@@ -132,6 +153,61 @@ public class CartService implements CartRepository {
 		for (int i = 0; i < arr.length; i++) {
 			if (!arr[i].equals(arr1[0]) && !arr[i].equals("")) {
 				newListProd += arr[i] + "/";
+			}
+		}
+		return newListProd;
+	}
+	
+	public String delete_prod_in_cart_not_login(String id_prod, String list_prod) { //string list_prod format = {csid}/{csid}/{csid}...
+		String newListProd = "";
+		String arr[] = list_prod.split("/");
+		for (int i = 0; i < arr.length; i++) {
+			if (!arr[i].equals(id_prod) && !arr[i].equals("")) {
+				if(i==0) {
+					newListProd += arr[i];
+				} else {
+					newListProd += "/" + arr[i];
+				}
+			}
+		}
+		return newListProd;
+	}
+	
+	public String change_color_in_cart_not_login(String color, String list_prod) { 
+		//string list_prod format = {csid}/{csid}/{csid}...
+		// color format = {color id}_{prod id}_{cs id}
+		color_sizeService = new Color_sizeService();
+		String newListProd = "";
+		String arr[] = color.split("_");
+		if(arr.length > 2) {
+			int csid = color_sizeService.get_Color_size_id_by_prodid_color_id(Integer.parseInt(arr[1]), Integer.parseInt(arr[0]));
+			String a[] = list_prod.split("/");
+			for (String s : a) {
+				if(!s.equals("") && !s.equals(arr[2])) {
+					newListProd += s +"/";
+				} else if(!s.equals("") && s.equals(arr[2])) {
+					newListProd += csid +"/";
+				}
+			}
+		}
+		return newListProd;
+	}
+	
+	public String change_size_in_cart_not_login(String size, String list_prod) { 
+		// string list_prod format = {csid}/{csid}/{csid}...
+		// size format = {size id}_{color id}_{prod id}_{cs id}
+		color_sizeService = new Color_sizeService();
+		String newListProd = "";
+		String arr[] = size.split("_");
+		if(arr.length > 3) {
+			int csid = color_sizeService.get_Color_size_id(Integer.parseInt(arr[0]), Integer.parseInt(arr[1]), Integer.parseInt(arr[2]));
+			String a[] = list_prod.split("/");
+			for (String s : a) {
+				if(!s.equals("") && !s.equals(arr[3])) {
+					newListProd += s +"/";
+				} else if(!s.equals("") && s.equals(arr[3])) {
+					newListProd += csid +"/";
+				}
 			}
 		}
 		return newListProd;
@@ -466,10 +542,8 @@ public class CartService implements CartRepository {
 		CartService c = new CartService();
 //		c.insertIntoCartDB(1, 1, 3);
 		
-		List<Cart> li = c.get_all_cart_by_string("5_6");
-		for (Cart cart : li) {
-			System.out.println(cart.getId() + "="+cart.getUser().getId());
-		}
+		
+		System.out.println(c.change_size_in_cart_not_login("15_2_6_73", "455/441/157/157/73/73/73/73/"));
 		
 	}
 }

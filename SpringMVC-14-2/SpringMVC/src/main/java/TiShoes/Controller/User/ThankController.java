@@ -62,7 +62,7 @@ public class ThankController {
 		String userID = request.getParameter("user");
 		String method = request.getParameter("method");
 		
-		if(userID != null) {
+		if(userID != null && !userID.equals("")) {
 			mv.addObject("userID", userID);
 			System.out.println(userID);
 			String avatar = userService.getAvatarByUserID(Integer.parseInt(userID));

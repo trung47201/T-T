@@ -364,7 +364,6 @@
 	</script>
 
 	<script type="text/javascript">
-		
 		var url = window.location.href;
 		if(${user_id != null && user_id != ''}) {
 			function amount(x) {
@@ -415,7 +414,7 @@
 							var u_id = "${ user_id}";
 							if (confirm("Are you sure to remove the order from the cart?")) {
 								var xhr = new XMLHttpRequest();
-								xhr.open("GET", url+"?minus="+value_amount.name+"&minusdelate="+value_amount.name);
+								xhr.open("GET", url+"?minus="+value_amount.name+"&minusdelete="+value_amount.name);
 								// What to do when server responds
 								xhr.onload = function() {
 									window.location.assign(url);

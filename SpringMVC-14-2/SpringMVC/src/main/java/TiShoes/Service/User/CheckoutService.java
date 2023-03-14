@@ -5,24 +5,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import com.mysql.jdbc.Statement;
 
 import TiShoes.Model.Color;
 import TiShoes.Model.Color_size;
-import TiShoes.Model.Order_;
-import TiShoes.Model.Order_details;
 import TiShoes.Model.Product;
 import TiShoes.Model.Sizes;
 import TiShoes.Repository.User.CheckoutRepository;
 
 public class CheckoutService implements CheckoutRepository {
 	private ConnectService connectService;
-	private OrderService orderService;
-	private Order_detailsService order_detailsService;
 	private ProductService productService;
 	private VoucherService voucherService;
+	private Color_sizeService color_sizeService;
 
 	@Override
 	public List<Color> getRgbById_prod(int id_prod) {
@@ -240,10 +239,35 @@ public class CheckoutService implements CheckoutRepository {
 		return discount_at;
 	}
 	
+	public HashMap<Color_size, Integer> get_list_color_size_qty_by_string_process(String process) {
+		color_sizeService = new Color_sizeService();
+		HashMap<Color_size, Integer> hm = new LinkedHashMap<Color_size, Integer>();
+		String arr[] = process.split("/");
+		for (String s : arr) {
+			if(!s.equals("")) {
+				String a[] = s.split("_");
+				hm.put(color_sizeService.getByIdCS(Integer.parseInt(a[0])), Integer.parseInt(a[1]));
+			}
+		}
+		return hm;
+	}
+	
+	public double get_total_by_string_process(String process) {
+		double total=0;
+		HashMap<Color_size, Integer> hm = get_list_color_size_qty_by_string_process(process);
+		for (Color_size c : hm.keySet()) {
+			if(c.getProd().getDiscount() > 0) {
+				total += c.getProd().getPrice() - c.getProd().getPrice()*c.getProd().getDiscount() /100;
+			} else {
+				total += c.getProd().getPrice();
+			}
+		}
+		return total;
+	}
+	
 	public static void main(String[] args) {
 		CheckoutService c = new CheckoutService();
-		System.out.println(c.get_discount_at(1, "TS666", 25));
-		// System.out.println(removeProductFromCartAfterCheckout(3, "3//4/3"));
+		System.out.println(c.get_total_by_string_process("455_1/441_1"));
 	}
 
 }
