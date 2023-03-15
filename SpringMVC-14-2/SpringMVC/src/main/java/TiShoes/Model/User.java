@@ -1,5 +1,7 @@
 package TiShoes.Model;
 
+import java.sql.Date;
+
 public class User{
 	private int id;
 	private String fullname;
@@ -10,6 +12,9 @@ public class User{
 	private String avatar;
 	private int status;
 	private Role role;
+	private Date created_at;	
+	private Date updated_at;	
+	
 	public User() {
 		// TODO Auto-generated constructor stub
 	}
@@ -69,6 +74,19 @@ public class User{
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
 	}
+	public Date getCreated_at() {
+		return created_at;
+	}
+	public void setCreated_at(Date created_at) {
+		this.created_at = created_at;
+	}
+	public Date getUpdated_at() {
+		return updated_at;
+	}
+	public void setUpdated_at(Date updated_at) {
+		this.updated_at = updated_at;
+	}
+	
 }
 	
 

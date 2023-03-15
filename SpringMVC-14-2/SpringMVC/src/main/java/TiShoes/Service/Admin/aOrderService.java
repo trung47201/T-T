@@ -1,8 +1,11 @@
 package TiShoes.Service.Admin;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,12 +18,12 @@ import TiShoes.Model.Voucher;
 import TiShoes.Repository.Admin.aOrderRepository;
 import TiShoes.Service.User.ConnectService;
 
-public class aOrderService implements aOrderRepository{
+public class aOrderService implements aOrderRepository {
 	private ConnectService connectService;
 	private Order_ order_;
 	private Voucher voucher;
 	private Status status;
-	
+
 	@Override
 	public List<Order_> getAllOrder() {
 		List<Order_> li = null;
@@ -32,16 +35,14 @@ public class aOrderService implements aOrderRepository{
 			stmt = (Statement) con.createStatement();
 			ResultSet rs = stmt
 					.executeQuery("select * from order_ " + "Inner join voucher on order_.voucher_id = voucher.id "
-							+ "Inner join status on order_.status_id = status.id "
-							+ "group by order_.id");
+							+ "Inner join status on order_.status_id = status.id " + "group by order_.id");
 			while (rs.next()) {
 				order_ = new Order_();
 				voucher = new Voucher();
 				status = new Status();
-				
+
 				status.setId(rs.getInt("status_id"));
 				status.setStatus_name(rs.getString("status_name"));
-
 
 				voucher.setId(rs.getInt("voucher_id"));
 				voucher.setCode(rs.getString("code"));
@@ -75,7 +76,7 @@ public class aOrderService implements aOrderRepository{
 		}
 		return li;
 	}
-	
+
 	public boolean insertIntoOrder(String fullname, String email, String phone_number, String address, int voucher_id,
 			String note, String method) {
 		try {
@@ -111,21 +112,20 @@ public class aOrderService implements aOrderRepository{
 
 	public int getLastOrderId() {
 		int size = getAllOrder().size();
-		int order_id = getAllOrder().get(size-1).getId();
+		int order_id = getAllOrder().get(size - 1).getId();
 		return order_id;
 	}
-	
+
 	public Order_ getOrderByID(int id_order) {
 		Order_ od = new Order_();
 		for (Order_ o : getAllOrder()) {
-			if(o.getId() == id_order) {
+			if (o.getId() == id_order) {
 				od = o;
 			}
 		}
 		return od;
 	}
-	
-	
+
 	@Override
 	public boolean addOrder() {
 		// TODO Auto-generated method stub
@@ -164,19 +164,20 @@ public class aOrderService implements aOrderRepository{
 //		}
 		return false;
 	}
+
 	public boolean editStatusOrderById(int order_id, int status_id) {
 		try {
 			connectService = new ConnectService();
 			Connection conn = connectService.getConnect();
-			//check id_prod
+			// check id_prod
 			boolean check = false;
 			List<Order_> list = getAllOrder();
 			for (Order_ o : list) {
-				if(o.getId()==order_id) {
-					check=true;
+				if (o.getId() == order_id) {
+					check = true;
 				}
 			}
-			if(check) {
+			if (check) {
 				String query = "update order_ set status_id = ? where id = ?";
 				PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(query);
 				preparedStmt.setInt(1, status_id);
@@ -188,13 +189,15 @@ public class aOrderService implements aOrderRepository{
 				return false;
 			}
 			// create the java mysql update preparedstatement
-			
+
 		} catch (Exception e) {
 			System.err.println("Got an exception! ");
 			System.err.println(e.getMessage());
 		}
 		return false;
 	}
-	
 
+	public static void main(String[] args) {
+		aOrderService a = new aOrderService();
+	}
 }

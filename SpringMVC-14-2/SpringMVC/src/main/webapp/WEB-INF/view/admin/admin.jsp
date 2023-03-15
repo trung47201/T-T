@@ -44,7 +44,7 @@
 										<p>Today's Revenue</p>
 									</div>
 									<div class="dashboard-row-parameter">
-										<p>$5,895.3</p>
+										<p>$${ revenueofday }</p>
 									</div>
 								</div>
 							</div>
@@ -52,7 +52,12 @@
 							<div class="dashboard-row-2">
 								<div class="compare">
 									<p>
-										<span class="green">+13%</span> than yesterday
+										<c:if test="${ percentrevenue >= 0}">
+											<span class="green">+${ percentrevenue }%</span> than yesterday
+										</c:if>
+										<c:if test="${ percentrevenue < 0}">
+											<span class="red">${ percentrevenue }%</span> than yesterday
+										</c:if>
 									</p>
 								</div>
 							</div>
@@ -71,7 +76,7 @@
 										<p>Today's Order</p>
 									</div>
 									<div class="dashboard-row-parameter">
-										<p>+78</p>
+										<p>+${ orderofday }</p>
 									</div>
 								</div>
 							</div>
@@ -79,12 +84,18 @@
 							<div class="dashboard-row-2">
 								<div class="compare">
 									<p>
-										<span class="green">+5%</span> than yesterday
+										<c:if test="${ percentorder >= 0}">
+											<span class="green">+${ percentorder }%</span> than yesterday
+										</c:if>
+										<c:if test="${ percentorder < 0}">
+											<span class="red">${ percentorder }%</span> than yesterday
+										</c:if>
 									</p>
 								</div>
 							</div>
 						</div>
 					</div>
+					<!-- USER -->
 					<div class="db-row">
 						<div class="dashboard-col">
 							<div class="dashboard-row-1">
@@ -100,7 +111,7 @@
 										<p>New Customer</p>
 									</div>
 									<div class="dashboard-row-parameter">
-										<p>+139</p>
+										<p>+${ userofday }</p>
 									</div>
 								</div>
 							</div>
@@ -108,7 +119,12 @@
 							<div class="dashboard-row-2">
 								<div class="compare">
 									<p>
-										<span class="red">-3%</span> than last week
+										<c:if test="${ percentuser >= 0}">
+											<span class="green">+${ percentuser }%</span> than last week
+										</c:if>
+										<c:if test="${ percentuser < 0}">
+											<span class="red">${ percentuser }%</span> than last week
+										</c:if>
 									</p>
 								</div>
 							</div>

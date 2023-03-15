@@ -67,8 +67,33 @@ public class aProductService implements aProductRepository {
 	}
 
 	@Override
-	public boolean update() {
-		// TODO Auto-generated method stub
+	public boolean update(int id, String title, double price, int discount, String description, int style,
+			String thumbnail, int brand, int gender) {
+		try {
+			java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
+			connectService = new ConnectService();
+			Connection conn = connectService.getConnect();
+			String sql = "UPDATE `product` SET `title`= ?, `price`= ?, `discount`= ?, `style_id`= ?, `thumbnail`= ?, `description`= ?,`brand_id`= ?, `updated_at`= ?, `gender_id`= ? WHERE id = ?";
+			PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
+			preparedStmt.setString(1, title);
+			preparedStmt.setDouble(2, price);
+			preparedStmt.setInt(3, discount);
+			preparedStmt.setInt(4, style);
+			preparedStmt.setString(5, thumbnail);
+			preparedStmt.setString(6, description);
+			preparedStmt.setInt(7, brand);
+			preparedStmt.setTimestamp(8, date);
+			preparedStmt.setInt(9, gender);
+			preparedStmt.setInt(10, id);
+			preparedStmt.execute();
+
+			conn.close();
+			return true;
+		} catch (Exception e) {
+			System.err.println("Got an exception !");
+			e.printStackTrace();
+			System.out.println(e);
+		}
 		return false;
 	}
 
@@ -96,8 +121,6 @@ public class aProductService implements aProductRepository {
 		return false;
 	}
 
-	
-
 	@Override
 	public int getProd_Id_finally() {
 		productService = new ProductService();
@@ -107,7 +130,7 @@ public class aProductService implements aProductRepository {
 	}
 
 	public static void main(String[] args) {
-		//aProductService a = new aProductService();
+		// aProductService a = new aProductService();
 //		String title="Leather sandal"; 
 //		double price= 850.00; 
 //		int discount = 20; 

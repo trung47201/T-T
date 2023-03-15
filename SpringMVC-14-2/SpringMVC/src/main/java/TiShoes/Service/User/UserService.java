@@ -48,7 +48,8 @@ public class UserService implements UserRepository{
 				user.setAvatar(rs.getString("avatar"));
 				user.setStatus(rs.getInt("status"));
 				user.setRole(role);
-				
+				user.setCreated_at(rs.getDate("created_at"));
+				user.setUpdated_at(rs.getDate("updated_at"));
 				li.add(user);
 			}
 			con.close();

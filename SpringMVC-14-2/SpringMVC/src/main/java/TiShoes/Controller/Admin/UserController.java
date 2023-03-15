@@ -66,6 +66,8 @@ public class UserController {
 	public ModelAndView upload(@RequestParam(value="filetag", required = false) MultipartFile file ,HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		ModelAndView mv = new ModelAndView("admin/customer");
 		
+		aUserService = new aUserService();
+		
 		String fullname = request.getParameter("fullname");
 		String email = request.getParameter("email");
 		String phone_number = request.getParameter("phonenumber");

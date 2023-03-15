@@ -67,8 +67,6 @@ public class ShoesController {
 		String color = request.getParameter("color");
 		String description = request.getParameter("description");
 		
-		
-		
 		String li_size ="";
 		
 		for (int i=32; i<48; i++) {
@@ -130,7 +128,6 @@ public class ShoesController {
 			}
 			return new ModelAndView("redirect: /SpringMVC/admin/product/add-new-product");
 		}
-		
 		
 		return mv;
 	}

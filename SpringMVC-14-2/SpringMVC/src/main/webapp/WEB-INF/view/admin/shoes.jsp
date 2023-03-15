@@ -24,6 +24,11 @@
 </c:if>
 <link rel="stylesheet" href="<c:url value='/assets/css/admin-product.css'/>">
 <link rel="stylesheet" href="<c:url value='/assets/css/admin-login.css'/>">
+<style>
+	td.td-date {
+    min-width: 95px;
+}
+</style>
 <body>
 <jsp:include page="../layouts/admin/login.jsp"></jsp:include>
 	<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
@@ -149,7 +154,7 @@
 							<td><textarea id="w3review" name="w3review">${ liProduct.description }
 								</textarea></td>
 							<td class="td-action">
-								<button class="btn-edit-order btn-edit-product" id="${ liProduct.id }">
+								<button class="btn-edit-order btn-edit-product" id="btn-edit-product" name="${ liProduct.id }" onclick="productedit(this)">
 									<img
 										src="<c:url value="/assets/images/icons/icons8-edit-100.png"/>"
 										alt="">
@@ -389,7 +394,7 @@
 								<td class="td-center">${ liPCS.size.size_number }</td>
 								<td class="td-center">${ liPCS.quantity }</td>
 								<td class="td-action">
-									<button class="btn-edit-order" id="${ liPCS.id }">
+									<button class="btn-edit-order" id="btn-edit-order" name="${ liPCS.id }" value="">
 										<img
 											src="<c:url value="/assets/images/icons/icons8-edit-100.png"/>"
 											alt="">
@@ -885,9 +890,16 @@
 
 <!-- EDIT PRODUCT -->
 	<script>
-	    $(".btn-edit-product").click(function() {
-	    	
-	    });
+		function productedit(x) {
+			var url = window.location.href;
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", "");
+			xhr.onload = function() {
+				window.location.assign(url+"/edit/"+x.name);
+			};
+			xhr.send();
+			return false;
+		}
 	</script>
 <!-- DELETE PRODUCT -->
 	<script>

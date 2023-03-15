@@ -139,5 +139,6 @@ public class aProd_Color_SizeService implements aProd_ColorC_SizeRepository {
 		sizeService = new SizeService();
 		return sizeService.getAllSize();
 	}
+	
 
 }
