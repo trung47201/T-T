@@ -1,0 +1,88 @@
+.menu {
+    position: fixed;
+    right: 0;
+    width: 350px;
+    background: white;
+    min-height: 1000px;
+    max-height: 1000px;
+    box-shadow: -1px 0 5px black;
+    top: 0;
+    z-index: 101;
+}
+
+.menu-close {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-left: -24px;
+    margin-top: 20px;
+    font-weight: bold;
+}
+.menu-close p {
+	margin-left: 48px;
+	font-size: 24px;
+}
+.menu-close i {
+    font-size: 24px;
+}
+
+.menu-close i:hover {
+	color: #cb82a9;
+	cursor: pointer;
+}
+.none {
+	display: none;
+}
+
+.important-none {
+	display: none !important;
+}
+
+.list-menu ul li {
+	list-style-type: none; /* Remove bullets */
+	padding: 0;
+	margin: 0;
+	margin-bottom: 15px;
+}
+
+.list-menu {
+    margin-left: 60px;
+    margin-top: 10px;
+}
+.menu {
+    width: 0;
+    transition: all .25s ease-out;
+    overflow-y: auto;
+}
+
+.list-menu a {
+	color: black;
+}
+
+.list-menu a:hover {
+    cursor: pointer;
+    color: #cb82a9 !important;
+    text-decoration: none;
+}
+
+.menu-contact i{
+	color: #4a4a4a;
+	font-size: 24px;
+    margin-left: 2px;
+}
+
+
+.menu-contact a {
+    width: 41px;
+    border: 1px solid black;
+    display: flex;
+    height: 41px;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+}
+.menu-contact {
+	justify-content: space-between;
+    display: flex;
+    margin: 20px 60px;
+}

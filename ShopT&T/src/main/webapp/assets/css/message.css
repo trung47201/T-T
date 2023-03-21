@@ -1,0 +1,53 @@
+.message p {
+	margin-top: 5px;
+}
+
+.message {
+	position: fixed;
+	width: 380px;
+	border-radius: 10px;
+	box-shadow: 0 0 5px #0086ff;
+	background: white;
+	top: 37%;
+	left: 37%;
+	z-index: 100;
+	padding: 15px;
+	color: #16222d;
+}
+h2.msg-h2 {
+    display: flex;
+    font-size: 24px;
+    font-weight: bold;
+    justify-content: space-between;
+}
+h2.msg-h2 img {
+    width: 28px;
+    height: 28px;
+}
+input.ok {
+    background: #0086ff;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    border: 0;
+    padding: 3px 41px;
+    border-radius: 4px;
+}
+input.cancel {
+    background: gray;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    border: 0;
+    padding: 3px 20px;
+    border-radius: 4px;
+}
+input.ok:hover, input.cancel:hover {
+	cursor: pointer;
+}
+p.content-msg {
+    margin: 10px 10px 1rem 15px;
+}
+.btn-ok-cancel {
+    text-align: right;
+}

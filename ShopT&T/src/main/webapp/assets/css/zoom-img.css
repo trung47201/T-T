@@ -1,0 +1,45 @@
+.zoom {
+	display: inline-block;
+	position: relative;
+}
+.zoom img {
+	display: block;
+}
+.zoom img::selection {
+	background-color: transparent;
+}
+.zoom-most-loved {
+	display: inline-block;
+	position: relative;
+}
+.zoom-most-loved img {
+	display: block;
+}
+.zoom-most-loved img::selection {
+	background-color: transparent;
+}
+.zoom-same-price-product {
+	display: inline-block;
+	position: relative;
+}
+.zoom-same-price-product img {
+	display: block;
+}
+.zoom-same-price-product img::selection {
+	background-color: transparent;
+}
+.zoo:after {
+	content: attr(name);
+	display: flex;
+	width: 64px;
+	height: 64px;
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	font-weight: bold;
+	justify-content: center;
+	display: flex;
+	color: white;
+	align-items: center;
+	background: url("../images/icons/icons8-starburst-shape-64.png");
+}
