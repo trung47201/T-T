@@ -369,7 +369,7 @@
 		</form>
 	</header>
 
-	<jsp:include page="../layouts/user/footer.jsp"></jsp:include>
+	<jsp:include page="../layouts/user/re-footer.jsp"></jsp:include>
 
 	<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 	<script

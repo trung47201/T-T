@@ -69,10 +69,10 @@ window.addEventListener("scroll", (event) => {
     let scroll = this.scrollY;
     if(scroll >= 20) {
     	document.getElementById("re-logo").style.width = "80px";
-    	$(".nav-mid-img").css({top: 40, left: $('.top-nav').width()/2-40+"px", position:'absolute'});
+    	$(".nav-mid-img").css({marginTop: 0 , position:'sticky'});
     } else {
     	document.getElementById("re-logo").style.width = "160px";
-    	$(".nav-mid-img").css({top: 30, left: $('.top-nav').width()/2-80+"px", position:'absolute'});
+    	$(".nav-mid-img").css({marginTop: 40, position:'sticky'});
     }
 });
 </script>

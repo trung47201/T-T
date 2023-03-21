@@ -25,165 +25,27 @@
 	href='<c:url value="/assets/css/products_c.css"/>'>
 <link rel="stylesheet"
 	href='<c:url value="/assets/css/add-to-cart.css"/>'>
-<link rel="stylesheet" href="<c:url value="/assets/css/zoom-img.css"/>">
+<link rel="stylesheet"
+	href="<c:url value="/assets/css/re-zoom-img.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/home.css"/>">
 
 <link rel="stylesheet"
 	href="<c:url value="/assets/css/re-headers.css"/>">
-<link rel="stylesheet"
-	href="<c:url value="/assets/css/re-menu.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/re-menu.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/re-footer.css"/>">
 <style>
-body::-webkit-scrollbar {
-	width: 15px;
-}
-/* Track */
-body::-webkit-scrollbar-track {
-	border-radius: 10px;
-	box-shadow: inset 0 0 5px #0086ff;
-}
-/* Handle */
-body::-webkit-scrollbar-thumb {
-	background: #ccc;
-	border-radius: 10px;
-}
-/* Handle on hover */
-body::-webkit-scrollbar-thumb:hover {
-	background: #cb82a9;
-}
 
-.manual-btn {
-	border: 2px solid black !important;
-}
-
-.wrapper-nav {
-	width: 100%;
-	display: flex;
-	height: 100%;
-	justify-content: space-between;
-	align-items: center;
-}
-
-.nav-mid-img {
-	position: absolute;
-	border-radius: 500px;
-	left: calc(50% - 80px);
-	border: 5px solid #f5c6dc;
-	top: 30px;
-	transition: all .5s ease-out;
-}
-
-.nav-mid-img:hover, .nav-mid-img img:hover {
-	cursor: pointer;
-}
-
-.nav-mid-img img {
-	width: 160px;
-	border-radius: 500px;
-	border: 2px solid white;
-	transition: all .7s ease-out;
-}
-
-.nav-c {
-	display: flex;
-	height: 90px;
-	align-items: center;
-	padding: 0 60px;
-	width: 100%;
-}
-
-.nav-btn {
-	display: flex;
-	width: 120px;
-	justify-content: space-between;
-}
-
-.nav-left {
-	width: 40%;
-}
-
-.nav-left ul li.link:hover {
-	color: #cb82a9 !important;
-	text-decoration: none;
-}
-
-.nav-btn i:hover {
-	color: #cb82a9;
-	cursor: pointer;
-}
-.back-header {
-    position: sticky;
-    top: -40px;
-    z-index: 100;
-    background: white;
-    box-shadow: 0 1px 5px black;
-}
-.list-menu ul li {
-	list-style-type: none; /* Remove bullets */
-	padding: 0;
-	margin: 0;
-	margin-bottom: 15px;
-}
-
-.list-menu {
-    margin-left: 60px;
-    margin-top: 10px;
-    
-}
-.menu {
-    width: 0;
-    transition: all .25s ease-out;
-    overflow-y: auto;
-}
-
-.list-menu a {
-	color: black;
-}
-
-.list-menu a:hover {
-    cursor: pointer;
-    color: #cb82a9 !important;
-    text-decoration: none;
-}
-
-.menu-contact i{
-	color: #4a4a4a;
-	font-size: 24px;
-    margin-left: 2px;
-}
-
-
-.menu-contact a {
-    width: 41px;
-    border: 1px solid black;
-    display: flex;
-    height: 41px;
-    border-radius: 20px;
-    justify-content: center;
-    align-items: center;
-}
-.menu-contact a:hover {
-	cursor: pointer;
-    background: #f9e1ee !important;
-    text-decoration: none;
-    border: 0;
-}
-
-.menu-contact {
-	justify-content: space-between;
-    display: flex;
-    margin: 40px 60px;
-}
 </style>
 
 <body style="color: black;">
 	<!--  cart  -->
 	<jsp:include page="../layouts/user/re-menu.jsp"></jsp:include>
 
-	
-		<div class="back-header">
-			<jsp:include page="../layouts/user/re-header.jsp"></jsp:include>
-		</div>
-<header class="container-xl header-content">
+
+	<div class="back-header">
+		<jsp:include page="../layouts/user/re-header.jsp"></jsp:include>
+	</div>
+	<header class="container-xl header-content">
 		<!-- important -->
 		<div class="header-slide">
 			<div class="slider">
@@ -328,15 +190,11 @@ body::-webkit-scrollbar-thumb:hover {
 									<c:set var="vfirstColor" value="${ firstColor }"></c:set>
 									<div class="show-function" style="margin-left: 5px;">
 										<button class="favorite-product">
-											<img class="shadow-1"
-												src="<c:url value="/assets/images/icons/favorite32.png"/>"
-												alt="favorite32">
+											<i class="fa fa-heart" aria-hidden="true"></i>
 										</button>
 										<button type="button" class="add-to-cart" name="add-to-cart"
 											id="add-to-cart" value="${ it.id }">
-											<img class="shadow-2"
-												src="<c:url value="/assets/images/icons/addcart32.png"/>"
-												alt="addcart32">
+											<i class="fa fa-cart-plus" aria-hidden="true"></i>
 										</button>
 										<button class="buy-now" class="shadow-1" id="${ it.id }">Buy
 											now</button>
@@ -455,15 +313,11 @@ body::-webkit-scrollbar-thumb:hover {
 												<div class="favorite-product-products-effect">
 													<div class="show-function-effect">
 														<button class="favorite-effect">
-															<img
-																src="<c:url value="/assets/images/icons/favorite32.png"/>"
-																alt="favorite32">
+															<i class="fa fa-heart" aria-hidden="true"></i>
 														</button>
 														<button class="add-to-cart-effect" id="add-to-cart-effect"
 															value="${ item.id }">
-															<img
-																src="<c:url value="/assets/images/icons/addcart32.png"/>"
-																alt="addcart32">
+															<i class="fa fa-cart-plus" aria-hidden="true"></i>
 														</button>
 														<button class="buy-effect" id="${ item.id }">Buy
 															now</button>
@@ -569,15 +423,11 @@ body::-webkit-scrollbar-thumb:hover {
 								<div class="favorite-product-products">
 									<div class="show-function">
 										<button class="favorite-product">
-											<img class="shadow-1"
-												src="<c:url value="/assets/images/icons/favorite32.png"/>"
-												alt="favorite32">
+											<i class="fa fa-heart" aria-hidden="true"></i>
 										</button>
 										<button class="add-to-cart" id="add-to-cart"
 											value="${ it.id }">
-											<img class="shadow-2"
-												src="<c:url value="/assets/images/icons/addcart32.png"/>"
-												alt="addcart32">
+											<i class="fa fa-cart-plus" aria-hidden="true"></i>
 										</button>
 										<button class="buy-now" class="shadow-1" id="${ it.id }">
 											Buy now</button>
@@ -645,7 +495,7 @@ body::-webkit-scrollbar-thumb:hover {
 		</div>
 	</header>
 
-	<jsp:include page="../layouts/user/footer.jsp"></jsp:include>
+	<jsp:include page="../layouts/user/re-footer.jsp"></jsp:include>
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>

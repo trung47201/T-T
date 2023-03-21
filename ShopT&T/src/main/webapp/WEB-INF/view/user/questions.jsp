@@ -140,7 +140,7 @@
         </form>
     </header>
 
-    <jsp:include page="../layouts/user/footer.jsp"></jsp:include>
+    <jsp:include page="../layouts/user/re-footer.jsp"></jsp:include>
     <jsp:include page="../layouts/user/search.jsp"></jsp:include>
 
     <script>
