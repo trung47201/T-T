@@ -33,14 +33,18 @@
 	href="<c:url value="/assets/css/re-headers.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/re-menu.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/re-footer.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/re-effect.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/text.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/posts.css"/>">
 <style>
-
+.importantNone2 {
+	display: none !important;
+}
 </style>
 
 <body style="color: black;">
 	<!--  cart  -->
 	<jsp:include page="../layouts/user/re-menu.jsp"></jsp:include>
-
 
 	<div class="back-header">
 		<jsp:include page="../layouts/user/re-header.jsp"></jsp:include>
@@ -226,9 +230,12 @@
 		<div class="section-3">
 			<div class="h">MOST LOVED PRODUCTS</div>
 			<div class="position-product-effect">
+				<div class="backward">
+					<img alt=""
+						src="<c:url value="/assets/images/icons/icons8-love-arrow-100.png"/>">
+				</div>
 				<div class="swiper mySwiper">
 					<div class="swiper-wrapper">
-
 						<c:forEach var="item" items="${ listMostLovedProducts}"
 							varStatus="index">
 							<div class="swiper-slide">
@@ -329,10 +336,11 @@
 								</div>
 							</div>
 						</c:forEach>
-
-
 					</div>
-					<div class="swiper-pagination"></div>
+				</div>
+				<div class="forward">
+					<img alt=""
+						src="<c:url value="/assets/images/icons/icons8-love-arrow-100.png"/>">
 				</div>
 			</div>
 
@@ -436,7 +444,6 @@
 							</div>
 						</div>
 					</div>
-
 				</c:forEach>
 			</div>
 			<div class="poster2 container-xl">
@@ -450,48 +457,187 @@
 		</div>
 
 		<div class="section-2">
-			<div class="h">NEWS</div>
-			<div class="position-product">
-				<c:forEach var="item" items="${ listNewsHomeLeft }">
-					<a href="#">
-						<div class="left-news">
-							<img class="img-fluid img-news"
-								src="<c:url value="/assets/images/news/${ item.image }"/>"
-								alt="image-news">
-							<fmt:formatDate value="${ item.post_date }"
-								pattern="yyyy, MMM dd" var="post_date" />
-							<div class="news-content-left">
-								${ post_date } - by ${ item.by_name } <br> <span
-									class="news-name"> ${ item.title } </span>
-								<c:set var="string1" value="${item.content }" />
-								<c:set var="string2" value="${fn:substring(string1, 0, 150)}" />
-								<div class="news-desription">${string2}...</div>
+			<div class="text-effect">
+				<h2>POSTS</h2>
+				<h2>POSTS</h2>
+			</div>
+			<c:forEach var="liPosts" items="${ listPosts }" varStatus="i">
+				<c:set var="index" value="${ i.getIndex() }"></c:set>
+				<c:if test="${ index % 5 ==0 }">
+					<div class="list-view">
+						<div class="list-view-ele" id="${ liPosts.id }">
+							<div class="view-img">
+								<div class="opacity-ele importantNone" id="opacity">
+									<div class="nothing"></div>
+								</div>
+								<div class="ins-img importantNone" id="ins-img">
+									<a href="#"> <i class="fab fa-instagram" aria-hidden="true"></i></a>
+								</div>
+								<img alt=""
+									src="<c:url value="/assets/images/posts/${ liPosts.img }"/>">
 							</div>
 						</div>
-					</a>
-				</c:forEach>
-				<div class="right-news">
-					<c:forEach var="item" items="${ listNewsHomeRight }">
-						<a href="#">
-							<div class="sub-news">
-								<img class="img-fluid img-news1"
-									src="<c:url value="/assets/images/news/${ item.image }"/>"
-									alt="image-news">
-								<fmt:formatDate value="${ item.post_date }"
-									pattern="yyyy, MMM dd" var="post_date" />
-								<div class="news-content">
-									${ post_date } - by ${ item.by_name } <br> <span
-										class="news-name"> ${ item.title } </span>
-									<c:set var="string1" value="${item.content }" />
-									<c:set var="string2" value="${fn:substring(string1, 0, 100)}" />
-									<div class="news-desription">${string2}...</div>
+						<div class="view-details importantNone"
+							id="view-details${ liPosts.id }">
+							<div class="wrapper-view">
+								<div class="view-details-img">
+									<c:if test="${ liPosts.type == 0 }">
+										<img alt=""
+											src="<c:url value="/assets/images/posts/${ liPosts.img }"/>">
+									</c:if>
+									<c:if test="${ liPosts.type == 1 }">
+										<video controls="controls">
+											<source
+												src="<c:url value="/assets/images/posts/${ liPosts.video }"/>"
+												type="video/mp4">
+										</video>
+									</c:if>
+								</div>
+								<div class="view-details-content">
+									<div class="url-ins">
+										<a href="${ liPosts.url }"> <img alt=""
+											src="<c:url value="/assets/images/icons/icons8-external-link-52.png"/>">
+											View on Instagram
+										</a>
+										<div class="close-view-posts">
+											<i class="fa fa-times" aria-hidden="true"
+												id="close-view-posts"></i>
+										</div>
+									</div>
+									<div class="view-content">${ liPosts.content }</div>
+									<!-- <div class="buy-add-prod">
+									<div class="location-btn">
+										<div class="add-btn">
+											<button>Add to cart</button>
+										</div>
+										<div class="buy-btn">
+											<button>Buy it</button>
+										</div>
+									</div>								
+								</div> -->
 								</div>
 							</div>
-						</a>
-					</c:forEach>
+							<div class="opacity-view" id="opacity-view"></div>
+						</div>
+				</c:if>
+				<c:if
+					test="${ (index+4) % 5 ==0 || (index+2) % 5 ==0 || (index+3) % 5 ==0}">
+					<div class="list-view-ele" id="${ liPosts.id }">
+						<div class="view-img">
+							<div class="opacity-ele importantNone" id="opacity">
+								<div class="nothing"></div>
+							</div>
+							<div class="ins-img importantNone" id="ins-img">
+								<a href="#"> <i class="fab fa-instagram" aria-hidden="true"></i></a>
+							</div>
+							<img alt=""
+								src="<c:url value="/assets/images/posts/${ liPosts.img }"/>">
 
-				</div>
-			</div>
+						</div>
+					</div>
+					<div class="view-details importantNone"
+						id="view-details${ liPosts.id }">
+						<div class="wrapper-view">
+							<div class="view-details-img">
+								<c:if test="${ liPosts.type == 0 }">
+									<img alt=""
+										src="<c:url value="/assets/images/posts/${ liPosts.img }"/>">
+								</c:if>
+								<c:if test="${ liPosts.type == 1 }">
+									<video controls="controls">
+										<source
+											src="<c:url value="/assets/images/posts/${ liPosts.video }"/>"
+											type="video/mp4">
+									</video>
+								</c:if>
+							</div>
+							<div class="view-details-content">
+								<div class="url-ins">
+									<a href="${ liPosts.url }"> <img alt=""
+										src="<c:url value="/assets/images/icons/icons8-external-link-52.png"/>">
+										View on Instagram
+									</a>
+									<div class="close-view-posts">
+										<i class="fa fa-times" aria-hidden="true"
+											id="close-view-posts"></i>
+									</div>
+								</div>
+								<div class="view-content">${ liPosts.content }</div>
+								<!-- <div class="buy-add-prod">
+									<div class="location-btn">
+										<div class="add-btn">
+											<button>Add to cart</button>
+										</div>
+										<div class="buy-btn">
+											<button>Buy it</button>
+										</div>
+									</div>								
+								</div> -->
+							</div>
+						</div>
+						<div class="opacity-view" id="opacity-view"></div>
+					</div>
+				</c:if>
+				<c:if test="${ (index+1) % 5 ==0 }">
+					<div class="list-view-ele" id="${ liPosts.id }">
+						<div class="view-img">
+							<div class="opacity-ele importantNone" id="opacity">
+								<div class="nothing"></div>
+							</div>
+							<div class="ins-img importantNone" id="ins-img">
+								<a href="#"> <i class="fab fa-instagram" aria-hidden="true"></i></a>
+							</div>
+							<img alt=""
+								src="<c:url value="/assets/images/posts/${ liPosts.img }"/>">
+
+						</div>
+					</div>
+					<div class="view-details importantNone"
+						id="view-details${ liPosts.id }">
+						<div class="wrapper-view">
+							<div class="view-details-img">
+								<c:if test="${ liPosts.type == 0 }">
+									<img alt=""
+										src="<c:url value="/assets/images/posts/${ liPosts.img }"/>">
+								</c:if>
+								<c:if test="${ liPosts.type == 1 }">
+									<video controls="controls">
+										<source
+											src="<c:url value="/assets/images/posts/${ liPosts.video }"/>"
+											type="video/mp4">
+									</video>
+								</c:if>
+							</div>
+							<div class="view-details-content">
+								<div class="url-ins">
+									<a href="${ liPosts.url }"> <img alt=""
+										src="<c:url value="/assets/images/icons/icons8-external-link-52.png"/>">
+										View on Instagram
+									</a>
+									<div class="close-view-posts">
+										<i class="fa fa-times" aria-hidden="true"
+											id="close-view-posts"></i>
+									</div>
+								</div>
+								<div class="view-content">${ liPosts.content }</div>
+								<!-- <div class="buy-add-prod">
+									<div class="location-btn">
+										<div class="add-btn">
+											<button>Add to cart</button>
+										</div>
+										<div class="buy-btn">
+											<button>Buy it</button>
+										</div>
+									</div>								
+								</div> -->
+							</div>
+						</div>
+						<div class="opacity-view" id="opacity-view"></div>
+					</div>
+		</div>
+		</c:if>
+
+		</c:forEach>
 		</div>
 	</header>
 
@@ -500,6 +646,39 @@
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
+	<script type="text/javascript"> //click posts
+			$(".list-view-ele").click(function() { //open
+				var id = this.id;
+				$("#view-details"+id).removeClass("importantNone");
+				var current = $(window).scrollTop();
+				$(window).scroll(function() {
+				    $(window).scrollTop(current);
+				});
+				$(".fa-times").click(function() { //open
+					$("#view-details"+id).addClass("importantNone");
+					$(window).off('scroll');
+				});
+				
+			});	
+	</script>
+
+	<script type="text/javascript"> //hover posts
+		$(".list-view-ele").hover(function() {
+			var get = $(this).children()[0];
+			var child1 = $(get).children()[0];
+			var child2 = $(get).children()[1];
+			$(child1).removeClass("importantNone");
+			$(child2).removeClass("importantNone");
+		});	
+		$(".list-view-ele").mouseleave(function() {
+			var get = $(this).children()[0];
+			var child1 = $(get).children()[0];
+			var child2 = $(get).children()[1];
+			$(child1).addClass("importantNone");
+			$(child2).addClass("importantNone");
+		});
+	</script>
 
 	<script> // add to cart
 		var id_user = "";
@@ -603,27 +782,12 @@
 	</script>
 
 
-	<script type="text/javascript"> // msg search input empty
-	$("#search-link-icon").click(function () {
-		var txt = $('#search').val();
-		if(txt == "") {
-			$("#wrapper-search").removeClass("importantNone");
-			$("#welcome-search").removeClass("none");
-			$("#welcome-search h3").html("You have not entered search information!");
-		} else {
-			$("#search-link-icon").attr("type", "submit");
-		}
-	});
-	</script>
-
 	<script>
 	$(".ok-btn").click(function () {
 		$(".welcome").addClass("none");
 		$(".wrapper-wel").addClass("importantNone");
 	});
 	</script>
-
-
 
 	<script>
 	function logout() {
@@ -638,17 +802,8 @@
 		});
 	}
 	</script>
-	<!-- <script>
-		if(${userID == null }) {
-			$(document).ready(function() {
-				if(${message != "logout"}) {
-					$('#login').modal('toggle');
-				}
-			});
-		}
-	</script> -->
+
 	<script type="text/javascript">
-	
 	if(${ message != null }) {
 		if(${message == "true"}) {
 			//alert("Welcome to Ti Shoes!");
@@ -682,23 +837,6 @@
 		}
 	</script>
 
-	<script type="text/javascript">
-		window.addEventListener("scroll", function() {
-			var div = document.getElementById('nav-search');
-			var div1 = document.getElementsByClassName('hidden-poster2');
-			if (window.scrollY > 80) {
-				div.style.visibility = 'visible';
-			} else {
-				div.style.visibility = 'hidden';
-			}
-			if (window.scrollY > 2280 && window.scrollY < 2380) {
-				div1.style.visibility = 'hidden';
-			} else {
-				div1.style.visibility = 'visible';
-			}
-		})
-	</script>
-
 	<!-- Initialize Swiper -->
 	<script>
 		var swiper = new Swiper(".mySwiper", {
@@ -710,7 +848,7 @@
 				rotate : 0,
 				stretch : 0,
 				depth : 150,
-				modifier : 1,
+				modifier : .5,
 				slideShadows : true,
 			},
 			loop : true,

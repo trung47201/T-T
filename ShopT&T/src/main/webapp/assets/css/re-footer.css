@@ -20,6 +20,7 @@ footer {
 
 hr.shadow {
     background-color: white;
+    box-shadow: 0 0 3px black !important;
 }
 
 .text-shadow {

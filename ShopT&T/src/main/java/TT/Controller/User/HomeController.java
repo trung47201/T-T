@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import TT.Service.Admin.aStatisticsService;
 import TT.Service.User.LoginService;
-import TT.Service.User.NewsService;
+import TT.Service.User.PostsService;
 import TT.Service.User.ProductService;
 import TT.Service.User.SlidesService;
 import TT.Service.User.StyleService;
@@ -24,19 +24,18 @@ public class HomeController {
 	
 	private SlidesService slidesService;
 	private ProductService productService;
-	private NewsService newsService;
 	private StyleService styleService;
 	private LoginService loginService;
 	private UserService userService;
 	private aStatisticsService aStatisticsService;
+	private PostsService postsService;
 	
 	@RequestMapping(value = {"/"})
 	public ModelAndView loadHome(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView("user/re-index");
-		
+		postsService = new PostsService();
 		slidesService = new SlidesService();
 		productService = new ProductService();
-		newsService = new NewsService();
 		styleService = new StyleService();
 		loginService = new LoginService();
 		userService = new UserService();
@@ -132,20 +131,9 @@ public class HomeController {
 		mv.addObject("style", styleService.getAllStyle());
 		mv.addObject("slides", slidesService.getAllSlides());
 		mv.addObject("listNewArrivals", productService.getNewArrivals());
-		mv.addObject("listNewsHomeRight", newsService.getNewsHome());
-		mv.addObject("listNewsHomeLeft", newsService.listNewsHomeLeft);
 		mv.addObject("listMostLovedProducts", productService.getMostLovedProducts());
+		mv.addObject("listPosts", postsService.getAllPosts());
 		
-		return mv;
-	}
-	
-	@RequestMapping(value = {"news"})
-	public ModelAndView loadNews(){
-		ModelAndView mv = new ModelAndView("user/news");
-		styleService = new StyleService();
-		
-
-		mv.addObject("style", styleService.getAllStyle());
 		return mv;
 	}
 	
