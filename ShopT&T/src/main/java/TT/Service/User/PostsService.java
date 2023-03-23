@@ -4,7 +4,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+
+import javax.sound.sampled.Port;
 
 import com.mysql.jdbc.Statement;
 
@@ -40,5 +45,29 @@ public class PostsService {
 		}
 		return li;
 	}
-
+	
+	public HashMap<Integer, List<Posts>> listPost() {
+		HashMap<Integer, List<Posts>> hm = new LinkedHashMap<Integer, List<Posts>>();
+		int count=1;
+		List<Posts> li = getAllPosts();
+		List<Posts> getAll = new ArrayList<>();
+		int idx = 1;
+		for (Posts posts : li) {
+			if(count % 20 == 0) {
+				getAll.add(posts);
+				if(getAll.size() > 0) {
+					hm.put(idx, getAll);
+					idx++;
+				}
+				getAll = new ArrayList<>();
+			} else {
+				getAll.add(posts);
+			}
+			count++;
+		}
+		if(count % 20 != 0) {
+			hm.put(idx, getAll);
+		}
+		return hm;
+	}
 }

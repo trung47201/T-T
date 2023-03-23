@@ -8,7 +8,7 @@
 	pageEncoding="UTF-8"%>
 <link rel="stylesheet" href='<c:url value="/assets/css/bootstrap.css"/>'>
 <link rel="stylesheet" href='<c:url value="/assets/js/bootstrap.js"/>'>
-<link rel="stylesheet" href='<c:url value="/assets/css/re-index.css"/>'>
+<link rel="stylesheet" href='<c:url value="/assets/css/r-index.css"/>'>
 <link rel="stylesheet"
 	href='<c:url value="/assets/css/login-icon.css"/>'>
 <link rel="stylesheet"
@@ -16,7 +16,7 @@
 <link rel="stylesheet"
 	href='<c:url value="/assets/js/bootstrap.min.js"/>'>
 <link rel="stylesheet"
-	href='<c:url value="/assets/https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>'>
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 <link rel="stylesheet" href='<c:url value="/assets/css/login.css"/>'>
 <link rel="stylesheet"
 	href='<c:url value="/assets/css/swiper-bundle.min.css"/>'>
@@ -26,19 +26,55 @@
 <link rel="stylesheet"
 	href='<c:url value="/assets/css/add-to-cart.css"/>'>
 <link rel="stylesheet"
-	href="<c:url value="/assets/css/re-zoom-img.css"/>">
+	href="<c:url value="/assets/css/r-zoom-img.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/home.css"/>">
 
-<link rel="stylesheet"
-	href="<c:url value="/assets/css/re-headers.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/r-header.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/re-menu.css"/>">
-<link rel="stylesheet" href="<c:url value="/assets/css/re-footer.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/re-effect.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/r-footer.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/text.css"/>">
-<link rel="stylesheet" href="<c:url value="/assets/css/posts.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/r-posts.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/re-text.css"/>">
 <style>
-.importantNone2 {
-	display: none !important;
+div.section-1 {
+	margin-top: 50px;
+	padding-bottom: 250px;
+}
+.customer-menu {
+	width: 0;
+	transition: all .25s ease-out;
+	overflow-y: auto;
+	position: fixed;
+	right: 0;
+	background: white;
+	min-height: 1000px;
+	max-height: 1000px;
+	box-shadow: -1px 0 5px black;
+	top: 0;
+	z-index: 101;
+}
+.customer-close {
+    width: 100%;
+    display: flex;
+    justify-content: right;
+    margin-left: -24px;
+    margin-top: 20px;
+    font-weight: bold;
+}	
+.customer-close p {
+    margin-left: 48px;
+    font-size: 24px;
+}
+.follow {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+.follow img {
+    width: 160px;
+    border-radius: 100px;
 }
 </style>
 
@@ -99,7 +135,12 @@
 
 		<!-- ###########################     SECTION 0 - NEW ARRIVALS  ################################################### -->
 		<div class="section">
-			<div class="h">NEW ARRIVALS</div>
+			<div class="text">
+				<h3>NEW</h3>
+				<p class="cool">
+					<span data-text="ARRIVALS" style="color: white;">ARRIVALS</span>
+				</p>
+			</div>
 			<div class="position-product">
 
 				<c:forEach var="it" items="${ listNewArrivals }" varStatus="index">
@@ -228,7 +269,12 @@
 
 		<!-- ###########################     SECTION 3 - MOST LOVED PRODUCTS     ################################################### -->
 		<div class="section-3">
-			<div class="h">MOST LOVED PRODUCTS</div>
+			<div class="text">
+				<h3>MOST LOVED</h3>
+				<p class="cool">
+					<span data-text="PRODUCTS" style="color: white;">PRODUCTS</span>
+				</p>
+			</div>
 			<div class="position-product-effect">
 				<div class="backward">
 					<img alt=""
@@ -347,7 +393,12 @@
 		</div>
 		<!-- ###########################     SECTION 1 - SELL SAME PRICE    ################################################### -->
 		<div class="section-1">
-			<div class="h">SELL SAME PRICE</div>
+			<div class="text">
+				<h3>SELL SAME</h3>
+				<p class="cool">
+					<span data-text="PRICE" style="color: white;">PRICE</span>
+				</p>
+			</div>
 			<div class="position-product container-xl">
 				<c:forEach var="it" items="${ listNewArrivals }" varStatus="">
 					<div class="products-el">
@@ -455,190 +506,6 @@
 				</div>
 			</div>
 		</div>
-
-		<div class="section-2">
-			<div class="text-effect">
-				<h2>POSTS</h2>
-				<h2>POSTS</h2>
-			</div>
-			<c:forEach var="liPosts" items="${ listPosts }" varStatus="i">
-				<c:set var="index" value="${ i.getIndex() }"></c:set>
-				<c:if test="${ index % 5 ==0 }">
-					<div class="list-view">
-						<div class="list-view-ele" id="${ liPosts.id }">
-							<div class="view-img">
-								<div class="opacity-ele importantNone" id="opacity">
-									<div class="nothing"></div>
-								</div>
-								<div class="ins-img importantNone" id="ins-img">
-									<a href="#"> <i class="fab fa-instagram" aria-hidden="true"></i></a>
-								</div>
-								<img alt=""
-									src="<c:url value="/assets/images/posts/${ liPosts.img }"/>">
-							</div>
-						</div>
-						<div class="view-details importantNone"
-							id="view-details${ liPosts.id }">
-							<div class="wrapper-view">
-								<div class="view-details-img">
-									<c:if test="${ liPosts.type == 0 }">
-										<img alt=""
-											src="<c:url value="/assets/images/posts/${ liPosts.img }"/>">
-									</c:if>
-									<c:if test="${ liPosts.type == 1 }">
-										<video controls="controls">
-											<source
-												src="<c:url value="/assets/images/posts/${ liPosts.video }"/>"
-												type="video/mp4">
-										</video>
-									</c:if>
-								</div>
-								<div class="view-details-content">
-									<div class="url-ins">
-										<a href="${ liPosts.url }"> <img alt=""
-											src="<c:url value="/assets/images/icons/icons8-external-link-52.png"/>">
-											View on Instagram
-										</a>
-										<div class="close-view-posts">
-											<i class="fa fa-times" aria-hidden="true"
-												id="close-view-posts"></i>
-										</div>
-									</div>
-									<div class="view-content">${ liPosts.content }</div>
-									<!-- <div class="buy-add-prod">
-									<div class="location-btn">
-										<div class="add-btn">
-											<button>Add to cart</button>
-										</div>
-										<div class="buy-btn">
-											<button>Buy it</button>
-										</div>
-									</div>								
-								</div> -->
-								</div>
-							</div>
-							<div class="opacity-view" id="opacity-view"></div>
-						</div>
-				</c:if>
-				<c:if
-					test="${ (index+4) % 5 ==0 || (index+2) % 5 ==0 || (index+3) % 5 ==0}">
-					<div class="list-view-ele" id="${ liPosts.id }">
-						<div class="view-img">
-							<div class="opacity-ele importantNone" id="opacity">
-								<div class="nothing"></div>
-							</div>
-							<div class="ins-img importantNone" id="ins-img">
-								<a href="#"> <i class="fab fa-instagram" aria-hidden="true"></i></a>
-							</div>
-							<img alt=""
-								src="<c:url value="/assets/images/posts/${ liPosts.img }"/>">
-
-						</div>
-					</div>
-					<div class="view-details importantNone"
-						id="view-details${ liPosts.id }">
-						<div class="wrapper-view">
-							<div class="view-details-img">
-								<c:if test="${ liPosts.type == 0 }">
-									<img alt=""
-										src="<c:url value="/assets/images/posts/${ liPosts.img }"/>">
-								</c:if>
-								<c:if test="${ liPosts.type == 1 }">
-									<video controls="controls">
-										<source
-											src="<c:url value="/assets/images/posts/${ liPosts.video }"/>"
-											type="video/mp4">
-									</video>
-								</c:if>
-							</div>
-							<div class="view-details-content">
-								<div class="url-ins">
-									<a href="${ liPosts.url }"> <img alt=""
-										src="<c:url value="/assets/images/icons/icons8-external-link-52.png"/>">
-										View on Instagram
-									</a>
-									<div class="close-view-posts">
-										<i class="fa fa-times" aria-hidden="true"
-											id="close-view-posts"></i>
-									</div>
-								</div>
-								<div class="view-content">${ liPosts.content }</div>
-								<!-- <div class="buy-add-prod">
-									<div class="location-btn">
-										<div class="add-btn">
-											<button>Add to cart</button>
-										</div>
-										<div class="buy-btn">
-											<button>Buy it</button>
-										</div>
-									</div>								
-								</div> -->
-							</div>
-						</div>
-						<div class="opacity-view" id="opacity-view"></div>
-					</div>
-				</c:if>
-				<c:if test="${ (index+1) % 5 ==0 }">
-					<div class="list-view-ele" id="${ liPosts.id }">
-						<div class="view-img">
-							<div class="opacity-ele importantNone" id="opacity">
-								<div class="nothing"></div>
-							</div>
-							<div class="ins-img importantNone" id="ins-img">
-								<a href="#"> <i class="fab fa-instagram" aria-hidden="true"></i></a>
-							</div>
-							<img alt=""
-								src="<c:url value="/assets/images/posts/${ liPosts.img }"/>">
-
-						</div>
-					</div>
-					<div class="view-details importantNone"
-						id="view-details${ liPosts.id }">
-						<div class="wrapper-view">
-							<div class="view-details-img">
-								<c:if test="${ liPosts.type == 0 }">
-									<img alt=""
-										src="<c:url value="/assets/images/posts/${ liPosts.img }"/>">
-								</c:if>
-								<c:if test="${ liPosts.type == 1 }">
-									<video controls="controls">
-										<source
-											src="<c:url value="/assets/images/posts/${ liPosts.video }"/>"
-											type="video/mp4">
-									</video>
-								</c:if>
-							</div>
-							<div class="view-details-content">
-								<div class="url-ins">
-									<a href="${ liPosts.url }"> <img alt=""
-										src="<c:url value="/assets/images/icons/icons8-external-link-52.png"/>">
-										View on Instagram
-									</a>
-									<div class="close-view-posts">
-										<i class="fa fa-times" aria-hidden="true"
-											id="close-view-posts"></i>
-									</div>
-								</div>
-								<div class="view-content">${ liPosts.content }</div>
-								<!-- <div class="buy-add-prod">
-									<div class="location-btn">
-										<div class="add-btn">
-											<button>Add to cart</button>
-										</div>
-										<div class="buy-btn">
-											<button>Buy it</button>
-										</div>
-									</div>								
-								</div> -->
-							</div>
-						</div>
-						<div class="opacity-view" id="opacity-view"></div>
-					</div>
-		</div>
-		</c:if>
-
-		</c:forEach>
-		</div>
 	</header>
 
 	<jsp:include page="../layouts/user/re-footer.jsp"></jsp:include>
@@ -646,39 +513,6 @@
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-
-	<script type="text/javascript"> //click posts
-			$(".list-view-ele").click(function() { //open
-				var id = this.id;
-				$("#view-details"+id).removeClass("importantNone");
-				var current = $(window).scrollTop();
-				$(window).scroll(function() {
-				    $(window).scrollTop(current);
-				});
-				$(".fa-times").click(function() { //open
-					$("#view-details"+id).addClass("importantNone");
-					$(window).off('scroll');
-				});
-				
-			});	
-	</script>
-
-	<script type="text/javascript"> //hover posts
-		$(".list-view-ele").hover(function() {
-			var get = $(this).children()[0];
-			var child1 = $(get).children()[0];
-			var child2 = $(get).children()[1];
-			$(child1).removeClass("importantNone");
-			$(child2).removeClass("importantNone");
-		});	
-		$(".list-view-ele").mouseleave(function() {
-			var get = $(this).children()[0];
-			var child1 = $(get).children()[0];
-			var child2 = $(get).children()[1];
-			$(child1).addClass("importantNone");
-			$(child2).addClass("importantNone");
-		});
-	</script>
 
 	<script> // add to cart
 		var id_user = "";
@@ -803,29 +637,7 @@
 	}
 	</script>
 
-	<script type="text/javascript">
-	if(${ message != null }) {
-		if(${message == "true"}) {
-			//alert("Welcome to Ti Shoes!");
-		} else if(${message == "false"}){
-			$(".error-login").removeClass("none");
-			document.getElementById("msg-error").innerHTML = "Username or password is not correct!";  
-			$(document).ready(function() {
-				$('#login').modal('toggle');
-			});			
-		} else if(${message == "logout"}) {
-			//alert("Looking forward to seeing you again soon!");
-		} else if(${message == "block"}){
-			document.getElementById("login_form_container").style.maxHeight = "550px";
-			document.getElementById("login_form_container").style.height = "550px";
-			$(".error-login").removeClass("none");
-			document.getElementById("msg-error").innerHTML = "Your account has been locked, please contact hotline: 0346 643 755 for more details!";  
-			$(document).ready(function() {
-				$('#login').modal('toggle');
-			});			
-		}
-	}
-	</script>
+	
 	<script>
 		function test($a) {
 			for (let i = 1; i <= 10; i++) {

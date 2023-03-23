@@ -3,7 +3,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <header>
@@ -14,7 +13,18 @@
 		</div>
 
 		<div class="login-signup">
-			<a href="#">Login</a> / <a href="#">Sign Up</a>
+			<c:if
+				test="${ sessionScope.userid != null && sessionScope.avatar != null && sessionScope.fullname != null}">
+				<div class="customer" id="customer">
+					<p>${ sessionScope.fullname }</p>
+					<i class="fa fa-caret-down" aria-hidden="true"></i>
+				</div>
+			</c:if>
+			<c:if
+				test="${ sessionScope.userid == null || sessionScope.avatar == null || sessionScope.fullname == null }">
+				<a href="/ShopT&T/account/login">Login</a> / <a
+					href="/ShopT&T/account/register">Sign Up</a>
+			</c:if>
 		</div>
 	</div>
 	<!--########################################3   START NAVIGATION ###########################################-->
@@ -30,7 +40,8 @@
 			</div>
 			<div class="nav-middle">
 				<div class="nav-mid-img">
-					<img id="re-logo" alt="" src="<c:url value="/assets/images/logo/Thnk.png"/>">
+					<img id="re-logo" alt=""
+						src="<c:url value="/assets/images/logo/Thnk.png"/>">
 				</div>
 			</div>
 			<div class="nav-left">
@@ -43,7 +54,7 @@
 							<div>
 								<i class="fa fa-search" aria-hidden="true"></i>
 							</div>
-							<div >
+							<div>
 								<i class="fa fa-shopping-bag" aria-hidden="true"></i>
 							</div>
 							<div class="btn-menu" id="btn-menu">
@@ -57,12 +68,54 @@
 	</div>
 </header>
 
+<div class="customer-menu" id="customer-menu">
+	<div class="customer-close">
+		<i class="fa fa-times" aria-hidden="true" id="c-close"></i>
+	</div>
+	
+	<div class="follow1">
+		<img alt="" src="<c:url value="/assets/images/users/${ sessionScope.avatar }"/>">
+	</div>
+	
+	<div class="follow2">
+		<p>${ sessionScope.fullname }</p>
+	</div>
+	
+	<div class="list-menu">
+		<ul>
+			<li><a href="#">ORDER</a></li>
+			<li><a href="#">PROFILE</a></li>
+			<li><a href="#">LOGOUT</a></li>
+		</ul>
+	</div>
+	<div class="follow3">Follow us on</div>
+	<div class="menu-contact">
+		<a href="#"> <i class="fab fa-instagram" aria-hidden="true"></i></a> <a
+			href="#"> <i class="fab fa-facebook" aria-hidden="true"></i></a> <a
+			href="#"> <i class="fab fa-twitter" aria-hidden="true"></i></a> <a
+			href="#"> <i class="fab fa-youtube" aria-hidden="true"></i></a>
+	</div>
+</div>
 
-<script type="text/javascript">
+
+
+<script type="text/javascript"> //open
 	$("#btn-menu").click(function() {
 		$("#menu").css("width", 350+"px");
 	});
 </script>
+
+<script type="text/javascript"> //open
+	$("#customer").click(function() {
+		$("#customer-menu").css("width", 350+"px");
+	});
+</script>
+<script type="text/javascript"> //close
+	$("#c-close").click(function() {
+		$("#customer-menu").css("width", 0 + "px");
+	});
+</script>
+
 
 <script type="text/javascript">
 window.addEventListener("scroll", (event) => {
@@ -72,7 +125,7 @@ window.addEventListener("scroll", (event) => {
     	$(".nav-mid-img").css({marginTop: 0 , position:'sticky'});
     } else {
     	document.getElementById("re-logo").style.width = "160px";
-    	$(".nav-mid-img").css({marginTop: 40, position:'sticky'});
+    	$(".nav-mid-img").css({marginTop: 10, position:'sticky'});
     }
 });
 </script>

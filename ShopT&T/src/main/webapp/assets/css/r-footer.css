@@ -1,0 +1,53 @@
+footer {
+    background-color: #fff8f5;
+    height: 300px;
+}
+.footer-copyright {
+    text-align: center;
+    font: 14px;
+    margin-top: 12px;
+    height: 30px;
+}
+
+.col3, .col2, .col1, .content-col, .content-col a {
+	color: black !important;
+}
+
+.follow-app a, .follow-app i {
+	color: black !important;
+	font-size: 34px;
+}
+
+
+.text-shadow {
+    text-shadow: none;
+}
+.follow-app {
+	margin-top: 5px;
+	display: flex;
+	width: 135px;
+	justify-content: space-between;
+}
+.follow-app img {
+    width: 36px;
+    margin-top: -3px;
+}
+
+footer {
+    background-color: #fff8f5 !important;
+    height: 300px;
+}
+
+hr.shadow {
+    background-color: #f9e1ee;
+    height: 40px !important;
+    box-shadow: none !important;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    margin-top: 20px;
+}
+
+.follow-app i.fab.fa-instagram {
+    margin-top: 9px;
+}

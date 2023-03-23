@@ -1,0 +1,121 @@
+:root {
+  --base: #cb82a9;
+  --accent: #f9e1ee;
+  --shadow: white;
+}
+
+.cool {
+  font: bold 3rem/1.2 sans-serif;
+  font-style: italic;
+  margin-left: 15px;
+}
+
+span {
+  color: var(--shadow);
+  display: inline-block;
+  position: relative;
+  font-family: 'Bad Script', cursive;
+}
+span:nth-child(1)::before, span:nth-child(1)::after {
+  -webkit-animation-delay: 0.01s;
+          animation-delay: 0.01s;
+}
+span:nth-child(2)::before, span:nth-child(2)::after {
+  -webkit-animation-delay: 0.02s;
+          animation-delay: 0.02s;
+}
+span:nth-child(3)::before, span:nth-child(3)::after {
+  -webkit-animation-delay: 0.03s;
+          animation-delay: 0.03s;
+}
+span:nth-child(4)::before, span:nth-child(4)::after {
+  -webkit-animation-delay: 0.04s;
+          animation-delay: 0.04s;
+}
+span:nth-child(5)::before, span:nth-child(5)::after {
+  -webkit-animation-delay: 0.05s;
+          animation-delay: 0.05s;
+}
+span:nth-child(6)::before, span:nth-child(6)::after {
+  -webkit-animation-delay: 0.06s;
+          animation-delay: 0.06s;
+}
+span:nth-child(7)::before, span:nth-child(7)::after {
+  -webkit-animation-delay: 0.07s;
+          animation-delay: 0.07s;
+}
+span:nth-child(8)::before, span:nth-child(8)::after {
+  -webkit-animation-delay: 0.08s;
+          animation-delay: 0.08s;
+}
+span:nth-child(9)::before, span:nth-child(9)::after {
+  -webkit-animation-delay: 0.09s;
+          animation-delay: 0.09s;
+}
+span:nth-child(10)::before, span:nth-child(10)::after {
+  -webkit-animation-delay: 0.1s;
+          animation-delay: 0.1s;
+}
+@media (prefers-reduced-motion) {
+  span {
+    color: var(--base);
+  }
+}
+span::before {
+  -webkit-animation: max-height 2s cubic-bezier(0.61, 1, 0.88, 1) 1 normal both;
+          animation: max-height 2s cubic-bezier(0.61, 1, 0.88, 1) 1 normal both;
+  color: var(--accent);
+}
+span::after {
+  -webkit-animation: max-width 2.7s cubic-bezier(0.61, 1, 0.88, 1) 1 normal both;
+          animation: max-width 2.7s cubic-bezier(0.61, 1, 0.88, 1) 1 normal both;
+  color: var(--base);
+}
+span::before, span::after {
+  content: attr(data-text);
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  speak: none;
+}
+@media (prefers-reduced-motion) {
+  span::before, span::after {
+    -webkit-animation: none;
+            animation: none;
+    content: "";
+  }
+}
+
+@-webkit-keyframes max-width {
+  from {
+    max-width: 0;
+  }
+  to {
+    max-width: 100%;
+  }
+}
+
+@keyframes max-width {
+  from {
+    max-width: 0;
+  }
+  to {
+    max-width: 100%;
+  }
+}
+@-webkit-keyframes max-height {
+  from {
+    max-height: 0;
+  }
+  to {
+    max-height: 100%;
+  }
+}
+@keyframes max-height {
+  from {
+    max-height: 0;
+  }
+  to {
+    max-height: 100%;
+  }
+}
