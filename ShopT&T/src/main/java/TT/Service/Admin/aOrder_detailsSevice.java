@@ -25,7 +25,7 @@ import TT.Model.Style;
 import TT.Model.User;
 import TT.Model.Voucher;
 import TT.Repository.Admin.aOrder_detailsRepository;
-import TT.Service.User.Color_sizeService;
+import TT.Service.User.Product_color_sizeService;
 import TT.Service.User.ConnectService;
 import TT.Service.User.OrderService;
 
@@ -135,7 +135,7 @@ public class aOrder_detailsSevice implements aOrder_detailsRepository{
 				color.setRgb(rs.getString("rgb"));
 
 				size.setId(rs.getInt("size_id"));
-				size.setSize_number(rs.getInt("size_number"));
+				size.setSize_number(rs.getString("size_number"));
 				size.setCreated_at(rs.getDate("created_at"));
 				size.setUpdated_at(rs.getDate("updated_at"));
 
@@ -217,7 +217,7 @@ public class aOrder_detailsSevice implements aOrder_detailsRepository{
 	
 	public HashMap<Integer, List<Product_color_size>> getListColorByOrder_detail(int id_order) {
 		HashMap<Integer, List<Product_color_size>> hm = new HashMap<>();
-		Color_sizeService c = new Color_sizeService();
+		Product_color_sizeService c = new Product_color_sizeService();
 		for (Order_details o : getAllOrder_details()) {
 			if(o.getOrder_().getId() == id_order) {
 				hm.put(o.getProd().getId(), c.getAllColorById_prod(o.getProd().getId()));

@@ -1,0 +1,252 @@
+.color-product-details {
+	margin-top: 30px;
+}
+
+.size-product-details {
+	margin-top: 20px;
+}
+
+.list-color-product-details {
+	display: flex;
+}
+
+span.selected-color {
+	box-shadow: 0 0 10px #cb82a9;
+}
+
+span.selected-color-important {
+	box-shadow: 0 0 10px #cb82a9 !important;
+}
+hr {
+	border: 1px solid white;
+	margin: 30px 10% 20px 10%;
+    width: 80%;
+}
+
+span.select-color {
+	display: flex;
+	width: 36px;
+	height: 36px;
+	border-radius: 40px;
+	background-color: white;
+	margin-right: 10px;
+}
+td hr {
+	width: 100%;
+	margin-left: 0;
+}
+.fit-guide-size {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+}
+
+.fit-guide-size p {
+	margin: 0;
+}
+
+.fit-guide-size a {
+	text-decoration: underline;
+	color: black;
+	font-weight: bold;
+}
+
+.fit-guide-size a:hover {
+	color: #cb82a9;
+}
+
+.list-size-product-details {
+	display: flex;
+	overflow-x: scroll;
+	padding: 5px 0 5px 5px;
+}
+
+span.select-size {
+	display: flex;
+	min-width: 36px;
+	padding: 6px;
+	color: white;
+	border: 1px solid #cb82a9;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	background: none;
+	margin-right: 15px;
+}
+
+.list-size-product-details::-webkit-scrollbar {
+	width: 15px;
+}
+/* Track */
+.list-size-product-details::-webkit-scrollbar-track {
+	box-shadow: inset 0 0 5px #cb82a9;
+	border-radius: 10px;
+}
+/* Handle */
+.list-size-product-details::-webkit-scrollbar-thumb {
+	background: lightgrey;
+	border-radius: 10px;
+}
+/* Handle on hover */
+.list-size-product-details::-webkit-scrollbar-thumb:hover {
+	background: #cb82a9;;
+}
+
+.none {
+	display: none;
+}
+
+.importantNone {
+	display: none !important;
+}
+
+.btn-order input {
+    width: 25% !important;
+    border: 0px;
+    font-weight: bold;
+    color: #cb82a9;
+    font-size: 20px;
+    box-shadow: 1px 2px 3px #cb82a9;
+}
+.btn-order input:hover {
+	color: white;
+    box-shadow: 1px 2px 3px white;
+    background: #cb82a9;
+}
+.btn-order {
+	margin-top: 0 !important;
+	margin-right: 3%;
+	display: flex;
+	justify-content: center;
+	width: 100% !important;
+	float: unset !important;
+}
+
+.message {
+    width: 380px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px black;
+    background: white;
+    z-index: 100;
+    padding: 15px;
+    color: #16222d;
+}
+
+h2.msg-h2 {
+	display: flex;
+	justify-content: space-between;
+	font-size: 1.5em;
+	font-weight: bold;
+}
+
+h2.msg-h2 img {
+	width: 24px;
+	height: 24px;
+}
+
+.message p {
+	margin: 0;
+	margin-top: 0px;
+}
+
+.login {
+	width: 9% !important;
+	display: flex;
+	justify-content: right;
+	align-items: center;
+	height: 100%;
+	color: white;
+}
+
+.login a {
+	color: white;
+}
+
+.login a:hover {
+	color: #f9e1ee;
+}
+
+.avt {
+    position: absolute;
+    text-align: center;
+    right: 27%;
+}
+
+.btn-ok-cancel {
+	float: right;
+	margin-top: 15px;
+}
+
+.message input {
+	padding: 0 !important;
+	width: 92px;
+	height: 36px;
+	border: 0;
+	border-radius: 5px;
+	font-weight: bold;
+	color: #0086ff;
+}
+
+.hover-btn {
+	background-color: #cb82a9;
+	font-weight: bold;
+	color: white !important;
+	font-size: 16px;
+}
+input#ok-notify:hover {
+    border: 1px solid white;
+    box-shadow: 0 0 3px #cb82a9;
+}
+.wrapper {
+	position: fixed !important;
+	display: flex;
+	width: 100%;
+	height: 100%;
+	z-index: 1000;
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+	top: -50px;
+}
+
+
+input:hover::-webkit-outer-spin-button, input:hover::-webkit-inner-spin-button
+	{
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+input#phone {
+	font-size: 20px;
+}
+
+/* Firefox */
+input[type=number] {
+	-moz-appearance: textfield;
+}
+
+span.select-color:hover {
+	cursor: pointer;
+}
+
+span.select-size:hover {
+	cursor: pointer;
+}
+
+.back a:hover {
+	text-decoration: none;
+	color: #cb82a9;
+	text-shadow: 1px 2px 2px #f9e1ee;
+}
+.nav {
+	justify-content: space-between;
+    padding-right: 6%;
+}
+.shipping img {
+    width: 50px;
+}

@@ -26,7 +26,7 @@ import TT.Model.Sizes;
 import TT.Model.Style;
 import TT.Model.User;
 import TT.Repository.User.ProductRepository;
-import TT.Service.User.Color_sizeService;
+import TT.Service.User.Product_color_sizeService;
 import TT.Service.User.ConnectService;
 import TT.Service.User.RatingService;
 import TT.Service.User.VoucherService;
@@ -34,7 +34,7 @@ import TT.Service.User.VoucherService;
 public class ProductService implements ProductRepository {
 	private ConnectService connectService;
 	private RatingService ratingService;
-	private Color_sizeService color_sizeService;
+	private Product_color_sizeService product_color_sizeService;
 	private VoucherService voucherService;
 	private Product product;
 	private Brand brand;
@@ -106,7 +106,7 @@ public class ProductService implements ProductRepository {
 				color.setRgb(rs.getString("rgb"));
 
 				size.setId(rs.getInt("size_id"));
-				size.setSize_number(rs.getInt("size_number"));
+				size.setSize_number(rs.getString("size_number"));
 				size.setCreated_at(rs.getDate("created_at"));
 				size.setUpdated_at(rs.getDate("updated_at"));
 
@@ -686,8 +686,8 @@ public class ProductService implements ProductRepository {
 	@Override
 	public List<Integer> getRating(String txt) {
 		HashMap<Integer, Double> rating = new HashMap<>();
-		color_sizeService = new Color_sizeService();
-		List<Integer> liProd_id = color_sizeService.getAllProd_id();
+		product_color_sizeService = new Product_color_sizeService();
+		List<Integer> liProd_id = product_color_sizeService.getAllProd_id();
 		for (Integer i : liProd_id) {
 			rating.put(i, averageRating(i));
 		}

@@ -23,7 +23,7 @@ public class CartService implements CartRepository {
 
 	private ProductService productService;
 	private ConnectService connectService;
-	private Color_sizeService color_sizeService;
+	private Product_color_sizeService product_color_sizeService;
 	private Cart cart;
 	private User user;
 	private Role role;
@@ -31,7 +31,7 @@ public class CartService implements CartRepository {
 	public List<Cart> getAllCart() {
 		List<Cart> li = null;
 		try {
-			color_sizeService = new Color_sizeService();
+			product_color_sizeService = new Product_color_sizeService();
 			connectService = new ConnectService();
 			li = new ArrayList<>();
 			Connection con = connectService.getConnect();
@@ -61,7 +61,7 @@ public class CartService implements CartRepository {
 
 				cart.setId(rs.getInt("id"));
 				cart.setQuantity(rs.getInt("quantity"));
-				cart.setColor_size(color_sizeService.getByIdCS(rs.getInt("color_size_id")));
+				cart.setColor_size(product_color_sizeService.getByIdCS(rs.getInt("color_size_id")));
 				cart.setUser(user);
 				cart.setCreated_at(rs.getDate("created_at"));
 				cart.setUpdated_at(rs.getDate("updated_at"));
@@ -127,9 +127,9 @@ public class CartService implements CartRepository {
 	}
 	
 	public String Minus_Prod_Card(String id_prod, String list_prod) {
-		color_sizeService = new Color_sizeService();
+		product_color_sizeService = new Product_color_sizeService();
 		String newListProd = "";
-		HashMap<Product_color_size, Integer> map = color_sizeService.get_list_color_size_by_string(list_prod);
+		HashMap<Product_color_size, Integer> map = product_color_sizeService.get_list_color_size_by_string(list_prod);
 		for (Product_color_size i : map.keySet()) {
 			if (String.valueOf(i.getId()).equals(id_prod)) {
 				if (map.get(i) - 1 == 0) {
@@ -177,11 +177,11 @@ public class CartService implements CartRepository {
 	public String change_color_in_cart_not_login(String color, String list_prod) { 
 		//string list_prod format = {csid}/{csid}/{csid}...
 		// color format = {color id}_{prod id}_{cs id}
-		color_sizeService = new Color_sizeService();
+		product_color_sizeService = new Product_color_sizeService();
 		String newListProd = "";
 		String arr[] = color.split("_");
 		if(arr.length > 2) {
-			int csid = color_sizeService.get_Color_size_id_by_prodid_color_id(Integer.parseInt(arr[1]), Integer.parseInt(arr[0]));
+			int csid = product_color_sizeService.get_Color_size_id_by_prodid_color_id(Integer.parseInt(arr[1]), Integer.parseInt(arr[0]));
 			String a[] = list_prod.split("/");
 			for (String s : a) {
 				if(!s.equals("") && !s.equals(arr[2])) {
@@ -197,11 +197,11 @@ public class CartService implements CartRepository {
 	public String change_size_in_cart_not_login(String size, String list_prod) { 
 		// string list_prod format = {csid}/{csid}/{csid}...
 		// size format = {size id}_{color id}_{prod id}_{cs id}
-		color_sizeService = new Color_sizeService();
+		product_color_sizeService = new Product_color_sizeService();
 		String newListProd = "";
 		String arr[] = size.split("_");
 		if(arr.length > 3) {
-			int csid = color_sizeService.get_Color_size_id(Integer.parseInt(arr[0]), Integer.parseInt(arr[1]), Integer.parseInt(arr[2]));
+			int csid = product_color_sizeService.get_Color_size_id(Integer.parseInt(arr[0]), Integer.parseInt(arr[1]), Integer.parseInt(arr[2]));
 			String a[] = list_prod.split("/");
 			for (String s : a) {
 				if(!s.equals("") && !s.equals(arr[3])) {
@@ -453,7 +453,7 @@ public class CartService implements CartRepository {
 		try {
 			connectService = new ConnectService();
 			Connection conn = connectService.getConnect();
-			color_sizeService = new Color_sizeService();
+			product_color_sizeService = new Product_color_sizeService();
 			String arr[] = s.split("_");
 			int size_id = 0;
 			int color_id = 0;
@@ -464,8 +464,8 @@ public class CartService implements CartRepository {
 				color_id = Integer.parseInt(arr[0]);
 				prod_id = Integer.parseInt(arr[1]);
 				cart_id = Integer.parseInt(arr[2]);
-				size_id = color_sizeService.firstSizeId(prod_id, color_id);
-				color_size_id = color_sizeService.get_Color_size_id(size_id, color_id, prod_id);
+				size_id = product_color_sizeService.firstSizeId(prod_id, color_id);
+				color_size_id = product_color_sizeService.get_Color_size_id(size_id, color_id, prod_id);
 			}
 
 			String query = "UPDATE `cart` SET `color_size_id`= ? WHERE id = ?";
@@ -487,7 +487,7 @@ public class CartService implements CartRepository {
 		try {
 			connectService = new ConnectService();
 			Connection conn = connectService.getConnect();
-			color_sizeService = new Color_sizeService();
+			product_color_sizeService = new Product_color_sizeService();
 			String arr[] = s.split("_");
 			int size_id = 0;
 			int color_id = 0;
@@ -499,7 +499,7 @@ public class CartService implements CartRepository {
 				color_id = Integer.parseInt(arr[1]);
 				prod_id = Integer.parseInt(arr[2]);
 				cart_id = Integer.parseInt(arr[3]);
-				color_size_id = color_sizeService.get_Color_size_id(size_id, color_id, prod_id);
+				color_size_id = product_color_sizeService.get_Color_size_id(size_id, color_id, prod_id);
 			}
 			String query = "UPDATE `cart` SET `color_size_id`= ? WHERE id = ?";
 			PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(query);

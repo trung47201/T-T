@@ -17,9 +17,9 @@ import TT.Model.Product;
 import TT.Model.User;
 import TT.Service.User.CartService;
 import TT.Service.User.CheckoutService;
-import TT.Service.User.Color_sizeService;
 import TT.Service.User.OrderService;
 import TT.Service.User.Order_detailsService;
+import TT.Service.User.Product_color_sizeService;
 import TT.Service.User.StatisticsService;
 import TT.Service.User.UserService;
 import TT.Service.User.VoucherService;
@@ -29,7 +29,7 @@ import TT.Service.User.Product.ProductService;
 public class CheckoutController {
 	private ProductService productService;
 	private CheckoutService checkoutService;
-	private Color_sizeService color_sizeService;
+	private Product_color_sizeService product_color_sizeService;
 	private VoucherService voucherService;
 	private Order_detailsService order_detailsService;
 	private OrderService orderService;
@@ -46,6 +46,7 @@ public class CheckoutController {
 		userService = new UserService();
 		voucherService = new VoucherService();
 		statisticsService = new StatisticsService();
+		product_color_sizeService = new Product_color_sizeService();
 
 		String fullname = request.getParameter("fullname");
 		String phone_number = request.getParameter("phone");
@@ -109,51 +110,51 @@ public class CheckoutController {
 						&& order_detailsService.insertIntoOrder_details((double) Math.round(price_at * 100) / 100,
 								Integer.parseInt(quantity), Integer.parseInt(id_prod), Integer.parseInt(size),
 								Integer.parseInt(color), phone_number, email)
-						&& color_sizeService.updateColor_size_Quantity(Integer.parseInt(size), Integer.parseInt(color),
+						&& product_color_sizeService.updateColor_size_Quantity(Integer.parseInt(size), Integer.parseInt(color),
 								Integer.parseInt(id_prod), Integer.parseInt(quantity))
 						&& productService.updateProduct_Sold(Integer.parseInt(id_prod), Integer.parseInt(quantity))
 						&& statisticsService.update_order_revenue_product_num_in_statistics_DB(
 								Integer.parseInt(quantity), pricetotal)) {
 					System.out.println("buy now success (96 checkoutController)");
-					return new ModelAndView("redirect: /SpringMVC/sucess-buynow?id_prod=" + id_prod + "&id_color="
+					return new ModelAndView("redirect: /ShopT&T/sucess-buynow?id_prod=" + id_prod + "&id_color="
 							+ color + "&id_size=" + size + "&quantity=" + quantity + "&fullname=" + fullname
 							+ "&phone_number=" + phone_number + "&email=" + email + "&city=" + city + "&town=" + town
 							+ "&village=" + village + "&note=" + note + "&voucher=" + vc_id + "&priceat=" + pricetotal
 							+ "&user=" + user + "&method=" + method);
 				} else {
 					System.out.println("buy now unsuccess");
-					return new ModelAndView("redirect: /SpringMVC/cart/checkout/" + id);
+					return new ModelAndView("redirect: /ShopT&T/cart/checkout/" + id);
 				}
 			} else {
 				if (orderService.insertIntoOrder(fullname, email, phone_number, address, vc_id, note, method, dis)
 						&& order_detailsService.insertIntoOrder_details((double) Math.round(price_at * 100) / 100,
 								Integer.parseInt(quantity), Integer.parseInt(id_prod), Integer.parseInt(size),
 								Integer.parseInt(color), phone_number, email)
-						&& color_sizeService.updateColor_size_Quantity(Integer.parseInt(size), Integer.parseInt(color),
+						&& product_color_sizeService.updateColor_size_Quantity(Integer.parseInt(size), Integer.parseInt(color),
 								Integer.parseInt(id_prod), Integer.parseInt(quantity))
 						&& productService.updateProduct_Sold(Integer.parseInt(id_prod), Integer.parseInt(quantity))
 						&& statisticsService.update_order_revenue_product_num_in_statistics_DB(
 								Integer.parseInt(quantity), pricetotal)) {
 					System.out.println("buy now success (96 checkoutController)");
-					return new ModelAndView("redirect: /SpringMVC/sucess-buynow?id_prod=" + id_prod + "&id_color="
+					return new ModelAndView("redirect: /ShopT&T/sucess-buynow?id_prod=" + id_prod + "&id_color="
 							+ color + "&id_size=" + size + "&quantity=" + quantity + "&fullname=" + fullname
 							+ "&phone_number=" + phone_number + "&email=" + email + "&city=" + city + "&town=" + town
 							+ "&village=" + village + "&note=" + note + "&voucher=" + vc_id + "&priceat=" + pricetotal
 							+ "&user=" + user + "&method=" + method);
 				} else {
 					System.out.println("buy now unsuccess");
-					return new ModelAndView("redirect: /SpringMVC/cart/checkout/" + id);
+					return new ModelAndView("redirect: /ShopT&T/cart/checkout/" + id);
 				}
 			}
 		}
-		return new ModelAndView("redirect: /SpringMVC/");
+		return new ModelAndView("redirect: /ShopT&T/");
 	}
 
 	@RequestMapping(value = { "cart/checkout/{id}" }) // buy now login and not login
 	public ModelAndView checkout_buy_now(@PathVariable String id, HttpServletRequest request,
 			HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("user/buynow");
-		color_sizeService = new Color_sizeService();
+		product_color_sizeService = new Product_color_sizeService();
 		productService = new ProductService();
 		checkoutService = new CheckoutService();
 		voucherService = new VoucherService();
@@ -299,11 +300,11 @@ public class CheckoutController {
 			mv.addObject("method", method);
 		}
 
-		if (!color_sizeService.getAllSizeById_Prod(Integer.parseInt(id_prod)).isEmpty()) {
-			mv.addObject("listSize", color_sizeService.getAllSizeById_Prod(Integer.parseInt(id_prod)));
+		if (!product_color_sizeService.getAllSizeById_Prod(Integer.parseInt(id_prod)).isEmpty()) {
+			mv.addObject("listSize", product_color_sizeService.getAllSizeById_Prod(Integer.parseInt(id_prod)));
 		}
-		if (!color_sizeService.getAllColorById_prod(Integer.parseInt(id_prod)).isEmpty()) {
-			mv.addObject("listColor", color_sizeService.getAllColorById_prod(Integer.parseInt(id_prod)));
+		if (!product_color_sizeService.getAllColorById_prod(Integer.parseInt(id_prod)).isEmpty()) {
+			mv.addObject("listColor", product_color_sizeService.getAllColorById_prod(Integer.parseInt(id_prod)));
 		}
 
 		mv.addObject("averageRating", productService.averageRating(Integer.parseInt(id_prod)));
@@ -321,7 +322,7 @@ public class CheckoutController {
 			mv.addObject("id_user", id_user);
 
 		}
-
+		mv.addObject("back_home", "cart");
 		return mv;
 
 	}
@@ -334,7 +335,7 @@ public class CheckoutController {
 
 		userService = new UserService();
 		cartService = new CartService();
-		color_sizeService = new Color_sizeService();
+		product_color_sizeService = new Product_color_sizeService();
 		productService = new ProductService();
 		checkoutService = new CheckoutService();
 		voucherService = new VoucherService();

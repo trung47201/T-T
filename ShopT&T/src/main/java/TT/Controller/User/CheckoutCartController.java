@@ -15,7 +15,7 @@ import TT.Model.Cart;
 import TT.Model.Product_color_size;
 import TT.Service.User.CartService;
 import TT.Service.User.CheckoutService;
-import TT.Service.User.Color_sizeService;
+import TT.Service.User.Product_color_sizeService;
 import TT.Service.User.OrderService;
 import TT.Service.User.Order_detailsService;
 import TT.Service.User.StatisticsService;
@@ -29,7 +29,7 @@ public class CheckoutCartController {
 	private OrderService orderService;
 	private CartService cartService;
 	private CheckoutService checkoutService;
-	private Color_sizeService color_sizeService;
+	private Product_color_sizeService product_color_sizeService;
 	private ProductService productService;
 	private StatisticsService statisticsService;
 
@@ -40,7 +40,7 @@ public class CheckoutCartController {
 		orderService = new OrderService();
 		voucherService = new VoucherService();
 		cartService = new CartService();
-		color_sizeService = new Color_sizeService();
+		product_color_sizeService = new Product_color_sizeService();
 		productService = new ProductService();
 		statisticsService = new StatisticsService();
 
@@ -111,7 +111,7 @@ public class CheckoutCartController {
 					if (order_detailsService.insertIntoOrder_details(price_at, cart.getQuantity(),
 							cart.getColor_size().getProd().getId(), cart.getColor_size().getSize().getId(),
 							cart.getColor_size().getColor().getId(), phone_number, email)
-							&& color_sizeService.updateColor_size_Quantity(cart.getColor_size().getSize().getId(),
+							&& product_color_sizeService.updateColor_size_Quantity(cart.getColor_size().getSize().getId(),
 									cart.getColor_size().getColor().getId(), cart.getColor_size().getProd().getId(),
 									cart.getQuantity())
 							&& productService.updateProduct_Sold(cart.getColor_size().getProd().getId(),
@@ -203,7 +203,7 @@ public class CheckoutCartController {
 					}
 					if (order_detailsService.insertIntoOrder_details(price_at, hm.get(c), c.getProd().getId(),
 							c.getSize().getId(), c.getColor().getId(), phone_number, email)
-							&& color_sizeService.updateColor_size_Quantity(c.getSize().getId(), c.getColor().getId(),
+							&& product_color_sizeService.updateColor_size_Quantity(c.getSize().getId(), c.getColor().getId(),
 									c.getProd().getId(), hm.get(c))) {
 
 					}

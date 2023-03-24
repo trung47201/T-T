@@ -28,7 +28,7 @@ public class SizeService implements SizeRepository {
 			while (rs.next()) {
 				size = new Sizes();
 				size.setId(rs.getInt("id"));
-				size.setSize_number(rs.getInt("size_number"));
+				size.setSize_number(rs.getString("size_number"));
 				size.setCreated_at(rs.getDate("created_at"));
 				size.setUpdated_at(rs.getDate("updated_at"));
 				li.add(size);
@@ -54,7 +54,7 @@ public class SizeService implements SizeRepository {
 		return s;
 	}
 
-	public int get_size_id_by_size_number(int size_number) {
+	public int get_size_id_by_size_number(String size_number) {
 		int id = 0;
 		for (Sizes sizes : getAllSize()) {
 			if (sizes.getSize_number() == size_number) {

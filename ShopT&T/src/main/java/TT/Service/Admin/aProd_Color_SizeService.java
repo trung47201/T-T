@@ -17,12 +17,12 @@ import TT.Model.Role;
 import TT.Model.Sizes;
 import TT.Model.Style;
 import TT.Model.User;
-import TT.Repository.Admin.aProd_ColorC_SizeRepository;
+import TT.Repository.Admin.aProduct_color_sizeRepository;
 import TT.Service.User.ColorService;
 import TT.Service.User.ConnectService;
 import TT.Service.User.SizeService;
 
-public class aProd_Color_SizeService implements aProd_ColorC_SizeRepository {
+public class aProd_Color_SizeService implements aProduct_color_sizeRepository {
 
 	private ColorService colorService;
 	private SizeService sizeService;
@@ -72,7 +72,7 @@ public class aProd_Color_SizeService implements aProd_ColorC_SizeRepository {
 				gender.setDescription(rs.getString("description"));
 
 				size.setId(rs.getInt("size_id"));
-				size.setSize_number(rs.getInt("size_number"));
+				size.setSize_number(rs.getString("size_number"));
 				size.setCreated_at(rs.getDate("created_at"));
 				size.setUpdated_at(rs.getDate("updated_at"));
 

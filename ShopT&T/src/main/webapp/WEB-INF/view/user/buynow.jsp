@@ -6,7 +6,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="<c:url value="/assets/css/checkout.css"/>">
+<link rel="stylesheet"
+	href="<c:url value="/assets/css/re-checkout2.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/bootstrap.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/js/bootstrap.js"/>">
 <link rel="stylesheet"
@@ -16,340 +17,60 @@
 <link rel="stylesheet" href="<c:url value="/assets/css/login.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/color.css"/>">
 <link rel="stylesheet"
-	href="<c:url value="/assets/css/size_depend_color.css"/>">
+	href="<c:url value="/assets/css/re-size_depend_color.css"/>">
 <link rel="stylesheet"
 	href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />">
 <style>
-.checkout h4 {
-	margin-top: -50px !important;
-	padding-bottom: 10px;
-}
-.avt img {
-    width: 70px;
-    height: 70px;
-    border-radius: 100px;
-    margin-top: 10px;
-}
-.bank img {
-    height: 50px;
-    margin-left: 5px;
-}
-.content-bank {
-    height: 80px;
-}
-
-#radio2:hover {
-cursor: pointer;
-} 
-#radio3:hover {
-cursor: pointer;
-} 
 </style>
 <body>
-	<form action="/SpringMVC/cart/checkout/ok/${ id }" method="post" id="myform">
+	<form action="/ShopT&T/cart/checkout/ok/${ id }" method="post"
+		id="myform">
 		<div class="nav">
 			<c:set var="item" value="${ back_home }"></c:set>
 			<c:if test="${ item == 'home'}">
 				<div class="back">
-					<a href="/SpringMVC"><img
+					<a href="/ShopT&T"><img
 						src="<c:url value="/assets/images/icons/back52.png"/>"
 						alt="back-icon">Back</a>
 				</div>
 			</c:if>
 			<c:if test="${ item == 'cart'}">
 				<div class="back">
-					<a href="/SpringMVC/cart"><img
+					<a href="/ShopT&T/cart"><img
 						src="<c:url value="/assets/images/icons/back52.png"/>"
 						alt="back-icon">Back</a>
 				</div>
 			</c:if>
-			<c:if test="${ userID != null }">
-				<c:if test="${ avatar != null }">
+			<c:if test="${ sessionScope.userid != null }">
+				<c:if test="${ sessionScope.avatar != null }">
 					<div class="avt">
-						<img src="<c:url value="/assets/images/users/${ avatar }"/>" alt="">
+						<img
+							src="<c:url value="/assets/images/users/${ sessionScope.avatar }"/>"
+							alt="">
 					</div>
 				</c:if>
-				<c:if test="${ avatar == null }">
+				<c:if test="${ sessionScope.avatar == null }">
 					<div class="avt">
-						<img src="<c:url value="/assets/images/users/avt-default.jpg"/>" alt="">
+						<img src="<c:url value="/assets/images/users/avt-default.jpg"/>"
+							alt="">
 					</div>
 				</c:if>
 			</c:if>
-			<c:if test="${ userID == null }">
+			<c:if test="${ sessionScope.userid == null }">
 				<div class="avt">
-					<img src="<c:url value="/assets/images/users/avt-default.jpg"/>" alt="">
+					<img src="<c:url value="/assets/images/users/avt-default.jpg"/>"
+						alt="">
 				</div>
 			</c:if>
-			<c:if test="${ userID != null }">
-				<div class="login none">
-					<div class="container-xl icon-user">
-						<c:if test="${ userID != null }">
-							<button type="button" class="icon-user btn none" data-toggle="modal"
-								data-target="#login">
-								<img class="icon-user"
-									src="<c:url value="/assets/images/users/${ avatar }"/>"
-									alt="icon-user">
-							</button>
-							<button type="button" class="icon-user-login drop-icon"
-								id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-								aria-expanded="false">
-								<img class="icon-user-login"
-									src="<c:url value="/assets/images/users/${ avatar }"/>"
-									alt="icon-user">
-							</button>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
-								id="dropdown-menu">
-								<div class="img-dropdown-menu">
-									<img src="<c:url value="/assets/images/icons/triangle-up.png"/>">
-								</div>
-								<div>
-									<a class="dropdown-item" href="/SpringMVC/order/${ id_user }">Order</a>
-									<a class="dropdown-item" href="#">Personal details</a> <a
-										class="dropdown-item" onclick="logout()">Logout</a>
-								</div>
-							</div>
-						</c:if>
-						<c:if test="${ userID == null }">
-							<button type="button" class="icon-user btn" data-toggle="modal"
-								data-target="#login">
-								<img class="icon-user"
-									src="<c:url value="/assets/images/icons/user48.png"/>"
-									alt="icon-user">
-							</button>
-						</c:if>
-						<div class="modal fade" id="login" tabindex="-1" role="dialog"
-							aria-labelledby="exampleModalLabel" aria-hidden="true">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-									<div class="btn-close-login">
-										<button type="button" class="btn btn-secondary close"
-											data-dismiss="modal">
-											<img class="close-login-icon"
-												src="<c:url value="/assets/images/icons/close48.png"/>"
-												alt="icon-close" width="32px">
-										</button>
-									</div>
-									<div class="login_form_container" id="login_form_container">
-											<div class="login_form">
-												<h2>LOGIN</h2>
-												<div class="input_group">
-				
-													<i class="fa fa-user"></i> <input type="text" id="username"
-														name="username" placeholder="Username" class="input_text"
-														autocomplete="off" />
-												</div>
-												<div class="input_group">
-													<i class="fa fa-unlock-alt"></i> <input type="password"
-														id="password" name="password" placeholder="Password"
-														class="input_text" autocomplete="off" />
-												</div>
-				
-												<div class="error-login none">
-													<p id="msg-error">Username or password is not correct!</p>
-												</div>
-				
-												<div class="form-check">
-				
-													<input class="form-check-input" type="checkbox"
-														name="rememberme" value="" id="flexCheckChecked"> <label
-														class="form-check-label" for="flexCheckChecked">
-														Remember me </label>
-												</div>
-												<div class="button_group" id="login_button">
-													<input type="submit" name="login" id="login-btn" value="Login">
-												</div>
-												<div class="fotter">
-													<a>Forgot Password ?</a> <a href="/SpringMVC/sign-up">SignUp</a>
-												</div>
-											</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</c:if>
-			<c:if test="${ userID == null }">
+			<c:if test="${ sessionScope.userid == null }">
 				<div class="login">
-					<div class="container-xl icon-user">
-						<button type="button" class="icon-user btn btn-primary"
-							data-toggle="modal" data-target="#login">
-							<img class="icon-user"
-								src="<c:url value="/assets/images/icons/user48.png"/>"
-								alt="icon-user">
-						</button>
-						<div class="modal fade" id="login" tabindex="-1" role="dialog"
-							aria-labelledby="exampleModalLabel" aria-hidden="true">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-									<button type="button" class="btn btn-secondary close"
-										data-dismiss="modal">
-										<img class="close-login-icon"
-											src="<c:url value="/assets/images/icons/close48.png"/>"
-											alt="icon-close" width="32px">
-									</button>
-									<div class="login_form_container">
-										<div class="login_form">
-											<h2>Login</h2>
-											<div class="input_group">
-												<i class="fa fa-user"></i> <input type="text"
-													placeholder="Username" class="input_text" autocomplete="off" />
-											</div>
-											<div class="input_group">
-												<i class="fa fa-unlock-alt"></i> <input type="password"
-													placeholder="Password" class="input_text" autocomplete="off" />
-											</div>
-											<div class="button_group" id="login_button">
-													<input type="button" name="login" id="login-btn" value="Login">
-											</div>
-											<div class="fotter">
-												<a>Forgot Password ?</a> <a>SingUp</a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+					<a href="/ShopT&T/account/login">Login</a>&nbsp;/&nbsp; <a
+						href="/ShopT&T/account/signup">Sign Up</a>
 				</div>
 			</c:if>
 		</div>
+
 		<div class="checkout">
-			<!-- Consignee information -->
-			<div class="customer-info">
-				<h4>Consignee information</h4>
-				<c:if test="${ user != null }">
-					<div class="name-customer">
-						<input type="text" id="fullname" name="fullname"
-							value="${ user.fullname }" placeholder="Full name">
-					</div>
-					<div class="phone-customer">
-						<input type="number" id="phone" name="phone" min="0"
-							value="${ user.phone_number }" placeholder="Phone number">
-					</div>
-					<div class="mail-customer">
-						<input type="text" id="email" name="email" value="${ user.email }"
-							placeholder="Email">
-					</div>
-					<div class="city-customer">
-						<input type="text" id="city" name="city" value="${ city }"
-							placeholder="City">
-					</div>
-					<div class="town-customer">
-						<input type="text" id="town" name="town" value="${ town }"
-							placeholder="Town">
-					</div>
-					<div class="village-customer">
-						<input type="text" id="village" name="village"
-							value="${ village }" placeholder="Village">
-					</div>
-					<div class="note-customer">
-						<textarea id="note" name="note" placeholder="Note"></textarea>
-					</div>
-				</c:if>
-				<c:if test="${ user == null }">
-					<div class="name-customer">
-						<input type="text" id="fullname" name="fullname" value=""
-							placeholder="Full name">
-					</div>
-					<div class="phone-customer">
-						<input type="number" id="phone" name="phone" min="0" value=""
-							placeholder="Phone number">
-					</div>
-					<div class="mail-customer">
-						<input type="text" id="email" name="email" value=""
-							placeholder="Email">
-					</div>
-					<div class="city-customer">
-						<input type="text" id="city" name="city" value=""
-							placeholder="City">
-					</div>
-					<div class="town-customer">
-						<input type="text" id="town" name="town" value=""
-							placeholder="Town">
-					</div>
-					<div class="village-customer">
-						<input type="text" id="village" name="village"
-							placeholder="Village">
-					</div>
-					<div class="note-customer">
-						<textarea id="note" name="note" placeholder="Note"></textarea>
-					</div>
-				</c:if>
-			</div>
-
-			<!-- Payment methods -->
-			<div class="payment-method">
-				<h4>Shipping methods</h4>
-				<div class="shipping" id="radio1">
-					<input type="radio" name="Delivery" id="rad1" checked>
-					<div>&emsp;Delivery to your place</div>
-					<div>&emsp;&emsp;&emsp;$11.00</div>
-				</div>
-				<div class="content-sm" id="content-sm">Buy products over $50
-					will get free shipping</div>
-				<h4 class="pm">Payment methods</h4>
-				
-				<div class="shipping" id="radio2" onclick="radio(this)">
-					<c:if test="${ method == 'cod' ||  method == null }">
-						<input type="radio" name="paymentmethods" id="rad2" value="cod"
-							checked>
-					</c:if>
-					<c:if test="${ method != 'cod' &&  method != null }">
-						<input type="radio" name="paymentmethods" id="rad2" value="cod">
-					</c:if>
-					<div class="icon-cod">
-						&emsp;Payment on delivery (COD) <img
-							src="<c:url value="/assets/images/icons/cash-on-delivery.png"/>"
-							alt="">
-					</div>
-				</div>
-				
-				<c:if test="${ method == 'cod' ||  method == null }">
-					<div class="content-pm" id="content-pm" style="visibility: visible;">
-						You only have to pay when you receive the goods.
-					</div>
-				</c:if>
-				
-				<c:if test="${ method != 'cod' &&  method != null }">
-					<div class="content-pm none" id="content-pm" style="visibility: visible;">
-						You only have to pay when you receive the goods.
-					</div>
-				</c:if>
-				
-					<c:if test="${ id_user != null || userID != null}">
-						<div class="shipping" id="radio3" onclick="radio(this)">
-							<c:if test="${ method == 'card' }">
-								<input type="radio" name="paymentmethods" id="rad3"
-									value="payByCard" checked>
-							</c:if>
-							<c:if test="${ method != 'card' }">
-								<input type="radio" name="paymentmethods" id="rad3"
-									value="payByCard">
-							</c:if>
-							<div class="icon-credit">
-								&emsp; Pay by credit card <img
-									src="<c:url value="/assets/images/icons/credit-card.png"/>"
-									alt="">
-							</div>
-						</div>
-						<c:if test="${ method != 'card' }">
-							<div class="content-bank none" id="content-bank" style="visibility: visible;">
-					</c:if>
-					<c:if test="${ method == 'card' }">
-							<div class="content-bank" id="content-bank" style="visibility: visible;">
-					</c:if>
-						<div>Choose a</div>
-						<div class="bank">
-							<div class="bank" id="Paypal" onclick="bank(this)">
-								<img src="<c:url value="/assets/images/icons/icons8-paypal-96.png"/>" alt="">
-							</div>
-						</div>
-					</div>
-					</c:if>
-				
-			</div>
-
 			<!-- Order -->
 			<div class="order">
 				<c:set var="prod_checkout" value="${ product }" />
@@ -365,7 +86,8 @@ cursor: pointer;
 					</div>
 					<c:if test="${ prod_checkout.discount > 0 }">
 						<div class="price-product-checkout">
-							$<fmt:formatNumber type="number" maxFractionDigits="2"
+							$
+							<fmt:formatNumber type="number" maxFractionDigits="2"
 								value="${ prod_checkout.price - prod_checkout.price*prod_checkout.discount/100 }" />
 						</div>
 					</c:if>
@@ -785,8 +507,9 @@ cursor: pointer;
 								<c:if test="${ prod_checkout.discount <= 0 }">
 									<c:if test="${ quantity != null && quantity > 0 }">
 										<c:if test="${ (prod_checkout.price * quantity) >= 50.0 }">
-											<td class="price"><span class="total-payment"> <b id="total-payment">$<fmt:formatNumber
-															type="number" maxFractionDigits="2"
+											<td class="price"><span class="total-payment"> <b
+													id="total-payment">$<fmt:formatNumber type="number"
+															maxFractionDigits="2"
 															value="${prod_checkout.price*quantity - vccost }" />
 												</b>
 											</span></td>
@@ -794,8 +517,9 @@ cursor: pointer;
 									</c:if>
 									<c:if test="${ quantity == null || quantity <= 0 }">
 										<c:if test="${ (prod_checkout.price) >= 50.0 }">
-											<td class="price"><span class="total-payment"> <b id="total-payment">$<fmt:formatNumber
-															type="number" maxFractionDigits="2"
+											<td class="price"><span class="total-payment"> <b
+													id="total-payment">$<fmt:formatNumber type="number"
+															maxFractionDigits="2"
 															value="${prod_checkout.price - vccost }" />
 												</b>
 											</span></td>
@@ -803,15 +527,17 @@ cursor: pointer;
 									</c:if>
 									<c:if test="${ quantity != null && quantity > 0 }">
 										<c:if test="${ (prod_checkout.price*quantity) < 50.0 }">
-											<td class="price"><span class="total-payment"> <b id="total-payment">$<fmt:formatNumber
-															type="number" maxFractionDigits="2"
+											<td class="price"><span class="total-payment"> <b
+													id="total-payment">$<fmt:formatNumber type="number"
+															maxFractionDigits="2"
 															value="${prod_checkout.price*quantity + 11.00 - vccost }" /></b></span></td>
 										</c:if>
 									</c:if>
 									<c:if test="${ quantity == null || quantity <= 0 }">
 										<c:if test="${ (prod_checkout.price) < 50.0 }">
-											<td class="price"><span class="total-payment"> <b id="total-payment">$<fmt:formatNumber
-															type="number" maxFractionDigits="2"
+											<td class="price"><span class="total-payment"> <b
+													id="total-payment">$<fmt:formatNumber type="number"
+															maxFractionDigits="2"
 															value="${prod_checkout.price + 11.00 - vccost }" /></b></span></td>
 										</c:if>
 									</c:if>
@@ -823,8 +549,9 @@ cursor: pointer;
 										<c:if
 											test="${ (prod_checkout.price * quantity - prod_checkout.price * quantity * prod_checkout.discount/100) < 50.0 }">
 											<c:if test="${ quantity != null && quantity > 0 }">
-												<td class="price"><span class="total-payment"><b id="total-payment">$<fmt:formatNumber
-																type="number" maxFractionDigits="2"
+												<td class="price"><span class="total-payment"><b
+														id="total-payment">$<fmt:formatNumber type="number"
+																maxFractionDigits="2"
 																value="${prod_checkout.price*quantity - prod_checkout.price*quantity * prod_checkout.discount/100 + 11.00 }" />
 													</b></span></td>
 											</c:if>
@@ -832,8 +559,9 @@ cursor: pointer;
 										<c:if
 											test="${ (prod_checkout.price  * quantity  - prod_checkout.price  * quantity * prod_checkout.discount/100) >= 50.0 }">
 											<c:if test="${ quantity != null && quantity > 0 }">
-												<td class="price"><span class="total-payment"><b id="total-payment">$<fmt:formatNumber
-																type="number" maxFractionDigits="2"
+												<td class="price"><span class="total-payment"><b
+														id="total-payment">$<fmt:formatNumber type="number"
+																maxFractionDigits="2"
 																value="${prod_checkout.price * quantity - prod_checkout.price * quantity * prod_checkout.discount/100  }" />
 													</b></span></td>
 											</c:if>
@@ -843,8 +571,9 @@ cursor: pointer;
 										<c:if
 											test="${ (prod_checkout.price - prod_checkout.price * prod_checkout.discount/100) < 50.0 }">
 											<c:if test="${ quantity == null || quantity <= 0 }">
-												<td class="price"><span class="total-payment"><b id="total-payment">$<fmt:formatNumber
-																type="number" maxFractionDigits="2"
+												<td class="price"><span class="total-payment"><b
+														id="total-payment">$<fmt:formatNumber type="number"
+																maxFractionDigits="2"
 																value="${prod_checkout.price - prod_checkout.price * prod_checkout.discount/100 + 11.00 }" />
 													</b></span></td>
 											</c:if>
@@ -852,8 +581,9 @@ cursor: pointer;
 										<c:if
 											test="${ (prod_checkout.price - prod_checkout.price * prod_checkout.discount/100) >= 50.0 }">
 											<c:if test="${ quantity == null || quantity <= 0 }">
-												<td class="price"><span class="total-payment"><b id="total-payment">$<fmt:formatNumber
-																type="number" maxFractionDigits="2"
+												<td class="price"><span class="total-payment"><b
+														id="total-payment">$<fmt:formatNumber type="number"
+																maxFractionDigits="2"
 																value="${prod_checkout.price - prod_checkout.price * prod_checkout.discount/100  }" />
 													</b></span></td>
 											</c:if>
@@ -863,26 +593,27 @@ cursor: pointer;
 								<c:if test="${ prod_checkout.discount <= 0 }">
 									<c:if test="${ quantity != null && quantity > 0 }">
 										<c:if test="${ (prod_checkout.price) >= 50.0 }">
-											<td class="price"><span class="total-payment"><b id="total-payment">$${
-														prod_checkout.price * quantity }</b></span></td>
+											<td class="price"><span class="total-payment"><b
+													id="total-payment">$${ prod_checkout.price * quantity }</b></span></td>
 										</c:if>
 									</c:if>
 									<c:if test="${ quantity == null || quantity <= 0 }">
 										<c:if test="${ (prod_checkout.price) >= 50.0 }">
-											<td class="price"><span class="total-payment"><b id="total-payment">$${
-														prod_checkout.price }</b></span></td>
+											<td class="price"><span class="total-payment"><b
+													id="total-payment">$${ prod_checkout.price }</b></span></td>
 										</c:if>
 									</c:if>
 									<c:if test="${ quantity != null && quantity > 0 }">
 										<c:if test="${ (prod_checkout.price) < 50.0 }">
-											<td class="price"><span class="total-payment"><b id="total-payment">$${
-														prod_checkout.price * quantity +11.00 }</b></span></td>
+											<td class="price"><span class="total-payment"><b
+													id="total-payment">$${ prod_checkout.price * quantity
+														+11.00 }</b></span></td>
 										</c:if>
 									</c:if>
 									<c:if test="${ quantity == null || quantity <= 0 }">
 										<c:if test="${ (prod_checkout.price) < 50.0 }">
-											<td class="price"><span class="total-payment"><b id="total-payment">$${
-														prod_checkout.price+11.00 }</b></span></td>
+											<td class="price"><span class="total-payment"><b
+													id="total-payment">$${ prod_checkout.price+11.00 }</b></span></td>
 										</c:if>
 									</c:if>
 								</c:if>
@@ -892,23 +623,163 @@ cursor: pointer;
 				</div>
 
 			</div>
+
+			<!-- Consignee information -->
+			<div class="customer-info">
+				<h4>Shipping methods</h4>
+				<div class="shipping" id="radio1">
+
+					<div>
+						<input type="radio" name="Delivery" id="rad1" checked>&emsp;Delivery
+						to your place
+					</div>
+					<div>&emsp;&emsp;&emsp;$11.00</div>
+				</div>
+				<div class="content-sm" id="content-sm">Buy products over $50
+					will get free shipping</div>
+				<h4 class="pm">Payment methods</h4>
+
+				<div class="shipping" id="radio2" onclick="radio(this)">
+					<div class="icon-cod">
+						<c:if test="${ method == 'cod' ||  method == null }">
+							<input type="radio" name="paymentmethods" id="rad2" value="cod"
+								checked>
+						</c:if>
+						<c:if test="${ method != 'cod' &&  method != null }">
+							<input type="radio" name="paymentmethods" id="rad2" value="cod">
+						</c:if>
+						&emsp;Payment on delivery (COD)
+					</div>
+					<img
+						src="<c:url value="/assets/images/icons/cash-on-delivery.png"/>"
+						alt="">
+				</div>
+
+				<c:if test="${ method == 'cod' ||  method == null }">
+					<div class="content-pm" id="content-pm"
+						style="visibility: visible;">You only have to pay when you
+						receive the goods.</div>
+				</c:if>
+
+				<c:if test="${ method != 'cod' &&  method != null }">
+					<div class="content-pm none" id="content-pm"
+						style="visibility: visible;">You only have to pay when you
+						receive the goods.</div>
+				</c:if>
+
+				<c:if test="${ sessionScope.userid != null || userID != null}">
+					<div class="shipping" id="radio3" onclick="radio(this)">
+
+						<div class="icon-credit">
+							<c:if test="${ method == 'card' }">
+								<input type="radio" name="paymentmethods" id="rad3"
+									value="payByCard" checked>
+							</c:if>
+							<c:if test="${ method != 'card' }">
+								<input type="radio" name="paymentmethods" id="rad3"
+									value="payByCard">
+							</c:if>
+							&emsp; Pay by credit card
+						</div>
+						<img src="<c:url value="/assets/images/icons/credit-card.png"/>"
+							alt="">
+					</div>
+					<c:if test="${ method != 'card' }">
+						<div class="content-bank none" id="content-bank"
+							style="visibility: visible;">
+					</c:if>
+					<c:if test="${ method == 'card' }">
+						<div class="content-bank" id="content-bank"
+							style="visibility: visible;">
+					</c:if>
+					<div>Choose a</div>
+					<div class="bank">
+						<div class="bank" id="Paypal" onclick="bank(this)">
+							<img
+								src="<c:url value="/assets/images/icons/icons8-paypal-96.png"/>"
+								alt="">
+						</div>
+					</div>
+			</div>
+			</c:if>
+			<h4>Consignee information</h4>
+			<c:if test="${ user != null }">
+				<div class="name-customer">
+					<input type="text" id="fullname" name="fullname"
+						value="${ user.fullname }" placeholder="Full name">
+				</div>
+				<div class="phone-customer">
+					<input type="number" id="phone" name="phone" min="0"
+						value="${ user.phone_number }" placeholder="Phone number">
+				</div>
+				<div class="mail-customer">
+					<input type="text" id="email" name="email" value="${ user.email }"
+						placeholder="Email">
+				</div>
+				<div class="city-customer">
+					<input type="text" id="city" name="city" value="${ city }"
+						placeholder="City">
+				</div>
+				<div class="town-customer">
+					<input type="text" id="town" name="town" value="${ town }"
+						placeholder="Town">
+				</div>
+				<div class="village-customer">
+					<input type="text" id="village" name="village" value="${ village }"
+						placeholder="Village">
+				</div>
+				<div class="note-customer">
+					<textarea id="note" name="note" placeholder="Note"></textarea>
+				</div>
+			</c:if>
+			<c:if test="${ user == null }">
+				<div class="name-customer">
+					<input type="text" id="firstname" name="firstname" value=""
+						placeholder="First name"> <input type="text" id="lastname"
+						name="lastname" value="" placeholder="Last name">
+				</div>
+				<div class="phone-customer">
+					<input type="number" id="phone" name="phone" min="0" value=""
+						placeholder="Phone number">
+				</div>
+				<div class="mail-customer">
+					<input type="text" id="email" name="email" value=""
+						placeholder="Email">
+				</div>
+				<div class="city-customer">
+					<select name="calc_shipping_provinces" required="">
+						<option value="">Tỉnh / Thành phố</option>
+					</select> <select name="calc_shipping_district" required="">
+						<option value="">Quận / Huyện</option>
+					</select> <input class="billing_address_1" name="" type="hidden" value="">
+					<input class="billing_address_2" name="" type="hidden" value="">
+					<input type="text" id="address" name="address"
+						placeholder="Address">
+				</div>
+				<div class="note-customer">
+					<textarea id="note" name="note" placeholder="Note"></textarea>
+				</div>
+			</c:if>
+			<div class="btn-order">
+				<input type="button" name="order" id="order" value="Order">
+			</div>
 		</div>
-		
+		</div>
+
 		<input type="hidden" name="total" id="total" value="${ total }">
 		<input type="hidden" name="vccode" id="vccode" value="${ vccode }">
 		<input type="hidden" name="idprod" id="idprod" value="${ idprod }">
-		
+
 		<input type="hidden" name="userid" id="userid" value="${ id_user }">
-		
+
 		<input type="hidden" name="cartid" value="${ cartid }">
-		
+
 		<c:if test="${ vchprice != null }">
-			<input type="hidden" name="vchprice" id="vchprice" value="${ vchprice }">
+			<input type="hidden" name="vchprice" id="vchprice"
+				value="${ vchprice }">
 		</c:if>
 
-		<div class="btn-order">
-			<input type="button" name="order" id="order" value="Order">
-		</div>
+
 	</form>
 
 	<div class="wrapper importantNone" id="wrapper">
@@ -969,7 +840,7 @@ cursor: pointer;
 		xhr.send();
 	}
 	</script>
-	
+
 	<script type="text/javascript">
 		const validateEmail = (email) => {
 		  	return email.match(
@@ -986,7 +857,11 @@ cursor: pointer;
 			var village = $("#village").val();
 			var quantity = $("#input_Id1").val();
 			var id_prod = 	$("#id_prod").val();
-			var method = document.getElementById("rad3").checked;
+			
+			var method;
+			if(${ sessionScope.userid != null }) {
+				method = document.getElementById("rad3").checked;
+			}
 			
 			var error = "";
 			if(fullname == "") {
@@ -1004,11 +879,10 @@ cursor: pointer;
 			} else if(village == "") {
 				error = "Village is empty!";
 			} 
-			
 			if (error == "") {
 				if(method == true) {
 					var product = id_prod+"_"+quantity;
-					$('#myform').attr('action', "/SpringMVC/authorize_payment?product="+product);
+					$('#myform').attr('action', "/ShopT&T/authorize_payment?product="+product);
 					$(get).attr("type", "submit");
 				} else {
 					$(get).attr("type", "submit");
@@ -1020,7 +894,7 @@ cursor: pointer;
 			}
 		});
 	</script>
-	
+
 	<script type="text/javascript"> //message voucher status
 		if(${vcstatus != null}) {
 			var status = "${ vcstatus }";
@@ -1292,6 +1166,9 @@ cursor: pointer;
 		}
 	</script>
 
+	<script
+		src='https://cdn.jsdelivr.net/gh/vietblogdao/js/districts.min.js'></script>
+	<script src="<c:url value="/assets/js/select-address.js" />"></script>
 
 	<script src="<c:url value="/assets/js/color.js" />" defer></script>
 	<script src="js/login.js"></script>

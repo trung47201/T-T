@@ -25,7 +25,7 @@ import com.paypal.base.rest.PayPalRESTException;
 import TT.Model.Cart;
 import TT.Model.Product_color_size;
 import TT.Service.User.CartService;
-import TT.Service.User.Color_sizeService;
+import TT.Service.User.Product_color_sizeService;
 import TT.Service.User.PaymentService;
 import TT.Service.User.UserService;
 
@@ -33,7 +33,7 @@ import TT.Service.User.UserService;
 public class PaymentController {
 	private UserService userService;
 	private CartService cartService;
-	private Color_sizeService color_sizeService;
+	private Product_color_sizeService product_color_sizeService;
 	
 	@RequestMapping(value = { "/payment" })
 	public ModelAndView loadpayment(HttpServletRequest request, HttpServletResponse response) {
@@ -50,7 +50,7 @@ public class PaymentController {
 
 		cartService = new CartService();
 		userService = new UserService();
-		color_sizeService = new Color_sizeService();
+		product_color_sizeService = new Product_color_sizeService();
 		
 		try {
 			PaymentService paymentServices = new PaymentService();
@@ -73,7 +73,7 @@ public class PaymentController {
 					if(it.getDescription() != null) {
 						if(it.getDescription().contains("cs")) {
 							System.out.println(it.getDescription());
-							Product_color_size c = color_sizeService.getByIdCS(Integer.parseInt(it.getDescription().replace("cs", "").trim()));
+							Product_color_size c = product_color_sizeService.getByIdCS(Integer.parseInt(it.getDescription().replace("cs", "").trim()));
 							mv.addObject("csprod", c);
 							mv.addObject("quantity", it.getQuantity());
 							mv.addObject("id", id+"_"+c.getProd().getId());
@@ -109,7 +109,7 @@ public class PaymentController {
 	@RequestMapping(value = { "/authorize_payment" })
 	public void load_payment_paypal(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, PayPalRESTException {
-		color_sizeService = new Color_sizeService();
+		product_color_sizeService = new Product_color_sizeService();
 		String product = request.getParameter("product"); // product = {id_prod_quantity}/{id_prod_quantity}/{id_prod_quantity}...
 		String voucher = request.getParameter("vchprice");
 		String total = request.getParameter("total");
@@ -131,7 +131,7 @@ public class PaymentController {
 			String approvalLink = paymentServices.authorizePayment(product, Float.parseFloat(voucher), Float.parseFloat(total), Integer.parseInt(user_id), cartid, vccode);
 			response.sendRedirect(approvalLink);
 		} else {
-				int cs = color_sizeService.get_Color_size_id(Integer.parseInt(size), Integer.parseInt(color), Integer.parseInt(product.split("_")[0]));
+				int cs = product_color_sizeService.get_Color_size_id(Integer.parseInt(size), Integer.parseInt(color), Integer.parseInt(product.split("_")[0]));
 				String approvalLink = paymentServices.authorizePaymentBuyNow(product, Float.parseFloat(voucher), Float.parseFloat(total), Integer.parseInt(user_id), cs, vccode);
 				response.sendRedirect(approvalLink);
 				System.out.println(color +"-"+size);

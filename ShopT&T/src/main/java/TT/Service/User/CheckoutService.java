@@ -21,7 +21,7 @@ public class CheckoutService implements CheckoutRepository {
 	private ConnectService connectService;
 	private ProductService productService;
 	private VoucherService voucherService;
-	private Color_sizeService color_sizeService;
+	private Product_color_sizeService product_color_sizeService;
 
 	@Override
 	public List<Color> getRgbById_prod(int id_prod) {
@@ -69,7 +69,7 @@ public class CheckoutService implements CheckoutRepository {
 				size = new Sizes();
 				product_color_size = new Product_color_size();
 				size.setId(rs.getInt("size_id"));
-				size.setSize_number(rs.getInt("size_number"));
+				size.setSize_number(rs.getString("size_number"));
 				size.setCreated_at(rs.getDate("created_at"));
 				size.setUpdated_at(rs.getDate("updated_at"));
 				product_color_size.setId(rs.getInt("id"));
@@ -240,13 +240,13 @@ public class CheckoutService implements CheckoutRepository {
 	}
 	
 	public HashMap<Product_color_size, Integer> get_list_color_size_qty_by_string_process(String process) {
-		color_sizeService = new Color_sizeService();
+		product_color_sizeService = new Product_color_sizeService();
 		HashMap<Product_color_size, Integer> hm = new LinkedHashMap<Product_color_size, Integer>();
 		String arr[] = process.split("/");
 		for (String s : arr) {
 			if(!s.equals("")) {
 				String a[] = s.split("_");
-				hm.put(color_sizeService.getByIdCS(Integer.parseInt(a[0])), Integer.parseInt(a[1]));
+				hm.put(product_color_sizeService.getByIdCS(Integer.parseInt(a[0])), Integer.parseInt(a[1]));
 			}
 		}
 		return hm;

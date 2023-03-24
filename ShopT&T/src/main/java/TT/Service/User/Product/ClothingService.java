@@ -17,7 +17,7 @@ import TT.Model.Role;
 import TT.Model.Sizes;
 import TT.Model.Style;
 import TT.Model.User;
-import TT.Service.User.Color_sizeService;
+import TT.Service.User.Product_color_sizeService;
 import TT.Service.User.ConnectService;
 import TT.Service.User.RatingService;
 import TT.Service.User.VoucherService;
@@ -25,7 +25,7 @@ import TT.Service.User.VoucherService;
 public class ClothingService {
 	private ConnectService connectService;
 	private RatingService ratingService;
-	private Color_sizeService color_sizeService;
+	private Product_color_sizeService product_color_sizeService;
 	private VoucherService voucherService;
 	private Product product;
 	private Brand brand;
@@ -37,8 +37,8 @@ public class ClothingService {
 	private Sizes size;
 	private Gender gender;
 
-	public List<Product_color_size> getAllProductsClothing() {
-		List<Product_color_size> list = null;
+	public List<Product> getAllProductsClothing() {
+		List<Product> list = null;
 		try {
 			list = new ArrayList<>();
 			connectService = new ConnectService();
@@ -46,19 +46,13 @@ public class ClothingService {
 			Statement stmt;
 			stmt = (Statement) con.createStatement();
 			ResultSet rs = stmt
-					.executeQuery("select * from color_size " + "Inner join product on product.id = color_size.prod_id "
-							+ "Inner join sizes on sizes.id = color_size.size_id "
-							+ "Inner join color on color.id = color_size.color_id "
-							+ "Inner join brand on product.brand_id = brand.id "
+					.executeQuery("select * from product " + "Inner join brand on product.brand_id = brand.id "
 							+ "Inner join style on product.style_id = style.id "
 							+ "Inner join category on product.category_id = category.id "
 							+ "Inner join user on product.user_id = user.id "
 							+ "Inner join gender on product.gender_id = gender.id "
-							+ "Inner join role on role.id = user.role_id " + "Where color_size.quantity > 0 " + "and category.id = 1");
+							+ "Inner join role on role.id = user.role_id Where category.id = 1");
 			while (rs.next()) {
-				product_color_size = new Product_color_size();
-				color = new Color();
-				size = new Sizes();
 				product = new Product();
 				brand = new Brand();
 				user = new User();
@@ -75,7 +69,7 @@ public class ClothingService {
 				role.setDescription(rs.getString("description"));
 				role.setCreated_at(rs.getDate("created_at"));
 				role.setUpdated_at(rs.getDate("updated_at"));
-
+				
 				user.setId(rs.getInt("user_id"));
 				user.setFullname(rs.getString("fullname"));
 				user.setEmail(rs.getString("email"));
@@ -91,16 +85,7 @@ public class ClothingService {
 				style.setId(rs.getInt("style_id"));
 				style.setStyle_name(rs.getString("style_name"));
 
-				color.setId(rs.getInt("color_id"));
-				color.setColor_name(rs.getString("color_name"));
-				color.setRgb(rs.getString("rgb"));
-
-				size.setId(rs.getInt("size_id"));
-				size.setSize_number(rs.getInt("size_number"));
-				size.setCreated_at(rs.getDate("created_at"));
-				size.setUpdated_at(rs.getDate("updated_at"));
-
-				product.setId(rs.getInt("prod_id"));
+				product.setId(rs.getInt("id"));
 				product.setTitle(rs.getString("title"));
 				product.setPrice(rs.getDouble("price"));
 				product.setDiscount(rs.getInt("discount"));
@@ -116,13 +101,7 @@ public class ClothingService {
 				product.setMost_loved(rs.getInt("most_loved"));
 				product.setGender(gender);
 
-				product_color_size.setId(rs.getInt("id"));
-				product_color_size.setSize(size);
-				product_color_size.setColor(color);
-				product_color_size.setProd(product);
-				product_color_size.setQuantity(rs.getInt("quantity"));
-
-				list.add(product_color_size);
+				list.add(product);
 			}
 			con.close();
 		} catch (SQLException e) {

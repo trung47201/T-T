@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Sizes {
 	private int id;
-	private int size_number;
+	private String size_number;
 	private Date created_at;
 	private Date updated_at;
 	public Sizes() {
@@ -16,10 +16,10 @@ public class Sizes {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getSize_number() {
+	public String getSize_number() {
 		return size_number;
 	}
-	public void setSize_number(int size_number) {
+	public void setSize_number(String size_number) {
 		this.size_number = size_number;
 	}
 	public Date getCreated_at() {

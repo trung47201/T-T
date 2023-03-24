@@ -171,8 +171,7 @@ display: none;
 							alt="">
 						<div class="name-product-checkout">${ product.title }</div>
 						<div class="price-product-checkout">
-							$
-							<fmt:formatNumber type="number" maxFractionDigits="2"
+							$<fmt:formatNumber type="number" maxFractionDigits="2"
 								value="${ product.price-
 							product.price*product.discount/100 }" />
 						</div>

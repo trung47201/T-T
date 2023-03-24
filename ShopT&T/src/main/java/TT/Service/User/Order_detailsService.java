@@ -134,7 +134,7 @@ public class Order_detailsService implements Order_detailsRepository {
 				color.setRgb(rs.getString("rgb"));
 
 				size.setId(rs.getInt("size_id"));
-				size.setSize_number(rs.getInt("size_number"));
+				size.setSize_number(rs.getString("size_number"));
 				size.setCreated_at(rs.getDate("created_at"));
 				size.setUpdated_at(rs.getDate("updated_at"));
 

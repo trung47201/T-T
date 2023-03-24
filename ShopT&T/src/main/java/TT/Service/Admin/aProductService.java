@@ -7,7 +7,7 @@ import com.mysql.jdbc.PreparedStatement;
 
 import TT.Model.Product;
 import TT.Repository.Admin.aProductRepository;
-import TT.Service.User.Color_sizeService;
+import TT.Service.User.Product_color_sizeService;
 import TT.Service.User.ConnectService;
 import TT.Service.User.GalleryService;
 import TT.Service.User.Product.ProductService;
@@ -15,7 +15,7 @@ import TT.Service.User.Product.ProductService;
 public class aProductService implements aProductRepository {
 	private ConnectService connectService;
 	private ProductService productService;
-	private Color_sizeService color_sizeService;
+	private Product_color_sizeService product_color_sizeService;
 	private GalleryService galleryService;
 
 	@Override
@@ -24,12 +24,12 @@ public class aProductService implements aProductRepository {
 		try {
 			java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
 			connectService = new ConnectService();
-			color_sizeService = new Color_sizeService();
+			product_color_sizeService = new Product_color_sizeService();
 			galleryService = new GalleryService();
 			Connection conn = connectService.getConnect();
 			if (checkProduct(title, price, discount, style, brand, gender, thumbnail, color)) {
 				galleryService.insertIntoGallery(thumbnail, getProd_Id_finally(), color);
-				color_sizeService.insertIntoColor_Size(size_quantity, color, getProd_Id_finally());
+				product_color_sizeService.insertIntoColor_Size(size_quantity, color, getProd_Id_finally());
 			} else {
 				String sql = "INSERT INTO `product`(`title`, `price`, `discount`, `description`, `style_id`, `thumbnail`, `brand_id`, `user_id`, `gender_id`, `created_at`,  `updated_at`, `published_at`, `sold`, `most_loved`) "
 						+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -50,7 +50,7 @@ public class aProductService implements aProductRepository {
 				preparedStmt.setInt(14, 0);
 				preparedStmt.execute();
 				galleryService.insertIntoGallery(thumbnail, getProd_Id_finally(), color);
-				color_sizeService.insertIntoColor_Size(size_quantity, color, getProd_Id_finally());
+				product_color_sizeService.insertIntoColor_Size(size_quantity, color, getProd_Id_finally());
 			}
 			conn.close();
 			return true;
@@ -122,7 +122,7 @@ public class aProductService implements aProductRepository {
 	public boolean checkProduct(String title, double price, int discount, int style, int brand, int gender,
 			String thumbnail, int color) {
 		productService = new ProductService();
-		color_sizeService = new Color_sizeService();
+		product_color_sizeService = new Product_color_sizeService();
 		galleryService = new GalleryService();
 		List<Product> li = productService.getAllProducts();
 		for (Product p : li) {
