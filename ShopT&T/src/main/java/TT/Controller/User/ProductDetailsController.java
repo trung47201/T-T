@@ -10,9 +10,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import TT.Service.User.Color_sizeService;
 import TT.Service.User.GalleryService;
-import TT.Service.User.ProductService;
 import TT.Service.User.StyleService;
 import TT.Service.User.UserService;
+import TT.Service.User.Product.ProductService;
 
 @Controller
 public class ProductDetailsController {

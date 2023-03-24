@@ -20,10 +20,10 @@ import TT.Service.User.CheckoutService;
 import TT.Service.User.Color_sizeService;
 import TT.Service.User.OrderService;
 import TT.Service.User.Order_detailsService;
-import TT.Service.User.ProductService;
 import TT.Service.User.StatisticsService;
 import TT.Service.User.UserService;
 import TT.Service.User.VoucherService;
+import TT.Service.User.Product.ProductService;
 
 @Controller
 public class CheckoutController {

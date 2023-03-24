@@ -59,7 +59,7 @@ body::-webkit-scrollbar {
 /* Track */
 body::-webkit-scrollbar-track {
 	border-radius: 10px;
-	box-shadow: inset 0 0 5px #0086ff;
+	box-shadow: inset 0 0 5px #cb82a9;
 }
 /* Handle */
 body::-webkit-scrollbar-thumb {
@@ -300,30 +300,31 @@ p.price-sale-effect {
 }
 
 .show-function-effect i {
-    font-size: 24px;
-    border: 0;
-    text-shadow: 0 0 5px black;
-    color: white;
+	font-size: 24px;
+	border: 0;
+	text-shadow: 0 0 5px black;
+	color: white;
 }
 
 .show-function-effect i:hover {
-    font-size: 24px;
-    border: 0;
-    text-shadow: 0 0 5px black;
-    color: #cb82a9;
-    box-shadow: none;
+	font-size: 24px;
+	border: 0;
+	text-shadow: 0 0 5px black;
+	color: #cb82a9;
+	box-shadow: none;
 }
 
 button.add-to-cart-effect:hover, button.favorite-effect:hover {
-    border-radius: 5px;
-    cursor: pointer;
-    box-shadow: none;
+	border-radius: 5px;
+	cursor: pointer;
+	box-shadow: none;
 }
+
 button.buy-effect:hover {
-    border-radius: 5px;
-    cursor: pointer;
-    color: black;
-    background: #cb82a9;
+	border-radius: 5px;
+	cursor: pointer;
+	color: black;
+	background: #cb82a9;
 }
 
 button.buy-effect {
@@ -332,23 +333,25 @@ button.buy-effect {
 	box-shadow: 0 0 5px black !important;
 	margin-top: 3px;
 }
+
 .text {
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    width: 100%;
-    align-items: center;
-    margin-top: 24px;
-    margin-bottom: 32px;
+	display: flex;
+	text-align: center;
+	justify-content: center;
+	width: 100%;
+	align-items: center;
+	margin-top: 24px;
+	margin-bottom: 32px;
 }
+
 .text h3 {
-    font-family: Playfair Display, serif;
-    font-style: italic;
-    font-weight: 700;
-    color: #4a4a4a;
-    letter-spacing: 1.58px;
-    margin: 0;
-    text-transform: uppercase;
-    font-size: 26px;
-    margin-left: -15px;
+	font-family: Playfair Display, serif;
+	font-style: italic;
+	font-weight: 700;
+	color: #4a4a4a;
+	letter-spacing: 1.58px;
+	margin: 0;
+	text-transform: uppercase;
+	font-size: 26px;
+	margin-left: -15px;
 }

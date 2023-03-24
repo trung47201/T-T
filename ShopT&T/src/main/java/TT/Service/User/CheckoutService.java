@@ -5,17 +5,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 
 import com.mysql.jdbc.Statement;
 
 import TT.Model.Color;
-import TT.Model.Product_color_size;
 import TT.Model.Product;
+import TT.Model.Product_color_size;
 import TT.Model.Sizes;
 import TT.Repository.User.CheckoutRepository;
+import TT.Service.User.Product.ProductService;
 
 public class CheckoutService implements CheckoutRepository {
 	private ConnectService connectService;

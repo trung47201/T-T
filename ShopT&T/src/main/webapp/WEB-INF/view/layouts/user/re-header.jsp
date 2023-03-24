@@ -32,23 +32,23 @@
 		<div class="wrapper-nav">
 			<div class="nav-left">
 				<ul>
-					<li class="link"><a href="">NEW ARRIVALS</a></li>
-					<li class="link"><a href="">CLOTHINGS</a></li>
-					<li class="link"><a href="">GIFTS</a></li>
-					<li class="link"><a href="">SHOES</a></li>
+					<li class="link"><a href="/ShopT&T/products/new-arrivals">NEW ARRIVALS</a></li>
+					<li class="link"><a href="/ShopT&T/products/clothing">CLOTHING</a></li>
+					<li class="link"><a href="/ShopT&T/products/gifts">GIFTS</a></li>
+					<li class="link"><a href="/ShopT&T/products/shoes">SHOES</a></li>
 				</ul>
 			</div>
 			<div class="nav-middle">
-				<div class="nav-mid-img">
+				<div class="nav-mid-img" id="home">
 					<img id="re-logo" alt=""
 						src="<c:url value="/assets/images/logo/Thnk.png"/>">
 				</div>
 			</div>
 			<div class="nav-left">
 				<ul>
-					<li class="link"><a href="">JEWELRY</a></li>
-					<li class="link"><a href="">HANDBAGS</a></li>
-					<li class="link"><a href="">ACCESSORIES</a></li>
+					<li class="link"><a href="/ShopT&T/products/jewelry">JEWELRY</a></li>
+					<li class="link"><a href="/ShopT&T/products/handbags">HANDBAGS</a></li>
+					<li class="link"><a href="/ShopT&T/products/accessories">ACCESSORIES</a></li>
 					<li>
 						<div class="nav-btn">
 							<div>
@@ -68,7 +68,7 @@
 	</div>
 </header>
 
-<div class="customer-menu" id="customer-menu">
+<div class="customer-menu" id="customer-menu" style="width: 0;">
 	<div class="customer-close">
 		<i class="fa fa-times" aria-hidden="true" id="c-close"></i>
 	</div>
@@ -97,7 +97,11 @@
 	</div>
 </div>
 
-
+<script type="text/javascript">
+$("#home").click(function() {
+	window.location.href = "/ShopT&T/";
+}); 
+</script>
 
 <script type="text/javascript"> //open
 	$("#btn-menu").click(function() {
@@ -125,7 +129,7 @@ window.addEventListener("scroll", (event) => {
     	$(".nav-mid-img").css({marginTop: 0 , position:'sticky'});
     } else {
     	document.getElementById("re-logo").style.width = "160px";
-    	$(".nav-mid-img").css({marginTop: 10, position:'sticky'});
+    	$(".nav-mid-img").css({marginTop: 0, position:'sticky'});
     }
 });
 </script>

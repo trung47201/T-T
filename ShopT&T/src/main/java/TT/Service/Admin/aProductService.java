@@ -10,7 +10,7 @@ import TT.Repository.Admin.aProductRepository;
 import TT.Service.User.Color_sizeService;
 import TT.Service.User.ConnectService;
 import TT.Service.User.GalleryService;
-import TT.Service.User.ProductService;
+import TT.Service.User.Product.ProductService;
 
 public class aProductService implements aProductRepository {
 	private ConnectService connectService;

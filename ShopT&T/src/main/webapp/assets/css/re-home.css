@@ -70,7 +70,7 @@ a.dropdown-item {
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #cb82a9 !important; 
+  background: #cb82a9; 
 }
 a:hover {
     color: #cb82a9 !important;

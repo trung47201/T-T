@@ -13,15 +13,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import TT.Model.Cart;
 import TT.Model.Product_color_size;
-import TT.Service.Admin.aStatisticsService;
 import TT.Service.User.CartService;
 import TT.Service.User.CheckoutService;
 import TT.Service.User.Color_sizeService;
 import TT.Service.User.OrderService;
 import TT.Service.User.Order_detailsService;
-import TT.Service.User.ProductService;
 import TT.Service.User.StatisticsService;
 import TT.Service.User.VoucherService;
+import TT.Service.User.Product.ProductService;
 
 @Controller
 public class CheckoutCartController {

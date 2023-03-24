@@ -21,10 +21,10 @@ import TT.Service.User.CheckoutService;
 import TT.Service.User.ColorService;
 import TT.Service.User.OrderService;
 import TT.Service.User.Order_detailsService;
-import TT.Service.User.ProductService;
 import TT.Service.User.SizeService;
 import TT.Service.User.UserService;
 import TT.Service.User.VoucherService;
+import TT.Service.User.Product.ProductService;
 
 @Controller
 public class ThankController {

@@ -21,8 +21,8 @@ import TT.Service.Admin.aBSGService;
 import TT.Service.Admin.aGalleryService;
 import TT.Service.Admin.aProd_Color_SizeService;
 import TT.Service.Admin.aProductService;
-import TT.Service.User.ProductService;
 import TT.Service.User.UserService;
+import TT.Service.User.Product.ProductService;
 
 @Controller
 public class ShoesController {

@@ -5,17 +5,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import TT.Model.User;
 import TT.Service.Admin.aStatisticsService;
 import TT.Service.User.PostsService;
-import TT.Service.User.ProductService;
 import TT.Service.User.SlidesService;
 import TT.Service.User.StyleService;
-import TT.Service.User.UserService;
+import TT.Service.User.Product.ProductService;
 
 @Controller
 public class HomeController {
