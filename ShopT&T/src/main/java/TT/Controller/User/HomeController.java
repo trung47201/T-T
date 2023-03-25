@@ -1,8 +1,8 @@
 package TT.Controller.User;
 
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +31,12 @@ public class HomeController {
 		productService = new ProductService();
 		styleService = new StyleService();
 		aStatisticsService = new aStatisticsService();
+		
+		String buy = request.getParameter("buynow");
+		if (buy != null) {
+			HttpSession session = request.getSession();
+			session.setAttribute("order", "start");
+		}
 
 		if (!aStatisticsService.check_date_of_today_exist()) { // not exists
 			aStatisticsService.insert_new_statistics();
@@ -45,7 +51,6 @@ public class HomeController {
 
 		return mv;
 	}
-	
 
 	// reset cookie
 //	

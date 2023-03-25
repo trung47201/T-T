@@ -39,7 +39,7 @@ public class ThankController {
 	
 	@RequestMapping(value = {"sucess-buynow"})
 	public ModelAndView loadOrder(HttpServletRequest request, HttpServletResponse response){
-		ModelAndView mv = new ModelAndView("user/sucess-buynow");
+		ModelAndView mv = new ModelAndView("user/re-sucess-buynow");
 		productService = new ProductService();
 		checkoutService = new CheckoutService();
 		colorService = new ColorService();
@@ -54,9 +54,7 @@ public class ThankController {
 		String fullname = request.getParameter("fullname");
 		String phone_number = request.getParameter("phone_number");
 		String email = request.getParameter("email");
-		String city = request.getParameter("city");
-		String town = request.getParameter("town");
-		String village = request.getParameter("village");
+		String address = request.getParameter("address");
 		String note = request.getParameter("note");
 		String price_at = request.getParameter("priceat");
 		String voucher = request.getParameter("voucher");
@@ -81,7 +79,7 @@ public class ThankController {
 			}
 			mv.addObject("discount", discount);
 		}
-		
+		System.out.println(address);
 		mv.addObject("method", method);
 		mv.addObject("price_at", price_at);
 		mv.addObject("id_prod", id_prod);
@@ -91,11 +89,8 @@ public class ThankController {
 		mv.addObject("fullname", fullname);
 		mv.addObject("phone_number", phone_number);
 		mv.addObject("email", email);
-		mv.addObject("city", city);
-		mv.addObject("town", town);
-		mv.addObject("village", village);
+		mv.addObject("address", address);
 		mv.addObject("note", note);
-		mv.addObject("freeship", note);
 		mv.addObject("product", productService.getProduct(Integer.parseInt(id_prod)));
 		mv.addObject("color", colorService.getColorById(Integer.parseInt(id_color)).getRgb());
 		mv.addObject("size", sizeService.getSizeById(Integer.parseInt(id_size)).getSize_number());

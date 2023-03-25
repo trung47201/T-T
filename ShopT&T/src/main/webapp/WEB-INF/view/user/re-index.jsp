@@ -28,7 +28,6 @@
 <link rel="stylesheet"
 	href="<c:url value="/assets/css/r-zoom-img.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/home.css"/>">
-
 <link rel="stylesheet" href="<c:url value="/assets/css/r-header.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/re-menu.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/r-effect.css"/>">
@@ -37,54 +36,9 @@
 <link rel="stylesheet" href="<c:url value="/assets/css/r-posts.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/re-text.css"/>">
 <style>
-div.section-1 {
-	margin-top: 50px;
-	padding-bottom: 250px;
-}
-
-.customer-menu {
-	width: 0;
-	transition: all .25s ease-out;
-	overflow-y: auto;
-	position: fixed;
-	right: 0;
-	background: white;
-	min-height: 1000px;
-	max-height: 1000px;
-	box-shadow: -1px 0 5px black;
-	top: 0;
-	z-index: 101;
-}
-
-.customer-close {
-	width: 100%;
-	display: flex;
-	justify-content: right;
-	margin-left: -24px;
-	margin-top: 20px;
-	font-weight: bold;
-}
-
-.customer-close p {
-	margin-left: 48px;
-	font-size: 24px;
-}
-
-.follow {
-	text-align: center;
-	font-size: 18px;
-	font-weight: bold;
-	margin-top: 15px;
-}
-
-.follow img {
-	width: 160px;
-	border-radius: 100px;
-}
 </style>
 
 <body style="color: black;">
-	<!--  cart  -->
 	<jsp:include page="../layouts/user/re-menu.jsp"></jsp:include>
 
 	<div class="back-header">
@@ -150,10 +104,9 @@ div.section-1 {
 
 				<c:forEach var="it" items="${ listNewArrivals }" varStatus="index">
 					<div class="products-el">
-						<c:if test="${ userID == null }">
+						<c:if test="${ sessionScope.userid == null }">
 							<c:if test="${ it.discount > 0 }">
-								<a
-									href="/ShopT&T/product-details?product-id=${ it.id }">
+								<a href="/ShopT&T/product-details?product-id=${ it.id }">
 									<div class="img-product-products zoom zoo" id="ex1"
 										name="${it.discount }%" style="">
 										<img
@@ -163,8 +116,7 @@ div.section-1 {
 								</a>
 							</c:if>
 							<c:if test="${ it.discount <= 0 }">
-								<a
-									href="/ShopT&T/product-details?product-id=${ it.id }">
+								<a href="/ShopT&T/product-details?product-id=${ it.id }">
 									<div class="img-product-products zoom" id="ex1"
 										name="${it.discount }%" style="">
 										<img
@@ -174,10 +126,10 @@ div.section-1 {
 								</a>
 							</c:if>
 						</c:if>
-						<c:if test="${ userID != null }">
+						<c:if test="${ sessionScope.userid != null }">
 							<c:if test="${ it.discount > 0 }">
 								<a
-									href="/ShopT&T/product-details/${ id_user }_${ it.id }">
+									href="/ShopT&T/product-details/${ sessionScope.userid }_${ it.id }">
 									<div class="img-product-products zoom zoo" id="ex1"
 										name="${it.discount }%" style="">
 										<img
@@ -188,7 +140,7 @@ div.section-1 {
 							</c:if>
 							<c:if test="${ it.discount <= 0 }">
 								<a
-									href="/ShopT&T/product-details/${ id_user }_${ it.id }">
+									href="/ShopT&T/product-details/${ sessionScope.userid }_${ it.id }">
 									<div class="img-product-products zoom" id="ex1"
 										name="${it.discount }%" style="">
 										<img
@@ -201,13 +153,12 @@ div.section-1 {
 						<div class="content-product-products">
 							<div class="brand-product-products">${ it.style.style_name }</div>
 							<div class="name-product-products">
-								<c:if test="${ userID != null }">
+								<c:if test="${ sessionScope.userid != null }">
 									<a
-										href="/ShopT&T/product-details/${ id_user }_${ it.id }">${ it.title }</a>
+										href="/ShopT&T/product-details/${ sessionScope.userid }_${ it.id }">${ it.title }</a>
 								</c:if>
-								<c:if test="${ userID == null }">
-									<a
-										href="/ShopT&T/product-details?product-id=${ it.id }">${ it.title }</a>
+								<c:if test="${ sessionScope.userid == null }">
+									<a href="/ShopT&T/product-details?product-id=${ it.id }">${ it.title }</a>
 								</c:if>
 							</div>
 							<div class="show-products">
@@ -291,10 +242,10 @@ div.section-1 {
 							varStatus="index">
 							<div class="swiper-slide">
 								<div class="effect">
-									<c:if test="${ userID != null }">
+									<c:if test="${ sessionScope.userid != null }">
 										<c:if test="${ item.discount > 0 }">
 											<a
-												href="/ShopT&T/product-details/${ id_user }_${ item.id }">
+												href="/ShopT&T/product-details/${ sessionScope.userid }_${ item.id }">
 												<div class="zoom-most-loved zoo"
 													id="ee${ index.getIndex() }" name="${item.discount }%">
 													<img class="product-effect"
@@ -304,7 +255,7 @@ div.section-1 {
 										</c:if>
 										<c:if test="${ item.discount <= 0 }">
 											<a
-												href="/ShopT&T/product-details/${ id_user }_${ item.id }">
+												href="/ShopT&T/product-details/${ sessionScope.userid }_${ item.id }">
 												<div class="zoom-most-loved" id="ee${ index.getIndex() }"
 													name="${item.discount }%">
 													<img class="product-effect"
@@ -313,10 +264,9 @@ div.section-1 {
 											</a>
 										</c:if>
 									</c:if>
-									<c:if test="${ userID == null }">
+									<c:if test="${ sessionScope.userid == null }">
 										<c:if test="${ item.discount > 0 }">
-											<a
-												href="/ShopT&T/product-details?product-id=${ item.id }">
+											<a href="/ShopT&T/product-details?product-id=${ item.id }">
 												<div class="zoom-most-loved zoo"
 													id="ee${ index.getIndex() }" name="${item.discount }%">
 													<img class="product-effect"
@@ -325,8 +275,7 @@ div.section-1 {
 											</a>
 										</c:if>
 										<c:if test="${ item.discount <= 0 }">
-											<a
-												href="/ShopT&T/product-details?product-id=${ item.id }">
+											<a href="/ShopT&T/product-details?product-id=${ item.id }">
 												<div class="zoom-most-loved" id="ee${ index.getIndex() }"
 													name="${item.discount }%">
 													<img class="product-effect"
@@ -337,9 +286,16 @@ div.section-1 {
 									</c:if>
 									<div class="content-effect">
 										<div class="details">
-											<a class="product-link-effect"
-												href="/ShopT&T/product-details?product-id=${ item.id }"><p
-													class="name-product-effect">${ item.title }</p></a>
+											<c:if test="${ sessionScope.userid == null }">
+												<a class="product-link-effect"
+													href="/ShopT&T/product-details?product-id=${ item.id }"><p
+														class="name-product-effect">${ item.title }</p></a>
+											</c:if>
+											<c:if test="${ sessionScope.userid != null }">
+												<a class="product-link-effect"
+													href="/ShopT&T/product-details/${ sessionScope.userid }_${ item.id }"><p
+														class="name-product-effect">${ item.title }</p></a>
+											</c:if>
 											<div class="fun-hover-effect">
 												<div class="price-effect">
 													<c:if test="${ item.discount > 0}">
@@ -407,10 +363,9 @@ div.section-1 {
 			<div class="position-product container-xl">
 				<c:forEach var="it" items="${ listNewArrivals }" varStatus="">
 					<div class="products-el">
-						<c:if test="${ userID == null }">
+						<c:if test="${ sessionScope.userid == null }">
 							<c:if test="${ it.discount > 0 }">
-								<a
-									href="/ShopT&T/product-details?product-id=${ it.id }">
+								<a href="/ShopT&T/product-details?product-id=${ it.id }">
 									<div class="img-product-products zoom-same-price-product zoo"
 										id="exe${ index.getIndex() }" name="${ it.discount }%">
 										<img
@@ -420,8 +375,7 @@ div.section-1 {
 								</a>
 							</c:if>
 							<c:if test="${ it.discount <= 0 }">
-								<a
-									href="/ShopT&T/product-details/${ id_user }_${ it.id }">
+								<a href="/ShopT&T/product-details?product-id=${ it.id }">
 									<div class="img-product-products zoom-same-price-product"
 										id="exe${ index.getIndex() }">
 										<img
@@ -431,10 +385,10 @@ div.section-1 {
 								</a>
 							</c:if>
 						</c:if>
-						<c:if test="${ userID != null }">
+						<c:if test="${ sessionScope.userid != null }">
 							<c:if test="${ it.discount > 0 }">
 								<a
-									href="/ShopT&T/product-details/${ id_user }_${ it.id }">
+									href="/ShopT&T/product-details/${ sessionScope.userid }_${ it.id }">
 									<div class="img-product-products zoom-same-price-product zoo"
 										id="exe${ index.getIndex() }" name="${ it.discount }%">
 										<img
@@ -445,7 +399,7 @@ div.section-1 {
 							</c:if>
 							<c:if test="${ it.discount <= 0 }">
 								<a
-									href="/ShopT&T/product-details/${ id_user }_${ it.id }">
+									href="/ShopT&T/product-details/${ sessionScope.userid }_${ it.id }">
 									<div class="img-product-products zoom-same-price-product"
 										id="exe${ index.getIndex() }">
 										<img
@@ -457,10 +411,17 @@ div.section-1 {
 						</c:if>
 						<div class="content-product-products">
 							<div class="brand-product-products">${ it.style.style_name }</div>
-							<a
-								href="/ShopT&T/product-details?product-id=${ it.id }">
-								<div class="name-product-products">${ it.title }</div>
-							</a>
+							<c:if test="${ sessionScope.userid != null }">
+								<a
+									href="/ShopT&T/product-details/${ sessionScope.userid }_${ it.id }">
+									<div class="name-product-products">${ it.title }</div>
+								</a>
+							</c:if>
+							<c:if test="${ sessionScope.userid == null }">
+								<a href="/ShopT&T/product-details?product-id=${ it.id }">
+									<div class="name-product-products">${ it.title }</div>
+								</a>
+							</c:if>
 							<div class="show-products">
 								<div class="price-product-products">
 									<c:if test="${ it.discount > 0}">
@@ -570,15 +531,15 @@ div.section-1 {
 	</script>
 	<script> // buy now
 		var id_user = "";
-		if(${ id_user != null }) {
-			id_user = "${ id_user }";
+		if(${ sessionScope.userid != null }) {
+			id_user = "${ sessionScope.userid }";
 		}
 		if(id_user != "") {
 			$(".buy-now").click(function(e) {
 				var id_prod = e.target.id;
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"/ShopT&T/cart/checkout/"+id_user+"_"+id_prod);
+						"/ShopT&T/?buynow");
 				xhr.onload = function() {
 					window.location.assign("/ShopT&T/cart/checkout/"+id_user+"_"+id_prod);
 				};
@@ -589,7 +550,7 @@ div.section-1 {
 				var id_prod = e.target.id;
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"/ShopT&T/cart/checkout/"+id_user+"_"+id_prod);
+						"/ShopT&T/?buynow");
 				xhr.onload = function() {
 					window.location.assign("/ShopT&T/cart/checkout/"+id_user+"_"+id_prod);
 				};
@@ -599,7 +560,7 @@ div.section-1 {
 			$(".buy-now").click(function(e) {
 				var id_prod = e.target.id;
 				var xhr = new XMLHttpRequest();
-				xhr.open("GET","");
+				xhr.open("GET","/ShopT&T/?buynow");
 				xhr.onload = function() {
 					window.location.assign("/ShopT&T/cart/checkout/"+id_prod);
 				};
@@ -610,7 +571,7 @@ div.section-1 {
 				var id_prod = e.target.id;
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"/ShopT&T/cart/checkout/"+id_prod);
+						"/ShopT&T/?buynow");
 				xhr.onload = function() {
 					window.location.assign("/ShopT&T/cart/checkout/"+id_prod);
 				};

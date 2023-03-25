@@ -242,23 +242,19 @@ public class PaymentService {
 
 	private RedirectUrls getRedirectURLs(int user_id) {
 		RedirectUrls redirectUrls = new RedirectUrls();
-		redirectUrls.setCancelUrl("http://localhost:8888/SpringMVC/products/"+user_id);
-		redirectUrls.setReturnUrl("http://localhost:8888/SpringMVC/review_payment/"+user_id);
+		redirectUrls.setCancelUrl("/ShopT&T/products/"+user_id);
+		redirectUrls.setReturnUrl("/ShopT&T/review_payment/"+user_id);
 		return redirectUrls;
 	}
 
 	private Payer getPayerInformation(User u) {
-		String arr[] = u.getFullname().split("\\s+");
-		
-		String firstname = arr[arr.length-1];
-		String lastname = u.getFullname().replace(firstname, "").trim();
 		
 		Payer payer = new Payer();
 		payer.setPaymentMethod("paypal");
 		
 		PayerInfo payerInfo = new PayerInfo();
-		payerInfo.setFirstName(firstname);
-		payerInfo.setLastName(lastname);
+		payerInfo.setFirstName(u.getFirstname());
+		payerInfo.setLastName(u.getLastname());
 		payerInfo.setEmail(u.getEmail());
 
 		payer.setPayerInfo(payerInfo);

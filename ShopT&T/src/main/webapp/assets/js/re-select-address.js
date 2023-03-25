@@ -1,4 +1,3 @@
-
 if (address_2 = localStorage.getItem('address_2_saved')) {
   $('select[name="calc_shipping_district"] option').each(function() {
     if ($(this).text() == address_2) {
@@ -26,7 +25,7 @@ $('select[name="calc_shipping_provinces"]').each(function() {
   c.forEach(function(i, e) {
     e += +1
     stc += '<option value=' + e + '>' + i + '</option>'
-    $this.html('<option value="">Province / City</option>' + stc)
+    $this.html('<option value="" disabled="disabled" selected>Province / City</option>' + stc)
     if (address_1 = localStorage.getItem('address_1_saved')) {
       $('select[name="calc_shipping_provinces"] option').each(function() {
         if ($(this).text() == address_1) {
@@ -38,11 +37,11 @@ $('select[name="calc_shipping_provinces"]').each(function() {
     $this.on('change', function(i) {
       i = $this.children('option:selected').index() - 1
       var str = '',
-        r = $this.val()
+        r = $this.val();
       if (r != '') {
         arr[i].forEach(function(el) {
           str += '<option value="' + el + '">' + el + '</option>'
-          $('select[name="calc_shipping_district"]').html('<option value="">District</option>' + str)
+          $('select[name="calc_shipping_district"]').html('<option value="" disabled="disabled" selected>District</option>' + str)
         })
         var address_1 = $this.children('option:selected').text()
         var district = $('select[name="calc_shipping_district"]').html()
@@ -59,7 +58,7 @@ $('select[name="calc_shipping_provinces"]').each(function() {
           localStorage.setItem('address_2_saved', address_2)
         })
       } else {
-        $('select[name="calc_shipping_district"]').html('<option value="">District</option>')
+        $('select[name="calc_shipping_district"]').html('<option value="" disabled="disabled" selected>District</option>')
         district = $('select[name="calc_shipping_district"]').html()
         localStorage.setItem('district', district)
         localStorage.removeItem('address_1_saved', address_1)

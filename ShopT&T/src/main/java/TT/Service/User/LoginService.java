@@ -40,10 +40,12 @@ public class LoginService implements LoginRepository {
 				role.setUpdated_at(rs.getDate("updated_at"));
 
 				user.setId(rs.getInt("id"));
-				user.setFullname(rs.getString("fullname"));
+				user.setFirstname(rs.getString("firstname"));user.setLastname(rs.getString("lastname"));
 				user.setEmail(rs.getString("email"));
 				user.setPhone_number(rs.getString("phone_number"));
 				user.setAddress(rs.getString("address"));
+				user.setDistrict(rs.getString("district"));
+				user.setCity(rs.getString("city"));
 				user.setPassword(rs.getString("password"));
 				user.setAvatar(rs.getString("avatar"));
 				user.setStatus(rs.getInt("status"));

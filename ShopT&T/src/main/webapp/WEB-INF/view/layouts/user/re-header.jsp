@@ -85,7 +85,7 @@
 		<ul>
 			<li><a href="#">ORDER</a></li>
 			<li><a href="#">PROFILE</a></li>
-			<li><a href="#">LOGOUT</a></li>
+			<li><a href="/ShopT&T/account/logout">LOGOUT</a></li>
 		</ul>
 	</div>
 	<div class="follow3">Follow us on</div>

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,20 +49,32 @@ public class CheckoutController {
 		statisticsService = new StatisticsService();
 		product_color_sizeService = new Product_color_sizeService();
 
-		String fullname = request.getParameter("fullname");
+		HttpSession session = request.getSession();
+
+		String firstname = request.getParameter("firstname");
+		String lastname = request.getParameter("lastname");
 		String phone_number = request.getParameter("phone");
 		String email = request.getParameter("email");
 		String city = request.getParameter("city");
-		String town = request.getParameter("town");
-		String village = request.getParameter("village");
+		String district = request.getParameter("district");
+		String address = request.getParameter("address");
 		String note = request.getParameter("note");
-		String method = request.getParameter("method");
+		String method = request.getParameter("paymentmethods");
 		String size = request.getParameter("size");
 		String color = request.getParameter("color");
 		String id_prod = request.getParameter("idprod");
 		String vccode = request.getParameter("vccode");
 		String quantity = request.getParameter("quantity");
+		String fullname = "";
 
+		if (firstname != null && lastname != null) {
+			fullname = firstname + " " + lastname;
+		}
+
+		String adr = "";
+		if (address != null && city != null && district != null) {
+			adr = address + "-" + district + "-" + city;
+		}
 		List<String> li = new ArrayList<>();
 		Cookie arrO[] = request.getCookies();
 		if (arrO != null) {
@@ -87,60 +100,58 @@ public class CheckoutController {
 		double price_at = 0;
 		Product p = productService.getProduct(Integer.parseInt(id_prod));
 		if (p.getDiscount() > 0) {
-			price_at += p.getPrice()
-					- p.getPrice() * p.getDiscount() / 100;
+			price_at += p.getPrice() - p.getPrice() * p.getDiscount() / 100;
 		} else {
 			price_at += p.getPrice();
 		}
-		if (id_prod != null && vccode != null && size != null && color != null && city != null && town != null
-				&& village != null && fullname != null && phone_number != null && email != null) {
+		if (id_prod != null && vccode != null && size != null && color != null && city != null && district != null
+				&& address != null && firstname != null && lastname != null && phone_number != null && email != null) {
 			double dis = checkoutService.get_discount_at(Integer.parseInt(quantity), vccode, Integer.parseInt(id_prod));
 			double pricetotal = checkoutService.get_price_at(Integer.parseInt(quantity), vccode,
 					Integer.parseInt(id_prod));
-			String address = city + " - " + town + " - " + village;
 			if (vc_id == 0) {
 				vc_id = 1;
 			}
-			if(pricetotal < 50) {
+			if (pricetotal < 50) {
 				pricetotal = pricetotal + 11.00;
 			}
 			if (vc_id != 1) {
-				if (orderService.insertIntoOrder(fullname, email, phone_number, address, vc_id, note, method, dis)
+				if (orderService.insertIntoOrder(fullname, email, phone_number, adr, vc_id, note, method, dis)
 						&& voucherService.update_limit_voucher(vc_id)
 						&& order_detailsService.insertIntoOrder_details((double) Math.round(price_at * 100) / 100,
 								Integer.parseInt(quantity), Integer.parseInt(id_prod), Integer.parseInt(size),
 								Integer.parseInt(color), phone_number, email)
-						&& product_color_sizeService.updateColor_size_Quantity(Integer.parseInt(size), Integer.parseInt(color),
-								Integer.parseInt(id_prod), Integer.parseInt(quantity))
+						&& product_color_sizeService.updateColor_size_Quantity(Integer.parseInt(size),
+								Integer.parseInt(color), Integer.parseInt(id_prod), Integer.parseInt(quantity))
 						&& productService.updateProduct_Sold(Integer.parseInt(id_prod), Integer.parseInt(quantity))
 						&& statisticsService.update_order_revenue_product_num_in_statistics_DB(
 								Integer.parseInt(quantity), pricetotal)) {
+					session.setAttribute("order", "end");
 					System.out.println("buy now success (96 checkoutController)");
-					return new ModelAndView("redirect: /ShopT&T/sucess-buynow?id_prod=" + id_prod + "&id_color="
-							+ color + "&id_size=" + size + "&quantity=" + quantity + "&fullname=" + fullname
-							+ "&phone_number=" + phone_number + "&email=" + email + "&city=" + city + "&town=" + town
-							+ "&village=" + village + "&note=" + note + "&voucher=" + vc_id + "&priceat=" + pricetotal
-							+ "&user=" + user + "&method=" + method);
+					return new ModelAndView("redirect: /ShopT&T/sucess-buynow?id_prod=" + id_prod + "&id_color=" + color
+							+ "&id_size=" + size + "&quantity=" + quantity + "&fullname=" + fullname + "&phone_number="
+							+ phone_number + "&email=" + email + "&address=" + adr + "&note=" + note + "&voucher="
+							+ vc_id + "&priceat=" + pricetotal + "&user=" + user + "&method=" + method);
 				} else {
 					System.out.println("buy now unsuccess");
 					return new ModelAndView("redirect: /ShopT&T/cart/checkout/" + id);
 				}
 			} else {
-				if (orderService.insertIntoOrder(fullname, email, phone_number, address, vc_id, note, method, dis)
+				if (orderService.insertIntoOrder(fullname, email, phone_number, adr, vc_id, note, method, dis)
 						&& order_detailsService.insertIntoOrder_details((double) Math.round(price_at * 100) / 100,
 								Integer.parseInt(quantity), Integer.parseInt(id_prod), Integer.parseInt(size),
 								Integer.parseInt(color), phone_number, email)
-						&& product_color_sizeService.updateColor_size_Quantity(Integer.parseInt(size), Integer.parseInt(color),
-								Integer.parseInt(id_prod), Integer.parseInt(quantity))
+						&& product_color_sizeService.updateColor_size_Quantity(Integer.parseInt(size),
+								Integer.parseInt(color), Integer.parseInt(id_prod), Integer.parseInt(quantity))
 						&& productService.updateProduct_Sold(Integer.parseInt(id_prod), Integer.parseInt(quantity))
 						&& statisticsService.update_order_revenue_product_num_in_statistics_DB(
 								Integer.parseInt(quantity), pricetotal)) {
+					session.setAttribute("order", "end");
 					System.out.println("buy now success (96 checkoutController)");
-					return new ModelAndView("redirect: /ShopT&T/sucess-buynow?id_prod=" + id_prod + "&id_color="
-							+ color + "&id_size=" + size + "&quantity=" + quantity + "&fullname=" + fullname
-							+ "&phone_number=" + phone_number + "&email=" + email + "&city=" + city + "&town=" + town
-							+ "&village=" + village + "&note=" + note + "&voucher=" + vc_id + "&priceat=" + pricetotal
-							+ "&user=" + user + "&method=" + method);
+					return new ModelAndView("redirect: /ShopT&T/sucess-buynow?id_prod=" + id_prod + "&id_color=" + color
+							+ "&id_size=" + size + "&quantity=" + quantity + "&fullname=" + fullname + "&phone_number="
+							+ phone_number + "&email=" + email + "&address=" + adr + "&note=" + note + "&voucher="
+							+ vc_id + "&priceat=" + pricetotal + "&user=" + user + "&method=" + method);
 				} else {
 					System.out.println("buy now unsuccess");
 					return new ModelAndView("redirect: /ShopT&T/cart/checkout/" + id);
@@ -153,7 +164,7 @@ public class CheckoutController {
 	@RequestMapping(value = { "cart/checkout/{id}" }) // buy now login and not login
 	public ModelAndView checkout_buy_now(@PathVariable String id, HttpServletRequest request,
 			HttpServletResponse response) {
-		ModelAndView mv = new ModelAndView("user/buynow");
+		ModelAndView mv = new ModelAndView("user/re-buynow");
 		product_color_sizeService = new Product_color_sizeService();
 		productService = new ProductService();
 		checkoutService = new CheckoutService();
@@ -165,7 +176,7 @@ public class CheckoutController {
 		String quantity = request.getParameter("quantity");
 		String size = request.getParameter("size");
 		String color = request.getParameter("color");
-		String method = request.getParameter("method");
+		String method = request.getParameter("paymentmethods");
 
 		String id_prod = "";
 		String id_user = "";
@@ -228,6 +239,7 @@ public class CheckoutController {
 									mv.addObject("vcdiscount", vch_discount);
 									mv.addObject("vcstatus", "start");
 									mv.addObject("vchprice", price_at * vch_discount / 100);
+									mv.addObject("applyfor", applyfor);
 									System.out.println("start");
 								} else {
 									mv.addObject("vcstatus", "used");
@@ -248,6 +260,7 @@ public class CheckoutController {
 									mv.addObject("vcdiscount", vch_discount);
 									mv.addObject("vcstatus", "start");
 									mv.addObject("vchprice", price_at * vch_discount / 100);
+									mv.addObject("applyfor", applyfor);
 									System.out.println("start");
 								} else {
 									mv.addObject("vcstatus", "used");
@@ -267,23 +280,6 @@ public class CheckoutController {
 			User u = userService.get_user_by_id(Integer.parseInt(id_user));
 			if (u != null) {
 				mv.addObject("user", u);
-				String address = u.getAddress();
-				String city_value = "";
-				String town_value = "";
-				String village_value = "";
-				if (address.split("-").length > 2) {
-					city_value = address.split("-")[0];
-					town_value = address.split("-")[1];
-					village_value = address.split("-")[2];
-				} else if (address.split(",").length > 2) {
-					city_value = address.split("-")[0];
-					town_value = address.split("-")[1];
-					village_value = address.split("-")[2];
-				}
-
-				mv.addObject("city", city_value.trim());
-				mv.addObject("town", town_value.trim());
-				mv.addObject("village", village_value.trim());
 			}
 		}
 
@@ -323,6 +319,8 @@ public class CheckoutController {
 
 		}
 		mv.addObject("back_home", "cart");
+
+		System.out.println(quantity);
 		return mv;
 
 	}
@@ -343,7 +341,7 @@ public class CheckoutController {
 
 		int user_id = 0;
 		double total = 0;
-		String address = "", city = "", town = "", village = "";
+		String address = "", city = "", district = "", village = "";
 		String voucher = request.getParameter("voucher");
 		if (voucher != null) {
 			mv.addObject("voucher", voucher);
@@ -369,11 +367,11 @@ public class CheckoutController {
 			String arrAddress[] = address.split("-");
 			if (arrAddress.length > 2) {
 				city = arrAddress[0];
-				town = arrAddress[1];
+				district = arrAddress[1];
 				village = arrAddress[2];
 
 				mv.addObject("city", city.trim());
-				mv.addObject("town", town.trim());
+				mv.addObject("district", district.trim());
 				mv.addObject("village", village.trim());
 			}
 

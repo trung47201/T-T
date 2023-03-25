@@ -15,7 +15,7 @@ public class ForgotPassword {
 	
 	@RequestMapping(value = { "account/forgot-password" })
 	public ModelAndView login(HttpServletRequest request, HttpServletResponse response) {
-		ModelAndView mv = new ModelAndView("user/forgot-password");
+		ModelAndView mv = new ModelAndView("user/re-forgot-password");
 		
 		postsService = new PostsService();
 		

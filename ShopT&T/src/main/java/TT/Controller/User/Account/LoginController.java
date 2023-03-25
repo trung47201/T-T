@@ -41,7 +41,7 @@ public class LoginController {
 					User u = loginService.get_user_by_username_password(username, password);
 					session.setAttribute("userid", u.getId());
 					session.setAttribute("avatar", u.getAvatar());
-					session.setAttribute("fullname", u.getFullname());
+					session.setAttribute("fullname", u.getLastname().trim() + " "+ u.getFirstname().trim());
 					return new ModelAndView("redirect: /ShopT&T/");
 				}
 			} else {

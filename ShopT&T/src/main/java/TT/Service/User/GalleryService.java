@@ -67,10 +67,12 @@ public class GalleryService implements GalleryRepository {
 				brand.setBrand_name(rs.getString("brand_name"));
 				
 				user.setId(rs.getInt("user_id"));
-				user.setFullname(rs.getString("fullname"));
+				user.setFirstname(rs.getString("firstname"));user.setLastname(rs.getString("lastname"));
 				user.setEmail(rs.getString("email"));
 				user.setPhone_number(rs.getString("phone_number"));
 				user.setAddress(rs.getString("address"));
+				user.setDistrict(rs.getString("district"));
+				user.setCity(rs.getString("city"));
 				user.setPassword(rs.getString("password"));
 				user.setAvatar(rs.getString("avatar"));
 				user.setRole(role);

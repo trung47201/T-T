@@ -1,5 +1,5 @@
 .color-product-details {
-	margin-top: 30px;
+	margin-top: 20px;
 }
 
 .size-product-details {
@@ -11,11 +11,13 @@
 }
 
 span.selected-color {
-	box-shadow: 0 0 10px #cb82a9;
+    border: 1px solid white;
+    box-shadow: 0 0 10px black;
 }
 
 span.selected-color-important {
-	box-shadow: 0 0 10px #cb82a9 !important;
+	border: 1px solid white;
+    box-shadow: 0 0 10px black !important;
 }
 hr {
 	border: 1px solid white;

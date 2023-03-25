@@ -87,7 +87,7 @@ public class ProductService implements ProductRepository {
 				role.setUpdated_at(rs.getDate("updated_at"));
 				
 				user.setId(rs.getInt("user_id"));
-				user.setFullname(rs.getString("fullname"));
+				user.setFirstname(rs.getString("firstname"));user.setLastname(rs.getString("lastname"));
 				user.setEmail(rs.getString("email"));
 				user.setPhone_number(rs.getString("phone_number"));
 				user.setAddress(rs.getString("address"));
@@ -175,7 +175,7 @@ public class ProductService implements ProductRepository {
 				role.setUpdated_at(rs.getDate("updated_at"));
 				
 				user.setId(rs.getInt("user_id"));
-				user.setFullname(rs.getString("fullname"));
+				user.setFirstname(rs.getString("firstname"));user.setLastname(rs.getString("lastname"));
 				user.setEmail(rs.getString("email"));
 				user.setPhone_number(rs.getString("phone_number"));
 				user.setAddress(rs.getString("address"));
