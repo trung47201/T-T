@@ -10,6 +10,8 @@
 <link rel="stylesheet" href='<c:url value="/assets/js/bootstrap.js"/>'>
 <link rel="stylesheet" href='<c:url value="/assets/css/r-index.css"/>'>
 <link rel="stylesheet"
+	href="<c:url value="/assets/css/newarrivals.css"/>">
+<link rel="stylesheet"
 	href='<c:url value="/assets/css/login-icon.css"/>'>
 <link rel="stylesheet"
 	href='<c:url value="/assets/css/bootstrap.min.css"/>'>
@@ -36,6 +38,29 @@
 <link rel="stylesheet" href="<c:url value="/assets/css/r-posts.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/re-text.css"/>">
 <style>
+.img-product-products {
+	width: 100%;
+	height: calC(21vw * 1.18) !important;
+	background: #f1f1f1;
+	border: 1px solid #cb82a9;
+}
+
+.show-function i:hover {
+	cursor: pointer;
+	text-shadow: 0px 0px 5px black;
+	color: #cb82a9;
+}
+
+.buy-now {
+	width: 92px;
+	height: 36px;
+	border: 0;
+	border-radius: 4px;
+	margin-left: 20px;
+	color: white;
+	background: #cb82a9 !important;
+	margin-top: 3px;
+}
 </style>
 
 <body style="color: black;">
@@ -106,7 +131,7 @@
 					<div class="products-el">
 						<c:if test="${ sessionScope.userid == null }">
 							<c:if test="${ it.discount > 0 }">
-								<a href="/ShopT&T/product-details?product-id=${ it.id }">
+								<a href="/ShopTandT/product-details?product-id=${ it.id }">
 									<div class="img-product-products zoom zoo" id="ex1"
 										name="${it.discount }%" style="">
 										<img
@@ -116,7 +141,7 @@
 								</a>
 							</c:if>
 							<c:if test="${ it.discount <= 0 }">
-								<a href="/ShopT&T/product-details?product-id=${ it.id }">
+								<a href="/ShopTandT/product-details?product-id=${ it.id }">
 									<div class="img-product-products zoom" id="ex1"
 										name="${it.discount }%" style="">
 										<img
@@ -129,7 +154,7 @@
 						<c:if test="${ sessionScope.userid != null }">
 							<c:if test="${ it.discount > 0 }">
 								<a
-									href="/ShopT&T/product-details/${ sessionScope.userid }_${ it.id }">
+									href="/ShopTandT/product-details/${ sessionScope.userid }_${ it.id }">
 									<div class="img-product-products zoom zoo" id="ex1"
 										name="${it.discount }%" style="">
 										<img
@@ -140,7 +165,7 @@
 							</c:if>
 							<c:if test="${ it.discount <= 0 }">
 								<a
-									href="/ShopT&T/product-details/${ sessionScope.userid }_${ it.id }">
+									href="/ShopTandT/product-details/${ sessionScope.userid }_${ it.id }">
 									<div class="img-product-products zoom" id="ex1"
 										name="${it.discount }%" style="">
 										<img
@@ -155,10 +180,10 @@
 							<div class="name-product-products">
 								<c:if test="${ sessionScope.userid != null }">
 									<a
-										href="/ShopT&T/product-details/${ sessionScope.userid }_${ it.id }">${ it.title }</a>
+										href="/ShopTandT/product-details/${ sessionScope.userid }_${ it.id }">${ it.title }</a>
 								</c:if>
 								<c:if test="${ sessionScope.userid == null }">
-									<a href="/ShopT&T/product-details?product-id=${ it.id }">${ it.title }</a>
+									<a href="/ShopTandT/product-details?product-id=${ it.id }">${ it.title }</a>
 								</c:if>
 							</div>
 							<div class="show-products">
@@ -245,7 +270,7 @@
 									<c:if test="${ sessionScope.userid != null }">
 										<c:if test="${ item.discount > 0 }">
 											<a
-												href="/ShopT&T/product-details/${ sessionScope.userid }_${ item.id }">
+												href="/ShopTandT/product-details/${ sessionScope.userid }_${ item.id }">
 												<div class="zoom-most-loved zoo"
 													id="ee${ index.getIndex() }" name="${item.discount }%">
 													<img class="product-effect"
@@ -255,7 +280,7 @@
 										</c:if>
 										<c:if test="${ item.discount <= 0 }">
 											<a
-												href="/ShopT&T/product-details/${ sessionScope.userid }_${ item.id }">
+												href="/ShopTandT/product-details/${ sessionScope.userid }_${ item.id }">
 												<div class="zoom-most-loved" id="ee${ index.getIndex() }"
 													name="${item.discount }%">
 													<img class="product-effect"
@@ -266,7 +291,7 @@
 									</c:if>
 									<c:if test="${ sessionScope.userid == null }">
 										<c:if test="${ item.discount > 0 }">
-											<a href="/ShopT&T/product-details?product-id=${ item.id }">
+											<a href="/ShopTandT/product-details?product-id=${ item.id }">
 												<div class="zoom-most-loved zoo"
 													id="ee${ index.getIndex() }" name="${item.discount }%">
 													<img class="product-effect"
@@ -275,7 +300,7 @@
 											</a>
 										</c:if>
 										<c:if test="${ item.discount <= 0 }">
-											<a href="/ShopT&T/product-details?product-id=${ item.id }">
+											<a href="/ShopTandT/product-details?product-id=${ item.id }">
 												<div class="zoom-most-loved" id="ee${ index.getIndex() }"
 													name="${item.discount }%">
 													<img class="product-effect"
@@ -288,12 +313,12 @@
 										<div class="details">
 											<c:if test="${ sessionScope.userid == null }">
 												<a class="product-link-effect"
-													href="/ShopT&T/product-details?product-id=${ item.id }"><p
+													href="/ShopTandT/product-details?product-id=${ item.id }"><p
 														class="name-product-effect">${ item.title }</p></a>
 											</c:if>
 											<c:if test="${ sessionScope.userid != null }">
 												<a class="product-link-effect"
-													href="/ShopT&T/product-details/${ sessionScope.userid }_${ item.id }"><p
+													href="/ShopTandT/product-details/${ sessionScope.userid }_${ item.id }"><p
 														class="name-product-effect">${ item.title }</p></a>
 											</c:if>
 											<div class="fun-hover-effect">
@@ -353,122 +378,48 @@
 
 		</div>
 		<!-- ###########################     SECTION 1 - SELL SAME PRICE    ################################################### -->
-		<div class="section-1">
-			<div class="text">
-				<h3>SELL SAME</h3>
-				<p class="cool">
-					<span data-text="PRICE" style="color: white;">PRICE</span>
-				</p>
-			</div>
-			<div class="position-product container-xl">
-				<c:forEach var="it" items="${ listNewArrivals }" varStatus="">
-					<div class="products-el">
-						<c:if test="${ sessionScope.userid == null }">
-							<c:if test="${ it.discount > 0 }">
-								<a href="/ShopT&T/product-details?product-id=${ it.id }">
-									<div class="img-product-products zoom-same-price-product zoo"
-										id="exe${ index.getIndex() }" name="${ it.discount }%">
-										<img
-											src="<c:url value="/assets/images/products/${ it.thumbnail }"/>"
-											alt="">
-									</div>
-								</a>
-							</c:if>
-							<c:if test="${ it.discount <= 0 }">
-								<a href="/ShopT&T/product-details?product-id=${ it.id }">
-									<div class="img-product-products zoom-same-price-product"
-										id="exe${ index.getIndex() }">
-										<img
-											src="<c:url value="/assets/images/products/${ it.thumbnail }"/>"
-											alt="">
-									</div>
-								</a>
-							</c:if>
-						</c:if>
-						<c:if test="${ sessionScope.userid != null }">
-							<c:if test="${ it.discount > 0 }">
-								<a
-									href="/ShopT&T/product-details/${ sessionScope.userid }_${ it.id }">
-									<div class="img-product-products zoom-same-price-product zoo"
-										id="exe${ index.getIndex() }" name="${ it.discount }%">
-										<img
-											src="<c:url value="/assets/images/products/${ it.thumbnail }"/>"
-											alt="">
-									</div>
-								</a>
-							</c:if>
-							<c:if test="${ it.discount <= 0 }">
-								<a
-									href="/ShopT&T/product-details/${ sessionScope.userid }_${ it.id }">
-									<div class="img-product-products zoom-same-price-product"
-										id="exe${ index.getIndex() }">
-										<img
-											src="<c:url value="/assets/images/products/${ it.thumbnail }"/>"
-											alt="">
-									</div>
-								</a>
-							</c:if>
-						</c:if>
-						<div class="content-product-products">
-							<div class="brand-product-products">${ it.style.style_name }</div>
-							<c:if test="${ sessionScope.userid != null }">
-								<a
-									href="/ShopT&T/product-details/${ sessionScope.userid }_${ it.id }">
-									<div class="name-product-products">${ it.title }</div>
-								</a>
-							</c:if>
-							<c:if test="${ sessionScope.userid == null }">
-								<a href="/ShopT&T/product-details?product-id=${ it.id }">
-									<div class="name-product-products">${ it.title }</div>
-								</a>
-							</c:if>
-							<div class="show-products">
-								<div class="price-product-products">
-									<c:if test="${ it.discount > 0}">
-										<div class="price-sale-products">
-											$
-											<fmt:formatNumber
-												value="${it.price+ it.price*it.discount/100 }" type="number"
-												maxFractionDigits="2" />
-										</div>
-										<div class="price-old-products">$${ it.price }</div>
-									</c:if>
-									<c:if test="${ it.discount <= 0}">
-										<div class="price-sale-products">$${ it.price }</div>
-									</c:if>
-								</div>
-								<div class="rate-product-products">
-									5.0
-									<div class="img-rate-product-products">
-										<img src="<c:url value="/assets/images/icons.star24.png"/>"
-											alt="">
-									</div>
-									| Sold (${ it.sold })
-								</div>
-								<div class="favorite-product-products">
-									<div class="show-function">
-										<button class="favorite-product">
-											<i class="fa fa-heart" aria-hidden="true"></i>
-										</button>
-										<button class="add-to-cart" id="add-to-cart"
-											value="${ it.id }">
-											<i class="fa fa-cart-plus" aria-hidden="true"></i>
-										</button>
-										<button class="buy-now" class="shadow-1" id="${ it.id }">
-											Buy now</button>
-									</div>
+		<div class="section-1 section-newarrivals">
+			<div class="newarrivals">
+				<div class="wrappser-arr">
+					<div class="content-arr1">
+						<div class="abs-arr">
+							<div class="text">
+								<h3>NEW</h3>
+								<p class="cool">
+									<span data-text="ARRIVALS" style="color: white;">ARRIVALS</span>
+								</p>
+							</div>
+							<hr>
+							<p>At She She, women can find the newest items from edgy
+								undiscovered designers alongside basic everyday styles from
+								well-known names.</p>
+							<p>Ever-changing and always current, our clients appreciate
+								the diverse selection and varied price ranges for the fashion
+								addict in all of us.</p>
+							<div class="btn-arr">
+								<div class="btn-effect">
+									<button type="button" name="" id="">Shopping</button>
 								</div>
 							</div>
 						</div>
 					</div>
-				</c:forEach>
-			</div>
-			<div class="poster2 container-xl">
-				<img src="<c:url value="/assets/images/poster/poster2.jpg"/>"
-					class="poster2 img-fluid" alt="img_poster2">
-				<div class="content-poster2 container-xl">
-					<a class="poster2-1"></a> <a class="poster2 hidden-poster2"
-						id="a-poster" href="#">SHOP NOW</a>
+					<div class="content-arr2">
+						<img
+							src="<c:url value="/assets/images/poster/entro_media_012723_d20222_0002_x1000.webp"/>"
+							alt="img_arrivals">
+					</div>
+					<div class="content-arr3">
+						<div class="img-arr-top">
+							<img
+								src="<c:url value="/assets/images/poster/2023-02-23_13_x600.webp"/>"
+								alt="img_arrivals">
+						</div>
+						<div class="img-arr-bottom">
+							<img
+								src="<c:url value="/assets/images/poster/2023-02-24_29_x600.webp"/>"
+								alt="img_arrivals">
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -482,17 +433,17 @@
 
 	<script> // add to cart
 		var id_user = "";
-		if(${ id_user != null }) {
-			id_user = "${ id_user }";
+		if(${ sessionScope.userid != null }) {
+			id_user = "${ sessionScope.userid }";
 		}
 		if(id_user != "") {
 			$(".add-to-cart").click(function() {
 				var id_prod = $(this).val();
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"/ShopT&T/add-to-cart/"+id_user+"_"+id_prod);
+						"/ShopTandT/add-to-cart/"+id_user+"_"+id_prod);
 				xhr.onload = function() {
-					window.location.assign("/ShopT&T/cart/"+id_user);
+					window.location.assign("/ShopTandT/cart/"+id_user);
 				};
 				xhr.send();
 			});
@@ -500,9 +451,9 @@
 				var id_prod = $(this).val();
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"/ShopT&T/add-to-cart/"+id_user+"_"+id_prod);
+						"/ShopTandT/add-to-cart/"+id_user+"_"+id_prod);
 				xhr.onload = function() {
-					window.location.assign("/ShopT&T/cart/"+id_user);
+					window.location.assign("/ShopTandT/cart/"+id_user);
 				};
 				xhr.send();
 			});
@@ -511,9 +462,9 @@
 				var id_prod = $(this).val();
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"/ShopT&T/cart?id="+id_prod);
+						"/ShopTandT/cart?id="+id_prod);
 				xhr.onload = function() {
-					window.location.assign("/ShopT&T/cart");
+					window.location.assign("/ShopTandT/cart");
 				};
 				xhr.send();
 			});
@@ -521,9 +472,9 @@
 				var id_prod = $(this).val();
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"/ShopT&T/cart?id="+id_prod);
+						"/ShopTandT/cart?id="+id_prod);
 				xhr.onload = function() {
-					window.location.assign("/ShopT&T/cart");
+					window.location.assign("/ShopTandT/cart");
 				};
 				xhr.send();
 			});
@@ -539,9 +490,9 @@
 				var id_prod = e.target.id;
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"/ShopT&T/?buynow");
+						"/ShopTandT/?buynow");
 				xhr.onload = function() {
-					window.location.assign("/ShopT&T/cart/checkout/"+id_user+"_"+id_prod);
+					window.location.assign("/ShopTandT/cart/checkout/"+id_user+"_"+id_prod);
 				};
 				xhr.send();
 			});
@@ -550,9 +501,9 @@
 				var id_prod = e.target.id;
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"/ShopT&T/?buynow");
+						"/ShopTandT/?buynow");
 				xhr.onload = function() {
-					window.location.assign("/ShopT&T/cart/checkout/"+id_user+"_"+id_prod);
+					window.location.assign("/ShopTandT/cart/checkout/"+id_user+"_"+id_prod);
 				};
 				xhr.send();
 			});
@@ -560,9 +511,9 @@
 			$(".buy-now").click(function(e) {
 				var id_prod = e.target.id;
 				var xhr = new XMLHttpRequest();
-				xhr.open("GET","/ShopT&T/?buynow");
+				xhr.open("GET","/ShopTandT/?buynow");
 				xhr.onload = function() {
-					window.location.assign("/ShopT&T/cart/checkout/"+id_prod);
+					window.location.assign("/ShopTandT/cart/checkout/"+id_prod);
 				};
 				xhr.send();
 			});
@@ -571,9 +522,9 @@
 				var id_prod = e.target.id;
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"/ShopT&T/?buynow");
+						"/ShopTandT/?buynow");
 				xhr.onload = function() {
-					window.location.assign("/ShopT&T/cart/checkout/"+id_prod);
+					window.location.assign("/ShopTandT/cart/checkout/"+id_prod);
 				};
 				xhr.send();
 			});
@@ -593,9 +544,9 @@
 		$(document).ready(function(){
 			var xhr = new XMLHttpRequest();
 			xhr.open("GET",
-					"/ShopT&T/home?logout=true");
+					"/ShopTandT/home?logout=true");
 			xhr.onload = function() {
-				window.location.assign("/ShopT&T/");
+				window.location.assign("/ShopTandT/");
 			};
 			xhr.send();
 		});
@@ -676,7 +627,11 @@
 			}
 		});
 	</script>
-
+	<script type="text/javascript">
+		if ( window.history.replaceState ) {
+		  window.history.replaceState( null, null, window.location.href );
+		}
+	</script>
 	<script
 		src="<c:url value="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"/>"
 		integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"

@@ -177,7 +177,7 @@ div#status-select {
 			<div class="origin">
 				<img
 					src="<c:url value="/assets/images/icons/icons8-home-page-64.png"/>"
-					alt=""> <a href="/SpringMVC/admin">Home</a>
+					alt=""> <a href="/ShopTandT/admin">Home</a>
 			</div>
 			<div>
 				<p>/</p>
@@ -190,7 +190,7 @@ div#status-select {
 				<p>/</p>
 				<img
 					src="<c:url value="/assets/images/icons/icons8-calendar-96.png"/>"
-					alt=""> <a href="/SpringMVC/admin/order-management">Management</a>
+					alt=""> <a href="/ShopTandT/admin/order-management">Management</a>
 			</div>
 
 			<c:if test="${ orderdetails == 'true' }">
@@ -498,7 +498,7 @@ div#status-select {
 								}, 500);
 								var xhr = new XMLHttpRequest();
 								xhr.open("GET",
-										"http://localhost:8888/SpringMVC/admin/order-management/countermand/"
+										"http://localhost:8888/ShopTandT/admin/order-management/countermand/"
 												+ id_order);
 								xhr.onload = function() {
 									location.reload();
@@ -530,7 +530,7 @@ div#status-select {
 												.open(
 														"GET",
 														origin
-																+ "/SpringMVC/admin/order-management?id_order="
+																+ "/ShopTandT/admin/order-management?id_order="
 																+ id_order
 																+ "&status="
 																+ status);
@@ -538,7 +538,7 @@ div#status-select {
 										xhr.onload = function() {
 											window.location
 													.assign(origin
-															+ "/SpringMVC/admin/order-management");
+															+ "/ShopTandT/admin/order-management");
 										};
 										xhr.send();
 									}, 500);
@@ -602,14 +602,14 @@ div#status-select {
 																	.open(
 																			"GET",
 																			origin
-																					+ "/SpringMVC/admin/order-management?id_order="
+																					+ "/ShopTandT/admin/order-management?id_order="
 																					+ id_order
 																					+ "&status=2");
 															// What to do when server responds
 															xhr.onload = function() {
 																window.location
 																		.assign(origin
-																				+ "/SpringMVC/admin/order-management");
+																				+ "/ShopTandT/admin/order-management");
 															};
 															xhr.send();
 														}, 500);

@@ -4,7 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <nav class="navigation">
 	<!-- DASHBOARD -->
-	<a href="/SpringMVC/admin">
+	<a href="/ShopTandT/admin">
 		<ul class="dashboard">
 			<li>
 				<div class="menu" id="sub-menu-dashboard">
@@ -31,17 +31,17 @@
 	</ul>
 	<!-- SUB MENU ORDER -->
 	<div class="sub-menu-order none">
-		<a href="/SpringMVC/admin/order-management">
+		<a href="/ShopTandT/admin/order-management">
 			<ul class="sub-menu-ul" id="">
 				<li>Management</li>
 			</ul>
 		</a>
-		<a href="/SpringMVC/admin/search-order">
+		<a href="/ShopTandT/admin/search-order">
 			<ul class="sub-menu-ul" id="">
 				<li>Search</li>
 			</ul>
 		</a>
-		<a href="/SpringMVC/admin/voucher">
+		<a href="/ShopTandT/admin/voucher">
 			<ul class="sub-menu-ul">
 				<li>Voucher</li>
 			</ul>
@@ -62,22 +62,22 @@
 	</ul>
 	<!-- SUB MENU SHOES -->
 	<div class="sub-menu-shoes none">
-		<a href="/SpringMVC/admin/product">
+		<a href="/ShopTandT/admin/product">
 			<ul class="sub-menu-ul" id="">
 				<li>Product</li>
 			</ul>
 		</a>
-		<a href="/SpringMVC/admin/color-size">
+		<a href="/ShopTandT/admin/color-size">
 			<ul class="sub-menu-ul" id="">
 				<li>Color-Size</li>
 			</ul>
 		</a>
-		<a href="/SpringMVC/admin/gallery">
+		<a href="/ShopTandT/admin/gallery">
 			<ul class="sub-menu-ul" id="">
 				<li>Gallery</li>
 			</ul>
 		</a>
-		<a href="/SpringMVC/admin/brand-style-gender">
+		<a href="/ShopTandT/admin/brand-style-gender">
 			<ul class="sub-menu-ul" id="">
 				<li>B-S-G</li>
 			</ul>
@@ -97,12 +97,12 @@
 	</ul>
 	<!-- SUB MENU CUSTOMER -->
 	<div class="sub-menu-customer none">
-		<a href="/SpringMVC/admin/customer">
+		<a href="/ShopTandT/admin/customer">
 			<ul class="sub-menu-ul" id="">
 				<li>User</li>
 			</ul>
 		</a>
-		<a href="/SpringMVC/admin/role">
+		<a href="/ShopTandT/admin/role">
 			<ul class="sub-menu-ul" id="">
 				<li>Role</li>
 			</ul>
@@ -123,12 +123,12 @@
 	</ul>
 	<!-- SUB MENU PARAMETERS -->
 	<div class="sub-menu-parameters none">
-		<a href="/SpringMVC/admin/revenue">
+		<a href="/ShopTandT/admin/revenue">
 			<ul class="sub-menu-ul" id="">
 				<li>Revenue</li>
 			</ul>
 		</a>
-		<a href="/SpringMVC/admin/selling-products">
+		<a href="/ShopTandT/admin/selling-products">
 			<ul class="sub-menu-ul" id="">
 				<li>Selling products</li>
 			</ul>

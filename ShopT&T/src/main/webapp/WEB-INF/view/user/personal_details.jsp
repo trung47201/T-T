@@ -44,7 +44,7 @@
 			<!--########################################3   START page CONTACT ###########################################-->
 			<div class="title-page">
 				<h3>PERSONAL DETAILS</h3>
-				<span><a href="/SpringMVC/">Home</a> / <a
+				<span><a href="/ShopTandT/">Home</a> / <a
 					href="">Personal Details</a></span>
 			</div>
 
@@ -235,24 +235,6 @@
 		}
 	</script>
 
-	<script type="text/javascript">
-		window.addEventListener("scroll", function() {
-			var div = document.getElementById('nav-search');
-			var div1 = document.getElementsByClassName('hidden-poster2');
-			$(".wrapper-all").css({ top: txt });
-			if (window.scrollY > 80) {
-				div.style.visibility = 'visible';
-			} else {
-				div.style.visibility = 'hidden';
-			}
-			if (window.scrollY > 2280 && window.scrollY < 2380) {
-				div1.style.visibility = 'hidden';
-			} else {
-				div1.style.visibility = 'visible';
-			}
-		});
-	</script>
-
 	<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 
 	<!-- Initialize Swiper -->
@@ -283,19 +265,11 @@
 			}
 		}, 5000);
 	</script>
-
-	<script>
-		function bigImg(x) {
-			var listkeys = document.getElementById("listkeys");
-			listkeys.style.visibility = 'visible';
-		}
-
-		function normalImg(x) {
-			var listkeys = document.getElementById("listkeys");
-			listkeys.style.visibility = 'hidden';
+<script type="text/javascript">
+		if ( window.history.replaceState ) {
+		  window.history.replaceState( null, null, window.location.href );
 		}
 	</script>
-
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
 		crossorigin="anonymous"></script>

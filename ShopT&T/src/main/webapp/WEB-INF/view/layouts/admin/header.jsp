@@ -10,7 +10,7 @@
                 <img src="<c:url value="/assets/images/icons/icons8-menu-rounded-100.png"/>" alt="icon-menu">
             </div>
             <div class="admin-logo">
-                <a href="/SpringMVC/admin"><h2>ADMIN</h2></a>
+                <a href="/ShopTandT/admin"><h2>ADMIN</h2></a>
             </div>
             <div class="admin-search-form">
                 <div class="admin-search-input">

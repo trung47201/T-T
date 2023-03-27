@@ -22,8 +22,8 @@ import TT.Model.User;
 import TT.Service.User.Product.ProductService;
 
 public class PaymentService {
-	private static final String CLIENT_ID = "Ab9hEluU0ckPAwAbNLhpJAzb3rvKFtHxQOnoF2wRk-IwScOcTK4g7aIVx6xIx6kM2STn2N_1dyBQR8mM";
-	private static final String CLIENT_SECRET = "EG72j2PAsKci7RrsNgGTKhkbspj4Zl1pGNwaXMIo1ighuZUrxkFY6j3zCB71_lm8V8OKqk1IbgxTGr2q";
+	private static final String CLIENT_ID = "AX9GvRsdo30M--bSA5g3yDHf1hAYoVYAblwFGK7V8agpcBHRO5Wa1Iy1NbXrOfpMw4DQn0VYTnXQbiS2";
+	private static final String CLIENT_SECRET = "EInSWlGEFeQbcTFh-TLdohO16TQ2olHfp2tLCJnL9SNBlOYZzFsgLJZLOQ3nRCjJudYZvV-3A2l4NyK7";
 	private static final String MODE = "sandbox";
 	
 	private ProductService productService;
@@ -81,6 +81,7 @@ public class PaymentService {
 	
 	private List<Transaction> getTransactionInformation(String product, float voucher, float subtotal, String cartid, String vccode) {
 		productService = new ProductService();
+		
 		float total = subtotal;
 		if(subtotal < 50) {
 			total = total + 11;
@@ -88,7 +89,7 @@ public class PaymentService {
 		if(voucher > 0) {
 			total = total - voucher;
 		}
-		
+		System.out.println(subtotal + "============================================+= "+total);
 	    Amount amount = new Amount();
 	    amount.setCurrency("USD");
 	    amount.setTotal(String.format("%.2f", total));
@@ -132,7 +133,7 @@ public class PaymentService {
 	    
 	   
 	    items.add(item1);
-	    if(total >= 50 ) {
+	    if(subtotal >= 50 ) {
 	    	Item item2 = new Item();
 		    item2.setCurrency("USD");
 		    item2.setName("Free ship");
@@ -210,7 +211,7 @@ public class PaymentService {
 	    
 	   
 	    items.add(item1);
-	    if(total >= 50 ) {
+	    if(subtotal >= 50 ) {
 	    	Item item2 = new Item();
 		    item2.setCurrency("USD");
 		    item2.setName("Free ship");
@@ -242,8 +243,8 @@ public class PaymentService {
 
 	private RedirectUrls getRedirectURLs(int user_id) {
 		RedirectUrls redirectUrls = new RedirectUrls();
-		redirectUrls.setCancelUrl("/ShopT&T/products/"+user_id);
-		redirectUrls.setReturnUrl("/ShopT&T/review_payment/"+user_id);
+		redirectUrls.setCancelUrl("http://localhost:8888/ShopTandT/products/"+user_id);
+		redirectUrls.setReturnUrl("http://localhost:8888/ShopTandT/review_payment/"+user_id);
 		return redirectUrls;
 	}
 

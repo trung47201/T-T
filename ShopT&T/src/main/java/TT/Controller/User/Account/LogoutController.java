@@ -18,6 +18,10 @@ public class LogoutController {
 		HttpSession session = request.getSession();
 		session.invalidate();
 		
-		return new ModelAndView("redirect: /ShopT&T/");
+		session = request.getSession();
+		session.setAttribute("login", "end");
+		System.out.println("login end");
+		
+		return new ModelAndView("redirect: /ShopTandT/");
 	}
 }

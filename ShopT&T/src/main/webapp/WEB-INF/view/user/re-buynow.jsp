@@ -28,24 +28,24 @@
 	response.setHeader("Cache-Control", "no-cache, no-store");
 	if (session.getAttribute("order") != null && session.getAttribute("order") != "") {
 		if (session.getAttribute("order").equals("end")) {
-			response.sendRedirect("/ShopT&T/");
+			response.sendRedirect("/ShopTandT/");
 		}
 	}
 	%>
-	<form action="/ShopT&T/cart/checkout/ok/${ id }" method="post"
+	<form action="/ShopTandT/cart/checkout/ok/${ id }" method="post"
 		id="myform">
 		<div class="nav">
 			<c:set var="item" value="${ back_home }"></c:set>
 			<c:if test="${ item == 'home'}">
 				<div class="back">
-					<a href="/ShopT&T"><img
+					<a href="/ShopTandT"><img
 						src="<c:url value="/assets/images/icons/back52.png"/>"
 						alt="back-icon">Back</a>
 				</div>
 			</c:if>
 			<c:if test="${ item == 'cart'}">
 				<div class="back">
-					<a href="/ShopT&T/cart"><img
+					<a href="/ShopTandT/cart"><img
 						src="<c:url value="/assets/images/icons/back52.png"/>"
 						alt="back-icon">Back</a>
 				</div>
@@ -73,8 +73,8 @@
 			</c:if>
 			<c:if test="${ sessionScope.userid == null }">
 				<div class="login">
-					<a href="/ShopT&T/account/login">Login</a>&nbsp;/&nbsp; <a
-						href="/ShopT&T/account/signup">Sign Up</a>
+					<a class='a-login' href="/ShopTandT/account/login">Login</a>&nbsp;/&nbsp; <a
+						href="/ShopTandT/account/signup">Sign Up</a>
 				</div>
 			</c:if>
 		</div>
@@ -635,13 +635,14 @@
 							<option value="" disabled="disabled" selected>Province /
 								City</option>
 						</select> <input class="billing_address_1" name="" type="hidden"> <input
-							type="text" id="city" name="city" placeholder="City" value="${ user.city }">
+							type="text" id="city" name="city" placeholder="City"
+							value="${ user.city }">
 						<!-- district -->
 						<select class="none" name="calc_shipping_district"
 							id="selected-district">
 							<option value="" disabled="disabled" selected>District</option>
 						</select> <input class="billing_address_2" name="" type="hidden"> <input
-							type="text" id="district" name="district" placeholder="District" 
+							type="text" id="district" name="district" placeholder="District"
 							value="${ user.district }">
 						<!-- address -->
 						<input type="text" id="address" name="address"
@@ -667,16 +668,19 @@
 					</div>
 					<div class="city-customer">
 						<!-- city -->
-						<select class="none" name="calc_shipping_provinces" id="selected-city">
+						<select class="none" name="calc_shipping_provinces"
+							id="selected-city">
 							<option value="" disabled="disabled" selected>Province /
 								City</option>
 						</select> <input class="billing_address_1" name="" type="hidden"> <input
-							type="text" id="city" name="city" placeholder="Province / City" value="${ user.city }">
+							type="text" id="city" name="city" placeholder="Province / City"
+							value="${ user.city }">
 						<!-- district -->
-						<select class="none" name="calc_shipping_district" id="selected-district">
+						<select class="none" name="calc_shipping_district"
+							id="selected-district">
 							<option value="" disabled="disabled" selected>District</option>
 						</select> <input class="billing_address_2" name="" type="hidden"> <input
-							type="text" id="district" name="district" placeholder="District" 
+							type="text" id="district" name="district" placeholder="District"
 							value="${ user.district }">
 						<!-- address -->
 						<input type="text" id="address" name="address"
@@ -721,6 +725,17 @@
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+	<script type="text/javascript">
+	$(".a-login").click(function () {
+		var url = window.location.href;
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", url+"?login");
+		xhr.onload = function() {
+		};
+		xhr.send();
+	});
+	</script>
 
 	<script>
 	function radio(x) {
@@ -781,7 +796,7 @@
 			if (error == "") {
 				if(method == true) {
 					var product = id_prod+"_"+quantity;
-					$('#myform').attr('action', "/ShopT&T/authorize_payment?product="+product);
+					$('#myform').attr('action', "/ShopTandT/authorize_payment?product="+product);
 					$(get).attr("type", "submit");
 				} else {
 					$(get).attr("type", "submit");
@@ -841,7 +856,7 @@
 				$("#message-notify").removeClass("none");
 				$("#content-msg-notify").text("You have not entered the voucher!");
 			} else {
-				$("#myform").attr("action", "/ShopT&T/cart/checkout/"+id)
+				$("#myform").attr("action", "/ShopTandT/cart/checkout/"+id)
 				$(this).attr("type", "submit");
 			}
 		});
@@ -935,18 +950,20 @@ s			});
 				}
 				$(".vch-free b").text("-$"+vch_at);
 				$("tr.tr-vch").removeClass("none");
+				$("#total").val(calc);
 			} else {
+				$("#total").val(calc);
 				calc = calc + 11.0;
 				$("td.p_total b").text("$"+parseFloat(Math.round(calc * 100)/100));
 				$("tr.tr-shipping").addClass("none");
 				$("tr.tr-vch").addClass("none");
-				
-				$("#wrapper").removeClass("importantNone");
-				$("#message-notify").removeClass("none");
-				var error = "Sorry! Voucher is only applicable for orders of "+apply_for+" or more.";
-				$("#content-msg-notify").text(error);
+				if(vc_price != 0) {
+					$("#wrapper").removeClass("importantNone");
+					$("#message-notify").removeClass("none");
+					var error = "Sorry! Voucher is only applicable for orders of "+apply_for+" or more.";
+					$("#content-msg-notify").text(error);
+				}
 			}
-			
 		}
 	</script>
 
@@ -986,12 +1003,16 @@ s			});
 	};
 	</script>
 
-	
+
+	<script type="text/javascript">
+		if ( window.history.replaceState ) {
+		  window.history.replaceState( null, null, window.location.href );
+		}
+	</script>
+
 	<script
 		src='https://cdn.jsdelivr.net/gh/vietblogdao/js/districts.min.js'></script>
-	<script src="<c:url value="/assets/js/re-select-address.js" />">
-		
-	</script>
+	<script src="<c:url value="/assets/js/re-select-address.js" />"></script>
 
 	<script src="<c:url value="/assets/js/color.js" />" defer></script>
 	<script src="js/login.js"></script>

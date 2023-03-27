@@ -27,24 +27,24 @@
 </style>
 <body>
 	<c:if test="${ cartid != null && cartid != 0}">
-		<form method="post" action="/SpringMVC/cart/checkout/user-cart/${ cartid }">
+		<form method="post" action="/ShopTandT/cart/checkout/user-cart/${ cartid }">
 	</c:if>
 	<c:if test="${ cartid == null || cartid==0 }">
-		<form action="/SpringMVC/cart/checkout/ok/${ id }" method="post">
+		<form action="/ShopTandT/cart/checkout/ok/${ id }" method="post">
 	</c:if>
 	
 		<div class="nav">
 			<c:set var="item" value="${ back_home }"></c:set>
 			<c:if test="${ item == 'home'}">
 				<div class="back">
-					<a href="/SpringMVC"><img
+					<a href="/ShopTandT"><img
 						src="<c:url value="/assets/images/icons/back52.png"/>"
 						alt="back-icon">Back</a>
 				</div>
 			</c:if>
 			<c:if test="${ item == 'cart'}">
 				<div class="back">
-					<a href="/SpringMVC/cart"><img
+					<a href="/ShopTandT/cart"><img
 						src="<c:url value="/assets/images/icons/back52.png"/>"
 						alt="back-icon">Back</a>
 				</div>
@@ -256,7 +256,7 @@
 			var xhr = new XMLHttpRequest();
 			xhr.open("GET", "");
 			xhr.onload = function() {
-				window.location.assign("http://localhost:8888/SpringMVC/");
+				window.location.assign("http://localhost:8888/ShopTandT/");
 			};
 			xhr.send();
 		}

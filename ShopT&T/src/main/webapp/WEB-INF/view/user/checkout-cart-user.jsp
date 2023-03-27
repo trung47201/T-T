@@ -50,20 +50,34 @@ input#phone {
 }
 </style>
 <body>
-	<form action="/SpringMVC/cart/checkout/user-cart/${ id }" method="post"
+
+	<%
+	response.setHeader("Cache-Control", "no-cache, no-store");
+	String userid = "";
+	if (session.getAttribute("userid") != null && session.getAttribute("userid") != "") {
+		userid = String.valueOf(session.getAttribute("userid"));
+	}
+	if (session.getAttribute("checkoutcart") != null && session.getAttribute("checkoutcart") != "") {
+		if (String.valueOf(session.getAttribute("checkoutcart")).equals("end")) {
+			response.sendRedirect("/ShopTandT/cart/"+userid);
+		}
+	}
+	%>
+
+	<form action="/ShopTandT/cart/checkout/user-cart/${ id }" method="post"
 		id="myform">
 		<div class="nav">
 			<c:set var="item" value="${ back_home }"></c:set>
 			<c:if test="${ item == 'home'}">
 				<div class="back">
-					<a href="/SpringMVC"><img
+					<a href="/ShopTandT"><img
 						src="<c:url value="/assets/images/icons/back52.png"/>"
 						alt="back-icon">Back</a>
 				</div>
 			</c:if>
 			<c:if test="${ item == 'cart'}">
 				<div class="back">
-					<a href="/SpringMVC/cart/${ user.id }"><img
+					<a href="/ShopTandT/cart/${ user.id }"><img
 						src="<c:url value="/assets/images/icons/back52.png"/>"
 						alt="back-icon">Back</a>
 				</div>
@@ -179,7 +193,7 @@ input#phone {
 				<h4>Consignee information</h4>
 				<div class="name-customer">
 					<input type="text" id="fullname" name="fullname"
-						value="${ user.fullname }" placeholder="Full name">
+						value="" placeholder="Full name">
 				</div>
 				<div class="phone-customer">
 					<input type="number" id="phone" name="phone"
@@ -551,7 +565,7 @@ input#phone {
 							}
 						}
 						if(product != "") {
-							$('#myform').attr('action', "/SpringMVC/authorize_payment?product="+product);
+							$('#myform').attr('action', "/ShopTandT/authorize_payment?product="+product);
 							$(get).attr("type", "submit");
 						}
 					} else {
@@ -603,7 +617,11 @@ input#phone {
 					}
 				});
 	</script>
-	
+	<script type="text/javascript">
+		if ( window.history.replaceState ) {
+		  window.history.replaceState( null, null, window.location.href );
+		}
+	</script>
 	<script src="<c:url value="/assets/js/color.js" />" defer></script>
 	<script src="js/login.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import TT.Model.Product_color_size;
 import TT.Service.User.CartService;
 import TT.Service.User.CheckoutService;
 import TT.Service.User.ColorService;
+import TT.Service.User.PostsService;
 import TT.Service.User.Product_color_sizeService;
 import TT.Service.User.StyleService;
 import TT.Service.User.UserService;
@@ -31,26 +33,43 @@ public class CartController {
 	private UserService userService;
 	private CheckoutService checkoutService;
 	private StyleService styleService;
+	private PostsService postsService;
 
 	@RequestMapping(value = { "/cart/{id}" })
 	public ModelAndView loadCartByUserID(@PathVariable String id, HttpServletRequest request,
 			HttpServletResponse response) {
-		ModelAndView mv = new ModelAndView("user/cart-user");
+		ModelAndView mv = new ModelAndView("user/re-cart-user");
 
 		cartService = new CartService();
 		product_color_sizeService = new Product_color_sizeService();
 		colorService = new ColorService();
 		userService = new UserService();
 		styleService = new StyleService();
-
-
+		postsService = new PostsService();
+		
+		HttpSession session = request.getSession();
+		if(session.getAttribute("userid") != null && session.getAttribute("userid") != "") {
+			String userid = String.valueOf(session.getAttribute("userid"));
+			if(!userid.equals(id)) {
+				return new ModelAndView("redirect: /ShopTandT/cart/"+userid);
+			}
+		} else {
+			System.out.println("null");
+		}
+		
 		String size = request.getParameter("size");
 		String color = request.getParameter("color");
 		String plus = request.getParameter("plus");
 		String minus = request.getParameter("minus");
 		String del_prod = request.getParameter("delete");
 		String delete = request.getParameter("minusdelete");
-
+		String checkout = request.getParameter("checkout");
+		if(checkout != null) {
+			session.setAttribute("checkout", checkout);
+			session.setAttribute("checkoutcart", "start");
+			
+			System.out.println(session.getAttribute("checkoutcart"));
+		}
 		if (size != null) {
 			if (cartService.update_size_in_cart_by_string(size)) {
 				System.out.println("size: " + size);
@@ -106,18 +125,20 @@ public class CartController {
 		mv.addObject("userID", id_);
 		mv.addObject("user_id", id_);
 		mv.addObject("avatar", userService.getAvatarByUserID(Integer.parseInt(id)));
+		mv.addObject("hmPosts", postsService.listPost());
 		return mv;
 	}
 
 	@RequestMapping(value = { "/cart" })
 	public ModelAndView loadCart(HttpServletRequest request, HttpServletResponse response) {
-		ModelAndView mv = new ModelAndView("user/cart");
+		ModelAndView mv = new ModelAndView("user/re-cart");
 
 		product_color_sizeService = new Product_color_sizeService();
 		colorService = new ColorService();
 		cartService = new CartService();
 		checkoutService = new CheckoutService();
 		styleService = new StyleService();
+		postsService = new PostsService();
 
 		String size = request.getParameter("size");
 		String color = request.getParameter("color");
@@ -130,6 +151,12 @@ public class CartController {
 		String process_delete = request.getParameter("process-delete");
 		String order_id = request.getParameter("order-id");
 		String id = request.getParameter("id");
+		String login = request.getParameter("login");
+		
+		HttpSession session = request.getSession();
+		if(login != null) {
+			session.setAttribute("cartlogin", "true");
+		}
 		
 		List<String> li = new LinkedList<>();
 		Cookie arr[] = request.getCookies();
@@ -194,7 +221,7 @@ public class CartController {
 					}
 				}
 			}
-			return new ModelAndView("redirect: /SpringMVC/thank/" + order_id);
+			return new ModelAndView("redirect: /ShopTandT/thank/" + order_id);
 		}
 
 		if (size != null) { //change size
@@ -288,6 +315,7 @@ public class CartController {
 			mv.addObject("hmProd_Color_Size", product_color_sizeService.getCS());
 		}
 		mv.addObject("style", styleService.getAllStyle());
+		mv.addObject("hmPosts", postsService.listPost());
 		return mv;
 	}
 
@@ -295,24 +323,40 @@ public class CartController {
 	public void add_to_cart(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
 		cartService = new CartService();
 		product_color_sizeService = new Product_color_sizeService();
-
+		
+		String process = request.getParameter("process");
 		Cookie arr[] = request.getCookies();
 		List<String> li = new ArrayList<>();
 		for (Cookie o : arr) {
 			li.add(o.getValue());
 		}
 		String a[] = id.split("_");
-
-		System.out.println(a.length);
-
-		if (a.length > 1) {
+		if (a.length > 2) {
+			if(process != null) {
+				String id_user = a[0];
+				String id_prod = a[1];
+				String qty = a[2];
+				int id_color_size = product_color_sizeService.get_Color_size_id(Integer.parseInt(process.split("_")[2]), Integer.parseInt(process.split("_")[1]), Integer.parseInt(process.split("_")[0]));
+				if (id_user != "" && id_prod != "") {
+					cartService.insertIntoCartDB(Integer.parseInt(qty), id_color_size, Integer.parseInt(id_user));
+				}
+			} else {
+				String id_user = a[0];
+				String id_prod = a[1];
+				String qty = a[2];
+				int id_color_size = product_color_sizeService.firstColor_SizeById_Prod(Integer.parseInt(id_prod));
+				if (id_user != "" && id_prod != "") {
+					cartService.insertIntoCartDB(Integer.parseInt(qty), id_color_size, Integer.parseInt(id_user));
+				}
+			}
+		} else if (a.length > 1) {
 			String id_user = a[0];
 			String id_prod = a[1];
 			int id_color_size = product_color_sizeService.firstColor_SizeById_Prod(Integer.parseInt(id_prod));
 			if (id_user != "" && id_prod != "") {
 				cartService.insertIntoCartDB(1, id_color_size, Integer.parseInt(id_user));
 			}
-		}
+		} 
 	}
 
 }

@@ -53,7 +53,7 @@ padding: 10px 10px 10px 5px !important;
 			<div class="origin">
 				<img
 					src="<c:url value="/assets/images/icons/icons8-home-page-64.png"/>"
-					alt=""> <a href="/SpringMVC/admin">Home</a>
+					alt=""> <a href="/ShopTandT/admin">Home</a>
 			</div>
 			<div>
 				<p>/</p>
@@ -66,14 +66,14 @@ padding: 10px 10px 10px 5px !important;
 				<p>/</p>
 				<img class="voucher-img"
 					src="<c:url value="/assets/images/icons/icons8-voucher-96.png"/>"
-					alt=""> <a href="/SpringMVC/admin/voucher">Voucher</a>
+					alt=""> <a href="/ShopTandT/admin/voucher">Voucher</a>
 			</div>
 			<c:if test="${ editvoucher == 'true' }">
 				<div>
 					<p>/</p>
 					<img
 						src="<c:url value="/assets/images/icons/icons8-edit-100-title.png"/>"
-						alt=""> <a href="/SpringMVC/admin/voucher">Edit voucher</a>
+						alt=""> <a href="/ShopTandT/admin/voucher">Edit voucher</a>
 				</div>
 			</c:if>
 
@@ -127,7 +127,7 @@ padding: 10px 10px 10px 5px !important;
 							<td>${ liVoucher.description }</td>
 							<td class="td-action">
 								<form
-									action="/SpringMVC/admin/voucher/edit-voucher/${liVoucher.id }"
+									action="/ShopTandT/admin/voucher/edit-voucher/${liVoucher.id }"
 									method="post">
 									<button type="submit" class="btn-edit-product editneworder"
 										id="editvoucher" name="editvoucher">
@@ -145,7 +145,7 @@ padding: 10px 10px 10px 5px !important;
 
 
 		<c:if test="${  editvoucher == 'false' }">
-			<form action="/SpringMVC/admin/voucher" method="post">
+			<form action="/ShopTandT/admin/voucher" method="post">
 				<div class="add-new-order-form">
 					<div class="customer-infor">
 						<div class="customer-infor-form">
@@ -214,7 +214,7 @@ padding: 10px 10px 10px 5px !important;
 		</c:if>
 
 		<c:if test="${ editvoucher == 'true' }">
-			<form action="/SpringMVC/admin/voucher/edit-voucher/${ vch.id }"
+			<form action="/ShopTandT/admin/voucher/edit-voucher/${ vch.id }"
 				method="post">
 				<div class="add-new-order-form">
 					<div class="customer-infor">
@@ -484,9 +484,9 @@ padding: 10px 10px 10px 5px !important;
 		$(".search-role-img").click(function() {
 			var search = $("#search-voucher").val();
 			var xhr = new XMLHttpRequest();
-			xhr.open("GET", "http://localhost:8888/SpringMVC/admin/voucher" + "?search=" + search);
+			xhr.open("GET", "http://localhost:8888/ShopTandT/admin/voucher" + "?search=" + search);
 			xhr.onload = function() {
-				window.location.assign("http://localhost:8888/SpringMVC/admin/voucher" + "?search=" + search);
+				window.location.assign("http://localhost:8888/ShopTandT/admin/voucher" + "?search=" + search);
 			};
 			xhr.send();
 		});
@@ -495,9 +495,9 @@ padding: 10px 10px 10px 5px !important;
 				var search = $("#search-voucher").val();
 				var url = window.location.href;
 				var xhr = new XMLHttpRequest();
-				xhr.open("GET", "http://localhost:8888/SpringMVC/admin/voucher" + "?search=" + search);
+				xhr.open("GET", "http://localhost:8888/ShopTandT/admin/voucher" + "?search=" + search);
 				xhr.onload = function() {
-					window.location.assign("http://localhost:8888/SpringMVC/admin/voucher" + "?search=" + search);
+					window.location.assign("http://localhost:8888/ShopTandT/admin/voucher" + "?search=" + search);
 				};
 				xhr.send();
 			}

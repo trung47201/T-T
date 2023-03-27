@@ -22,8 +22,7 @@
 			</c:if>
 			<c:if
 				test="${ sessionScope.userid == null || sessionScope.avatar == null || sessionScope.fullname == null }">
-				<a href="/ShopT&T/account/login">Login</a> / <a
-					href="/ShopT&T/account/register">Sign Up</a>
+				<a class="a-login" href="/ShopTandT/account/login">Login</a> / <a class="a-signup" href="/ShopTandT/account/register">Sign Up</a>
 			</c:if>
 		</div>
 	</div>
@@ -32,10 +31,11 @@
 		<div class="wrapper-nav">
 			<div class="nav-left">
 				<ul>
-					<li class="link"><a href="/ShopT&T/products/new-arrivals">NEW ARRIVALS</a></li>
-					<li class="link"><a href="/ShopT&T/products/clothing">CLOTHING</a></li>
-					<li class="link"><a href="/ShopT&T/products/gifts">GIFTS</a></li>
-					<li class="link"><a href="/ShopT&T/products/shoes">SHOES</a></li>
+					<li class="link"><a href="/ShopTandT/products/new-arrivals">NEW
+							ARRIVALS</a></li>
+					<li class="link"><a href="/ShopTandT/products/clothing">CLOTHING</a></li>
+					<li class="link"><a href="/ShopTandT/products/gifts">GIFTS</a></li>
+					<li class="link"><a href="/ShopTandT/products/shoes">SHOES</a></li>
 				</ul>
 			</div>
 			<div class="nav-middle">
@@ -46,15 +46,15 @@
 			</div>
 			<div class="nav-left">
 				<ul>
-					<li class="link"><a href="/ShopT&T/products/jewelry">JEWELRY</a></li>
-					<li class="link"><a href="/ShopT&T/products/handbags">HANDBAGS</a></li>
-					<li class="link"><a href="/ShopT&T/products/accessories">ACCESSORIES</a></li>
+					<li class="link"><a href="/ShopTandT/products/jewelry">JEWELRY</a></li>
+					<li class="link"><a href="/ShopTandT/products/handbags">HANDBAGS</a></li>
+					<li class="link"><a href="/ShopTandT/products/accessories">ACCESSORIES</a></li>
 					<li>
 						<div class="nav-btn">
 							<div>
 								<i class="fa fa-search" aria-hidden="true"></i>
 							</div>
-							<div>
+							<div id="cart">
 								<i class="fa fa-shopping-bag" aria-hidden="true"></i>
 							</div>
 							<div class="btn-menu" id="btn-menu">
@@ -72,20 +72,21 @@
 	<div class="customer-close">
 		<i class="fa fa-times" aria-hidden="true" id="c-close"></i>
 	</div>
-	
+
 	<div class="follow1">
-		<img alt="" src="<c:url value="/assets/images/users/${ sessionScope.avatar }"/>">
+		<img alt=""
+			src="<c:url value="/assets/images/users/${ sessionScope.avatar }"/>">
 	</div>
-	
+
 	<div class="follow2">
 		<p>${ sessionScope.fullname }</p>
 	</div>
-	
+
 	<div class="list-menu">
 		<ul>
 			<li><a href="#">ORDER</a></li>
 			<li><a href="#">PROFILE</a></li>
-			<li><a href="/ShopT&T/account/logout">LOGOUT</a></li>
+			<li><a href="/ShopTandT/account/logout">LOGOUT</a></li>
 		</ul>
 	</div>
 	<div class="follow3">Follow us on</div>
@@ -99,7 +100,7 @@
 
 <script type="text/javascript">
 $("#home").click(function() {
-	window.location.href = "/ShopT&T/";
+	window.location.href = "/ShopTandT/";
 }); 
 </script>
 
@@ -132,4 +133,18 @@ window.addEventListener("scroll", (event) => {
     	$(".nav-mid-img").css({marginTop: 0, position:'sticky'});
     }
 });
+</script>
+
+<script type="text/javascript">
+	var userid = "";
+	if(${ sessionScope.userid != null }) {
+		userid = "${ sessionScope.userid }";
+	}
+	$("#cart").click(function() {
+		if(userid != "") {
+			window.location.href = "/ShopTandT/cart/"+userid;
+		} else {
+			window.location.href = "/ShopTandT/cart";
+		}
+	});
 </script>

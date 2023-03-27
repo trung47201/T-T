@@ -233,7 +233,7 @@ div.position-product {
 .show-function i:hover {
 	cursor: pointer;
 	text-shadow: 0px 0px 5px black;
-	color: #f9e1ee;
+	color: #cb82a9;
 }
 
 .price-old-products {
@@ -257,14 +257,13 @@ div.position-product {
 }
 
 .buy-now {
-	width: 80px;
+	width: 92px;
 	height: 36px;
 	border: 0;
 	border-radius: 4px;
-	margin-left: 15px;
-	background-color: #f9e1ee;
-	color: black;
-	background: #f9e1ee;
+	margin-left: 20px;
+	color: white;
+	background: #cb82a9 !important;
 	margin-top: 3px;
 }
 

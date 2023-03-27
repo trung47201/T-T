@@ -63,7 +63,7 @@
 			<div class="origin">
 				<img
 					src="<c:url value="/assets/images/icons/icons8-home-page-64.png"/>"
-					alt=""> <a href="/SpringMVC/admin">Home</a>
+					alt=""> <a href="/ShopTandT/admin">Home</a>
 			</div>
 			
 			<div>
@@ -77,7 +77,7 @@
 			<p>/</p>
 				<img
 					src="<c:url value="/assets/images/icons/icons8-used-product-100-title.png"/>"
-					alt=""> <a href="/SpringMVC/admin/product">Product</a>
+					alt=""> <a href="/ShopTandT/admin/product">Product</a>
 			</div>
 			
 			
@@ -102,7 +102,7 @@
 				<thead>
 					<tr>
 						<th colspan="1000" class="td-addnewshoes">
-							<a href="/SpringMVC/admin/product/add-new-product">
+							<a href="/ShopTandT/admin/product/add-new-product">
 								<button class="addnewshoes addnewproduct" id="addnewshoes-product">
 									<img
 										src="<c:url value="/assets/images/icons/icons8-add-64.png"/>"
@@ -176,7 +176,7 @@
 		<c:if test="${ newProduct == 'false' }">
 			<div class="table-add-new-product importantNone">
 		</c:if>
-			<form action="http://localhost:8888/SpringMVC/admin/product/add-new-product/savefile" method="post" enctype="multipart/form-data">
+			<form action="http://localhost:8888/ShopTandT/admin/product/add-new-product/savefile" method="post" enctype="multipart/form-data">
 				<table class="table-new-product">
 					<tr>
 						<td>

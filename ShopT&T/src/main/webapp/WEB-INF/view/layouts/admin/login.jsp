@@ -7,7 +7,7 @@
 	<div class="background"></div>
 	<div class="caixa__login">
 		<h2>Administrativo</h2>
-		 <form id="my_form" method="post" action="/SpringMVC/admin/login">
+		 <form id="my_form" method="post" action="/ShopTandT/admin/login">
 			<div class="caixa__login-input">
 				<input type="text" id="username" name="username"  autocomplete="off" required /> <label>Email or Phone number</label>
 			</div>

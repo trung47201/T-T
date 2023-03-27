@@ -44,7 +44,7 @@
 		<img alt=""
 			src="<c:url value="/assets/images/poster/storepic2_1200x.webp"/>">
 	</div>
-	
+
 	<header class="container-xl header-content">
 		<form method="post">
 			<div class="title-page">
@@ -84,7 +84,7 @@
 				<div class="product-details-infor">
 					<div class="title-product-details">
 						<h4>${ product.title }</h4>
-						<div class="icon-favorite" >
+						<div class="icon-favorite">
 							<i class="fa fa-heart" onclick="favorite(this)"></i>
 						</div>
 					</div>
@@ -101,8 +101,7 @@
 
 						<c:if test="${ product.discount > 0 }">
 							<h2>
-								$
-								<fmt:formatNumber type="number" maxFractionDigits="2"
+								$<fmt:formatNumber type="number" maxFractionDigits="2"
 									value="${ product.price - product.price * product.discount/100 }" />
 							</h2>
 							<p>$${ product.price }</p>
@@ -177,12 +176,10 @@
 
 					</div>
 					<div class="amount-product-details">
-						<input class="minus-plus" type="button" name="" id=""
-							onclick="amount(this)" value="-"> <input
-							class="input_amount" type="text" name="input_amount"
-							id="input_amount" value="1" readonly> <input
-							class="minus-plus" type="button" name="" id=""
-							onclick="amount(this)" value="+">
+						<input class="minus-plus" type="button" name="" id="minus" value="-">
+						<input class="input_amount" type="text" name="input_amount"
+							id="input_amount" value="1"> <input
+							class="minus-plus" type="button" name="" id="plus" value="+">
 					</div>
 					<div class="btn-add-buy">
 						<div class="btn-add-to-cart">
@@ -413,41 +410,39 @@
 								</div>
 							</div>
 						</div>
-						
+
 					</div>
 					<div class="details-content none" id="">
-							<div class="description-product-details" id="">
-								<div class="des-title">
-									<p>Description</p>
-								</div>
-								<div class="des-content">&emsp;&nbsp;Lace up and feel the
-									legacy with the Nike Air Max 90 LTR. An iconic Waffle outsole
-									and moulded plastic accents help these kicks stay true to their
-									roots, while Max Air cushioning adds comfort to your every
-									step. Crisp leather and soft, textured suede bring a premium
-									look and feel to this classic sneaker.</div>
+						<div class="description-product-details" id="">
+							<div class="des-title">
+								<p>Description</p>
 							</div>
-							<div class="features-product-details" id="">
-								<div class="features-title">
-									<p>Features</p>
-								</div>
-								<div class="features-content">
-									<li>Hypoknit upper designed to provide strategic areas of
-										stretch and support</li>
-									<li>Nylon outsole designed specifically for firm ground
-										use</li>
-									<li>Firm ground studs</li>
-									<li>Off-set lacing with cored-out canopy to increase
-										strike zone and provide lockdown</li>
-									<li>Hypoknit mesh collar for a lightweight and breathable
-										feel</li>
-									<li>3D tongue tab for added grip</li>
-									<li>Flying NB wrap-around logo with multi-tone heel
-										graphic</li>
-									<li>Designed for athlete Bukayo Saka</li>
-								</div>
+							<div class="des-content">&emsp;&nbsp;Lace up and feel the
+								legacy with the Nike Air Max 90 LTR. An iconic Waffle outsole
+								and moulded plastic accents help these kicks stay true to their
+								roots, while Max Air cushioning adds comfort to your every step.
+								Crisp leather and soft, textured suede bring a premium look and
+								feel to this classic sneaker.</div>
+						</div>
+						<div class="features-product-details" id="">
+							<div class="features-title">
+								<p>Features</p>
+							</div>
+							<div class="features-content">
+								<li>Hypoknit upper designed to provide strategic areas of
+									stretch and support</li>
+								<li>Nylon outsole designed specifically for firm ground use</li>
+								<li>Firm ground studs</li>
+								<li>Off-set lacing with cored-out canopy to increase strike
+									zone and provide lockdown</li>
+								<li>Hypoknit mesh collar for a lightweight and breathable
+									feel</li>
+								<li>3D tongue tab for added grip</li>
+								<li>Flying NB wrap-around logo with multi-tone heel graphic</li>
+								<li>Designed for athlete Bukayo Saka</li>
 							</div>
 						</div>
+					</div>
 				</div>
 				<div class="recomment-product"></div>
 		</form>
@@ -459,6 +454,20 @@
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
+	<script>
+	$("#plus").click(function() {
+		var qty = $("#input_amount").val();
+		qty = parseInt(qty)+1;
+		document.getElementById("input_amount").value = qty;
+	});
+	$("#minus").click(function() {
+		var qty = $("#input_amount").val();
+		if(parseInt(qty) > 1) {
+			qty = parseInt(qty)-1;
+			$("#input_amount").val(qty);
+		}
+	});
+	</script>
 	<script type="text/javascript">
 	var user_prod = "";
 	if(${ user_prod != null }) {
@@ -485,9 +494,9 @@
 		      		var val = document.getElementById("size").value;
 		      		var quantity = document.getElementById("input_amount").value;
 		      		if(val != null || quantity != null) {
-		      			window.location.assign("/ShopT&T/cart/checkout/"+user_prod + "?size="+val + "&quantity="+quantity);
+		      			window.location.assign("/ShopTandT/cart/checkout/"+user_prod + "?size="+val + "&quantity="+quantity);
 		      		} else {
-		      			window.location.assign("/ShopT&T/cart/checkout/"+user_prod);
+		      			window.location.assign("/ShopTandT/cart/checkout/"+user_prod);
 		      		}
 		      	};
 		      	xhr.send();
@@ -496,21 +505,13 @@
 				var xhr = new XMLHttpRequest();
 		      	xhr.open("GET", url+"?buynow");
 		      	xhr.onload = function () { 
-		      		window.location.assign("/ShopT&T/cart/checkout/"+myarr[0]+"?color="+myarr[1]+"&size="+myarr[2]);
+		      		window.location.assign("/ShopTandT/cart/checkout/"+myarr[0]+"?color="+myarr[1]+"&size="+myarr[2]);
 		      	};
 		      	xhr.send();
 			}
-			
 		}
 	}
-	
 	</script>
-
-
-	<c:if test="${ userID != null }">
-		<c:set var="id_user" value="${ userID }"></c:set>
-	</c:if>
-
 
 	<script> // add to cart
 		var id_user = "";
@@ -525,11 +526,19 @@
 		}
 		if(id_user != "") {
 			$("#add-to-cart-input").click(function() {
+				var size = document.getElementsByClassName("select-size");
+				var txt_size = "";
+				for (let i=0; i<size.length; i++) {
+					if (size[i].className == "select-size selected-color") {
+						txt_size = size[i].id;
+					}
+				}
+				var qty = document.getElementById("input_amount").value;
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"http://localhost:8888/ShopT&T/add-to-cart/"+id_user+"_"+id_prod);
+						"/ShopTandT/add-to-cart/"+id_user+"_"+id_prod+"_"+qty+"?process="+txt_size);
 				xhr.onload = function() {
-					window.location.assign("http://localhost:8888/ShopT&T/cart/"+id_user);
+					window.location.assign("/ShopTandT/cart/"+id_user);
 				};
 				xhr.send();
 			});
@@ -548,9 +557,9 @@
 					} else {
 						var xhr = new XMLHttpRequest();
 						xhr.open("GET",
-								"http://localhost:8888/ShopT&T/cart?id="+id_prod+"&process="+txt_size+"&amount="+amount);
+								"/ShopTandT/cart?id="+id_prod+"&process="+txt_size+"&amount="+amount);
 						xhr.onload = function() {
-							window.location.assign("http://localhost:8888/ShopT&T/cart");
+							window.location.assign("/ShopTandT/cart");
 						};
 						xhr.send();
 					}
@@ -718,7 +727,7 @@
 											function() {
 												document
 														.getElementById("image-hover").src = root
-														+ "/ShopT&T/assets/images/products/"
+														+ "/ShopTandT/assets/images/products/"
 														+ this.id;
 												document
 														.getElementById(this.id).style.boxShadow = "-1px -1px 10px #ff523E";
@@ -733,7 +742,7 @@
 													if (arr[i].id == this.id) {
 														document
 																.getElementById("image-hover").src = root
-																+ "/ShopT&T/assets/images/products/"
+																+ "/ShopTandT/assets/images/products/"
 																+ this.id;
 														document
 																.getElementById(this.id).style.boxShadow = "-0px -0px 10px #ff523E";
@@ -748,51 +757,9 @@
 						});
 	</script>
 
-	<script>
-		function amount(x) {
-			let txt = x.value;
-			var valueInput = 1;
-			if (txt == "+") {
-				var input = document.getElementById("input_amount").value;
-				valueInput = parseInt(input) + 1;
-				document.getElementById("input_amount").value = valueInput;
-			} else {
-				var input = document.getElementById("input_amount").value;
-				if (parseInt(input) > 1) {
-					valueInput = parseInt(input) - 1;
-				}
-				document.getElementById("input_amount").value = valueInput;
-			}
-		}
-	</script>
-
-	<script type="text/javascript"> // scroll display search
-		window.addEventListener("scroll", function() {
-			var div = document.getElementById('nav-search');
-			var div1 = document.getElementsByClassName('hidden-poster2');
-			if (window.scrollY > 80) {
-				div.style.visibility = 'visible';
-			} else {
-				div.style.visibility = 'hidden';
-			}
-			if (window.scrollY > 2280 && window.scrollY < 2380) {
-				div1.style.visibility = 'hidden';
-			} else {
-				div1.style.visibility = 'visible';
-			}
-		})
-	</script>
-
-	<!-- Initialize Swiper -->
-	<script>
-		function bigImg(x) {
-			var listkeys = document.getElementById("listkeys");
-			listkeys.style.visibility = 'visible';
-		}
-
-		function normalImg(x) {
-			var listkeys = document.getElementById("listkeys");
-			listkeys.style.visibility = 'hidden';
+<script type="text/javascript">
+		if ( window.history.replaceState ) {
+		  window.history.replaceState( null, null, window.location.href );
 		}
 	</script>
 

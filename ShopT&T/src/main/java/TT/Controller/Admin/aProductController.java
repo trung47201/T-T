@@ -101,7 +101,7 @@ public class aProductController {
 					System.out.println("save product unsuccess aProductController (100)");
 				}
 			}
-			return new ModelAndView("redirect: /SpringMVC/admin/product");
+			return new ModelAndView("redirect: /ShopTandT/admin/product");
 		} else {
 			if (title != null && price != null && discount != null && style != null && gender != null && brand != null
 					&& description != null) {
@@ -113,7 +113,7 @@ public class aProductController {
 					System.out.println("save product unsuccess aProductController (100)");
 				}
 			}
-			return new ModelAndView("redirect: /SpringMVC/admin/product");
+			return new ModelAndView("redirect: /ShopTandT/admin/product");
 		}
 	}
 
@@ -122,7 +122,7 @@ public class aProductController {
 			try {
 				byte[] bytes = file.getBytes();
 				// String rootpath = System.getProperty("catalina.home");
-				File dir = new File("D:\\TTTN\\SpringMVC-14-2\\SpringMVC\\src\\main\\webapp\\assets\\images\\products");
+				File dir = new File("D:\\TTTN\\ShopTandT-14-2\\ShopTandT\\src\\main\\webapp\\assets\\images\\products");
 				if (!dir.exists()) {
 					dir.mkdir();
 				}

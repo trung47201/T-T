@@ -95,7 +95,7 @@ public class VoucherController {
 		}
 		
 		if(editvoucher == null && save == null) {
-			return new ModelAndView("redirect: /SpringMVC/admin/voucher");
+			return new ModelAndView("redirect: /ShopTandT/admin/voucher");
 		}
 		
 		if (save != null) {

@@ -39,7 +39,7 @@
 	<hr>
 
 	<div class="wrapper-form-signup container">
-		<form action="/SpringMVC/sign-up" method="post">
+		<form action="/ShopTandT/sign-up" method="post">
 			<div class="login_form">
 				<div class="form-input">
 					<div class="right-form-input">
@@ -95,7 +95,7 @@
 			document.getElementById("msg-error").innerHTML = "Sign Up Success!";
 			document.getElementById("login_button").style.marginTop = "15px";
 			
-			window.location.href = 'http://localhost:8888/SpringMVC/';
+			window.location.href = 'http://localhost:8888/ShopTandT/';
 		} else if(msg == "false"){
 			$(".error-login").removeClass("none");
 			document.getElementById("msg-error").innerHTML = "Sign Up Unsuccess!";
@@ -127,7 +127,11 @@
 		});
 	</script>
 
-
+	<script type="text/javascript">
+		if ( window.history.replaceState ) {
+		  window.history.replaceState( null, null, window.location.href );
+		}
+	</script>
 </body>
 
 </html>

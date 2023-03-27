@@ -62,7 +62,7 @@ public class reProductDetailsController {
 	@RequestMapping(value = { "product-details/{user_prod}" })
 	public ModelAndView loadProducts(@PathVariable String user_prod, HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("user/re-product_details");
-		
+		postsService = new PostsService();
 		productService = new ProductService();
 		galleryService = new GalleryService();
 		product_color_sizeService = new Product_color_sizeService();
@@ -98,7 +98,7 @@ public class reProductDetailsController {
 		mv.addObject("style", styleService.getAllStyle());
 		mv.addObject("avatar", userService.getAvatarByUserID(Integer.parseInt(id_user)));
 		mv.addObject("user_prod", user_prod);
-		
+		mv.addObject("hmPosts", postsService.listPost());
 		return mv;
 	}
 }

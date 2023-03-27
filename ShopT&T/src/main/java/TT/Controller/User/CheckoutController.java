@@ -20,6 +20,7 @@ import TT.Service.User.CartService;
 import TT.Service.User.CheckoutService;
 import TT.Service.User.OrderService;
 import TT.Service.User.Order_detailsService;
+import TT.Service.User.PostsService;
 import TT.Service.User.Product_color_sizeService;
 import TT.Service.User.StatisticsService;
 import TT.Service.User.UserService;
@@ -37,6 +38,7 @@ public class CheckoutController {
 	private UserService userService;
 	private CartService cartService;
 	private StatisticsService statisticsService;
+	private PostsService postsService;
 
 	@RequestMapping(value = { "cart/checkout/ok/{id}" })
 	public ModelAndView checkout_ok(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
@@ -128,13 +130,13 @@ public class CheckoutController {
 								Integer.parseInt(quantity), pricetotal)) {
 					session.setAttribute("order", "end");
 					System.out.println("buy now success (96 checkoutController)");
-					return new ModelAndView("redirect: /ShopT&T/sucess-buynow?id_prod=" + id_prod + "&id_color=" + color
+					return new ModelAndView("redirect: /ShopTandT/sucess-buynow?id_prod=" + id_prod + "&id_color=" + color
 							+ "&id_size=" + size + "&quantity=" + quantity + "&fullname=" + fullname + "&phone_number="
 							+ phone_number + "&email=" + email + "&address=" + adr + "&note=" + note + "&voucher="
 							+ vc_id + "&priceat=" + pricetotal + "&user=" + user + "&method=" + method);
 				} else {
 					System.out.println("buy now unsuccess");
-					return new ModelAndView("redirect: /ShopT&T/cart/checkout/" + id);
+					return new ModelAndView("redirect: /ShopTandT/cart/checkout/" + id);
 				}
 			} else {
 				if (orderService.insertIntoOrder(fullname, email, phone_number, adr, vc_id, note, method, dis)
@@ -148,17 +150,17 @@ public class CheckoutController {
 								Integer.parseInt(quantity), pricetotal)) {
 					session.setAttribute("order", "end");
 					System.out.println("buy now success (96 checkoutController)");
-					return new ModelAndView("redirect: /ShopT&T/sucess-buynow?id_prod=" + id_prod + "&id_color=" + color
+					return new ModelAndView("redirect: /ShopTandT/sucess-buynow?id_prod=" + id_prod + "&id_color=" + color
 							+ "&id_size=" + size + "&quantity=" + quantity + "&fullname=" + fullname + "&phone_number="
 							+ phone_number + "&email=" + email + "&address=" + adr + "&note=" + note + "&voucher="
 							+ vc_id + "&priceat=" + pricetotal + "&user=" + user + "&method=" + method);
 				} else {
 					System.out.println("buy now unsuccess");
-					return new ModelAndView("redirect: /ShopT&T/cart/checkout/" + id);
+					return new ModelAndView("redirect: /ShopTandT/cart/checkout/" + id);
 				}
 			}
 		}
-		return new ModelAndView("redirect: /ShopT&T/");
+		return new ModelAndView("redirect: /ShopTandT/");
 	}
 
 	@RequestMapping(value = { "cart/checkout/{id}" }) // buy now login and not login
@@ -171,13 +173,21 @@ public class CheckoutController {
 		voucherService = new VoucherService();
 		userService = new UserService();
 		orderService = new OrderService();
+		postsService = new PostsService();
 
 		String voucher = request.getParameter("voucher");
 		String quantity = request.getParameter("quantity");
 		String size = request.getParameter("size");
 		String color = request.getParameter("color");
 		String method = request.getParameter("paymentmethods");
-
+		String login = request.getParameter("login");
+		
+		HttpSession session = request.getSession();
+		if(login != null) {
+			session.setAttribute("buynowlogin", id);
+			System.out.println(login);
+		}
+		
 		String id_prod = "";
 		String id_user = "";
 		String a[] = id.split("_");
@@ -255,7 +265,6 @@ public class CheckoutController {
 								System.out.println("notenough");
 							} else {
 								if (orderService.check_voucher_used_by_user_id(Integer.parseInt(id_user), voucher)) {
-									System.out.println("a");
 									int vch_discount = voucherService.get_discount_by_voucher_code(voucher);
 									mv.addObject("vcdiscount", vch_discount);
 									mv.addObject("vcstatus", "start");
@@ -319,7 +328,7 @@ public class CheckoutController {
 
 		}
 		mv.addObject("back_home", "cart");
-
+		mv.addObject("hmPosts", postsService.listPost());
 		System.out.println(quantity);
 		return mv;
 
@@ -328,6 +337,25 @@ public class CheckoutController {
 	@RequestMapping(value = { "cart/checkout-cart/{id}" }) // with id user
 	public ModelAndView loadCheckout_cart_with_user_id(@PathVariable String id, HttpServletRequest request,
 			HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		if (session.getAttribute("checkout") != null) {
+			String checkout = String.valueOf(session.getAttribute("checkout"));
+			if (!checkout.equals(id)) {
+				return new ModelAndView("redirect: /ShopTandT/cart/checkout-cart/" + checkout);
+			}
+		} else {
+			System.out.println("null");
+		}
+		String userid = String.valueOf(session.getAttribute("userid"));
+		if (session.getAttribute("checkoutcart") != null || session.getAttribute("checkoutcart") != "") {
+			String checkout = String.valueOf(session.getAttribute("checkoutcart"));
+			if (checkout.equals("end")) {
+				return new ModelAndView("redirect: /ShopTandT/cart/" + userid);
+			}
+		} else {
+			System.out.println("null");
+		}
+
 		ModelAndView mv = new ModelAndView("user/checkout-cart-user");
 		System.out.println("checkout cart -> order with user id (294)");
 
@@ -338,7 +366,7 @@ public class CheckoutController {
 		checkoutService = new CheckoutService();
 		voucherService = new VoucherService();
 		orderService = new OrderService();
-
+		
 		int user_id = 0;
 		double total = 0;
 		String address = "", city = "", district = "", village = "";
@@ -362,6 +390,7 @@ public class CheckoutController {
 			mv.addObject("total", total);
 			mv.addObject("listCart", li);
 		}
+
 		if (user_id != 0) {
 			address = userService.get_user_by_id(user_id).getAddress();
 			String arrAddress[] = address.split("-");

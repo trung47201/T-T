@@ -33,8 +33,8 @@ public class CheckoutService implements CheckoutRepository {
 			Connection con = connectService.getConnect();
 			Statement stmt;
 			stmt = (Statement) con.createStatement();
-			ResultSet rs = stmt.executeQuery("select rgb, color_name, color.id, color_size.prod_id from color "
-					+ "Inner join color_size on color.id = color_size.color_id " + "Where prod_id=" + id_prod
+			ResultSet rs = stmt.executeQuery("select rgb, color_name, color.id, product_color_size.prod_id from color "
+					+ "Inner join product_color_size on color.id = product_color_size.color_id " + "Where prod_id=" + id_prod
 					+ " Group by rgb");
 			while (rs.next()) {
 				color = new Color();
@@ -62,8 +62,8 @@ public class CheckoutService implements CheckoutRepository {
 			Statement stmt;
 			stmt = (Statement) con.createStatement();
 			ResultSet rs = stmt.executeQuery(
-					"select color_size.id, color_size.size_id, color_size.prod_id, color_size.color_id, color_size.quantity, size_number, created_at, updated_at from sizes "
-							+ "Inner join color_size on sizes.id = color_size.size_id " + "Where prod_id=" + prod_id
+					"select product_color_size.id, product_color_size.size_id, product_color_size.prod_id, product_color_size.color_id, product_color_size.quantity, size_number, created_at, updated_at from sizes "
+							+ "Inner join product_color_size on sizes.id = product_color_size.size_id " + "Where prod_id=" + prod_id
 							+ " and color_id=" + color_id);
 			while (rs.next()) {
 				size = new Sizes();
@@ -94,8 +94,8 @@ public class CheckoutService implements CheckoutRepository {
 			Statement stmt;
 			stmt = (Statement) con.createStatement();
 			ResultSet rs = stmt.executeQuery(
-					"select color_size.id, color_size.size_id, color_size.prod_id, color_size.color_id, color_size.quantity, size_number, created_at, updated_at from sizes "
-							+ "Inner join color_size on sizes.id = color_size.size_id " + "Where prod_id=" + prod_id);
+					"select product_color_size.id, product_color_size.size_id, product_color_size.prod_id, product_color_size.color_id, product_color_size.quantity, size_number, created_at, updated_at from sizes "
+							+ "Inner join product_color_size on sizes.id = product_color_size.size_id " + "Where prod_id=" + prod_id);
 			while (rs.next()) {
 				color_id = rs.getInt("color_id");
 				break;

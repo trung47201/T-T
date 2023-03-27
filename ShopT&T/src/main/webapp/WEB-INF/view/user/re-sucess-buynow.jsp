@@ -30,14 +30,14 @@ display: none;
 			<c:set var="item" value="${ back_home }"></c:set>
 			<c:if test="${ item == 'home'}">
 				<div class="back">
-					<a href="/ShopT&T/"><img
+					<a href="/ShopTandT/"><img
 						src="<c:url value="/assets/images/icons/back52.png"/>"
 						alt="back-icon">Back</a>
 				</div>
 			</c:if>
 			<c:if test="${ item == 'cart'}">
 				<div class="back">
-					<a href="/ShopT&T/cart"><img
+					<a href="/ShopTandT/cart"><img
 						src="<c:url value="/assets/images/icons/back52.png"/>"
 						alt="back-icon">Back</a>
 				</div>
@@ -147,14 +147,14 @@ display: none;
 				</div>
 				<c:if test="${ userID != null }">
 					<div class="continue-shopping">
-						<a href="/SpringMVC/products/${ userID }"><input type="button"
+						<a href="/ShopTandT/products/${ userID }"><input type="button"
 							name="continueShopping" id="continueShopping"
 							value="Continue Shopping"></a>
 					</div>
 				</c:if>
 				<c:if test="${ userID == null }">
 					<div class="continue-shopping">
-						<a href="/SpringMVC/products"><input type="button"
+						<a href="/ShopTandT/products"><input type="button"
 							name="continueShopping" id="continueShopping"
 							value="Continue Shopping"></a>
 					</div>
@@ -315,10 +315,9 @@ display: none;
 	</form>
 	
 	<script type="text/javascript">
-	history.pushState(null, null, location.href);
-	window.onpopstate = function () {
-	  history.go(1);
-	};
+		if ( window.history.replaceState ) {
+		  window.history.replaceState( null, null, window.location.href );
+		}
 	</script>
 
 	<script src="js/login.js"></script>

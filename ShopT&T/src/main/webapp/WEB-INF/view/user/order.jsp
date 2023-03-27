@@ -44,7 +44,7 @@
 			<jsp:include page="../layouts/user/re-header.jsp"></jsp:include>
 			<div class="title-page">
                 <h3>ORDER</h3>
-                <span><a href="/SpringMVC">Home</a> / <a href="">Order</a></span>
+                <span><a href="/ShopTandT">Home</a> / <a href="">Order</a></span>
             </div>
             <!-- ######################################################################################################################################### -->
                 <div class="order">
@@ -57,7 +57,7 @@
                                 </div>
                                 <div class="order-infor">
                                     <div>
-                                        <a href="/SpringMVC/order-details/${ id_user }_${ liOrder.id }">View Details ></a>
+                                        <a href="/ShopTandT/order-details/${ id_user }_${ liOrder.id }">View Details ></a>
                                     </div>
                                 </div>
                             </div>
@@ -107,10 +107,10 @@
 			 alert(rememberme);
 			  var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"http://localhost:8888/SpringMVC/home?rememberme="+rememberme);
+						"http://localhost:8888/ShopTandT/home?rememberme="+rememberme);
 				// What to do when server responds
 				xhr.onload = function() {
-					//window.location.assign("http://localhost:8888/SpringMVC/");
+					//window.location.assign("http://localhost:8888/ShopTandT/");
 				};
 				xhr.send();
 		  });
@@ -123,10 +123,10 @@
 		$(document).ready(function(){
 			var xhr = new XMLHttpRequest();
 			xhr.open("GET",
-					"http://localhost:8888/SpringMVC/home?logout=true");
+					"http://localhost:8888/ShopTandT/home?logout=true");
 			// What to do when server responds
 			xhr.onload = function() {
-				window.location.assign("http://localhost:8888/SpringMVC/");
+				window.location.assign("http://localhost:8888/ShopTandT/");
 			};
 			xhr.send();
 		});
@@ -181,11 +181,11 @@
 			} else {
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"http://localhost:8888/SpringMVC/home?username="
+						"http://localhost:8888/ShopTandT/home?username="
 								+ username +"&password="+password);
 				// What to do when server responds
 				xhr.onload = function() {
-					window.location.assign("http://localhost:8888/SpringMVC/");
+					window.location.assign("http://localhost:8888/ShopTandT/");
 				};
 				xhr.send();
 			}
@@ -220,7 +220,11 @@
 			}
 		})
 	</script>
-
+<script type="text/javascript">
+		if ( window.history.replaceState ) {
+		  window.history.replaceState( null, null, window.location.href );
+		}
+	</script>
 	<script
 		src="<c:url value="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"/>"
 		integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"

@@ -25,14 +25,14 @@
 			<c:set var="item" value="${ back_home }"></c:set>
 			<c:if test="${ item == 'home'}">
 				<div class="back">
-					<a href="/SpringMVC"><img
+					<a href="/ShopTandT"><img
 						src="<c:url value="/assets/images/icons/back52.png"/>"
 						alt="back-icon">Back</a>
 				</div>
 			</c:if>
 			<c:if test="${ item == 'cart'}">
 				<div class="back">
-					<a href="/SpringMVC/cart"><img
+					<a href="/ShopTandT/cart"><img
 						src="<c:url value="/assets/images/icons/back52.png"/>"
 						alt="back-icon">Back</a>
 				</div>
@@ -98,14 +98,14 @@
 				</div>
 				<c:if test="${ userid != null }">
 					<div class="continue-shopping">
-						<a href="/SpringMVC/products/${ userid }"><input type="button"
+						<a href="/ShopTandT/products/${ userid }"><input type="button"
 							name="continueShopping" id="continueShopping"
 							value="Continue Shopping"></a>
 					</div>
 				</c:if>
 				<c:if test="${ userid == null }">
 					<div class="continue-shopping">
-						<a href="/SpringMVC/products"><input type="button"
+						<a href="/ShopTandT/products"><input type="button"
 							name="continueShopping" id="continueShopping"
 							value="Continue Shopping"></a>
 					</div>
@@ -327,6 +327,11 @@
 	</form>
 	
 	<script type="text/javascript">
+		if ( window.history.replaceState ) {
+		  window.history.replaceState( null, null, window.location.href );
+		}
+	</script>
+	<script type="text/javascript">
 	 $(window).load(function(){
 		    $('body').backDetect(function(){
 		      // Callback function
@@ -334,6 +339,7 @@
 		    });
 		  });
 	</script>
+	
 	
 	<script src="js/login.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

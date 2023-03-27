@@ -56,15 +56,15 @@ public class ProductService implements ProductRepository {
 			Statement stmt;
 			stmt = (Statement) con.createStatement();
 			ResultSet rs = stmt
-					.executeQuery("select * from color_size " 
-							+ "Inner join product on product.id = color_size.prod_id "
-							+ "Inner join sizes on sizes.id = color_size.size_id "
-							+ "Inner join color on color.id = color_size.color_id "
+					.executeQuery("select * from product_color_size " 
+							+ "Inner join product on product.id = product_color_size.prod_id "
+							+ "Inner join sizes on sizes.id = product_color_size.size_id "
+							+ "Inner join color on color.id = product_color_size.color_id "
 							+ "Inner join brand on product.brand_id = brand.id "
 							+ "Inner join style on product.style_id = style.id "
 							+ "Inner join user on product.user_id = user.id "
 							+ "Inner join gender on product.gender_id = gender.id "
-							+ "Inner join role on role.id = user.role_id " + "Where color_size.quantity > 0 " + "");
+							+ "Inner join role on role.id = user.role_id " + "Where product_color_size.quantity > 0 " + "");
 			while (rs.next()) {
 				product_color_size = new Product_color_size();
 				color = new Color();

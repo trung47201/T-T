@@ -72,7 +72,7 @@ img.eye-show-hide, img.eye-show-hide-pw {
 			<div class="origin">
 				<img
 					src="<c:url value="/assets/images/icons/icons8-home-page-64.png"/>"
-					alt=""> <a href="/SpringMVC/admin">Home</a>
+					alt=""> <a href="/ShopTandT/admin">Home</a>
 			</div>
 			
 			<div>
@@ -86,7 +86,7 @@ img.eye-show-hide, img.eye-show-hide-pw {
 				<p>/</p>
 				<img
 					src="<c:url value="/assets/images/icons/icons8-customer-64.png"/>"
-					alt=""> <a href="/SpringMVC/admin/customer">User</a>
+					alt=""> <a href="/ShopTandT/admin/customer">User</a>
 			</div>
 			
 			<c:if test="${ addnewuser == 'true' }">
@@ -109,7 +109,7 @@ img.eye-show-hide, img.eye-show-hide-pw {
 					<thead>
 						<tr>
 							<th colspan="1000" class="td-addnewshoes">
-								<a href="/SpringMVC/admin/customer/add-new-user">
+								<a href="/ShopTandT/admin/customer/add-new-user">
 									<button class="addnewshoes add-new-user">
 										<img
 											src="<c:url value="/assets/images/icons/icons8-add-64.png"/>"
@@ -187,7 +187,7 @@ img.eye-show-hide, img.eye-show-hide-pw {
 			<c:if test="${ addnewuser == 'false' }">
 				<div class="tbl-add-new none">
 			</c:if>
-				<form action="http://localhost:8888/SpringMVC/admin/customer/add-new-user/savefile" method="post" enctype="multipart/form-data">
+				<form action="http://localhost:8888/ShopTandT/admin/customer/add-new-user/savefile" method="post" enctype="multipart/form-data">
 					<table class="tbl-new-user">
 						<tr>
 							<td class="choose-img-avt" rowspan="7">
@@ -327,7 +327,7 @@ img.eye-show-hide, img.eye-show-hide-pw {
 			<div class="origin">
 				<img
 					src="<c:url value="/assets/images/icons/icons8-home-page-64.png"/>"
-					alt=""> <a href="/SpringMVC/admin">Home</a>
+					alt=""> <a href="/ShopTandT/admin">Home</a>
 			</div>
 			<div>
 				<p>/</p>
@@ -338,13 +338,13 @@ img.eye-show-hide, img.eye-show-hide-pw {
 			<div>
 				<p>/</p>
 				<img src="<c:url value="/assets/images/icons/icons8-role-66.png"/>"
-					alt=""> <a href="/SpringMVC/admin/role">Role</a>
+					alt=""> <a href="/ShopTandT/admin/role">Role</a>
 			</div>
 			<c:if test="${ roleedit == 'true' }">
 				<div>
 					<p>/</p>
 					<img src="<c:url value="/assets/images/icons/icons8-edit-100-title.png"/>"
-						alt=""> <a href="/SpringMVC/admin/role">Edit</a>
+						alt=""> <a href="/ShopTandT/admin/role">Edit</a>
 				</div>
 			</c:if>
 		</div>
@@ -418,7 +418,7 @@ img.eye-show-hide, img.eye-show-hide-pw {
 								<td>${ liRole.role_name }</td>
 								<td>${ liRole.description }</td>
 								<td class="td-action">
-									<a href="/SpringMVC/admin/role/edit/${ liRole.id }">
+									<a href="/ShopTandT/admin/role/edit/${ liRole.id }">
 										<button class="btn-edit-user" id="${ liRole.id }">
 											<img
 												src="<c:url value="/assets/images/icons/icons8-edit-100.png"/>"
@@ -510,9 +510,9 @@ img.eye-show-hide, img.eye-show-hide-pw {
 		} else {
 			var url = window.location.href;
 			if(url.includes("/edit/")) {
-				url = "http://localhost:8888/SpringMVC/admin/role";
+				url = "http://localhost:8888/ShopTandT/admin/role";
 			} else if(url.includes("?search_role")) {
-				url = "http://localhost:8888/SpringMVC/admin/role";
+				url = "http://localhost:8888/ShopTandT/admin/role";
 			}
 			var xhr = new XMLHttpRequest();
 			xhr.open("GET", url+"?search_role="+txt);
@@ -542,9 +542,9 @@ img.eye-show-hide, img.eye-show-hide-pw {
     		} else {
     			var url = window.location.href;
     			if(url.includes("/edit/")) {
-    				url = "http://localhost:8888/SpringMVC/admin/role";
+    				url = "http://localhost:8888/ShopTandT/admin/role";
     			} else if(url.includes("?search_role")) {
-    				url = "http://localhost:8888/SpringMVC/admin/role";
+    				url = "http://localhost:8888/ShopTandT/admin/role";
     			}
     			var xhr = new XMLHttpRequest();
     			xhr.open("GET", url+"?search_role="+txt);
@@ -680,7 +680,7 @@ img.eye-show-hide, img.eye-show-hide-pw {
 							$(".content-msg-notify").text("Updated role successfully!");
 							$('.ok').click(function() {
 								$(".message-notify").addClass("none");
-								window.location.assign("http://localhost:8888/SpringMVC/admin/role");
+								window.location.assign("http://localhost:8888/ShopTandT/admin/role");
 							});
 						};
 						xhr.send();

@@ -51,19 +51,19 @@ input[type=number] {
 
 
 <body>
-	<form action="/SpringMVC/checkout-cart/ok?process=${ process }" method="post">
+	<form action="/ShopTandT/checkout-cart/ok?process=${ process }" method="post">
 		<div class="nav">
 			<c:set var="item" value="${ back_home }"></c:set>
 			<c:if test="${ item == 'home'}">
 				<div class="back">
-					<a href="/SpringMVC"><img
+					<a href="/ShopTandT"><img
 						src="<c:url value="/assets/images/icons/back52.png"/>"
 						alt="back-icon">Back</a>
 				</div>
 			</c:if>
 			<c:if test="${ item == 'cart'}">
 				<div class="back">
-					<a href="/SpringMVC/cart"><img
+					<a href="/ShopTandT/cart"><img
 						src="<c:url value="/assets/images/icons/back52.png"/>"
 						alt="back-icon">Back</a>
 				</div>
@@ -406,15 +406,10 @@ input[type=number] {
 	</script>
 	
 	<script type="text/javascript">
-	if (window.performance && window.performance.navigation.type == window.performance.navigation.TYPE_BACK_FORWARD) {
-		window.location.href="http://localhost:8888/SpringMVC/";
-	}
-	if(performance.navigation.type == 2)
-	{
-		window.location.href="http://localhost:8888/SpringMVC/";
-	}
+		if ( window.history.replaceState ) {
+		  window.history.replaceState( null, null, window.location.href );
+		}
 	</script>
-	
 	<script src="<c:url value="/assets/js/color.js" />" defer></script>
 	<script src="js/login.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

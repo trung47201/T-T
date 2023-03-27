@@ -21,6 +21,14 @@
 <link rel="stylesheet" href="<c:url value="/assets/css/r-footer.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/re-text.css"/>">
 <body>
+	<%
+	response.setHeader("Cache-Control", "no-cache, no-store");
+	if (session.getAttribute("login") != null && session.getAttribute("login") != "") {
+		if (session.getAttribute("login").equals("start")) {
+			response.sendRedirect("/ShopTandT/");
+		}
+	}
+	%>
 	<jsp:include page="../layouts/user/re-menu.jsp"></jsp:include>
 	<div class="back-header">
 		<jsp:include page="../layouts/user/re-header.jsp"></jsp:include>
@@ -38,7 +46,7 @@
 	<hr>
 
 	<div class="wrapper-form-signup container">
-		<form action="/ShopT&T/account/login" method="post">
+		<form action="/ShopTandT/account/login" method="post">
 			<div class="login_form">
 				<div class="form-input">
 					<div class="right-form-input">
@@ -61,7 +69,7 @@
 					<p id="msg-error">Password is empty!</p>
 				</div>
 				<div class="fotter">
-					<a href="/ShopT&T/account/forgot-password">Forgot password?</a>
+					<a href="/ShopTandT/account/forgot-password">Forgot password?</a>
 				</div>
 				<div class="button_group w-login" id="login_button">
 					<div class="btn-effect">
@@ -69,7 +77,7 @@
 					</div>
 				</div>
 				<div class="fotter">
-					or <a href="/ShopT&T/account/register">Create an Account</a>
+					or <a href="/ShopTandT/account/register">Create an Account</a>
 				</div>
 			</div>
 		</form>
@@ -107,7 +115,7 @@
 		}
 	}
 	</script>
-
+	
 	<script> //SIGN UP
 		$(".signup").click(function() {
 			var toSubmit = this;
@@ -128,6 +136,11 @@
 		});
 	</script>
 
+	<script type="text/javascript">
+		if ( window.history.replaceState ) {
+		  window.history.replaceState( null, null, window.location.href );
+		}
+	</script>
 
 </body>
 

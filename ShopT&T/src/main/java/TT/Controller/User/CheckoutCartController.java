@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,9 +16,10 @@ import TT.Model.Cart;
 import TT.Model.Product_color_size;
 import TT.Service.User.CartService;
 import TT.Service.User.CheckoutService;
-import TT.Service.User.Product_color_sizeService;
 import TT.Service.User.OrderService;
 import TT.Service.User.Order_detailsService;
+import TT.Service.User.PostsService;
+import TT.Service.User.Product_color_sizeService;
 import TT.Service.User.StatisticsService;
 import TT.Service.User.VoucherService;
 import TT.Service.User.Product.ProductService;
@@ -32,6 +34,7 @@ public class CheckoutCartController {
 	private Product_color_sizeService product_color_sizeService;
 	private ProductService productService;
 	private StatisticsService statisticsService;
+	private PostsService postsService;
 
 	@RequestMapping(value = { "cart/checkout/user-cart/{id}" })
 	public ModelAndView checkout_ok_cart(@PathVariable String id, HttpServletRequest request,
@@ -44,6 +47,8 @@ public class CheckoutCartController {
 		productService = new ProductService();
 		statisticsService = new StatisticsService();
 
+		HttpSession session = request.getSession();
+
 		String fullname = request.getParameter("fullname");
 		String phone_number = request.getParameter("phone");
 		String email = request.getParameter("email");
@@ -53,19 +58,6 @@ public class CheckoutCartController {
 		String note = request.getParameter("note");
 		String method = request.getParameter("method");
 		String vccode = request.getParameter("vccode");
-
-		int vc_id = 1;
-		if (vccode != null) {
-			vc_id = voucherService.getVoucherIdByCode(vccode);
-
-		}
-
-		if (note == null) {
-			note = "";
-		}
-		if (method == null) {
-			method = "COD";
-		}
 
 		double total = 0;
 		List<Cart> liCart = cartService.get_all_cart_by_string(id);
@@ -81,6 +73,35 @@ public class CheckoutCartController {
 				}
 			}
 		}
+		String userid = String.valueOf(session.getAttribute("userid"));
+		boolean check_vc = false;
+		if (vccode != null) {
+			if (voucherService.voucher_exists_by_code(vccode)) {
+				if (!voucherService.expired_voucher_by_code(vccode)) {
+					if (!voucherService.voucher_start_date_by_code(vccode)) {
+						double applyfor = voucherService.get_apply_for_by_code(vccode);
+						if (total >= applyfor) {
+							if (orderService.check_voucher_used_by_user_id(Integer.parseInt(userid), vccode)) {
+								System.out.println("start");
+								check_vc = true;
+							}
+						}
+					}
+				}
+			}
+		}
+		int vc_id = 1;
+		if (check_vc) {
+			vc_id = voucherService.getVoucherIdByCode(vccode);
+		}
+
+		if (note == null) {
+			note = "";
+		}
+		if (method == null) {
+			method = "COD";
+		}
+
 		int vch_discount = voucherService.getDiscountById_Voucher(vc_id);
 		double dis = 0;
 		if (vch_discount > 0) {
@@ -94,10 +115,10 @@ public class CheckoutCartController {
 				vc_id = 1;
 			}
 			if (orderService.insertIntoOrder(fullname, email, phone_number, address, vc_id, note, method, dis)) {
-				if(vc_id != 1) {
+				if (vc_id != 1) {
 					voucherService.update_limit_voucher(vc_id);
 				}
-				if(vch_discount == 0) {
+				if (vch_discount == 0) {
 					vch_discount = 1;
 				}
 				for (Cart cart : liCart) {
@@ -111,9 +132,9 @@ public class CheckoutCartController {
 					if (order_detailsService.insertIntoOrder_details(price_at, cart.getQuantity(),
 							cart.getColor_size().getProd().getId(), cart.getColor_size().getSize().getId(),
 							cart.getColor_size().getColor().getId(), phone_number, email)
-							&& product_color_sizeService.updateColor_size_Quantity(cart.getColor_size().getSize().getId(),
-									cart.getColor_size().getColor().getId(), cart.getColor_size().getProd().getId(),
-									cart.getQuantity())
+							&& product_color_sizeService.updateColor_size_Quantity(
+									cart.getColor_size().getSize().getId(), cart.getColor_size().getColor().getId(),
+									cart.getColor_size().getProd().getId(), cart.getQuantity())
 							&& productService.updateProduct_Sold(cart.getColor_size().getProd().getId(),
 									cart.getQuantity())
 							&& statisticsService.update_order_revenue_product_num_in_statistics_DB(cart.getQuantity(),
@@ -124,10 +145,12 @@ public class CheckoutCartController {
 				int order_id = orderService.get_last_order_id_by(phone_number, email);
 				System.out.println("buy cart success this checkout cart controller");
 				System.out.println(vc_id + "_" + method);
-				return new ModelAndView("redirect: /SpringMVC/thank/" + order_id);
+				session.setAttribute("checkoutcart", "end");
+				System.out.println(session.getAttribute("checkoutcart"));
+				return new ModelAndView("redirect: /ShopTandT/thank/" + order_id);
 			} else {
 				System.out.println("buy cart unsuccess this");
-				return new ModelAndView("redirect: /SpringMVC/cart/checkout-cart/" + id);
+				return new ModelAndView("redirect: /ShopTandT/cart/checkout-cart/" + id);
 			}
 		}
 		return null;
@@ -137,6 +160,7 @@ public class CheckoutCartController {
 	public ModelAndView checkout_cart_not_login(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("user/checkout-cart");
 
+		postsService = new PostsService();
 		checkoutService = new CheckoutService();
 
 		String process = String.valueOf(request.getParameter("process"));
@@ -165,7 +189,7 @@ public class CheckoutCartController {
 		mv.addObject("process", process);
 		// back home
 		mv.addObject("back_home", "cart");
-
+		mv.addObject("hmPosts", postsService.listPost());
 		return mv;
 	}
 
@@ -203,18 +227,17 @@ public class CheckoutCartController {
 					}
 					if (order_detailsService.insertIntoOrder_details(price_at, hm.get(c), c.getProd().getId(),
 							c.getSize().getId(), c.getColor().getId(), phone_number, email)
-							&& product_color_sizeService.updateColor_size_Quantity(c.getSize().getId(), c.getColor().getId(),
-									c.getProd().getId(), hm.get(c))) {
+							&& product_color_sizeService.updateColor_size_Quantity(c.getSize().getId(),
+									c.getColor().getId(), c.getProd().getId(), hm.get(c))) {
 
 					}
 				}
 				int order_id = orderService.get_last_order_id_by(phone_number, email);
 				System.out.println("buy cart success this checkout cart controller (192)");
-				return new ModelAndView(
-						"redirect: /SpringMVC/cart?process-delete=" + process + "&order-id=" + order_id);
+				return new ModelAndView("redirect: /ShopTandT/cart?process-delete=" + process + "&order-id=" + order_id);
 			} else {
 				System.out.println("buy cart unsuccess this");
-				return new ModelAndView("redirect: /SpringMVC/checkout-cart?process=" + process);
+				return new ModelAndView("redirect: /ShopTandT/checkout-cart?process=" + process);
 			}
 		}
 		return null;

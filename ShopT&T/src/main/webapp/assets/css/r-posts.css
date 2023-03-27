@@ -27,6 +27,7 @@
 	width: 100%;
 	height: calC(21vw * 1.18) !important;
 	background: #f1f1f1;
+	border: 1px solid #cb82a9;
 }
 
 .ins-img {

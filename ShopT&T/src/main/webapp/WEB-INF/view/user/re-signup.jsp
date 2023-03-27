@@ -39,7 +39,7 @@
 	<hr>
 
 	<div class="wrapper-form-signup container">
-		<form action="/ShopT&T/account/register" method="post">
+		<form action="/ShopTandT/account/register" method="post">
 			<div class="login_form">
 				<div class="form-input">
 					<div class="right-form-input">
@@ -83,7 +83,7 @@
 					</div>
 				</div>
 				<div class="fotter">
-					Already have an account? <a href="/ShopT&T/account/login">Login</a>
+					Already have an account? <a href="/ShopTandT/account/login">Login</a>
 				</div>
 			</div>
 		</form>
@@ -249,6 +249,11 @@
 		$(".error-login").addClass("none");
 		document.getElementById("login_button").style.marginTop = "30px";
 	});
+	</script>
+	<script type="text/javascript">
+		if ( window.history.replaceState ) {
+		  window.history.replaceState( null, null, window.location.href );
+		}
 	</script>
 
 </body>

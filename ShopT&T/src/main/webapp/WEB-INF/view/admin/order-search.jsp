@@ -86,7 +86,7 @@ th.th-action {
 					<img
 						src="<c:url value="/assets/images/icons/icons8-search-client-60.png"/>"
 						alt=""> <a
-						href="http://localhost:8888/SpringMVC/admin/search-order">Search
+						href="http://localhost:8888/ShopTandT/admin/search-order">Search
 						order</a>
 				</div>
 			</div>
@@ -244,7 +244,7 @@ th.th-action {
 					}
 					window.location.assign(url);
 				} else {
-					window.location.assign("http://localhost:8888/SpringMVC/admin/search-order?sortby=id-asc");
+					window.location.assign("http://localhost:8888/ShopTandT/admin/search-order?sortby=id-asc");
 				}
 			};
 			xhr.send();
@@ -268,7 +268,7 @@ th.th-action {
 					}
 					window.location.assign(url);
 				} else {
-					window.location.assign("http://localhost:8888/SpringMVC/admin/search-order?sortby=email-desc");
+					window.location.assign("http://localhost:8888/ShopTandT/admin/search-order?sortby=email-desc");
 				}
 			};
 			xhr.send();
@@ -292,7 +292,7 @@ th.th-action {
 					}
 					window.location.assign(url);
 				} else {
-					window.location.assign("http://localhost:8888/SpringMVC/admin/search-order?sortby=fullname-desc");
+					window.location.assign("http://localhost:8888/ShopTandT/admin/search-order?sortby=fullname-desc");
 				}
 			};
 			xhr.send();
@@ -316,7 +316,7 @@ th.th-action {
 					}
 					window.location.assign(url);
 				} else {
-					window.location.assign("http://localhost:8888/SpringMVC/admin/search-order?sortby=address-desc");
+					window.location.assign("http://localhost:8888/ShopTandT/admin/search-order?sortby=address-desc");
 				}
 			};
 			xhr.send();
@@ -340,7 +340,7 @@ th.th-action {
 					}
 					window.location.assign(url);
 				} else {
-					window.location.assign("http://localhost:8888/SpringMVC/admin/search-order?sortby=order-date-desc");
+					window.location.assign("http://localhost:8888/ShopTandT/admin/search-order?sortby=order-date-desc");
 				}
 			};
 			xhr.send();
@@ -364,7 +364,7 @@ th.th-action {
 					}
 					window.location.assign(url);
 				} else {
-					window.location.assign("http://localhost:8888/SpringMVC/admin/search-order?sortby=status-desc");
+					window.location.assign("http://localhost:8888/ShopTandT/admin/search-order?sortby=status-desc");
 				}
 			};
 			xhr.send();
@@ -390,7 +390,7 @@ th.th-action {
 								url = url.replace(arr[1], "search=" + txt);
 								window.location.assign(url);
 							} else {
-								window.location.assign("http://localhost:8888/SpringMVC/admin/search-order?search="+ txt);
+								window.location.assign("http://localhost:8888/ShopTandT/admin/search-order?search="+ txt);
 							}
 						};
 						xhr.send();
@@ -414,7 +414,7 @@ th.th-action {
 									url = url.replace(arr[1], "search=" + txt);
 									window.location.assign(url);
 								} else {
-									window.location.assign("http://localhost:8888/SpringMVC/admin/search-order?search="+ txt);
+									window.location.assign("http://localhost:8888/ShopTandT/admin/search-order?search="+ txt);
 								}
 							};
 							xhr.send();
@@ -466,14 +466,14 @@ th.th-action {
 																	.open(
 																			"GET",
 																			origin
-																					+ "/SpringMVC/admin/order-management?id_order="
+																					+ "/ShopTandT/admin/order-management?id_order="
 																					+ id_order
 																					+ "&status=2");
 															// What to do when server responds
 															xhr.onload = function() {
 																window.location
 																		.assign(origin
-																				+ "/SpringMVC/admin/search-order");
+																				+ "/ShopTandT/admin/search-order");
 															};
 															xhr.send();
 														}, 500);
@@ -507,7 +507,7 @@ th.th-action {
 							xhr.open("GET", "");
 							xhr.onload = function() {
 								window.location
-										.assign("http://localhost:8888/SpringMVC/admin/order-management/edit-order?id_order="
+										.assign("http://localhost:8888/ShopTandT/admin/order-management/edit-order?id_order="
 												+ id_order);
 							};
 							xhr.send();
@@ -520,7 +520,7 @@ th.th-action {
 							xhr.open("GET", "");
 							xhr.onload = function() {
 								window.location
-										.assign("http://localhost:8888/SpringMVC/admin/order-management/order-details?id_order="
+										.assign("http://localhost:8888/ShopTandT/admin/order-management/order-details?id_order="
 												+ id_order);
 							};
 							xhr.send();

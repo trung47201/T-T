@@ -81,7 +81,7 @@
 		<form method="post">
 			<div class="title-page">
 				<h3>ORDER DETAILS</h3>
-				<span><a href="/SpringMVC/">Home</a> / <a href="">Order
+				<span><a href="/ShopTandT/">Home</a> / <a href="">Order
 						details</a></span>
 			</div>
 			<!-- ######################################################################################################################################### -->
@@ -323,7 +323,7 @@
 				</div>
 			</div>
 			<div class="continue-cancel">
-				<a href="/SpringMVC/products/${ userid }"><i class="fa fa-angle-left"></i> Continue Shopping</a>	
+				<a href="/ShopTandT/products/${ userid }"><i class="fa fa-angle-left"></i> Continue Shopping</a>	
 				<a class="countermand" id="${ order.id }">Countermand <i class="fa fa-angle-right"></i></a>			
 			</div>
 		</form>
@@ -372,18 +372,18 @@
 					$("#msg-done").text("Success countermand!!!");
 					var xhr = new XMLHttpRequest();
 					xhr.open("GET",
-							"http://localhost:8888/SpringMVC/order/countermand/"+order_id);
+							"http://localhost:8888/ShopTandT/order/countermand/"+order_id);
 					xhr.onload = function() {
-						//window.location.assign("http://localhost:8888/SpringMVC/");
+						//window.location.assign("http://localhost:8888/ShopTandT/");
 					};
 					xhr.send();
 				} else {
 					$("#msg-done").text("Please wait for confirmation!!!");
 					var xhr = new XMLHttpRequest();
 					xhr.open("GET",
-							"http://localhost:8888/SpringMVC/order/countermand/"+order_id);
+							"http://localhost:8888/ShopTandT/order/countermand/"+order_id);
 					xhr.onload = function() {
-						//window.location.assign("http://localhost:8888/SpringMVC/");
+						//window.location.assign("http://localhost:8888/ShopTandT/");
 					};
 					xhr.send();
 				}
@@ -410,10 +410,10 @@
 			 var rememberme = this.checked;
 			  var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"http://localhost:8888/SpringMVC/home?rememberme="+rememberme);
+						"http://localhost:8888/ShopTandT/home?rememberme="+rememberme);
 				// What to do when server responds
 				xhr.onload = function() {
-					//window.location.assign("http://localhost:8888/SpringMVC/");
+					//window.location.assign("http://localhost:8888/ShopTandT/");
 				};
 				xhr.send();
 		  });
@@ -426,10 +426,10 @@
 		$(document).ready(function(){
 			var xhr = new XMLHttpRequest();
 			xhr.open("GET",
-					"http://localhost:8888/SpringMVC/home?logout=true");
+					"http://localhost:8888/ShopTandT/home?logout=true");
 			// What to do when server responds
 			xhr.onload = function() {
-				window.location.assign("http://localhost:8888/SpringMVC/");
+				window.location.assign("http://localhost:8888/ShopTandT/");
 			};
 			xhr.send();
 		});
@@ -484,11 +484,11 @@
 			} else {
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"http://localhost:8888/SpringMVC/home?username="
+						"http://localhost:8888/ShopTandT/home?username="
 								+ username +"&password="+password);
 				// What to do when server responds
 				xhr.onload = function() {
-					window.location.assign("http://localhost:8888/SpringMVC/");
+					window.location.assign("http://localhost:8888/ShopTandT/");
 				};
 				xhr.send();
 			}
@@ -496,34 +496,11 @@
 		}
 		
 	</script>
-	<script>
-		function test($a) {
-			for (let i = 1; i <= 10; i++) {
-				if (i == $a) {
-					var span_Text = document.getElementById("span_Id" + $a).innerText;
-					document.querySelector('input[name="search"]').value = span_Text;
-				}
-			}
+<script type="text/javascript">
+		if ( window.history.replaceState ) {
+		  window.history.replaceState( null, null, window.location.href );
 		}
 	</script>
-
-	<script type="text/javascript">
-		window.addEventListener("scroll", function() {
-			var div = document.getElementById('nav-search');
-			var div1 = document.getElementsByClassName('hidden-poster2');
-			if (window.scrollY > 80) {
-				div.style.visibility = 'visible';
-			} else {
-				div.style.visibility = 'hidden';
-			}
-			if (window.scrollY > 2280 && window.scrollY < 2380) {
-				div1.style.visibility = 'hidden';
-			} else {
-				div1.style.visibility = 'visible';
-			}
-		})
-	</script>
-
 	<script
 		src="<c:url value="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"/>"
 		integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"

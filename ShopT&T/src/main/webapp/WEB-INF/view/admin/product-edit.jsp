@@ -94,7 +94,7 @@ cursor: pointer;
 			<div class="origin">
 				<img
 					src="<c:url value="/assets/images/icons/icons8-home-page-64.png"/>"
-					alt=""> <a href="/SpringMVC/admin">Home</a>
+					alt=""> <a href="/ShopTandT/admin">Home</a>
 			</div>
 
 			<div>
@@ -108,7 +108,7 @@ cursor: pointer;
 				<p>/</p>
 				<img
 					src="<c:url value="/assets/images/icons/icons8-used-product-100-title.png"/>"
-					alt=""> <a href="/SpringMVC/admin/product">Product</a>
+					alt=""> <a href="/ShopTandT/admin/product">Product</a>
 			</div>
 
 			<c:if test="${ productedit == 'true' }">
@@ -128,7 +128,7 @@ cursor: pointer;
 			<div class="table-add-new-product importantNone">
 		</c:if>
 		<form
-			action="http://localhost:8888/SpringMVC/admin/product/edit/saveproduct/${ id }"
+			action="http://localhost:8888/ShopTandT/admin/product/edit/saveproduct/${ id }"
 			method="post" enctype="multipart/form-data">
 			<table class="table-new-product">
 				<tr>

@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -70,6 +72,13 @@ public class CartService implements CartRepository {
 				li.add(cart);
 			}
 			con.close();
+			Collections.sort(li, new Comparator<Cart>() {
+				@Override
+				public int compare(Cart o1, Cart o2) {
+					return o2.getId() - o1.getId();
+				}
+				
+			});
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -341,17 +350,23 @@ public class CartService implements CartRepository {
 			connectService = new ConnectService();
 			Connection conn = connectService.getConnect();
 			boolean check = false;
+			int pcs_at = color_size_id;
+			product_color_sizeService = new Product_color_sizeService();
+			Product_color_size p = product_color_sizeService.getByIdCS(color_size_id);
 			for (Cart c : getAllCart()) {
-				if (c.getColor_size().getId() == color_size_id && c.getUser().getId() == user_id) {
+				if (c.getColor_size().getProd().getId() == p.getProd().getId() && c.getUser().getId() == user_id) {
+					color_size_id = c.getColor_size().getId();
 					check = true;
 				}
 			}
 
 			if (check) {
-				String query = "update cart set quantity = quantity + 1 where color_size_id = ? and user_id = ?";
+				String query = "update `cart` set `quantity` = `quantity` + ?, `color_size_id` = ?  where color_size_id = ? and user_id = ?";
 				PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(query);
-				preparedStmt.setInt(1, color_size_id);
-				preparedStmt.setInt(2, user_id);
+				preparedStmt.setInt(1, quantity);
+				preparedStmt.setInt(2, pcs_at);
+				preparedStmt.setInt(3, color_size_id);
+				preparedStmt.setInt(4, user_id);
 				preparedStmt.executeUpdate();
 				conn.close();
 				return true;
@@ -368,6 +383,8 @@ public class CartService implements CartRepository {
 				conn.close();
 				return true;
 			}
+			
+			
 
 		} catch (Exception e) {
 			System.err.println("Got an exception!");

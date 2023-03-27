@@ -51,7 +51,7 @@ public class SignUpController {
 							System.out.println("Update user num in statistics DB unsuccess!");
 						}
 					}
-					return new ModelAndView("redirect: /ShopT&T/account/login");
+					return new ModelAndView("redirect: /ShopTandT/account/login");
 				} else {
 					System.out.println("Sign up unsuccess!");
 					mv.addObject("message", "false");

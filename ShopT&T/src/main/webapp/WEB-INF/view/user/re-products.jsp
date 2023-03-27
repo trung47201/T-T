@@ -723,9 +723,9 @@
 				var id_prod = $(this).val();
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"http://localhost:8888/SpringMVC/add-to-cart/"+id_user+"_"+id_prod);
+						"/ShopTandT/add-to-cart/"+id_user+"_"+id_prod);
 				xhr.onload = function() {
-					window.location.assign("http://localhost:8888/SpringMVC/cart/"+id_user);
+					window.location.assign("/ShopTandT/cart/"+id_user);
 				};
 				xhr.send();
 			});
@@ -734,9 +734,9 @@
 				var id_prod = $(this).val();
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"http://localhost:8888/SpringMVC/cart?id="+id_prod);
+						"/ShopTandT/cart?id="+id_prod);
 				xhr.onload = function() {
-					window.location.assign("http://localhost:8888/SpringMVC/cart");
+					window.location.assign("/ShopTandT/cart");
 				};
 				xhr.send();
 			});
@@ -753,9 +753,9 @@
 				var id_prod = e.target.id;
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"http://localhost:8888/SpringMVC/cart/checkout/"+id_user+"_"+id_prod);
+						"/ShopTandT/cart/checkout/"+id_user+"_"+id_prod);
 				xhr.onload = function() {
-					window.location.assign("http://localhost:8888/SpringMVC/cart/checkout/"+id_user+"_"+id_prod);
+					window.location.assign("/ShopTandT/cart/checkout/"+id_user+"_"+id_prod);
 				};
 				xhr.send();
 			});
@@ -764,9 +764,9 @@
 				var id_prod = e.target.id;
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"http://localhost:8888/SpringMVC/cart/checkout/"+id_user+"_"+id_prod);
+						"/ShopTandT/cart/checkout/"+id_user+"_"+id_prod);
 				xhr.onload = function() {
-					window.location.assign("http://localhost:8888/SpringMVC/cart/checkout/"+id_user+"_"+id_prod);
+					window.location.assign("/ShopTandT/cart/checkout/"+id_user+"_"+id_prod);
 				};
 				xhr.send();
 			});
@@ -775,9 +775,9 @@
 				var id_prod = e.target.id;
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"http://localhost:8888/SpringMVC/cart/checkout/"+id_prod);
+						"/ShopTandT/cart/checkout/"+id_prod);
 				xhr.onload = function() {
-					window.location.assign("http://localhost:8888/SpringMVC/cart/checkout/"+id_prod);
+					window.location.assign("/ShopTandT/cart/checkout/"+id_prod);
 				};
 				xhr.send();
 			});
@@ -786,9 +786,9 @@
 				var id_prod = e.target.id;
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"http://localhost:8888/SpringMVC/cart/checkout/"+id_prod);
+						"/ShopTandT/cart/checkout/"+id_prod);
 				xhr.onload = function() {
-					window.location.assign("http://localhost:8888/SpringMVC/cart/checkout/"+id_prod);
+					window.location.assign("/ShopTandT/cart/checkout/"+id_prod);
 				};
 				xhr.send();
 			});
@@ -822,9 +822,9 @@
 				xhr.open("GET", "");
 				xhr.onload = function() {
 					if(id_user == 0) {
-						window.location.assign("http://localhost:8888/SpringMVC/products?stylename="+ id_style);
+						window.location.assign("/ShopTandT/products?stylename="+ id_style);
 					} else {
-						window.location.assign("http://localhost:8888/SpringMVC/products/"+id_user+"?stylename="+ id_style);
+						window.location.assign("/ShopTandT/products/"+id_user+"?stylename="+ id_style);
 					}
 					
 				};
@@ -843,18 +843,18 @@
 				var xhr = new XMLHttpRequest();
 				if(id_user != "") {
 					xhr.open("GET",
-							"http://localhost:8888/SpringMVC/product-details/"+id_user+"_"+ id_prod);
+							"/ShopTandT/product-details/"+id_user+"_"+ id_prod);
 					xhr.onload = function() {
 						window.location
-								.assign("http://localhost:8888/SpringMVC/product-details/"+id_user+"_"+ id_prod);
+								.assign("/ShopTandT/product-details/"+id_user+"_"+ id_prod);
 					};
 				} else {
 					xhr.open("GET",
-							"http://localhost:8888/SpringMVC/product-details?product-id="
+							"/ShopTandT/product-details?product-id="
 									+ id_prod);
 					xhr.onload = function() {
 						window.location
-								.assign("http://localhost:8888/SpringMVC/product-details?product-id="
+								.assign("/ShopTandT/product-details?product-id="
 										+ id_prod);
 					};
 				}
@@ -866,18 +866,18 @@
 			var xhr = new XMLHttpRequest();
 			if(id_user != "") {
 				xhr.open("GET",
-						"http://localhost:8888/SpringMVC/product-details/"+id_user+"_"+ id_prod);
+						"/ShopTandT/product-details/"+id_user+"_"+ id_prod);
 				xhr.onload = function() {
 					window.location
-							.assign("http://localhost:8888/SpringMVC/product-details/"+id_user+"_"+ id_prod);
+							.assign("/ShopTandT/product-details/"+id_user+"_"+ id_prod);
 				};
 			} else {
 				xhr.open("GET",
-						"http://localhost:8888/SpringMVC/product-details?product-id="
+						"/ShopTandT/product-details?product-id="
 								+ id_prod);
 				xhr.onload = function() {
 					window.location
-							.assign("http://localhost:8888/SpringMVC/product-details?product-id="
+							.assign("/ShopTandT/product-details?product-id="
 									+ id_prod);
 				};
 			}
@@ -1355,9 +1355,9 @@
 			xhr.open("GET", "");
 			xhr.onload = function() {
 				if(id_user != 0) {
-					window.location.assign("/ShopT&T/products/shoes/"+id_user);
+					window.location.assign("/ShopTandT/products/shoes/"+id_user);
 				} else {
-					window.location.assign("/ShopT&T/products/shoes");
+					window.location.assign("/ShopTandT/products/shoes");
 				}
 			};
 			xhr.send();
@@ -1447,7 +1447,11 @@
 		});
 	</script>
 
-
+<script type="text/javascript">
+		if ( window.history.replaceState ) {
+		  window.history.replaceState( null, null, window.location.href );
+		}
+	</script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
 		integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"

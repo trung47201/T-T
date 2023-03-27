@@ -43,6 +43,6 @@ public class aLoginController {
 				System.out.println("login_t: false");
 			}
 		}
-		return new ModelAndView("redirect: /SpringMVC/admin");
+		return new ModelAndView("redirect: /ShopTandT/admin");
 	}
 }

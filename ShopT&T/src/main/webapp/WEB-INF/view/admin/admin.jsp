@@ -335,7 +335,7 @@ color: green !important;
 				$("#msg-login-admin").removeClass("none");
 				$("#msg-login-admin").text("Password is empty!");
 			} else {
-				 $('#my_form').attr('action', '/SpringMVC/admin/login');
+				 $('#my_form').attr('action', '/ShopTandT/admin/login');
 				 document.getElementById('my_form').submit();
 			}
 		}

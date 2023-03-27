@@ -126,7 +126,7 @@ public class ShoesController {
 					System.out.println("unsuccess");
 				}
 			}
-			return new ModelAndView("redirect: /SpringMVC/admin/product/add-new-product");
+			return new ModelAndView("redirect: /ShopTandT/admin/product/add-new-product");
 		}
 		
 		return mv;
@@ -139,7 +139,7 @@ public class ShoesController {
 				byte[] bytes = file.getBytes();
 				//String rootpath = System.getProperty("catalina.home");
 				
-				File dir = new File("D:\\TTTN\\SpringMVC-14-2\\SpringMVC\\src\\main\\webapp\\assets\\images\\products");
+				File dir = new File("D:\\TTTN\\ShopTandT-14-2\\ShopTandT\\src\\main\\webapp\\assets\\images\\products");
 				if(!dir.exists()) {
 					dir.mkdir();
 				}
