@@ -172,10 +172,10 @@ cursor: pointer;
 									style</option>
 								<c:forEach var="liStyle" items="${ style }">
 									<c:if test="${ liStyle.id == product.style.id }">
-										<option value="${ liStyle.id }" selected>${ liStyle.style_name }</option>
+										<option value="${ liStyle.id }" selected>${ liStyle.sub_category_name }</option>
 									</c:if>
 									<c:if test="${ liStyle.id != product.style.id }">
-										<option value="${ liStyle.id }">${ liStyle.style_name }</option>
+										<option value="${ liStyle.id }">${ liStyle.sub_category_name }</option>
 									</c:if>
 								</c:forEach>
 							</select>

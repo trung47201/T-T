@@ -15,7 +15,7 @@ import TT.Model.Product;
 import TT.Model.Product_color_size;
 import TT.Model.Role;
 import TT.Model.Sizes;
-import TT.Model.Style;
+import TT.Model.Sub_category;
 import TT.Model.User;
 import TT.Service.User.Product_color_sizeService;
 import TT.Service.User.ConnectService;
@@ -31,7 +31,7 @@ public class ClothingService {
 	private Brand brand;
 	private User user;
 	private Role role;
-	private Style style;
+	private Sub_category sub_category;
 	private Product_color_size product_color_size;
 	private Color color;
 	private Sizes size;
@@ -47,7 +47,7 @@ public class ClothingService {
 			stmt = (Statement) con.createStatement();
 			ResultSet rs = stmt
 					.executeQuery("select * from product " + "Inner join brand on product.brand_id = brand.id "
-							+ "Inner join style on product.style_id = style.id "
+							+ "Inner join sub_category on product.sub_category_id = sub_category.id "
 							+ "Inner join category on product.category_id = category.id "
 							+ "Inner join user on product.user_id = user.id "
 							+ "Inner join gender on product.gender_id = gender.id "
@@ -57,7 +57,7 @@ public class ClothingService {
 				brand = new Brand();
 				user = new User();
 				role = new Role();
-				style = new Style();
+				sub_category = new Sub_category();
 				gender = new Gender();
 
 				gender.setId(rs.getInt("gender_id"));
@@ -83,14 +83,14 @@ public class ClothingService {
 				brand.setId(rs.getInt("brand_id"));
 				brand.setBrand_name(rs.getString("brand_name"));
 
-				style.setId(rs.getInt("style_id"));
-				style.setStyle_name(rs.getString("style_name"));
+				sub_category.setId(rs.getInt("sub_category_id"));
+				sub_category.setSub_category_name(rs.getString("sub_category_name"));
 
 				product.setId(rs.getInt("id"));
 				product.setTitle(rs.getString("title"));
 				product.setPrice(rs.getDouble("price"));
 				product.setDiscount(rs.getInt("discount"));
-				product.setStyle(style);
+				product.setSub_category(sub_category);
 				product.setThumbnail(rs.getString("thumbnail"));
 				product.setDescription(rs.getString("description"));
 				product.setBrand(brand);

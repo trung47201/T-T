@@ -2,8 +2,8 @@ package TT.Repository.User;
 
 import java.util.List;
 
-import TT.Model.Style;
+import TT.Model.Sub_category;
 
 public interface StyleRepository {
-	public List<Style> getAllStyle();
+	public List<Sub_category> getAllSubCategory();
 }

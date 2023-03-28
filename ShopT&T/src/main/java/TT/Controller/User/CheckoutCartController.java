@@ -22,7 +22,7 @@ import TT.Service.User.PostsService;
 import TT.Service.User.Product_color_sizeService;
 import TT.Service.User.StatisticsService;
 import TT.Service.User.VoucherService;
-import TT.Service.User.Product.ProductService;
+import TT.Service.User.Product.ShoesService;
 
 @Controller
 public class CheckoutCartController {
@@ -32,7 +32,7 @@ public class CheckoutCartController {
 	private CartService cartService;
 	private CheckoutService checkoutService;
 	private Product_color_sizeService product_color_sizeService;
-	private ProductService productService;
+	private ShoesService shoesService;
 	private StatisticsService statisticsService;
 	private PostsService postsService;
 
@@ -44,7 +44,7 @@ public class CheckoutCartController {
 		voucherService = new VoucherService();
 		cartService = new CartService();
 		product_color_sizeService = new Product_color_sizeService();
-		productService = new ProductService();
+		shoesService = new ShoesService();
 		statisticsService = new StatisticsService();
 
 		HttpSession session = request.getSession();
@@ -135,7 +135,7 @@ public class CheckoutCartController {
 							&& product_color_sizeService.updateColor_size_Quantity(
 									cart.getColor_size().getSize().getId(), cart.getColor_size().getColor().getId(),
 									cart.getColor_size().getProd().getId(), cart.getQuantity())
-							&& productService.updateProduct_Sold(cart.getColor_size().getProd().getId(),
+							&& shoesService.updateProduct_Sold(cart.getColor_size().getProd().getId(),
 									cart.getQuantity())
 							&& statisticsService.update_order_revenue_product_num_in_statistics_DB(cart.getQuantity(),
 									(double) Math.round(vch_discount * price_at) / 100)

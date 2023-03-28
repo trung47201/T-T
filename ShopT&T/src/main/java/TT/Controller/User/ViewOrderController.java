@@ -7,7 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import TT.Service.User.OrderService;
 import TT.Service.User.Order_detailsService;
-import TT.Service.User.StyleService;
+import TT.Service.User.SubCategoryService;
 import TT.Service.User.UserService;
 
 
@@ -16,7 +16,7 @@ public class ViewOrderController {
 	private UserService userService;
 	private OrderService orderService;
 	private Order_detailsService order_detailsService;
-	private StyleService styleService;
+	private SubCategoryService subCategoryService;
 	
 	@RequestMapping(value = {"order/{id}"})
 	public ModelAndView loadContact(@PathVariable String id){
@@ -24,7 +24,7 @@ public class ViewOrderController {
 		userService = new UserService();
 		orderService = new OrderService();
 		order_detailsService = new Order_detailsService();
-		styleService = new StyleService();
+		subCategoryService = new SubCategoryService();
 
 		
 		if(orderService.get_all_order_by_user_id(Integer.parseInt(id)).size() > 0) {
@@ -37,7 +37,7 @@ public class ViewOrderController {
 		
 		mv.addObject("avatar", userService.getAvatarByUserID(Integer.parseInt(id)));
 		mv.addObject("userID", id);
-		mv.addObject("style", styleService.getAllStyle());
+		mv.addObject("style", subCategoryService.getAllSubCategory());
 		return mv;
 	}
 }

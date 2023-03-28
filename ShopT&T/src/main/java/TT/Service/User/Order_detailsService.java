@@ -13,13 +13,13 @@ import com.mysql.jdbc.Statement;
 import TT.Model.Brand;
 import TT.Model.Color;
 import TT.Model.Gender;
-import TT.Model.Order_;
+import TT.Model.Order;
 import TT.Model.Order_details;
 import TT.Model.Product;
 import TT.Model.Role;
 import TT.Model.Sizes;
 import TT.Model.Status;
-import TT.Model.Style;
+import TT.Model.Sub_category;
 import TT.Model.User;
 import TT.Model.Voucher;
 import TT.Repository.User.Order_detailsRepository;
@@ -28,13 +28,13 @@ public class Order_detailsService implements Order_detailsRepository {
 	private ConnectService connectService;
 	private Order_details order_details;
 	private OrderService orderService;
-	private Order_ order_;
+	private Order order;
 	private Voucher voucher;
 	private Product product;
 	private Brand brand;
 	private User user;
 	private Role role;
-	private Style style;
+	private Sub_category sub_category;
 	private Color color;
 	private Sizes size;
 	private Gender gender;
@@ -57,12 +57,12 @@ public class Order_detailsService implements Order_detailsRepository {
 							+ "Inner join sizes on sizes.id = order_details.size_id "
 							+ "Inner join color on color.id = order_details.color_id "
 							+ "Inner join brand on product.brand_id = brand.id "
-							+ "Inner join style on product.style_id = style.id "
+							+ "Inner join sub_category on product.sub_category_id = sub_category.id "
 							+ "Inner join user on product.user_id = user.id "
 							+ "Inner join gender on product.gender_id = gender.id "
 							+ "Inner join role on role.id = user.role_id " + "group by order_details.id");
 			while (rs.next()) {
-				order_ = new Order_();
+				order = new Order();
 				voucher = new Voucher();
 				color = new Color();
 				size = new Sizes();
@@ -70,7 +70,7 @@ public class Order_detailsService implements Order_detailsRepository {
 				brand = new Brand();
 				user = new User();
 				role = new Role();
-				style = new Style();
+				sub_category = new Sub_category();
 				gender = new Gender();
 				order_details = new Order_details();
 				status = new Status();
@@ -89,20 +89,20 @@ public class Order_detailsService implements Order_detailsRepository {
 				voucher.setUpdated_at(rs.getTimestamp("updated_at"));
 				voucher.setDescription(rs.getString("description"));
 
-				order_.setId(rs.getInt("order_id"));
-				order_.setFullname(rs.getString("fullname"));
-				order_.setEmail(rs.getString("email"));
-				order_.setPhone_number(rs.getString("phone_number"));
-				order_.setAddress(rs.getString("address"));
-				order_.setOrder_date(rs.getDate("order_date"));
-				order_.setUpdated_at(rs.getDate("updated_at"));
-				order_.setVoucher(voucher);
-				order_.setDiscount_at(rs.getDouble("discount_at"));
-				order_.setNote(rs.getString("note"));
-				order_.setStatus(status);
-				order_.setMethod(rs.getString("method"));
-				order_.setBill(rs.getString("bill"));
-				order_.setRequest(rs.getInt("request"));
+				order.setId(rs.getInt("order_id"));
+				order.setFullname(rs.getString("fullname"));
+				order.setEmail(rs.getString("email"));
+				order.setPhone_number(rs.getString("phone_number"));
+				order.setAddress(rs.getString("address"));
+				order.setOrder_date(rs.getDate("order_date"));
+				order.setUpdated_at(rs.getDate("updated_at"));
+				order.setVoucher(voucher);
+				order.setDiscount_at(rs.getDouble("discount_at"));
+				order.setNote(rs.getString("note"));
+				order.setStatus(status);
+				order.setMethod(rs.getString("method"));
+				order.setBill(rs.getString("bill"));
+				order.setRequest(rs.getInt("request"));
 
 				gender.setId(rs.getInt("gender_id"));
 				gender.setGender_name(rs.getString("gender_name"));
@@ -128,8 +128,8 @@ public class Order_detailsService implements Order_detailsRepository {
 				brand.setId(rs.getInt("brand_id"));
 				brand.setBrand_name(rs.getString("brand_name"));
 
-				style.setId(rs.getInt("style_id"));
-				style.setStyle_name(rs.getString("style_name"));
+				sub_category.setId(rs.getInt("sub_category_id"));
+				sub_category.setSub_category_name(rs.getString("sub_category_name"));
 
 				color.setId(rs.getInt("color_id"));
 				color.setColor_name(rs.getString("color_name"));
@@ -144,7 +144,7 @@ public class Order_detailsService implements Order_detailsRepository {
 				product.setTitle(rs.getString("title"));
 				product.setPrice(rs.getDouble("price"));
 				product.setDiscount(rs.getInt("discount"));
-				product.setStyle(style);
+				product.setSub_category(sub_category);
 				product.setThumbnail(rs.getString("thumbnail"));
 				product.setDescription(rs.getString("description"));
 				product.setBrand(brand);
@@ -157,7 +157,7 @@ public class Order_detailsService implements Order_detailsRepository {
 				product.setGender(gender);
 
 				order_details.setId(rs.getInt("id"));
-				order_details.setOrder_(order_);
+				order_details.setOrder_(order);
 				order_details.setPrice_at(rs.getDouble("price_at"));
 				order_details.setQuantity(rs.getInt("quantity"));
 				order_details.setProd(product);
@@ -234,7 +234,7 @@ public class Order_detailsService implements Order_detailsRepository {
 	public List<Order_details> get_all_order_details_by_user_id(int user_id) {
 		orderService = new OrderService();
 		List<Order_details> li = new LinkedList<>();
-		for (Order_ o : orderService.get_all_order_by_user_id(user_id)) {
+		for (Order o : orderService.get_all_order_by_user_id(user_id)) {
 			for (Order_details od : get_all_order_details_by_order_id(o.getId())) {
 				li.add(od);
 			}

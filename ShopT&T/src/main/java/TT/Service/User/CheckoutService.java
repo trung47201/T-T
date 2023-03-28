@@ -15,11 +15,11 @@ import TT.Model.Product;
 import TT.Model.Product_color_size;
 import TT.Model.Sizes;
 import TT.Repository.User.CheckoutRepository;
-import TT.Service.User.Product.ProductService;
+import TT.Service.User.Product.ShoesService;
 
 public class CheckoutService implements CheckoutRepository {
 	private ConnectService connectService;
-	private ProductService productService;
+	private ShoesService shoesService;
 	private VoucherService voucherService;
 	private Product_color_sizeService product_color_sizeService;
 
@@ -113,8 +113,8 @@ public class CheckoutService implements CheckoutRepository {
 		String arr[] = txt.split("/");
 		for (int i = 0; i < arr.length; i++) {
 			String prod[] = arr[i].split("_");
-			ProductService productService = new ProductService();
-			Product p = productService.getProduct(Integer.parseInt(prod[0]));
+			ShoesService shoesService = new ShoesService();
+			Product p = shoesService.getProduct(Integer.parseInt(prod[0]));
 			li.add(p);
 		}
 		return li;
@@ -167,8 +167,8 @@ public class CheckoutService implements CheckoutRepository {
 		for (int i = 0; i < arr.length; i++) {
 			String prod[] = arr[i].split("_");
 			Double am = Double.parseDouble(prod[3]);
-			ProductService productService = new ProductService();
-			Product p = productService.getProduct(Integer.parseInt(prod[0]));
+			ShoesService shoesService = new ShoesService();
+			Product p = shoesService.getProduct(Integer.parseInt(prod[0]));
 			if (p.getDiscount() > 0) {
 				t += p.getPrice() * am - p.getPrice() * am * p.getDiscount() / 100;
 			} else {
@@ -190,9 +190,9 @@ public class CheckoutService implements CheckoutRepository {
 	}
 
 	public double get_price_at(int quantity, String code, int id_prod) {
-		productService = new ProductService();
+		shoesService = new ShoesService();
 		voucherService = new VoucherService();
-		Product p = productService.getProduct(id_prod);
+		Product p = shoesService.getProduct(id_prod);
 
 		double price = 0;
 		double total = 0;
@@ -219,9 +219,9 @@ public class CheckoutService implements CheckoutRepository {
 	}
 
 	public double get_discount_at(int quantity, String code, int id_prod) {
-		productService = new ProductService();
+		shoesService = new ShoesService();
 		voucherService = new VoucherService();
-		Product p = productService.getProduct(id_prod);
+		Product p = shoesService.getProduct(id_prod);
 
 		double price = 0;
 		double discount_at = 0;

@@ -8,7 +8,7 @@
 	pageEncoding="UTF-8"%>
 <link rel="stylesheet" href='<c:url value="/assets/css/bootstrap.css"/>'>
 <link rel="stylesheet" href='<c:url value="/assets/js/bootstrap.js"/>'>
-<link rel="stylesheet" href='<c:url value="/assets/css/r-index.css"/>'>
+<link rel="stylesheet" href='<c:url value="/assets/css/f-index.css"/>'>
 <link rel="stylesheet"
 	href='<c:url value="/assets/css/login-icon.css"/>'>
 <link rel="stylesheet"
@@ -21,19 +21,22 @@
 <link rel="stylesheet"
 	href='<c:url value="/assets/css/swiper-bundle.min.css"/>'>
 <link rel="stylesheet"
-	href='<c:url value="/assets/css/re-product_details2.css"/>'>
+	href='<c:url value="/assets/css/r-product_details.css"/>'>
 <link rel="stylesheet"
 	href='<c:url value="/assets/css/r-btn-effect.css"/>'>
 <link rel="stylesheet" href="<c:url value="/assets/css/home.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/navscroll.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/r-header.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/re-menu.css"/>">
-<link rel="stylesheet" href="<c:url value="/assets/css/r-effect.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/f-effect.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/r-footer.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/text.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/r-posts.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/re-text.css"/>">
-
+<link rel="stylesheet"
+	href="<c:url value="/assets/css/f-btn-effect.css"/>">
+<style>
+</style>
 <body style="color: #222121;">
 	<jsp:include page="../layouts/user/re-menu.jsp"></jsp:include>
 
@@ -89,7 +92,7 @@
 						</div>
 					</div>
 					<div class="stylename-product-details">
-						<p>${ product.style.style_name }</p>
+						<p>${ product.sub_category.sub_category_name }</p>
 					</div>
 					<div class="rate-product-details">
 						<p>${ averageRating }</p>
@@ -101,7 +104,8 @@
 
 						<c:if test="${ product.discount > 0 }">
 							<h2>
-								$<fmt:formatNumber type="number" maxFractionDigits="2"
+								$
+								<fmt:formatNumber type="number" maxFractionDigits="2"
 									value="${ product.price - product.price * product.discount/100 }" />
 							</h2>
 							<p>$${ product.price }</p>
@@ -114,20 +118,28 @@
 					</div>
 
 					<div class="color-product-details">
-						<p>Color: name of color</p>
+						<p class="name-color">
+							Color: <span>aaa</span>
+						</p>
 						<div class="list-color-product-details">
 							<c:forEach var="liColor" items="${ listColor }" varStatus="index">
 								<c:if test="${ index.getIndex() == 0 }">
 									<span class="select-color selected-color"
 										id="${ product.id }_${ liColor.color.id }"
-										style="background: ${ liColor.color.rgb }"></span>
+										style="background: ${ liColor.color.rgb }"> <input
+										type="hidden" name="" id="name-color-input"
+										value="${ liColor.color.color_name }">
+									</span>
 									<input type="hidden" name="color" id="color"
 										value="${ liColor.color.id }">
+
 								</c:if>
 								<c:if test="${ index.getIndex() != 0 }">
 									<span class="select-color"
 										id="${ product.id }_${ liColor.color.id }"
-										style="background: ${ liColor.color.rgb }"></span>
+										style="background: ${ liColor.color.rgb }"><input
+										type="hidden" name="" id="name-color-input"
+										value="${ liColor.color.color_name }"></span>
 								</c:if>
 							</c:forEach>
 						</div>
@@ -176,22 +188,21 @@
 
 					</div>
 					<div class="amount-product-details">
-						<input class="minus-plus" type="button" name="" id="minus" value="-">
-						<input class="input_amount" type="text" name="input_amount"
-							id="input_amount" value="1"> <input
+						<input class="minus-plus" type="button" name="" id="minus"
+							value="-"> <input class="input_amount" type="text"
+							name="input_amount" id="input_amount" value="1"> <input
 							class="minus-plus" type="button" name="" id="plus" value="+">
 					</div>
 					<div class="btn-add-buy">
-						<div class="btn-add-to-cart">
-							<input type="button" name="${ product.id }"
-								id="add-to-cart-input" value="Add to cart">
+						<div class="btn-effect">
+							<button type="button" class="addtocart gray" name="${ product.id }"
+								id="add-to-cart-input">Add to cart</button>
 						</div>
-						<div class="btn-buy-now btn-add-to-cart-effect">
-							<input type="button" name="" id="buy-now-input" value="Buy now"
-								onclick="buynow()">
+						<div class="btn-effect">
+							<button class="buynow" type="button" name="" id="buy-now-input"
+								onclick="buynow()">Buy now</button>
 						</div>
 					</div>
-
 				</div>
 			</div>
 			<div class="tab-product-details">
@@ -454,6 +465,11 @@
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
+	<script type="text/javascript">
+		var name = $("#name-color-input").val();
+		$(".name-color span").text(name);
+	</script>
+
 	<script>
 	$("#plus").click(function() {
 		var qty = $("#input_amount").val();
@@ -595,6 +611,8 @@
 				for (let i=0; i<color.length; i++) {
 					if (color[i].id == this.id) {
 						$(this).addClass("selected-color");
+						var value = $(".select-color.selected-color input").val();
+						$(".name-color span").text(value);
 					} else {
 						$(color[i]).removeClass("selected-color");
 						for (let j=0; j<sizes.length; j++) {
@@ -649,16 +667,15 @@
 	</script>
 	<script>
 		$(document).ready(function() {
-			$(".btn-add-to-cart").hover(function() {
-				$(".btn-add-to-cart").addClass("btn-add-to-cart-effect");
-				$(".btn-buy-now").removeClass("btn-add-to-cart-effect");
+			$(".addtocart").hover(function() {
+				$(".buynow").addClass("gray");
+				$(".addtocart").removeClass("gray");
 			});
 		});
 		$(document).ready(function() {
-			$(".btn-buy-now").hover(function() {
-
-				$(".btn-buy-now").addClass("btn-add-to-cart-effect");
-				$(".btn-add-to-cart").removeClass("btn-add-to-cart-effect");
+			$(".buynow").hover(function() {
+				$(".addtocart").addClass("gray");
+				$(".buynow").removeClass("gray");
 			});
 		});
 	</script>
@@ -757,7 +774,7 @@
 						});
 	</script>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 		if ( window.history.replaceState ) {
 		  window.history.replaceState( null, null, window.location.href );
 		}

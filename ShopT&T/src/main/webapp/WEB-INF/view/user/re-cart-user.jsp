@@ -8,7 +8,7 @@
 	pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="<c:url value="/assets/css/bootstrap.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/js/bootstrap.js"/>">
-<link rel="stylesheet" href="<c:url value="/assets/css/r-index.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/f-index.css"/>">
 <link rel="stylesheet"
 	href="<c:url value="/assets/css/bootstrap.min.css"/>">
 <link rel="stylesheet"
@@ -25,15 +25,16 @@
 <link rel="stylesheet"
 	href='<c:url value="/assets/css/login-icon.css"/>'>
 <link rel="stylesheet"
-	href="<c:url value="/assets/css/r-zoom-img.css"/>">
+	href="<c:url value="/assets/css/f-zoom-img.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/r-header.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/re-menu.css"/>">
-<link rel="stylesheet" href="<c:url value="/assets/css/r-effect.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/f-effect.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/r-footer.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/text.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/r-posts.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/re-text.css"/>">
-
+<link rel="stylesheet"
+	href="<c:url value="/assets/css/checkbox-radio-input.css"/>">
 <style>
 </style>
 <body style="color: black;">
@@ -559,7 +560,7 @@
 			}
 		}, 5000);
 	</script>
-<script type="text/javascript">
+	<script type="text/javascript">
 		if ( window.history.replaceState ) {
 		  window.history.replaceState( null, null, window.location.href );
 		}

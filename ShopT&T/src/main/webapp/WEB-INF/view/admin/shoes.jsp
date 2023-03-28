@@ -143,7 +143,7 @@
 							<td>${ liProduct.title }</td>
 							<td>${ liProduct.price }</td>
 							<td>${ liProduct.discount }</td>
-							<td>${ liProduct.style.style_name }</td>
+							<td>${ liProduct.style.sub_category_name }</td>
 							<td>${ liProduct.brand.brand_name }</td>
 							<td>${ liProduct.gender.gender_name }</td>
 							<td class="td-date">${ liProduct.created_at }</td>
@@ -214,7 +214,7 @@
 								<select class="selected-add-new-product" id="select-style" name="style">
 									<option value="" disabled="disabled" selected>Choose style</option>
 									<c:forEach var="liStyle" items="${ listStyle }">
-										<option value="${ liStyle.id }">${ liStyle.style_name }</option>
+										<option value="${ liStyle.id }">${ liStyle.sub_category_name }</option>
 									</c:forEach>
 								</select>
 							</div>
@@ -678,7 +678,7 @@
 						<c:forEach var="liStyle" items="${ listStyle }">
 							<tr>
 								<td class="td-center">${ liStyle.id }</td>
-								<td>${ liStyle.style_name }</td>
+								<td>${ liStyle.sub_category_name }</td>
 								<td class="td-action">
 									<button class="btn-edit-order" id="${ liStyle.id }">
 										<img

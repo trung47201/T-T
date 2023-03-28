@@ -18,7 +18,7 @@ import TT.Model.Product;
 import TT.Model.Product_color_size;
 import TT.Model.Role;
 import TT.Model.Sizes;
-import TT.Model.Style;
+import TT.Model.Sub_category;
 import TT.Model.User;
 import TT.Service.User.Product_color_sizeService;
 import TT.Service.User.ConnectService;
@@ -34,14 +34,14 @@ public class NewArrivalsService {
 	private Brand brand;
 	private User user;
 	private Role role;
-	private Style style;
+	private Sub_category sub_category;
 	private Product_color_size product_color_size;
 	private Color color;
 	private Sizes size;
 	private Gender gender;
 
 	public List<Product> getNewArrivals() {
-		ProductService p = new ProductService();
+		ShoesService p = new ShoesService();
 		List<Product> li = p.getAllProducts();
 		Collections.sort(li, new Comparator<Product>() {
 			@Override

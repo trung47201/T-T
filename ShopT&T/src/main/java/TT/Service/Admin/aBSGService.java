@@ -4,15 +4,15 @@ import java.util.List;
 
 import TT.Model.Brand;
 import TT.Model.Gender;
-import TT.Model.Style;
+import TT.Model.Sub_category;
 import TT.Repository.Admin.aBSGRepository;
 import TT.Service.User.BrandService;
 import TT.Service.User.GenderService;
-import TT.Service.User.StyleService;
+import TT.Service.User.SubCategoryService;
 
 public class aBSGService implements aBSGRepository{
 
-	private StyleService styleService;
+	private SubCategoryService subCategoryService;
 	private BrandService brandService;
 	private GenderService genderService;
 	
@@ -24,9 +24,9 @@ public class aBSGService implements aBSGRepository{
 	}
 
 	@Override
-	public List<Style> getAllStyle() {
-		styleService = new StyleService();
-		return styleService.getAllStyle();
+	public List<Sub_category> getAllSubCategory() {
+		subCategoryService = new SubCategoryService();
+		return subCategoryService.getAllSubCategory();
 	}
 
 	@Override

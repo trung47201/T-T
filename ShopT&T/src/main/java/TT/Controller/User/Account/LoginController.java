@@ -27,7 +27,7 @@ public class LoginController {
 
 	@RequestMapping(value = { "account/login" })
 	public ModelAndView login(HttpServletRequest request, HttpServletResponse response) {
-		ModelAndView mv = new ModelAndView("user/login");
+		ModelAndView mv = new ModelAndView("user/re-login");
 
 		cartService = new CartService();
 		postsService = new PostsService();

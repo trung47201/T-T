@@ -1,0 +1,78 @@
+hr.shadow {
+    background-color: white;
+    box-shadow: 0 0 3px black !important;
+}
+body::-webkit-scrollbar-track {
+	border-radius: 10px;
+	box-shadow: inset 0 0 5px #cb82a9;
+}
+div.section-3 {
+    margin-top: 347px;
+}
+.position-product-effect {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+}
+.swiper-3d, .swiper-3d.swiper-css-mode .swiper-wrapper {
+    perspective: 800px;
+}
+.swiper {
+    position: relative;
+    width: 69%;
+    padding-bottom: 50px;
+}
+.backward {
+    width: 12%;
+    display: flex;
+    justify-content: left;
+    rotate: 180deg;
+}
+.forward {
+    width: 12%;
+}
+
+.forward img:hover, .backward img:hover {
+cursor: pointer;
+}
+
+a.poster:hover:after {
+	background-color: #cb82a9 !important;
+}
+
+a.poster2:hover {
+	color: #cb82a9 !important;
+	text-decoration: none;
+}
+a.poster2:hover:after {
+	background-color:  #cb82a9 !important;
+}
+a.poster:hover {
+	color:  #cb82a9 !important;
+	text-decoration: none;
+}
+
+.img-header {
+    height: 240px;
+    overflow: hidden;
+    position: relative;
+}
+.img-header img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+::-moz-selection {
+    /* Firefox */
+    color: #ffffff;
+    background: #fbbee1;
+}
+
+::selection {
+    color: #ffffff;
+    background: #fbbee1;
+}

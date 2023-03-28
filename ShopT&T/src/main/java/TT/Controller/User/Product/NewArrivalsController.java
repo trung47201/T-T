@@ -15,18 +15,18 @@ import org.springframework.web.servlet.ModelAndView;
 import TT.Service.User.ColorService;
 import TT.Service.User.PostsService;
 import TT.Service.User.SizeService;
-import TT.Service.User.StyleService;
+import TT.Service.User.SubCategoryService;
 import TT.Service.User.UserService;
 import TT.Service.User.Product.ClothingService;
 import TT.Service.User.Product.JewelryService;
 import TT.Service.User.Product.NewArrivalsService;
-import TT.Service.User.Product.ProductService;
+import TT.Service.User.Product.ShoesService;
 
 @Controller
 public class NewArrivalsController {
 	private UserService userService;
-	private ProductService productService;
-	private StyleService styleService;
+	private ShoesService shoesService;
+	private SubCategoryService subCategoryService;
 	private SizeService sizeService;
 	private ColorService colorService;
 	private NewArrivalsService arrivalsService;
@@ -36,8 +36,8 @@ public class NewArrivalsController {
 	public ModelAndView clothing(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("user/re-products");
 
-		productService = new ProductService();
-		styleService = new StyleService();
+		shoesService = new ShoesService();
+		subCategoryService = new SubCategoryService();
 		sizeService = new SizeService();
 		colorService = new ColorService();
 		arrivalsService = new NewArrivalsService();
@@ -109,17 +109,17 @@ public class NewArrivalsController {
 			hm.put("gender", gender);
 		}
 		if (!size.equals("null")) {
-			mv.addObject("checkedSize", productService.getSizeCheckedByString(size));
+			mv.addObject("checkedSize", shoesService.getSizeCheckedByString(size));
 			hm.put("size", size);
 		}
 		if (!color.equals("null")) {
-			mv.addObject("checkedColor", productService.getColorCheckedByString(color));
+			mv.addObject("checkedColor", shoesService.getColorCheckedByString(color));
 			hm.put("color", color);
 		}
 
 		if (search != null) {
-			if (productService.get_all_product_by_search_keywords(search).size() > 0) {
-				mv.addObject("listProducts", productService.get_all_product_by_search_keywords(search));
+			if (shoesService.get_all_product_by_search_keywords(search).size() > 0) {
+				mv.addObject("listProducts", shoesService.get_all_product_by_search_keywords(search));
 			} else {
 				mv.addObject("listProductsEmpty", "");
 				mv.addObject("keyword", search);
@@ -128,7 +128,7 @@ public class NewArrivalsController {
 		} else {
 			if (color.equals("null") && size.equals("null") && gender.equals("null") && sortby.equals("null")
 					&& price.equals("null") && stylename.equals("null") && rate.equals("null")) {
-				if (productService.getAllProducts().size() == 0) {
+				if (shoesService.getAllProducts().size() == 0) {
 					mv.addObject("listProducts", "");
 				} else {
 					if (arrivalsService.getNewArrivals().size() > 0) {
@@ -136,11 +136,11 @@ public class NewArrivalsController {
 					}
 				}
 			} else {
-				if (!productService.getAllProductsColorSize(hm).isEmpty()) {
-					if (productService.getAllProductsColorSize(hm).size() == 0) {
+				if (!shoesService.getAllProductsColorSize(hm).isEmpty()) {
+					if (shoesService.getAllProductsColorSize(hm).size() == 0) {
 						mv.addObject("listProducts", "");
 					} else {
-						mv.addObject("listProducts", productService.getAllProductsColorSize(hm));
+						mv.addObject("listProducts", shoesService.getAllProductsColorSize(hm));
 					}
 				}
 			}
@@ -148,7 +148,7 @@ public class NewArrivalsController {
 		}
 		mv.addObject("color", colorService.getAllColor());
 		mv.addObject("listSize", sizeService.getAllSize());
-		mv.addObject("style", styleService.getAllStyle());
+		mv.addObject("style", subCategoryService.getAllSubCategory());
 		mv.addObject("title", "CLOTHING");
 
 		mv.addObject("hmPosts", postsService.listPost());

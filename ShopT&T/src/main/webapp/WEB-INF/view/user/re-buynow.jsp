@@ -8,7 +8,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <link rel="stylesheet"
-	href="<c:url value="/assets/css/r-checkout.css"/>">
+	href="<c:url value="/assets/css/f-checkout.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/bootstrap.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/js/bootstrap.js"/>">
 <link rel="stylesheet"
@@ -21,6 +21,10 @@
 	href="<c:url value="/assets/css/re-size_depend_color.css"/>">
 <link rel="stylesheet"
 	href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />">
+<link rel="stylesheet"
+	href="<c:url value="/assets/css/f-btn-effect.css"/>">
+	<link rel="stylesheet"
+	href="<c:url value="/assets/css/checkbox-radio-input.css"/>">
 <style>
 </style>
 <body>
@@ -73,8 +77,8 @@
 			</c:if>
 			<c:if test="${ sessionScope.userid == null }">
 				<div class="login">
-					<a class='a-login' href="/ShopTandT/account/login">Login</a>&nbsp;/&nbsp; <a
-						href="/ShopTandT/account/signup">Sign Up</a>
+					<a class='a-login' href="/ShopTandT/account/login">Login</a>&nbsp;/&nbsp;
+					<a href="/ShopTandT/account/signup">Sign Up</a>
 				</div>
 			</c:if>
 		</div>
@@ -290,8 +294,8 @@
 							<input type="text" name="voucher" id="voucher"
 								placeholder="Voucher">
 						</div>
-						<div class="apply-voucher">
-							<input type="button" name="apply" id="apply" value="Apply">
+						<div class="btn-effect">
+							<button type="button" name="apply" id="apply">Apply</button>
 						</div>
 					</div>
 				</c:if>
@@ -691,7 +695,9 @@
 					</div>
 				</c:if>
 				<div class="btn-order">
-					<input type="button" name="order" id="order" value="Order">
+					<div class="btn-order-effect">
+						<button type="button" name="order" id="order" value="">Order</button>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -12,7 +12,7 @@ import java.util.List;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
-import TT.Model.Order_;
+import TT.Model.Order;
 import TT.Model.Status;
 import TT.Model.User;
 import TT.Model.Voucher;
@@ -21,14 +21,14 @@ import TT.Repository.User.OrderRepository;
 public class OrderService implements OrderRepository {
 	private ConnectService connectService;
 	private UserService userService;
-	private Order_ order_;
+	private Order order;
 	private Voucher voucher;
 	private Status status;
 	private MD5Service md5Service;
 
 	@Override
-	public List<Order_> getAllOrder() {
-		List<Order_> li = null;
+	public List<Order> getAllOrder() {
+		List<Order> li = null;
 		try {
 			connectService = new ConnectService();
 			li = new ArrayList<>();
@@ -39,7 +39,7 @@ public class OrderService implements OrderRepository {
 					.executeQuery("select * from order_ " + "Inner join voucher on order_.voucher_id = voucher.id "
 							+ "Inner join status on order_.status_id = status.id order by order_.id");
 			while (rs.next()) {
-				order_ = new Order_();
+				order = new Order();
 				voucher = new Voucher();
 				status = new Status();
 
@@ -57,22 +57,22 @@ public class OrderService implements OrderRepository {
 				voucher.setUpdated_at(rs.getTimestamp("updated_at"));
 				voucher.setDescription(rs.getString("description"));
 
-				order_.setId(rs.getInt("id"));
-				order_.setFullname(rs.getString("fullname"));
-				order_.setEmail(rs.getString("email"));
-				order_.setPhone_number(rs.getString("phone_number"));
-				order_.setAddress(rs.getString("address"));
-				order_.setOrder_date(rs.getDate("order_date"));
-				order_.setUpdated_at(rs.getDate("updated_at"));
-				order_.setVoucher(voucher);
-				order_.setDiscount_at(rs.getDouble("discount_at"));
-				order_.setNote(rs.getString("note"));
-				order_.setStatus(status);
-				order_.setMethod(rs.getString("method"));
-				order_.setBill(rs.getString("bill"));
-				order_.setRequest(rs.getInt("request"));
+				order.setId(rs.getInt("id"));
+				order.setFullname(rs.getString("fullname"));
+				order.setEmail(rs.getString("email"));
+				order.setPhone_number(rs.getString("phone_number"));
+				order.setAddress(rs.getString("address"));
+				order.setOrder_date(rs.getDate("order_date"));
+				order.setUpdated_at(rs.getDate("updated_at"));
+				order.setVoucher(voucher);
+				order.setDiscount_at(rs.getDouble("discount_at"));
+				order.setNote(rs.getString("note"));
+				order.setStatus(status);
+				order.setMethod(rs.getString("method"));
+				order.setBill(rs.getString("bill"));
+				order.setRequest(rs.getInt("request"));
 
-				li.add(order_);
+				li.add(order);
 			}
 			con.close();
 		} catch (SQLException e) {
@@ -181,9 +181,9 @@ public class OrderService implements OrderRepository {
 	}
 
 	public int getLastOrderId() {
-		List<Order_> li = getAllOrder();
+		List<Order> li = getAllOrder();
 		int order_id = 0;
-		for (Order_ o : li) {
+		for (Order o : li) {
 			order_id = o.getId();
 			System.out.println(o.getId());
 		}
@@ -194,29 +194,29 @@ public class OrderService implements OrderRepository {
 		return false;
 	}
 
-	public List<Order_> get_all_order_by_user_id(int user_id) {
-		List<Order_> li = new LinkedList<>();
+	public List<Order> get_all_order_by_user_id(int user_id) {
+		List<Order> li = new LinkedList<>();
 		userService = new UserService();
 		if (userService.get_user_by_id(user_id) != null) {
 			User u = userService.get_user_by_id(user_id);
-			for (Order_ o : getAllOrder()) {
+			for (Order o : getAllOrder()) {
 				if (o.getPhone_number().equals(u.getPhone_number()) || o.getEmail().equals(u.getEmail())) {
 					li.add(o);
 				}
 			}
 		}
-		Collections.sort(li, new Comparator<Order_>() {
+		Collections.sort(li, new Comparator<Order>() {
 			@Override
-			public int compare(Order_ o1, Order_ o2) {
+			public int compare(Order o1, Order o2) {
 				return o2.getId() - o1.getId();
 			}
 		});
 		return li;
 	}
 
-	public Order_ get_all_order_by_order_id(int order_id) {
-		Order_ od = null;
-		for (Order_ o : getAllOrder()) {
+	public Order get_all_order_by_order_id(int order_id) {
+		Order od = null;
+		for (Order o : getAllOrder()) {
 			if (o.getId() == order_id) {
 				od = o;
 			}
@@ -225,7 +225,7 @@ public class OrderService implements OrderRepository {
 	}
 
 	public int get_voucher_discount_by_order_id(int order_id) {
-		Order_ od = get_all_order_by_order_id(order_id);
+		Order od = get_all_order_by_order_id(order_id);
 		return od.getVoucher().getVcdiscount();
 	}
 
@@ -261,16 +261,16 @@ public class OrderService implements OrderRepository {
 
 	public List<String> get_all_bill() {
 		List<String> li = new ArrayList<>();
-		for (Order_ o : getAllOrder()) {
+		for (Order o : getAllOrder()) {
 			li.add(o.getBill());
 		}
 		return li;
 	}
 
 	public int get_order_id_by(String phone, String email) {
-		List<Order_> li = getAllOrder();
+		List<Order> li = getAllOrder();
 		int od = 0;
-		for (Order_ o : li) {
+		for (Order o : li) {
 			if (o.getStatus().getId() == 1) {
 				od = o.getId();
 			}
@@ -281,8 +281,8 @@ public class OrderService implements OrderRepository {
 	public boolean check_voucher_used_by_user_id(int id, String code) {
 		userService = new UserService();
 		User u = userService.get_user_by_id(id);
-		List<Order_> li = getAllOrder();
-		for (Order_ o : li) {
+		List<Order> li = getAllOrder();
+		for (Order o : li) {
 			if ((o.getPhone_number().trim().equals(u.getPhone_number().trim())
 					|| o.getEmail().trim().equals(u.getEmail().trim()))
 					&& o.getVoucher().getCode().trim().toLowerCase().equals(code.trim().toLowerCase())) {
@@ -293,9 +293,9 @@ public class OrderService implements OrderRepository {
 	}
 
 	public int get_status_id_by_order_id(int order_id) {
-		List<Order_> o = getAllOrder();
+		List<Order> o = getAllOrder();
 		int status_id = 0;
-		for (Order_ ord : o) {
+		for (Order ord : o) {
 			if (ord.getId() == order_id) {
 				status_id = ord.getStatus().getId();
 			}
@@ -304,9 +304,9 @@ public class OrderService implements OrderRepository {
 	}
 
 	public int get_last_order_id_by(String phone_number, String email) {
-		List<Order_> o = getAllOrder();
+		List<Order> o = getAllOrder();
 		int id = 0;
-		for (Order_ ord : o) {
+		for (Order ord : o) {
 			if (ord.getEmail().trim().equals(email.trim())
 					&& ord.getPhone_number().trim().equals(phone_number.trim())) {
 				id = ord.getId();

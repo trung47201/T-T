@@ -1,13 +1,13 @@
 <!doctype html>
 <html lang="en">
-<title>Forgot Password:)</title>
+<title>Login :)</title>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<link rel="stylesheet" href='<c:url value="/assets/css/forgot-pw.css"/>'>
+<link rel="stylesheet" href='<c:url value="/assets/css/r-signup.css"/>'>
 <link rel="stylesheet" href='<c:url value="/assets/css/f-index.css"/>'>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -21,6 +21,14 @@
 <link rel="stylesheet" href="<c:url value="/assets/css/r-footer.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/re-text.css"/>">
 <body>
+	<%
+	response.setHeader("Cache-Control", "no-cache, no-store");
+	if (session.getAttribute("login") != null && session.getAttribute("login") != "") {
+		if (session.getAttribute("login").equals("start")) {
+			response.sendRedirect("/ShopTandT/");
+		}
+	}
+	%>
 	<jsp:include page="../layouts/user/re-menu.jsp"></jsp:include>
 	<div class="back-header">
 		<jsp:include page="../layouts/user/re-header.jsp"></jsp:include>
@@ -31,15 +39,14 @@
 	</div>
 
 	<div class="text">
-		<h3>Forgot</h3>
 		<p class="cool">
-			<span data-text="password" style="color: white;">password</span>
+			<span data-text="Login" style="color: white;">Login</span>
 		</p>
 	</div>
 	<hr>
 
 	<div class="wrapper-form-signup container">
-		<form action="/ShopTandT/sign-up" method="post">
+		<form action="/ShopTandT/account/login" method="post">
 			<div class="login_form">
 				<div class="form-input">
 					<div class="right-form-input">
@@ -48,19 +55,29 @@
 								name="email" placeholder="Email or Phone number"
 								class="input_text">
 						</div>
+						<div class="input_group">
+							<i class="fa fa-unlock-alt"></i> <input type="password"
+								id="password" name="password" placeholder="Password"
+								class="input_text"> <i class="fa fa-eye-slash"
+								id="eye-hidden-pw"></i> <i class="fa fa-eye none"
+								id="eye-show-pw"></i>
+						</div>
 					</div>
 				</div>
-				<div class="msg-none">
-					<p>We'll send you an email to reset your password.</p>
-				</div>
+
 				<div class="error-login none">
 					<p id="msg-error">Password is empty!</p>
 				</div>
-
+				<div class="fotter">
+					<a href="/ShopTandT/account/forgot-password">Forgot password?</a>
+				</div>
 				<div class="button_group w-login" id="login_button">
 					<div class="btn-effect">
-						<button type="button" class="signup" name="signup" id="signup">Send</button>
+						<button type="button" class="signup" name="signup" id="signup">Login</button>
 					</div>
+				</div>
+				<div class="fotter">
+					or <a href="/ShopTandT/account/register">Create an Account</a>
 				</div>
 			</div>
 		</form>
@@ -86,27 +103,19 @@
 	</script>
 
 	<script type="text/javascript">
-		var msg = "";
-		if(${message != null}) {
-			msg = "${ message }";
+	if(${ message != null }) {
+		if(${message == "false"}){
+			$(".error-login").removeClass("none");
+			document.getElementById("msg-error").innerHTML = "Username or password is not correct!";  
+		} else if(${message == "logout"}) {
+			//alert("Looking forward to seeing you again soon!");
+		} else if(${message == "block"}){
+			$(".error-login").removeClass("none");
+			document.getElementById("msg-error").innerHTML = "Your account has been locked, please contact hotline: 036 97 96 359 for more details!";  
 		}
-		if(msg == "true") {
-			$(".error-login").removeClass("none");
-			document.getElementById("msg-error").innerHTML = "Sign Up Success!";
-			document.getElementById("login_button").style.marginTop = "15px";
-			
-			window.location.href = 'http://localhost:8888/ShopTandT/';
-		} else if(msg == "false"){
-			$(".error-login").removeClass("none");
-			document.getElementById("msg-error").innerHTML = "Sign Up Unsuccess!";
-			document.getElementById("login_button").style.marginTop = "15px";
-		} else if(msg == "exist"){
-			$(".error-login").removeClass("none");
-			document.getElementById("msg-error").innerHTML = "Phone number or Email already exists!";
-			document.getElementById("login_button").style.marginTop = "15px";
-		} 
+	}
 	</script>
-
+	
 	<script> //SIGN UP
 		$(".signup").click(function() {
 			var toSubmit = this;
@@ -132,6 +141,7 @@
 		  window.history.replaceState( null, null, window.location.href );
 		}
 	</script>
+
 </body>
 
 </html>

@@ -9,20 +9,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import TT.Model.User;
-import TT.Service.User.StyleService;
+import TT.Service.User.SubCategoryService;
 import TT.Service.User.UserService;
 
 @Controller
 public class PersonalDetailsController {
 	private UserService userService;
-	private StyleService styleService;
+	private SubCategoryService subCategoryService;
 
 	@RequestMapping(value = { "/personal-details/{id}" })
 	public ModelAndView loadHome(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("user/personal_details");
 
 		userService = new UserService();
-		styleService = new StyleService();
+		subCategoryService = new SubCategoryService();
 		
 		int id_ = Integer.parseInt(id);
 		
@@ -42,7 +42,7 @@ public class PersonalDetailsController {
 		mv.addObject("userID", id_);
 		mv.addObject("user_id", id_);
 		mv.addObject("avatar", userService.getAvatarByUserID(id_));
-		mv.addObject("style", styleService.getAllStyle());
+		mv.addObject("style", subCategoryService.getAllSubCategory());
 
 		return mv;
 	}

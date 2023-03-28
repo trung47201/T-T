@@ -11,15 +11,14 @@ import org.springframework.web.servlet.ModelAndView;
 import TT.Service.Admin.aStatisticsService;
 import TT.Service.User.PostsService;
 import TT.Service.User.SlidesService;
-import TT.Service.User.StyleService;
-import TT.Service.User.Product.ProductService;
+import TT.Service.User.SubCategoryService;
+import TT.Service.User.Product.ShoesService;
 
 @Controller
 public class reHomeController {
 
 	private SlidesService slidesService;
-	private ProductService productService;
-	private StyleService styleService;
+	private ShoesService shoesService;
 	private aStatisticsService aStatisticsService;
 	private PostsService postsService;
 
@@ -28,8 +27,7 @@ public class reHomeController {
 		ModelAndView mv = new ModelAndView("user/re-index");
 		postsService = new PostsService();
 		slidesService = new SlidesService();
-		productService = new ProductService();
-		styleService = new StyleService();
+		shoesService = new ShoesService();
 		aStatisticsService = new aStatisticsService();
 		
 		String buy = request.getParameter("buynow");
@@ -42,10 +40,9 @@ public class reHomeController {
 			aStatisticsService.insert_new_statistics();
 		}
 
-		mv.addObject("style", styleService.getAllStyle());
 		mv.addObject("slides", slidesService.getAllSlides());
-		mv.addObject("listNewArrivals", productService.getNewArrivals());
-		mv.addObject("listMostLovedProducts", productService.getMostLovedProducts());
+		mv.addObject("listNewArrivals", shoesService.getNewArrivals());
+		mv.addObject("listMostLovedProducts", shoesService.getMostLovedProducts());
 		mv.addObject("listPosts", postsService.getAllPosts());
 		mv.addObject("hmPosts", postsService.listPost());
 

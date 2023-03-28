@@ -2,7 +2,7 @@ package TT.Model;
 
 public class Order_details {
 	private int id;
-	private Order_ order_;
+	private Order order;
 	private Product prod;
 	private double price_at;
 	private int quantity;
@@ -18,11 +18,11 @@ public class Order_details {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Order_ getOrder_() {
-		return order_;
+	public Order getOrder_() {
+		return order;
 	}
-	public void setOrder_(Order_ order_) {
-		this.order_ = order_;
+	public void setOrder_(Order order) {
+		this.order = order;
 	}
 	public Product getProd() {
 		return prod;

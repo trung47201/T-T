@@ -12,17 +12,17 @@ import org.springframework.web.servlet.ModelAndView;
 import TT.Service.User.GalleryService;
 import TT.Service.User.PostsService;
 import TT.Service.User.Product_color_sizeService;
-import TT.Service.User.StyleService;
+import TT.Service.User.SubCategoryService;
 import TT.Service.User.UserService;
-import TT.Service.User.Product.ProductService;
+import TT.Service.User.Product.ShoesService;
 
 @Controller
 public class reProductDetailsController {
-	private ProductService productService;
+	private ShoesService shoesService;
 	private GalleryService galleryService;
 	private Product_color_sizeService product_color_sizeService;
 	private UserService userService;
-	private StyleService styleService;
+	private SubCategoryService subCategoryService;
 	private PostsService postsService;
 	
 	@RequestMapping(value = { "product-details" })
@@ -30,10 +30,10 @@ public class reProductDetailsController {
 		ModelAndView mv = new ModelAndView("user/re-product_details");
 		
 		postsService = new PostsService();
-		productService = new ProductService();
+		shoesService = new ShoesService();
 		galleryService = new GalleryService();
 		product_color_sizeService = new Product_color_sizeService();
-		styleService = new StyleService();
+		subCategoryService = new SubCategoryService();
 		
 		String id_prod = String.valueOf(request.getParameter("product-id"));
 		String buy = request.getParameter("buynow");
@@ -52,9 +52,9 @@ public class reProductDetailsController {
 			mv.addObject("gallery", galleryService.getAllGalleryByProductId(Integer.parseInt(id_prod)));
 		}
 		
-		mv.addObject("style", styleService.getAllStyle());
-		mv.addObject("averageRating", productService.averageRating(Integer.parseInt(id_prod)));
-		mv.addObject("product", productService.getProduct(Integer.parseInt(id_prod)));
+		mv.addObject("subcategory", subCategoryService.getAllSubCategory());
+		mv.addObject("averageRating", shoesService.averageRating(Integer.parseInt(id_prod)));
+		mv.addObject("product", shoesService.getProduct(Integer.parseInt(id_prod)));
 		mv.addObject("hmPosts", postsService.listPost());
 		return mv;
 	}
@@ -63,11 +63,11 @@ public class reProductDetailsController {
 	public ModelAndView loadProducts(@PathVariable String user_prod, HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("user/re-product_details");
 		postsService = new PostsService();
-		productService = new ProductService();
+		shoesService = new ShoesService();
 		galleryService = new GalleryService();
 		product_color_sizeService = new Product_color_sizeService();
 		userService = new UserService();
-		styleService = new StyleService();
+		subCategoryService = new SubCategoryService();
 		
 		String id_user = user_prod.split("_")[0];
 		String id_prod = user_prod.split("_")[1];
@@ -87,15 +87,15 @@ public class reProductDetailsController {
 			mv.addObject("gallery", galleryService.getAllGalleryByProductId(Integer.parseInt(id_prod)));
 		}
 		
-		mv.addObject("averageRating", productService.averageRating(Integer.parseInt(id_prod)));
-		mv.addObject("product", productService.getProduct(Integer.parseInt(id_prod)));
+		mv.addObject("averageRating", shoesService.averageRating(Integer.parseInt(id_prod)));
+		mv.addObject("product", shoesService.getProduct(Integer.parseInt(id_prod)));
 		
 		if(id_user != null) {
 			mv.addObject("userID", Integer.parseInt(id_user));
 		}
 		
 		
-		mv.addObject("style", styleService.getAllStyle());
+		mv.addObject("subcategory", subCategoryService.getAllSubCategory());
 		mv.addObject("avatar", userService.getAvatarByUserID(Integer.parseInt(id_user)));
 		mv.addObject("user_prod", user_prod);
 		mv.addObject("hmPosts", postsService.listPost());

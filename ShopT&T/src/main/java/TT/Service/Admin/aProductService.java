@@ -10,11 +10,11 @@ import TT.Repository.Admin.aProductRepository;
 import TT.Service.User.Product_color_sizeService;
 import TT.Service.User.ConnectService;
 import TT.Service.User.GalleryService;
-import TT.Service.User.Product.ProductService;
+import TT.Service.User.Product.ShoesService;
 
 public class aProductService implements aProductRepository {
 	private ConnectService connectService;
-	private ProductService productService;
+	private ShoesService shoesService;
 	private Product_color_sizeService product_color_sizeService;
 	private GalleryService galleryService;
 
@@ -121,12 +121,12 @@ public class aProductService implements aProductRepository {
 	@Override
 	public boolean checkProduct(String title, double price, int discount, int style, int brand, int gender,
 			String thumbnail, int color) {
-		productService = new ProductService();
+		shoesService = new ShoesService();
 		product_color_sizeService = new Product_color_sizeService();
 		galleryService = new GalleryService();
-		List<Product> li = productService.getAllProducts();
+		List<Product> li = shoesService.getAllProducts();
 		for (Product p : li) {
-			if (p.getTitle().equals(title) && p.getStyle().getId() == style && p.getPrice() == price
+			if (p.getTitle().equals(title) && p.getSub_category().getId() == style && p.getPrice() == price
 					&& p.getDiscount() == discount && p.getBrand().getId() == brand
 					&& p.getGender().getId() == gender) {
 				galleryService.insertIntoGallery(thumbnail, p.getId(), color);
@@ -138,8 +138,8 @@ public class aProductService implements aProductRepository {
 
 	@Override
 	public int getProd_Id_finally() {
-		productService = new ProductService();
-		List<Product> li = productService.getAllProducts();
+		shoesService = new ShoesService();
+		List<Product> li = shoesService.getAllProducts();
 		int indexfinally = (li.size() - 1);
 		return li.get(indexfinally).getId();
 	}

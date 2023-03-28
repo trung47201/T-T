@@ -13,7 +13,7 @@ public class ConnectService implements ConnectRepository {
 		Connection con = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/t&t", "root", "");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/tandt", "root", "");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {

@@ -8,14 +8,14 @@
 	pageEncoding="UTF-8"%>
 
 <link rel="stylesheet" href='<c:url value="/assets/css/r-signup.css"/>'>
-<link rel="stylesheet" href='<c:url value="/assets/css/r-index.css"/>'>
+<link rel="stylesheet" href='<c:url value="/assets/css/f-index.css"/>'>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 <link rel="stylesheet"
-	href="<c:url value="/assets/css/r-zoom-img.css"/>">
+	href="<c:url value="/assets/css/f-zoom-img.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/r-header.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/re-menu.css"/>">
-<link rel="stylesheet" href="<c:url value="/assets/css/r-effect.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/f-effect.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/text.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/r-posts.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/r-footer.css"/>">

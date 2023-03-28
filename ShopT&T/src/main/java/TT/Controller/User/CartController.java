@@ -22,7 +22,7 @@ import TT.Service.User.CheckoutService;
 import TT.Service.User.ColorService;
 import TT.Service.User.PostsService;
 import TT.Service.User.Product_color_sizeService;
-import TT.Service.User.StyleService;
+import TT.Service.User.SubCategoryService;
 import TT.Service.User.UserService;
 
 @Controller
@@ -32,7 +32,7 @@ public class CartController {
 	private ColorService colorService;
 	private UserService userService;
 	private CheckoutService checkoutService;
-	private StyleService styleService;
+	private SubCategoryService subCategoryService;
 	private PostsService postsService;
 
 	@RequestMapping(value = { "/cart/{id}" })
@@ -44,7 +44,7 @@ public class CartController {
 		product_color_sizeService = new Product_color_sizeService();
 		colorService = new ColorService();
 		userService = new UserService();
-		styleService = new StyleService();
+		subCategoryService = new SubCategoryService();
 		postsService = new PostsService();
 		
 		HttpSession session = request.getSession();
@@ -121,7 +121,7 @@ public class CartController {
 
 		int id_ = Integer.parseInt(id);
 
-		mv.addObject("style", styleService.getAllStyle());
+		mv.addObject("style", subCategoryService.getAllSubCategory());
 		mv.addObject("userID", id_);
 		mv.addObject("user_id", id_);
 		mv.addObject("avatar", userService.getAvatarByUserID(Integer.parseInt(id)));
@@ -137,7 +137,7 @@ public class CartController {
 		colorService = new ColorService();
 		cartService = new CartService();
 		checkoutService = new CheckoutService();
-		styleService = new StyleService();
+		subCategoryService = new SubCategoryService();
 		postsService = new PostsService();
 
 		String size = request.getParameter("size");
@@ -314,7 +314,7 @@ public class CartController {
 		if (!product_color_sizeService.getCS().isEmpty()) {
 			mv.addObject("hmProd_Color_Size", product_color_sizeService.getCS());
 		}
-		mv.addObject("style", styleService.getAllStyle());
+		mv.addObject("style", subCategoryService.getAllSubCategory());
 		mv.addObject("hmPosts", postsService.listPost());
 		return mv;
 	}

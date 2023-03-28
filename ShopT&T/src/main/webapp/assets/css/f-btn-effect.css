@@ -1,0 +1,54 @@
+.btn-effect button {
+	display: inline-block;
+	font-family: Josefin Sans;
+	font-weight: 700;
+	font-size: 14px;
+	letter-spacing: 1.32px;
+	color: #fff;
+	background: #222121;
+	background-clip: content-box;
+	border: 1px solid #222121;
+	height: 45px;
+	line-height: 37px;
+	padding: 5px;
+	min-width: 300px;
+	text-align: center;
+	position: relative;
+	text-transform: uppercase;
+	-webkit-transition: all .25s ease-out;
+	-moz-transition: all .25s ease-out;
+	-ms-transition: all .25s ease-out;
+	transition: all .25s ease-out;
+}
+.btn-effect {
+	display: inline-block;
+}
+.btn-effect {
+  --c: #222121; /* the border color */
+  --b: 3px;    /* the border thickness*/
+  --g: 0px;     /* the gap on hover */
+  
+  padding: calc(var(--g) + var(--b));
+  --_g: #0000 25%,var(--c) 0;
+  background: 
+    conic-gradient(from 180deg at top    var(--b) right var(--b),var(--_g))
+     var(--_i,200%) 0  /200% var(--_i,var(--b))  no-repeat,
+    conic-gradient(            at bottom var(--b) left  var(--b),var(--_g))
+     0   var(--_i,200%)/var(--_i,var(--b)) 200%  no-repeat;
+  transition: .3s, background-position .3s .3s;
+  cursor: pointer;
+  height: 51px;
+}
+
+.btn-effect:hover {
+  --_i: 100%;
+  transition: .3s, background-size .3s .3s;
+}
+
+.btn-effect button:focus {
+	outline-style: none;
+}
+.btn-effect {
+    margin-left: 20px;
+}
+

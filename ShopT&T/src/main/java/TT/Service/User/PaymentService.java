@@ -19,14 +19,14 @@ import com.paypal.base.rest.PayPalRESTException;
 import TT.Model.Cart;
 import TT.Model.Product;
 import TT.Model.User;
-import TT.Service.User.Product.ProductService;
+import TT.Service.User.Product.ShoesService;
 
 public class PaymentService {
 	private static final String CLIENT_ID = "AX9GvRsdo30M--bSA5g3yDHf1hAYoVYAblwFGK7V8agpcBHRO5Wa1Iy1NbXrOfpMw4DQn0VYTnXQbiS2";
 	private static final String CLIENT_SECRET = "EInSWlGEFeQbcTFh-TLdohO16TQ2olHfp2tLCJnL9SNBlOYZzFsgLJZLOQ3nRCjJudYZvV-3A2l4NyK7";
 	private static final String MODE = "sandbox";
 	
-	private ProductService productService;
+	private ShoesService shoesService;
 	private UserService userService;
 	private CartService cartService;
 	
@@ -80,7 +80,7 @@ public class PaymentService {
 	}
 	
 	private List<Transaction> getTransactionInformation(String product, float voucher, float subtotal, String cartid, String vccode) {
-		productService = new ProductService();
+		shoesService = new ShoesService();
 		
 		float total = subtotal;
 		if(subtotal < 50) {
@@ -105,7 +105,7 @@ public class PaymentService {
 	    
 	    HashMap<Integer, String> hm = get_product_Id_and_quantity(product);
 		for (Integer i : hm.keySet()) {
-			Product p = productService.getProduct(i);
+			Product p = shoesService.getProduct(i);
 			Item item = new Item();
 			for (Cart c : li) {
 				if(c.getColor_size().getProd().getId() == p.getId()) {
@@ -164,7 +164,7 @@ public class PaymentService {
 	}
 	
 	private List<Transaction> getTransactionInformationBN(String product, float voucher, float subtotal, int cs, String vccode) {
-		productService = new ProductService();
+		shoesService = new ShoesService();
 		float total = subtotal;
 		if(subtotal < 50) {
 			total = total + 11;
@@ -187,7 +187,7 @@ public class PaymentService {
 	    
 	    HashMap<Integer, String> hm = get_product_Id_and_quantity(product);
 		for (Integer i : hm.keySet()) {
-			Product p = productService.getProduct(i);
+			Product p = shoesService.getProduct(i);
 			Item item = new Item();
 			item.setDescription("cs"+String.valueOf(cs));
 		    item.setCurrency("USD");

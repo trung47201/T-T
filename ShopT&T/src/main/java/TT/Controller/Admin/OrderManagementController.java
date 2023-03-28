@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import TT.Model.Order_;
+import TT.Model.Order;
 import TT.Service.Admin.aOrderService;
 import TT.Service.Admin.aOrder_detailsSevice;
 import TT.Service.Admin.aStatusService;
@@ -42,10 +42,10 @@ public class OrderManagementController {
 		mv.addObject("management", "true");
 		mv.addObject("editorder", "false");
 		mv.addObject("orderdetails", "false");
-		List<Order_> li = _aOrderService.getAllOrder();
-		Collections.sort(li, new Comparator<Order_>() {
+		List<Order> li = _aOrderService.getAllOrder();
+		Collections.sort(li, new Comparator<Order>() {
 			@Override
-			public int compare(Order_ o1, Order_ o2) {
+			public int compare(Order o1, Order o2) {
 				return o2.getId()-o1.getId();
 			}
 		
@@ -66,7 +66,7 @@ public class OrderManagementController {
 
 		String id_order = String.valueOf(request.getParameter("id_order"));
 		if (!id_order.equals("null")) {
-			Order_ o = _aOrderService.getOrderByID(Integer.parseInt(id_order));
+			Order o = _aOrderService.getOrderByID(Integer.parseInt(id_order));
 			if (_aOrderService.getOrderByID(Integer.parseInt(id_order)) != null) {
 				mv.addObject("orderById", o);
 			}
@@ -86,10 +86,10 @@ public class OrderManagementController {
 		mv.addObject("management", "false");
 		mv.addObject("editorder", "true");
 		mv.addObject("orderdetails", "false");
-		List<Order_> li = _aOrderService.getAllOrder();
-		Collections.sort(li, new Comparator<Order_>() {
+		List<Order> li = _aOrderService.getAllOrder();
+		Collections.sort(li, new Comparator<Order>() {
 			@Override
-			public int compare(Order_ o1, Order_ o2) {
+			public int compare(Order o1, Order o2) {
 				return o2.getId()-o1.getId();
 			}
 		
@@ -112,7 +112,7 @@ public class OrderManagementController {
 
 		String id_order = String.valueOf(request.getParameter("id_order"));
 		if (!id_order.equals("null")) {
-			Order_ o = _aOrderService.getOrderByID(Integer.parseInt(id_order));
+			Order o = _aOrderService.getOrderByID(Integer.parseInt(id_order));
 			if (_aOrderService.getOrderByID(Integer.parseInt(id_order)) != null) {
 				mv.addObject("orderById", o);
 			}
@@ -133,10 +133,10 @@ public class OrderManagementController {
 		mv.addObject("editorder", "false");
 		mv.addObject("orderdetails", "true");
 		if (!_aOrderService.getAllOrder().isEmpty()) {
-			List<Order_> li = _aOrderService.getAllOrder();
-			Collections.sort(li, new Comparator<Order_>() {
+			List<Order> li = _aOrderService.getAllOrder();
+			Collections.sort(li, new Comparator<Order>() {
 				@Override
-				public int compare(Order_ o1, Order_ o2) {
+				public int compare(Order o1, Order o2) {
 					return o2.getId()-o1.getId();
 				}
 			

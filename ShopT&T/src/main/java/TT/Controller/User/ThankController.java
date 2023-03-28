@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import TT.Model.Color;
-import TT.Model.Order_;
+import TT.Model.Order;
 import TT.Model.Order_details;
 import TT.Model.Product;
 import TT.Model.Sizes;
@@ -24,14 +24,14 @@ import TT.Service.User.Order_detailsService;
 import TT.Service.User.SizeService;
 import TT.Service.User.UserService;
 import TT.Service.User.VoucherService;
-import TT.Service.User.Product.ProductService;
+import TT.Service.User.Product.ShoesService;
 
 @Controller
 public class ThankController {
 	private CheckoutService checkoutService;
 	private ColorService colorService;
 	private SizeService sizeService;
-	private ProductService productService;
+	private ShoesService shoesService;
 	private VoucherService voucherService;
 	private UserService userService;
 	private OrderService orderService;
@@ -40,7 +40,7 @@ public class ThankController {
 	@RequestMapping(value = {"sucess-buynow"})
 	public ModelAndView loadOrder(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView("user/re-sucess-buynow");
-		productService = new ProductService();
+		shoesService = new ShoesService();
 		checkoutService = new CheckoutService();
 		colorService = new ColorService();
 		sizeService = new SizeService();
@@ -68,7 +68,7 @@ public class ThankController {
 			mv.addObject("avatar", avatar);
 		}
 		
-		Product p = productService.getProduct(Integer.parseInt(id_prod));
+		Product p = shoesService.getProduct(Integer.parseInt(id_prod));
 		if(voucher != null) {
 			double discount = (double) voucherService.getDiscountById_Voucher(Integer.parseInt(voucher));
 			
@@ -91,7 +91,7 @@ public class ThankController {
 		mv.addObject("email", email);
 		mv.addObject("address", address);
 		mv.addObject("note", note);
-		mv.addObject("product", productService.getProduct(Integer.parseInt(id_prod)));
+		mv.addObject("product", shoesService.getProduct(Integer.parseInt(id_prod)));
 		mv.addObject("color", colorService.getColorById(Integer.parseInt(id_color)).getRgb());
 		mv.addObject("size", sizeService.getSizeById(Integer.parseInt(id_size)).getSize_number());
 		mv.addObject("back_home", "home");
@@ -100,7 +100,7 @@ public class ThankController {
 	@RequestMapping(value = {"thank"})
 	public ModelAndView loadSucessCart(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView("user/thank");
-		productService = new ProductService();
+		shoesService = new ShoesService();
 		checkoutService = new CheckoutService();
 		colorService = new ColorService();
 		sizeService = new SizeService();
@@ -153,7 +153,7 @@ public class ThankController {
 		order_detailsService = new Order_detailsService();
 		userService = new UserService();
 		
-		Order_ o = orderService.get_all_order_by_order_id(Integer.parseInt(id));
+		Order o = orderService.get_all_order_by_order_id(Integer.parseInt(id));
 
 		double vch = o.getDiscount_at();
 		String fullname = o.getFullname();

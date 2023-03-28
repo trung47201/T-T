@@ -21,14 +21,14 @@ import org.springframework.web.servlet.ModelAndView;
 import TT.Service.Admin.aProductService;
 import TT.Service.User.BrandService;
 import TT.Service.User.GenderService;
-import TT.Service.User.StyleService;
-import TT.Service.User.Product.ProductService;
+import TT.Service.User.SubCategoryService;
+import TT.Service.User.Product.ShoesService;
 
 @Controller
 public class aProductController {
 
-	private ProductService productService;
-	private StyleService styleService;
+	private ShoesService shoesService;
+	private SubCategoryService subCategoryService;
 	private BrandService brandService;
 	private GenderService genderService;
 	private aProductService aProductService;
@@ -38,16 +38,16 @@ public class aProductController {
 			HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("admin/product-edit");
 
-		productService = new ProductService();
-		styleService = new StyleService();
+		shoesService = new ShoesService();
+		subCategoryService = new SubCategoryService();
 		brandService = new BrandService();
 		genderService = new GenderService();
 
-		mv.addObject("style", styleService.getAllStyle());
+		mv.addObject("style", subCategoryService.getAllSubCategory());
 		mv.addObject("brand", brandService.getAllBrand());
 		mv.addObject("gender", genderService.getAllGender());
-		mv.addObject("product", productService.getProduct(Integer.parseInt(id)));
-		mv.addObject("des", productService.getProduct(Integer.parseInt(id)).getDescription().trim());
+		mv.addObject("product", shoesService.getProduct(Integer.parseInt(id)));
+		mv.addObject("des", shoesService.getProduct(Integer.parseInt(id)).getDescription().trim());
 
 		mv.addObject("productedit", "true");
 		mv.addObject("id", id);

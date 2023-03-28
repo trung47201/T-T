@@ -19,11 +19,11 @@ import TT.Model.Product_color_size;
 import TT.Model.Role;
 import TT.Model.User;
 import TT.Repository.User.CartRepository;
-import TT.Service.User.Product.ProductService;
+import TT.Service.User.Product.ShoesService;
 
 public class CartService implements CartRepository {
 
-	private ProductService productService;
+	private ShoesService shoesService;
 	private ConnectService connectService;
 	private Product_color_sizeService product_color_sizeService;
 	private Cart cart;
@@ -238,13 +238,13 @@ public class CartService implements CartRepository {
 	}
 
 	public double totalProd(String prod) {
-		productService = new ProductService();
+		shoesService = new ShoesService();
 
 		String arr[] = prod.split("/");
 		double total = 0;
 		for (int i = 0; i < arr.length; i++) {
 			String arr2[] = arr[i].split("_");
-			Product p = productService.getProduct(Integer.parseInt(arr2[0]));
+			Product p = shoesService.getProduct(Integer.parseInt(arr2[0]));
 			if (p.getDiscount() > 0) {
 				total += p.getPrice() * Integer.parseInt(arr2[1])
 						- p.getPrice() * Integer.parseInt(arr2[1]) * p.getDiscount() / 100;
@@ -257,7 +257,7 @@ public class CartService implements CartRepository {
 	}
 
 	public List<Integer> listProd_id(String prod) {
-		productService = new ProductService();
+		shoesService = new ShoesService();
 		List<Integer> li = new ArrayList<>();
 		String arr[] = prod.split("/");
 		for (int i = 0; i < arr.length; i++) {

@@ -5,20 +5,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import TT.Service.User.StyleService;
+import TT.Service.User.SubCategoryService;
 import TT.Service.User.UserService;
 
 @Controller
 public class ContactController {
 	private UserService userService;
-	private StyleService styleService;
+	private SubCategoryService subCategoryService;
 	
 	@RequestMapping(value = {"contact"})
 	public ModelAndView loadContact(){
 		ModelAndView mv = new ModelAndView("user/contact");
-		styleService = new StyleService();
+		subCategoryService = new SubCategoryService();
 
-		mv.addObject("style", styleService.getAllStyle());
+		mv.addObject("style", subCategoryService.getAllSubCategory());
 		return mv;
 	}
 	
@@ -26,12 +26,12 @@ public class ContactController {
 	public ModelAndView loadContactByUser(@PathVariable String id){
 		ModelAndView mv = new ModelAndView("user/contact");
 		
-		styleService = new StyleService();
+		subCategoryService = new SubCategoryService();
 		userService = new UserService();
 		
 		mv.addObject("userID", id);
 		mv.addObject("avatar", userService.getAvatarByUserID(Integer.parseInt(id)));
-		mv.addObject("style", styleService.getAllStyle());
+		mv.addObject("style", subCategoryService.getAllSubCategory());
 		return mv;
 	}
 	

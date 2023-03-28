@@ -25,11 +25,11 @@ import TT.Service.User.Product_color_sizeService;
 import TT.Service.User.StatisticsService;
 import TT.Service.User.UserService;
 import TT.Service.User.VoucherService;
-import TT.Service.User.Product.ProductService;
+import TT.Service.User.Product.ShoesService;
 
 @Controller
 public class CheckoutController {
-	private ProductService productService;
+	private ShoesService shoesService;
 	private CheckoutService checkoutService;
 	private Product_color_sizeService product_color_sizeService;
 	private VoucherService voucherService;
@@ -44,7 +44,7 @@ public class CheckoutController {
 	public ModelAndView checkout_ok(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
 		order_detailsService = new Order_detailsService();
 		orderService = new OrderService();
-		productService = new ProductService();
+		shoesService = new ShoesService();
 		checkoutService = new CheckoutService();
 		userService = new UserService();
 		voucherService = new VoucherService();
@@ -100,7 +100,7 @@ public class CheckoutController {
 			method = "COD";
 		}
 		double price_at = 0;
-		Product p = productService.getProduct(Integer.parseInt(id_prod));
+		Product p = shoesService.getProduct(Integer.parseInt(id_prod));
 		if (p.getDiscount() > 0) {
 			price_at += p.getPrice() - p.getPrice() * p.getDiscount() / 100;
 		} else {
@@ -125,7 +125,7 @@ public class CheckoutController {
 								Integer.parseInt(color), phone_number, email)
 						&& product_color_sizeService.updateColor_size_Quantity(Integer.parseInt(size),
 								Integer.parseInt(color), Integer.parseInt(id_prod), Integer.parseInt(quantity))
-						&& productService.updateProduct_Sold(Integer.parseInt(id_prod), Integer.parseInt(quantity))
+						&& shoesService.updateProduct_Sold(Integer.parseInt(id_prod), Integer.parseInt(quantity))
 						&& statisticsService.update_order_revenue_product_num_in_statistics_DB(
 								Integer.parseInt(quantity), pricetotal)) {
 					session.setAttribute("order", "end");
@@ -145,7 +145,7 @@ public class CheckoutController {
 								Integer.parseInt(color), phone_number, email)
 						&& product_color_sizeService.updateColor_size_Quantity(Integer.parseInt(size),
 								Integer.parseInt(color), Integer.parseInt(id_prod), Integer.parseInt(quantity))
-						&& productService.updateProduct_Sold(Integer.parseInt(id_prod), Integer.parseInt(quantity))
+						&& shoesService.updateProduct_Sold(Integer.parseInt(id_prod), Integer.parseInt(quantity))
 						&& statisticsService.update_order_revenue_product_num_in_statistics_DB(
 								Integer.parseInt(quantity), pricetotal)) {
 					session.setAttribute("order", "end");
@@ -168,7 +168,7 @@ public class CheckoutController {
 			HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("user/re-buynow");
 		product_color_sizeService = new Product_color_sizeService();
-		productService = new ProductService();
+		shoesService = new ShoesService();
 		checkoutService = new CheckoutService();
 		voucherService = new VoucherService();
 		userService = new UserService();
@@ -195,7 +195,7 @@ public class CheckoutController {
 			id_prod = a[1];
 			id_user = a[0];
 
-			Product p = productService.getProduct(Integer.parseInt(id_prod));
+			Product p = shoesService.getProduct(Integer.parseInt(id_prod));
 			double total = 0;
 			if (quantity != null) {
 				if (p.getDiscount() > 0) {
@@ -230,7 +230,7 @@ public class CheckoutController {
 						System.out.println("not started yet");
 					} else {
 						if (quantity != null) {
-							Product p = productService.getProduct(Integer.parseInt(id_prod));
+							Product p = shoesService.getProduct(Integer.parseInt(id_prod));
 							double price_at = 0;
 							if (p.getDiscount() > 0) {
 								price_at = p.getPrice() * Integer.parseInt(quantity)
@@ -312,8 +312,8 @@ public class CheckoutController {
 			mv.addObject("listColor", product_color_sizeService.getAllColorById_prod(Integer.parseInt(id_prod)));
 		}
 
-		mv.addObject("averageRating", productService.averageRating(Integer.parseInt(id_prod)));
-		mv.addObject("product", productService.getProduct(Integer.parseInt(id_prod)));
+		mv.addObject("averageRating", shoesService.averageRating(Integer.parseInt(id_prod)));
+		mv.addObject("product", shoesService.getProduct(Integer.parseInt(id_prod)));
 
 		mv.addObject("id", id);
 		mv.addObject("idprod", id_prod);
@@ -362,7 +362,7 @@ public class CheckoutController {
 		userService = new UserService();
 		cartService = new CartService();
 		product_color_sizeService = new Product_color_sizeService();
-		productService = new ProductService();
+		shoesService = new ShoesService();
 		checkoutService = new CheckoutService();
 		voucherService = new VoucherService();
 		orderService = new OrderService();

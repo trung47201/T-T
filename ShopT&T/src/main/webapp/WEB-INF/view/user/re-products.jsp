@@ -9,7 +9,7 @@
 <title>${ title }:)</title>
 <link rel="stylesheet" href="<c:url value="/assets/css/bootstrap.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/js/bootstrap.js"/>">
-<link rel="stylesheet" href="<c:url value="/assets/css/r-index.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/f-index.css"/>">
 <link rel="stylesheet"
 	href="<c:url value="/assets/css/bootstrap.min.css"/>">
 <link rel="stylesheet"
@@ -30,12 +30,14 @@
 <link rel="stylesheet" href="<c:url value="/assets/css/re-menu.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/r-posts.css"/>">
 <link rel="stylesheet"
-	href="<c:url value="/assets/css/re-products.css"/>">
+	href="<c:url value="/assets/css/r-products.css"/>">
 <link rel="stylesheet"
-	href="<c:url value="/assets/css/r-zoom-img.css"/>">
-<link rel="stylesheet" href="<c:url value="/assets/css/r-effect.css"/>">
+	href="<c:url value="/assets/css/f-zoom-img.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/f-effect.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/r-footer.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/re-text.css"/>">
+<link rel="stylesheet"
+	href="<c:url value="/assets/css/checkbox-radio-input.css"/>">
 <body style="color: #222121;">
 	<c:if test="${ userID != null}">
 		<c:set var="id_user" value="${ userID }" />
@@ -61,7 +63,7 @@
 		<c:if test="${ listProducts != null}">
 			<div class="content-products">
 				<!-- CATEGORY PRODUCTS -->
-				<div>
+				<div class="wrapper-category">
 					<div class="category-products">
 						<div class="sortby-products">
 							<h5>Sort by</h5>
@@ -169,30 +171,6 @@
 							</div>
 						</div>
 						<hr class="cartegory">
-						<div class="brand-products">
-							<h5>Style name</h5>
-							<div class="brand-list">
-								<c:forEach var="liStyle" items="${ style }">
-									<c:if test="${ checkedStyleName == liStyle.id }">
-										<div class="brank-link style-link" onclick="stylename(this)"
-											id="${ liStyle.id }">
-											<a>${ liStyle.style_name }<img
-												src="<c:url value="/assets/images/icons/sortright30.png"/>"
-												alt=""></a>
-										</div>
-									</c:if>
-									<c:if test="${ checkedStyleName != liStyle.id }">
-										<div class="brank-link" onclick="stylename(this)"
-											id="${ liStyle.id }">
-											<a>${ liStyle.style_name }<img
-												src="<c:url value="/assets/images/icons/sortright30.png"/>"
-												alt=""></a>
-										</div>
-									</c:if>
-								</c:forEach>
-							</div>
-						</div>
-						<hr class="cartegory">
 						<div class="size-products">
 							<h5>Size</h5>
 							<div class="size-list">
@@ -284,75 +262,10 @@
 			</c:if>
 		</c:if>
 		</c:forEach>
-
 		<c:if test="${ idx%4 != 0 }">
 			</div>
 		</c:if>
 		</div>
-		</div>
-		<hr class="cartegory">
-		<div class="rate-products">
-			<h5>Rate</h5>
-			<div class="rate-list">
-				<div class="line1-rate-product">
-					<!-- one star -->
-					<c:if test="${ checkedRate == 'onestar' }">
-						<span class="sizeColor active" onclick="getRate(this)"
-							id="onestar">1<img
-							src="<c:url value="/assets/images/icons/star24.png"/>" alt=""></span>
-					</c:if>
-					<c:if test="${ checkedRate != 'onestar' }">
-						<span class="sizeColor" onclick="getRate(this)" id="onestar">1<img
-							src="<c:url value="/assets/images/icons/star24.png"/>" alt=""></span>
-					</c:if>
-					<!-- two stars -->
-					<c:if test="${ checkedRate == 'twostars' }">
-						<span class="sizeColor active" onclick="getRate(this)"
-							id="twostars">2<img
-							src="<c:url value="/assets/images/icons/star24.png"/>" alt=""></span>
-					</c:if>
-					<c:if test="${ checkedRate != 'twostars' }">
-						<span class="sizeColor" onclick="getRate(this)" id="twostars">2<img
-							src="<c:url value="/assets/images/icons/star24.png"/>" alt=""></span>
-					</c:if>
-				</div>
-				<div class="line2-rate-product">
-					<!-- three stars -->
-					<c:if test="${ checkedRate == 'threestars' }">
-						<span class="sizeColor active" onclick="getRate(this)"
-							id="threestars">3<img
-							src="<c:url value="/assets/images/icons/star24.png"/>" alt=""></span>
-					</c:if>
-					<c:if test="${ checkedRate != 'threestars' }">
-						<span class="sizeColor" onclick="getRate(this)" id="threestars">3<img
-							src="<c:url value="/assets/images/icons/star24.png"/>" alt=""></span>
-					</c:if>
-					<!-- four stars -->
-					<c:if test="${ checkedRate == 'fourstars' }">
-						<span class="sizeColor active" onclick="getRate(this)"
-							id="fourstars">4<img
-							src="<c:url value="/assets/images/icons/star24.png"/>" alt=""></span>
-					</c:if>
-					<c:if test="${ checkedRate != 'fourstars' }">
-						<span class="sizeColor" onclick="getRate(this)" id="fourstars">4<img
-							src="<c:url value="/assets/images/icons/star24.png"/>" alt=""></span>
-					</c:if>
-
-
-				</div>
-				<div class="line3-rate-product">
-					<!-- five stars -->
-					<c:if test="${ checkedRate == 'fivestars' }">
-						<span class="sizeColor active" onclick="getRate(this)"
-							id="fivestars">5<img
-							src="<c:url value="/assets/images/icons/star24.png"/>" alt=""></span>
-					</c:if>
-					<c:if test="${ checkedRate != 'fivestars' }">
-						<span class="sizeColor" onclick="getRate(this)" id="fivestars">5<img
-							src="<c:url value="/assets/images/icons/star24.png"/>" alt=""></span>
-					</c:if>
-				</div>
-			</div>
 		</div>
 		<hr class="cartegory">
 		<div class="color-products">
@@ -477,7 +390,7 @@
 									</div>
 								</c:if>
 								<div class="content-product-products">
-									<div class="brand-product-products" id="${ listProd.style.id }">${ listProd.style.style_name }</div>
+									<div class="brand-product-products" id="${ listProd.sub_category.id }">${ listProd.sub_category.sub_category_name }</div>
 									<div class="name-product-products" id="${ listProd.id }">${ listProd.title }</div>
 									<div class="show-products">
 										<div class="price-product-products">
@@ -486,8 +399,7 @@
 											</c:if>
 											<c:if test="${ listProd.discount > 0 }">
 												<div class="price-sale-products">
-													$
-													<fmt:formatNumber type="number" maxFractionDigits="2"
+													$<fmt:formatNumber type="number" maxFractionDigits="2"
 														value="${ listProd.price - listProd.price*listProd.discount/100 }" />
 												</div>
 												<div class="price-old-products">
@@ -541,7 +453,7 @@
 								</div>
 							</c:if>
 							<div class="content-product-products">
-								<div class="brand-product-products" id="${ listProd.style.id }">${ listProd.style.style_name }</div>
+								<div class="brand-product-products" id="${ listProd.sub_category.id }">${ listProd.sub_category.sub_category_name }</div>
 								<div class="name-product-products" id="${ listProd.id }">${ listProd.title }</div>
 								<div class="show-products">
 									<div class="price-product-products">
@@ -550,8 +462,7 @@
 										</c:if>
 										<c:if test="${ listProd.discount > 0 }">
 											<div class="price-sale-products">
-												$
-												<fmt:formatNumber type="number" maxFractionDigits="2"
+												$<fmt:formatNumber type="number" maxFractionDigits="2"
 													value="${ listProd.price - listProd.price*listProd.discount/100 }" />
 											</div>
 											<div class="price-old-products">
@@ -605,7 +516,7 @@
 					</div>
 				</c:if>
 				<div class="content-product-products">
-					<div class="brand-product-products" id="${ listProd.style.id }">${ listProd.style.style_name }</div>
+					<div class="brand-product-products" id="${ listProd.sub_category.id }">${ listProd.sub_category.sub_category_name }</div>
 					<div class="name-product-products" id="${ listProd.id }">${ listProd.title }</div>
 					<div class="show-products">
 						<div class="price-product-products">
@@ -614,8 +525,7 @@
 							</c:if>
 							<c:if test="${ listProd.discount > 0 }">
 								<div class="price-sale-products">
-									$
-									<fmt:formatNumber type="number" maxFractionDigits="2"
+									$<fmt:formatNumber type="number" maxFractionDigits="2"
 										value="${ listProd.price - listProd.price*listProd.discount/100 }" />
 								</div>
 								<div class="price-old-products">
@@ -1351,44 +1261,46 @@
 			id_user = "${ id_user }";
 		}
 		function resetAll() {
+			var url = window.location.href;
 			var xhr = new XMLHttpRequest();
 			xhr.open("GET", "");
 			xhr.onload = function() {
 				if(id_user != 0) {
-					window.location.assign("/ShopTandT/products/shoes/"+id_user);
+					if(url.includes("clothing")) {
+						window.location.assign("/ShopTandT/products/clothing/"+id_user);
+					} else if(url.includes("gifts")) {
+						window.location.assign("/ShopTandT/products/gifts/"+id_user);
+					} else if(url.includes("shoes")) {
+						window.location.assign("/ShopTandT/products/shoes/"+id_user);
+					} else if(url.includes("jewelry")) {
+						window.location.assign("/ShopTandT/products/jewelry/"+id_user);
+					} else if(url.includes("handbags")) {
+						window.location.assign("/ShopTandT/products/handbags/"+id_user);
+					} else if(url.includes("accessories")) {
+						window.location.assign("/ShopTandT/products/accessories/"+id_user);
+					} else {
+						window.location.assign("/ShopTandT/products/new-arrivals/"+id_user);
+					}
 				} else {
-					window.location.assign("/ShopTandT/products/shoes");
+					if(url.includes("clothing")) {
+						window.location.assign("/ShopTandT/products/clothing");
+					} else if(url.includes("gifts")) {
+						window.location.assign("/ShopTandT/products/gifts");
+					} else if(url.includes("shoes")) {
+						window.location.assign("/ShopTandT/products/shoes");
+					} else if(url.includes("jewelry")) {
+						window.location.assign("/ShopTandT/products/jewelry");
+					} else if(url.includes("handbags")) {
+						window.location.assign("/ShopTandT/products/handbags");
+					} else if(url.includes("accessories")) {
+						window.location.assign("/ShopTandT/products/accessories");
+					} else {
+						window.location.assign("/ShopTandT/products/new-arrivals");
+					}
 				}
 			};
 			xhr.send();
 		}
-	</script>
-
-	<script>
-		function test($a) {
-			for (let i = 1; i <= 10; i++) {
-				if (i == $a) {
-					var span_Text = document.getElementById("span_Id" + $a).innerText;
-					document.querySelector('input[name="search"]').value = span_Text;
-				}
-			}
-		}
-	</script>
-	<script type="text/javascript">
-		window.addEventListener("scroll", function() {
-			var div = document.getElementById('nav-search');
-			var div1 = document.getElementsByClassName('hidden-poster2');
-			if (window.scrollY > 80) {
-				div.style.visibility = 'visible';
-			} else {
-				div.style.visibility = 'hidden';
-			}
-			if (window.scrollY > 2280 && window.scrollY < 2380) {
-				div1.style.visibility = 'hidden';
-			} else {
-				div1.style.visibility = 'visible';
-			}
-		})
 	</script>
 
 	<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
@@ -1422,19 +1334,6 @@
 		}, 5000);
 	</script>
 
-	<script>
-		function bigImg(x) {
-			var listkeys = document.getElementById("listkeys");
-			listkeys.style.visibility = 'visible';
-		}
-
-		function normalImg(x) {
-			var listkeys = document.getElementById("listkeys");
-			listkeys.style.visibility = 'hidden';
-		}
-	</script>
-
-
 	<script
 		src="<c:url value="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"/>"></script>
 	<script src="<c:url value="/assets/js/jquery.zoom.js"/>"></script>
@@ -1447,7 +1346,7 @@
 		});
 	</script>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 		if ( window.history.replaceState ) {
 		  window.history.replaceState( null, null, window.location.href );
 		}

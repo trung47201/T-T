@@ -8,7 +8,7 @@
 	pageEncoding="UTF-8"%>
 <link rel="stylesheet" href='<c:url value="/assets/css/bootstrap.css"/>'>
 <link rel="stylesheet" href='<c:url value="/assets/js/bootstrap.js"/>'>
-<link rel="stylesheet" href='<c:url value="/assets/css/r-index.css"/>'>
+<link rel="stylesheet" href='<c:url value="/assets/css/f-index.css"/>'>
 <link rel="stylesheet"
 	href="<c:url value="/assets/css/newarrivals.css"/>">
 <link rel="stylesheet"
@@ -28,11 +28,11 @@
 <link rel="stylesheet"
 	href='<c:url value="/assets/css/add-to-cart.css"/>'>
 <link rel="stylesheet"
-	href="<c:url value="/assets/css/r-zoom-img.css"/>">
+	href="<c:url value="/assets/css/f-zoom-img.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/home.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/r-header.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/re-menu.css"/>">
-<link rel="stylesheet" href="<c:url value="/assets/css/r-effect.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/f-effect.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/r-footer.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/text.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/r-posts.css"/>">
@@ -176,7 +176,7 @@
 							</c:if>
 						</c:if>
 						<div class="content-product-products">
-							<div class="brand-product-products">${ it.style.style_name }</div>
+							<div class="brand-product-products">${ it.sub_category.sub_category_name }</div>
 							<div class="name-product-products">
 								<c:if test="${ sessionScope.userid != null }">
 									<a
@@ -575,10 +575,14 @@
 			coverflowEffect : {
 				rotate : 0,
 				stretch : 0,
-				depth : 150,
-				modifier : .5,
+				depth : 0,
+				modifier : 0,
 				slideShadows : true,
 			},
+			 navigation: {
+			        nextEl: ".forward",
+			        prevEl: ".backward",
+			      },
 			loop : true,
 		});
 	</script>
