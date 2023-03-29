@@ -1,11 +1,10 @@
-package TT.Service.Admin;
+package TT.Service.User;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.mysql.jdbc.PreparedStatement;
@@ -13,7 +12,6 @@ import com.mysql.jdbc.Statement;
 
 import TT.Model.Brand;
 import TT.Model.Color;
-import TT.Model.Product_color_size;
 import TT.Model.Gender;
 import TT.Model.Receipt;
 import TT.Model.Receipt_details;
@@ -24,12 +22,9 @@ import TT.Model.Status;
 import TT.Model.Sub_category;
 import TT.Model.User;
 import TT.Model.Voucher;
-import TT.Repository.Admin.aOrder_detailsRepository;
-import TT.Service.User.Product_color_sizeService;
-import TT.Service.User.ConnectService;
-import TT.Service.User.ReceiptService;
+import TT.Repository.User.Order_detailsRepository;
 
-public class aOrder_detailsSevice implements aOrder_detailsRepository{
+public class Receipt_detailsService implements Order_detailsRepository {
 	private ConnectService connectService;
 	private Receipt_details receipt_details;
 	private ReceiptService receiptService;
@@ -44,7 +39,7 @@ public class aOrder_detailsSevice implements aOrder_detailsRepository{
 	private Sizes size;
 	private Gender gender;
 	private Status status;
-	
+
 	@Override
 	public List<Receipt_details> getAllOrder_details() {
 		List<Receipt_details> li = null;
@@ -79,7 +74,7 @@ public class aOrder_detailsSevice implements aOrder_detailsRepository{
 				gender = new Gender();
 				receipt_details = new Receipt_details();
 				status = new Status();
-				
+
 				status.setId(rs.getInt("status_id"));
 				status.setStatus_name(rs.getString("status_name"));
 
@@ -106,6 +101,7 @@ public class aOrder_detailsSevice implements aOrder_detailsRepository{
 				receipt.setNote(rs.getString("note"));
 				receipt.setStatus(status);
 				receipt.setMethod(rs.getString("method"));
+				receipt.setBill(rs.getString("bill"));
 				receipt.setRequest(rs.getInt("request"));
 
 				gender.setId(rs.getInt("gender_id"));
@@ -114,6 +110,9 @@ public class aOrder_detailsSevice implements aOrder_detailsRepository{
 
 				role.setId(rs.getInt("role_id"));
 				role.setRole_name(rs.getString("role_name"));
+				role.setDescription(rs.getString("description"));
+				role.setCreated_at(rs.getDate("created_at"));
+				role.setUpdated_at(rs.getDate("updated_at"));
 
 				user.setId(rs.getInt("user_id"));
 				user.setFirstname(rs.getString("firstname"));user.setLastname(rs.getString("lastname"));
@@ -173,9 +172,8 @@ public class aOrder_detailsSevice implements aOrder_detailsRepository{
 		return li;
 	}
 
-	//@Override
-	public boolean insertIntoOrder_details(double price_at, int quantity, int prod_id, int size_id,
-			int color_id) {
+	@Override
+	public boolean insertIntoOrder_details(double price_at, int quantity, int prod_id, int size_id, int color_id, String phone_number, String email) {
 		try {
 			receiptService = new ReceiptService();
 			connectService = new ConnectService();
@@ -183,8 +181,8 @@ public class aOrder_detailsSevice implements aOrder_detailsRepository{
 			String sql = "INSERT INTO `order_details`(`order_id`, `price_at`, `quantity`, `prod_id`, `size_id`, `color_id`) "
 					+ "VALUES (?, ?, ?, ?, ?, ?)";
 			PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
-			preparedStmt.setInt(1, receiptService.getLastOrderId());
-			preparedStmt.setDouble(2, price_at);
+			preparedStmt.setInt(1, receiptService.get_last_order_id_by(phone_number, email));
+			preparedStmt.setDouble(2, (double) Math.round(price_at*100)/100);
 			preparedStmt.setInt(3, quantity);
 			preparedStmt.setInt(4, prod_id);
 			preparedStmt.setInt(5, size_id);
@@ -202,42 +200,56 @@ public class aOrder_detailsSevice implements aOrder_detailsRepository{
 		}
 		return false;
 	}
-	
-	
-	public List<Receipt_details> getOrder_detailsByIdOrder(int id_order) {
-		List<Receipt_details> li = new ArrayList<>();
+
+	public List<Receipt_details> get_all_order_details_by_order_id(int order_id) {
+		List<Receipt_details> li = new LinkedList<>();
 		for (Receipt_details o : getAllOrder_details()) {
-			if(o.getReceipt().getId() == id_order) {
+			if (o.getReceipt().getId() == order_id) {
 				li.add(o);
-				//.out.println(o.getProd().getThumbnail());
 			}
-			
 		}
-		
 		return li;
 	}
+
+	public double total_order_by_id_order(int order_id) {
+		List<Receipt_details> li = get_all_order_details_by_order_id(order_id);
+		double total = 0;
+		for (Receipt_details o : li) {
+			total += o.getPrice_at() * o.getQuantity();
+		}
+		System.out.println(total);
+		return (double) Math.round(total * 100) / 100;
+	}
+
+	public double price_when_apply_voucher_by_order_id(int order_id) {
+		receiptService = new ReceiptService();
+		int discount = receiptService.get_voucher_discount_by_order_id(order_id);
+		double total = total_order_by_id_order(order_id);
+		double rs = (double) discount * total / 100;
+		return (double) Math.round(rs * 100) / 100;
+	}
+
 	
-	public HashMap<Integer, List<Product_color_size>> getListColorByOrder_detail(int id_order) {
-		HashMap<Integer, List<Product_color_size>> hm = new HashMap<>();
-		Product_color_sizeService c = new Product_color_sizeService();
-		for (Receipt_details o : getAllOrder_details()) {
-			if(o.getReceipt().getId() == id_order) {
-				hm.put(o.getProd().getId(), c.getAllColorById_prod(o.getProd().getId()));
+
+	public List<Receipt_details> get_all_order_details_by_user_id(int user_id) {
+		receiptService = new ReceiptService();
+		List<Receipt_details> li = new LinkedList<>();
+		for (Receipt o : receiptService.get_all_order_by_user_id(user_id)) {
+			for (Receipt_details od : get_all_order_details_by_order_id(o.getId())) {
+				li.add(od);
 			}
 		}
-		
-		return hm;
+		return li;
 	}
-	
+
+
 	public static void main(String[] args) {
-		aOrder_detailsSevice a = new aOrder_detailsSevice();
-		HashMap<Integer, List<Product_color_size>> hm = a.getListColorByOrder_detail(4);
-		for (Integer i : hm.keySet()) {
-			System.out.println(i +": {");
-			for (Product_color_size c : hm.get(i)) {
-				System.out.printf(c.getColor().getId()+",");
-			}
-			System.out.println("}");
+		Receipt_detailsService o = new Receipt_detailsService();
+//		for (Order_details od : o.get_all_order_details_by_user_id(1)) {
+//			System.out.println(od.getReceipt().getId());
+//		}
+		for (Receipt_details od : o.get_all_order_details_by_order_id(7)) {
+			System.out.println(od.getReceipt().getId() +"==" + od.getPrice_at() +"="+od.getProd().getDiscount());
 		}
 	}
 }

@@ -14,7 +14,7 @@ import java.util.Locale;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
-import TT.Model.Order;
+import TT.Model.Receipt;
 import TT.Model.Status;
 import TT.Model.Voucher;
 import TT.Repository.Admin.aOrderRepository;
@@ -22,13 +22,13 @@ import TT.Service.User.ConnectService;
 
 public class aOrderService implements aOrderRepository {
 	private ConnectService connectService;
-	private Order order;
+	private Receipt receipt;
 	private Voucher voucher;
 	private Status status;
 
 	@Override
-	public List<Order> getAllOrder() {
-		List<Order> li = null;
+	public List<Receipt> getAllOrder() {
+		List<Receipt> li = null;
 		try {
 			connectService = new ConnectService();
 			li = new ArrayList<>();
@@ -36,10 +36,10 @@ public class aOrderService implements aOrderRepository {
 			Statement stmt;
 			stmt = (Statement) con.createStatement();
 			ResultSet rs = stmt
-					.executeQuery("select * from order_ " + "Inner join voucher on order_.voucher_id = voucher.id "
-							+ "Inner join status on order_.status_id = status.id " + "group by order_.id");
+					.executeQuery("select * from order " + "Inner join voucher on receipt.voucher_id = voucher.id "
+							+ "Inner join status on receipt.status_id = status.id " + "group by order.id");
 			while (rs.next()) {
-				order = new Order();
+				receipt = new Receipt();
 				voucher = new Voucher();
 				status = new Status();
 
@@ -57,22 +57,22 @@ public class aOrderService implements aOrderRepository {
 				voucher.setUpdated_at(rs.getTimestamp("updated_at"));
 				voucher.setDescription(rs.getString("description"));
 
-				order.setId(rs.getInt("id"));
-				order.setFullname(rs.getString("fullname"));
-				order.setEmail(rs.getString("email"));
-				order.setPhone_number(rs.getString("phone_number"));
-				order.setAddress(rs.getString("address"));
-				order.setOrder_date(rs.getDate("order_date"));
-				order.setUpdated_at(rs.getDate("updated_at"));
-				order.setVoucher(voucher);
-				order.setDiscount_at(rs.getDouble("discount_at"));
-				order.setNote(rs.getString("note"));
-				order.setStatus(status);
-				order.setMethod(rs.getString("method"));
-				order.setBill(rs.getString("bill"));
-				order.setRequest(rs.getInt("request"));
+				receipt.setId(rs.getInt("id"));
+				receipt.setFullname(rs.getString("fullname"));
+				receipt.setEmail(rs.getString("email"));
+				receipt.setPhone_number(rs.getString("phone_number"));
+				receipt.setAddress(rs.getString("address"));
+				receipt.setOrder_date(rs.getDate("order_date"));
+				receipt.setUpdated_at(rs.getDate("updated_at"));
+				receipt.setVoucher(voucher);
+				receipt.setDiscount_at(rs.getDouble("discount_at"));
+				receipt.setNote(rs.getString("note"));
+				receipt.setStatus(status);
+				receipt.setMethod(rs.getString("method"));
+				receipt.setBill(rs.getString("bill"));
+				receipt.setRequest(rs.getInt("request"));
 
-				li.add(order);
+				li.add(receipt);
 			}
 			con.close();
 		} catch (SQLException e) {
@@ -87,7 +87,7 @@ public class aOrderService implements aOrderRepository {
 			java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
 			connectService = new ConnectService();
 			Connection conn = connectService.getConnect();
-			String sql = "INSERT INTO `order_`(`fullname`, `email`, `phone_number`, `address`, `order_date`, `updated_at`, `voucher_id`, `note`, `status`, `method` , `discount_at`) "
+			String sql = "INSERT INTO `order`(`fullname`, `email`, `phone_number`, `address`, `order_date`, `updated_at`, `voucher_id`, `note`, `status`, `method` , `discount_at`) "
 					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
 			preparedStmt.setString(1, fullname);
@@ -120,9 +120,9 @@ public class aOrderService implements aOrderRepository {
 		return order_id;
 	}
 
-	public Order getOrderByID(int id_order) {
-		Order od = new Order();
-		for (Order o : getAllOrder()) {
+	public Receipt getOrderByID(int id_order) {
+		Receipt od = new Receipt();
+		for (Receipt o : getAllOrder()) {
 			if (o.getId() == id_order) {
 				od = o;
 			}
@@ -175,14 +175,14 @@ public class aOrderService implements aOrderRepository {
 			Connection conn = connectService.getConnect();
 			// check id_prod
 			boolean check = false;
-			List<Order> list = getAllOrder();
-			for (Order o : list) {
+			List<Receipt> list = getAllOrder();
+			for (Receipt o : list) {
 				if (o.getId() == order_id) {
 					check = true;
 				}
 			}
 			if (check) {
-				String query = "update order_ set status_id = ? where id = ?";
+				String query = "update order set status_id = ? where id = ?";
 				PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(query);
 				preparedStmt.setInt(1, status_id);
 				preparedStmt.setInt(2, order_id);
@@ -201,10 +201,10 @@ public class aOrderService implements aOrderRepository {
 		return false;
 	}
 
-	public List<Order> search_order_by_string(String txt) {
-		List<Order> li = new LinkedList<>();
-		List<Order> get = getAllOrder();
-		for (Order o : get) {
+	public List<Receipt> search_order_by_string(String txt) {
+		List<Receipt> li = new LinkedList<>();
+		List<Receipt> get = getAllOrder();
+		for (Receipt o : get) {
 			if (o.getFullname().toLowerCase().trim().equals(txt.toLowerCase().trim())
 					|| o.getPhone_number().toLowerCase().trim().equals(txt.toLowerCase().trim())
 					|| o.getEmail().toLowerCase().trim().equals(txt.toLowerCase().trim())) {
@@ -216,11 +216,11 @@ public class aOrderService implements aOrderRepository {
 	}
 
 	// sort by id - asc
-	public List<Order> sort_by_id_asc() {
-		List<Order> get = getAllOrder();
-		Collections.sort(get, new Comparator<Order>() {
+	public List<Receipt> sort_by_id_asc() {
+		List<Receipt> get = getAllOrder();
+		Collections.sort(get, new Comparator<Receipt>() {
 			@Override
-			public int compare(Order o1, Order o2) {
+			public int compare(Receipt o1, Receipt o2) {
 				return o1.getId() - o2.getId();
 			}
 		});
@@ -228,11 +228,11 @@ public class aOrderService implements aOrderRepository {
 	}
 
 	// sort by id - desc
-	public List<Order> sort_by_id_desc() {
-		List<Order> get = getAllOrder();
-		Collections.sort(get, new Comparator<Order>() {
+	public List<Receipt> sort_by_id_desc() {
+		List<Receipt> get = getAllOrder();
+		Collections.sort(get, new Comparator<Receipt>() {
 			@Override
-			public int compare(Order o1, Order o2) {
+			public int compare(Receipt o1, Receipt o2) {
 				return o2.getId() - o1.getId();
 			}
 		});
@@ -240,12 +240,12 @@ public class aOrderService implements aOrderRepository {
 	}
 
 	// sort by fullname - asc
-	public List<Order> sort_by_fullname_asc() {
-		List<Order> get = getAllOrder();
-	    Collections.sort(get, new Comparator<Order>() {
+	public List<Receipt> sort_by_fullname_asc() {
+		List<Receipt> get = getAllOrder();
+	    Collections.sort(get, new Comparator<Receipt>() {
 	        Collator collator = Collator.getInstance(new Locale("vi","VN"));
 	        @Override
-	        public int compare(Order o1, Order o2) {
+	        public int compare(Receipt o1, Receipt o2) {
 	            return collator.compare(o1.getFullname(), o2.getFullname());
 	        }
 	    });
@@ -253,12 +253,12 @@ public class aOrderService implements aOrderRepository {
 	}
 
 	// sort by fullname - desc
-	public List<Order> sort_by_fullname_desc() {
-		List<Order> get = getAllOrder();
-	    Collections.sort(get, new Comparator<Order>() {
+	public List<Receipt> sort_by_fullname_desc() {
+		List<Receipt> get = getAllOrder();
+	    Collections.sort(get, new Comparator<Receipt>() {
 	        Collator collator = Collator.getInstance(new Locale("vi","VN"));
 	        @Override
-	        public int compare(Order o1, Order o2) {
+	        public int compare(Receipt o1, Receipt o2) {
 	            return collator.compare(o2.getFullname(), o1.getFullname());
 	        }
 	    });
@@ -266,11 +266,11 @@ public class aOrderService implements aOrderRepository {
 	}
 
 	// sort by email - asc
-	public List<Order> sort_by_email_asc() {
-		List<Order> get = getAllOrder();
-		Collections.sort(get, new Comparator<Order>() {
+	public List<Receipt> sort_by_email_asc() {
+		List<Receipt> get = getAllOrder();
+		Collections.sort(get, new Comparator<Receipt>() {
 			@Override
-			public int compare(Order o1, Order o2) {
+			public int compare(Receipt o1, Receipt o2) {
 				return o1.getEmail().compareToIgnoreCase(o2.getEmail());
 			}
 		});
@@ -278,11 +278,11 @@ public class aOrderService implements aOrderRepository {
 	}
 
 	// sort by email - desc
-	public List<Order> sort_by_email_desc() {
-		List<Order> get = getAllOrder();
-		Collections.sort(get, new Comparator<Order>() {
+	public List<Receipt> sort_by_email_desc() {
+		List<Receipt> get = getAllOrder();
+		Collections.sort(get, new Comparator<Receipt>() {
 			@Override
-			public int compare(Order o1, Order o2) {
+			public int compare(Receipt o1, Receipt o2) {
 				return o2.getEmail().compareToIgnoreCase(o1.getEmail());
 			}
 		});
@@ -290,12 +290,12 @@ public class aOrderService implements aOrderRepository {
 	}
 
 	// sort by address - asc
-	public List<Order> sort_by_address_asc() {
-		List<Order> get = getAllOrder();
-	    Collections.sort(get, new Comparator<Order>() {
+	public List<Receipt> sort_by_address_asc() {
+		List<Receipt> get = getAllOrder();
+	    Collections.sort(get, new Comparator<Receipt>() {
 	        Collator collator = Collator.getInstance(new Locale("vi","VN"));
 	        @Override
-	        public int compare(Order o1, Order o2) {
+	        public int compare(Receipt o1, Receipt o2) {
 	            return collator.compare(o1.getAddress(), o2.getAddress());
 	        }
 	    });
@@ -303,12 +303,12 @@ public class aOrderService implements aOrderRepository {
 	}
 
 	// sort by address - desc
-	public List<Order> sort_by_address_desc() {
-		List<Order> get = getAllOrder();
-	    Collections.sort(get, new Comparator<Order>() {
+	public List<Receipt> sort_by_address_desc() {
+		List<Receipt> get = getAllOrder();
+	    Collections.sort(get, new Comparator<Receipt>() {
 	        Collator collator = Collator.getInstance(new Locale("vi","VN"));
 	        @Override
-	        public int compare(Order o1, Order o2) {
+	        public int compare(Receipt o1, Receipt o2) {
 	            return collator.compare(o2.getAddress(), o1.getAddress());
 	        }
 	    });
@@ -317,11 +317,11 @@ public class aOrderService implements aOrderRepository {
 
 
 	// sort by order_date - asc
-	public List<Order> sort_by_order_date_asc() {
-		List<Order> get = getAllOrder();
-		Collections.sort(get, new Comparator<Order>() {
+	public List<Receipt> sort_by_order_date_asc() {
+		List<Receipt> get = getAllOrder();
+		Collections.sort(get, new Comparator<Receipt>() {
 			@Override
-			public int compare(Order o1, Order o2) {
+			public int compare(Receipt o1, Receipt o2) {
 				return o1.getOrder_date().compareTo(o2.getOrder_date());
 			}
 		});
@@ -329,11 +329,11 @@ public class aOrderService implements aOrderRepository {
 	}
 
 	// sort by order_date - desc
-	public List<Order> sort_by_order_date_desc() {
-		List<Order> get = getAllOrder();
-		Collections.sort(get, new Comparator<Order>() {
+	public List<Receipt> sort_by_order_date_desc() {
+		List<Receipt> get = getAllOrder();
+		Collections.sort(get, new Comparator<Receipt>() {
 			@Override
-			public int compare(Order o1, Order o2) {
+			public int compare(Receipt o1, Receipt o2) {
 				return o2.getOrder_date().compareTo(o1.getOrder_date());
 			}
 		});
@@ -341,11 +341,11 @@ public class aOrderService implements aOrderRepository {
 	}
 
 	// sort by status - asc
-	public List<Order> sort_by_status_asc() {
-		List<Order> get = getAllOrder();
-		Collections.sort(get, new Comparator<Order>() {
+	public List<Receipt> sort_by_status_asc() {
+		List<Receipt> get = getAllOrder();
+		Collections.sort(get, new Comparator<Receipt>() {
 			@Override
-			public int compare(Order o1, Order o2) {
+			public int compare(Receipt o1, Receipt o2) {
 				return o1.getStatus().getStatus_name().compareToIgnoreCase(o2.getStatus().getStatus_name());
 			}
 		});
@@ -353,11 +353,11 @@ public class aOrderService implements aOrderRepository {
 	}
 
 	// sort by status - desc
-	public List<Order> sort_by_status_desc() {
-		List<Order> get = getAllOrder();
-		Collections.sort(get, new Comparator<Order>() {
+	public List<Receipt> sort_by_status_desc() {
+		List<Receipt> get = getAllOrder();
+		Collections.sort(get, new Comparator<Receipt>() {
 			@Override
-			public int compare(Order o1, Order o2) {
+			public int compare(Receipt o1, Receipt o2) {
 				return o2.getStatus().getStatus_name().compareToIgnoreCase(o1.getStatus().getStatus_name());
 			}
 		});

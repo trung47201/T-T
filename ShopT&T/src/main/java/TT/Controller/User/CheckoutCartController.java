@@ -16,8 +16,8 @@ import TT.Model.Cart;
 import TT.Model.Product_color_size;
 import TT.Service.User.CartService;
 import TT.Service.User.CheckoutService;
-import TT.Service.User.OrderService;
-import TT.Service.User.Order_detailsService;
+import TT.Service.User.ReceiptService;
+import TT.Service.User.Receipt_detailsService;
 import TT.Service.User.PostsService;
 import TT.Service.User.Product_color_sizeService;
 import TT.Service.User.StatisticsService;
@@ -27,8 +27,8 @@ import TT.Service.User.Product.ShoesService;
 @Controller
 public class CheckoutCartController {
 	private VoucherService voucherService;
-	private Order_detailsService order_detailsService;
-	private OrderService orderService;
+	private Receipt_detailsService receipt_detailsService;
+	private ReceiptService receiptService;
 	private CartService cartService;
 	private CheckoutService checkoutService;
 	private Product_color_sizeService product_color_sizeService;
@@ -39,8 +39,8 @@ public class CheckoutCartController {
 	@RequestMapping(value = { "cart/checkout/user-cart/{id}" })
 	public ModelAndView checkout_ok_cart(@PathVariable String id, HttpServletRequest request,
 			HttpServletResponse response) {
-		order_detailsService = new Order_detailsService();
-		orderService = new OrderService();
+		receipt_detailsService = new Receipt_detailsService();
+		receiptService = new ReceiptService();
 		voucherService = new VoucherService();
 		cartService = new CartService();
 		product_color_sizeService = new Product_color_sizeService();
@@ -81,7 +81,7 @@ public class CheckoutCartController {
 					if (!voucherService.voucher_start_date_by_code(vccode)) {
 						double applyfor = voucherService.get_apply_for_by_code(vccode);
 						if (total >= applyfor) {
-							if (orderService.check_voucher_used_by_user_id(Integer.parseInt(userid), vccode)) {
+							if (receiptService.check_voucher_used_by_user_id(Integer.parseInt(userid), vccode)) {
 								System.out.println("start");
 								check_vc = true;
 							}
@@ -114,7 +114,7 @@ public class CheckoutCartController {
 			if (vc_id == 0) {
 				vc_id = 1;
 			}
-			if (orderService.insertIntoOrder(fullname, email, phone_number, address, vc_id, note, method, dis)) {
+			if (receiptService.insertIntoOrder(fullname, email, phone_number, address, vc_id, note, method, dis)) {
 				if (vc_id != 1) {
 					voucherService.update_limit_voucher(vc_id);
 				}
@@ -129,7 +129,7 @@ public class CheckoutCartController {
 					} else {
 						price_at = cart.getColor_size().getProd().getPrice();
 					}
-					if (order_detailsService.insertIntoOrder_details(price_at, cart.getQuantity(),
+					if (receipt_detailsService.insertIntoOrder_details(price_at, cart.getQuantity(),
 							cart.getColor_size().getProd().getId(), cart.getColor_size().getSize().getId(),
 							cart.getColor_size().getColor().getId(), phone_number, email)
 							&& product_color_sizeService.updateColor_size_Quantity(
@@ -142,7 +142,7 @@ public class CheckoutCartController {
 							&& cartService.delete_cart_by_cart_id(cart.getId())) {
 					}
 				}
-				int order_id = orderService.get_last_order_id_by(phone_number, email);
+				int order_id = receiptService.get_last_order_id_by(phone_number, email);
 				System.out.println("buy cart success this checkout cart controller");
 				System.out.println(vc_id + "_" + method);
 				session.setAttribute("checkoutcart", "end");
@@ -197,8 +197,8 @@ public class CheckoutCartController {
 	public ModelAndView checkout_cart_not_login_ok(HttpServletRequest request, HttpServletResponse response) {
 
 		checkoutService = new CheckoutService();
-		orderService = new OrderService();
-		order_detailsService = new Order_detailsService();
+		receiptService = new ReceiptService();
+		receipt_detailsService = new Receipt_detailsService();
 		String process = String.valueOf(request.getParameter("process"));
 
 		String fullname = request.getParameter("fullname");
@@ -217,7 +217,7 @@ public class CheckoutCartController {
 
 		if (city != null && town != null && village != null && fullname != null && phone_number != null
 				&& email != null) {
-			if (orderService.insertIntoOrder(fullname, email, phone_number, address, 1, note, method, 0)) {
+			if (receiptService.insertIntoOrder(fullname, email, phone_number, address, 1, note, method, 0)) {
 				for (Product_color_size c : hm.keySet()) {
 					double price_at = 0;
 					if (c.getProd().getDiscount() > 0) {
@@ -225,14 +225,14 @@ public class CheckoutCartController {
 					} else {
 						price_at = c.getProd().getPrice();
 					}
-					if (order_detailsService.insertIntoOrder_details(price_at, hm.get(c), c.getProd().getId(),
+					if (receipt_detailsService.insertIntoOrder_details(price_at, hm.get(c), c.getProd().getId(),
 							c.getSize().getId(), c.getColor().getId(), phone_number, email)
 							&& product_color_sizeService.updateColor_size_Quantity(c.getSize().getId(),
 									c.getColor().getId(), c.getProd().getId(), hm.get(c))) {
 
 					}
 				}
-				int order_id = orderService.get_last_order_id_by(phone_number, email);
+				int order_id = receiptService.get_last_order_id_by(phone_number, email);
 				System.out.println("buy cart success this checkout cart controller (192)");
 				return new ModelAndView("redirect: /ShopTandT/cart?process-delete=" + process + "&order-id=" + order_id);
 			} else {

@@ -2,10 +2,10 @@ package TT.Repository.Admin;
 
 import java.util.List;
 
-import TT.Model.Order;
+import TT.Model.Receipt;
 
 public interface aOrderRepository {
-	public List<Order> getAllOrder();
+	public List<Receipt> getAllOrder();
 	public boolean addOrder();
 	public boolean editOrder();
 }

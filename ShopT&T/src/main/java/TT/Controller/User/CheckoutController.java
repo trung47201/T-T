@@ -18,8 +18,8 @@ import TT.Model.Product;
 import TT.Model.User;
 import TT.Service.User.CartService;
 import TT.Service.User.CheckoutService;
-import TT.Service.User.OrderService;
-import TT.Service.User.Order_detailsService;
+import TT.Service.User.ReceiptService;
+import TT.Service.User.Receipt_detailsService;
 import TT.Service.User.PostsService;
 import TT.Service.User.Product_color_sizeService;
 import TT.Service.User.StatisticsService;
@@ -33,8 +33,8 @@ public class CheckoutController {
 	private CheckoutService checkoutService;
 	private Product_color_sizeService product_color_sizeService;
 	private VoucherService voucherService;
-	private Order_detailsService order_detailsService;
-	private OrderService orderService;
+	private Receipt_detailsService receipt_detailsService;
+	private ReceiptService receiptService;
 	private UserService userService;
 	private CartService cartService;
 	private StatisticsService statisticsService;
@@ -42,8 +42,8 @@ public class CheckoutController {
 
 	@RequestMapping(value = { "cart/checkout/ok/{id}" })
 	public ModelAndView checkout_ok(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
-		order_detailsService = new Order_detailsService();
-		orderService = new OrderService();
+		receipt_detailsService = new Receipt_detailsService();
+		receiptService = new ReceiptService();
 		shoesService = new ShoesService();
 		checkoutService = new CheckoutService();
 		userService = new UserService();
@@ -118,9 +118,9 @@ public class CheckoutController {
 				pricetotal = pricetotal + 11.00;
 			}
 			if (vc_id != 1) {
-				if (orderService.insertIntoOrder(fullname, email, phone_number, adr, vc_id, note, method, dis)
+				if (receiptService.insertIntoOrder(fullname, email, phone_number, adr, vc_id, note, method, dis)
 						&& voucherService.update_limit_voucher(vc_id)
-						&& order_detailsService.insertIntoOrder_details((double) Math.round(price_at * 100) / 100,
+						&& receipt_detailsService.insertIntoOrder_details((double) Math.round(price_at * 100) / 100,
 								Integer.parseInt(quantity), Integer.parseInt(id_prod), Integer.parseInt(size),
 								Integer.parseInt(color), phone_number, email)
 						&& product_color_sizeService.updateColor_size_Quantity(Integer.parseInt(size),
@@ -139,8 +139,8 @@ public class CheckoutController {
 					return new ModelAndView("redirect: /ShopTandT/cart/checkout/" + id);
 				}
 			} else {
-				if (orderService.insertIntoOrder(fullname, email, phone_number, adr, vc_id, note, method, dis)
-						&& order_detailsService.insertIntoOrder_details((double) Math.round(price_at * 100) / 100,
+				if (receiptService.insertIntoOrder(fullname, email, phone_number, adr, vc_id, note, method, dis)
+						&& receipt_detailsService.insertIntoOrder_details((double) Math.round(price_at * 100) / 100,
 								Integer.parseInt(quantity), Integer.parseInt(id_prod), Integer.parseInt(size),
 								Integer.parseInt(color), phone_number, email)
 						&& product_color_sizeService.updateColor_size_Quantity(Integer.parseInt(size),
@@ -172,7 +172,7 @@ public class CheckoutController {
 		checkoutService = new CheckoutService();
 		voucherService = new VoucherService();
 		userService = new UserService();
-		orderService = new OrderService();
+		receiptService = new ReceiptService();
 		postsService = new PostsService();
 
 		String voucher = request.getParameter("voucher");
@@ -244,7 +244,7 @@ public class CheckoutController {
 								System.out.println("notenough");
 								mv.addObject("applyfor", applyfor);
 							} else {
-								if (orderService.check_voucher_used_by_user_id(Integer.parseInt(id_user), voucher)) {
+								if (receiptService.check_voucher_used_by_user_id(Integer.parseInt(id_user), voucher)) {
 									int vch_discount = voucherService.get_discount_by_voucher_code(voucher);
 									mv.addObject("vcdiscount", vch_discount);
 									mv.addObject("vcstatus", "start");
@@ -264,7 +264,7 @@ public class CheckoutController {
 								mv.addObject("applyfor", applyfor);
 								System.out.println("notenough");
 							} else {
-								if (orderService.check_voucher_used_by_user_id(Integer.parseInt(id_user), voucher)) {
+								if (receiptService.check_voucher_used_by_user_id(Integer.parseInt(id_user), voucher)) {
 									int vch_discount = voucherService.get_discount_by_voucher_code(voucher);
 									mv.addObject("vcdiscount", vch_discount);
 									mv.addObject("vcstatus", "start");
@@ -365,7 +365,7 @@ public class CheckoutController {
 		shoesService = new ShoesService();
 		checkoutService = new CheckoutService();
 		voucherService = new VoucherService();
-		orderService = new OrderService();
+		receiptService = new ReceiptService();
 		
 		int user_id = 0;
 		double total = 0;
@@ -426,7 +426,7 @@ public class CheckoutController {
 								mv.addObject("applyfor", applyfor);
 							} else {
 								if (user_id != 0) {
-									if (orderService.check_voucher_used_by_user_id(user_id, voucher)) {
+									if (receiptService.check_voucher_used_by_user_id(user_id, voucher)) {
 										System.out.println(voucher);
 										int vch_discount = voucherService.get_discount_by_voucher_code(voucher);
 										mv.addObject("vcdiscount", (double) Math.round(vch_discount * total) / 100);

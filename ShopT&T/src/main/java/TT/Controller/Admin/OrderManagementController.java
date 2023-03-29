@@ -12,18 +12,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import TT.Model.Order;
+import TT.Model.Receipt;
 import TT.Service.Admin.aOrderService;
 import TT.Service.Admin.aOrder_detailsSevice;
 import TT.Service.Admin.aStatusService;
-import TT.Service.User.Order_detailsService;
+import TT.Service.User.Receipt_detailsService;
 
 @Controller
 public class OrderManagementController {
 	private aOrderService _aOrderService;
 	private aOrder_detailsSevice _aOrder_detailsSevice;
 	private aStatusService _aStatusService;
-	private Order_detailsService order_detailsService;
+	private Receipt_detailsService receipt_detailsService;
 
 	@RequestMapping(value = { "/admin/order-management" })
 	public ModelAndView loadManagement(HttpServletRequest request, HttpServletResponse response) {
@@ -42,10 +42,10 @@ public class OrderManagementController {
 		mv.addObject("management", "true");
 		mv.addObject("editorder", "false");
 		mv.addObject("orderdetails", "false");
-		List<Order> li = _aOrderService.getAllOrder();
-		Collections.sort(li, new Comparator<Order>() {
+		List<Receipt> li = _aOrderService.getAllOrder();
+		Collections.sort(li, new Comparator<Receipt>() {
 			@Override
-			public int compare(Order o1, Order o2) {
+			public int compare(Receipt o1, Receipt o2) {
 				return o2.getId()-o1.getId();
 			}
 		
@@ -62,11 +62,11 @@ public class OrderManagementController {
 		_aOrderService = new aOrderService();
 		_aOrder_detailsSevice = new aOrder_detailsSevice();
 		_aStatusService = new aStatusService();
-		order_detailsService = new Order_detailsService();
+		receipt_detailsService = new Receipt_detailsService();
 
 		String id_order = String.valueOf(request.getParameter("id_order"));
 		if (!id_order.equals("null")) {
-			Order o = _aOrderService.getOrderByID(Integer.parseInt(id_order));
+			Receipt o = _aOrderService.getOrderByID(Integer.parseInt(id_order));
 			if (_aOrderService.getOrderByID(Integer.parseInt(id_order)) != null) {
 				mv.addObject("orderById", o);
 			}
@@ -74,7 +74,7 @@ public class OrderManagementController {
 				mv.addObject("orderDetailsById",
 						_aOrder_detailsSevice.getOrder_detailsByIdOrder(Integer.parseInt(id_order)));
 			}
-			double total = order_detailsService.total_order_by_id_order(Integer.parseInt(id_order));
+			double total = receipt_detailsService.total_order_by_id_order(Integer.parseInt(id_order));
 			if (total < 50) {
 				total = total + 11.0 - o.getDiscount_at();
 				mv.addObject("total", (double) Math.round(total*100)/100);
@@ -86,10 +86,10 @@ public class OrderManagementController {
 		mv.addObject("management", "false");
 		mv.addObject("editorder", "true");
 		mv.addObject("orderdetails", "false");
-		List<Order> li = _aOrderService.getAllOrder();
-		Collections.sort(li, new Comparator<Order>() {
+		List<Receipt> li = _aOrderService.getAllOrder();
+		Collections.sort(li, new Comparator<Receipt>() {
 			@Override
-			public int compare(Order o1, Order o2) {
+			public int compare(Receipt o1, Receipt o2) {
 				return o2.getId()-o1.getId();
 			}
 		
@@ -108,11 +108,11 @@ public class OrderManagementController {
 		_aOrderService = new aOrderService();
 		_aOrder_detailsSevice = new aOrder_detailsSevice();
 		_aStatusService = new aStatusService();
-		order_detailsService = new Order_detailsService();
+		receipt_detailsService = new Receipt_detailsService();
 
 		String id_order = String.valueOf(request.getParameter("id_order"));
 		if (!id_order.equals("null")) {
-			Order o = _aOrderService.getOrderByID(Integer.parseInt(id_order));
+			Receipt o = _aOrderService.getOrderByID(Integer.parseInt(id_order));
 			if (_aOrderService.getOrderByID(Integer.parseInt(id_order)) != null) {
 				mv.addObject("orderById", o);
 			}
@@ -120,7 +120,7 @@ public class OrderManagementController {
 				mv.addObject("orderDetailsById",
 						_aOrder_detailsSevice.getOrder_detailsByIdOrder(Integer.parseInt(id_order)));
 			}
-			double total = order_detailsService.total_order_by_id_order(Integer.parseInt(id_order));
+			double total = receipt_detailsService.total_order_by_id_order(Integer.parseInt(id_order));
 			if (total < 50) {
 				total = total + 11.0 - o.getDiscount_at();
 				mv.addObject("total", (double) Math.round(total*100)/100);
@@ -133,10 +133,10 @@ public class OrderManagementController {
 		mv.addObject("editorder", "false");
 		mv.addObject("orderdetails", "true");
 		if (!_aOrderService.getAllOrder().isEmpty()) {
-			List<Order> li = _aOrderService.getAllOrder();
-			Collections.sort(li, new Comparator<Order>() {
+			List<Receipt> li = _aOrderService.getAllOrder();
+			Collections.sort(li, new Comparator<Receipt>() {
 				@Override
-				public int compare(Order o1, Order o2) {
+				public int compare(Receipt o1, Receipt o2) {
 					return o2.getId()-o1.getId();
 				}
 			

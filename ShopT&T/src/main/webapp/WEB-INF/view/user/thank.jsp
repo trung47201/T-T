@@ -121,30 +121,30 @@
 							<div class="list_prod_checkout">
 								<div class="img-product-checkout">
 									<img
-										src="<c:url value="/assets/images/products/${ order_details.prod.thumbnail }"/>"
+										src="<c:url value="/assets/images/products/${ receipt_details.prod.thumbnail }"/>"
 										alt="">
 								</div>
 								<table>
 									<tr>
-										<th colspan="2">${ order_details.prod.title }</th>
+										<th colspan="2">${ receipt_details.prod.title }</th>
 									</tr>
 									<tr>
-										<td colspan="2">${ order_details.color.color_name }-${ order_details.size.size_number }</td>
+										<td colspan="2">${ receipt_details.color.color_name }-${ receipt_details.size.size_number }</td>
 									</tr>
 									<tr>
-										<c:if test="${ order_details.prod.discount > 0 }">
+										<c:if test="${ receipt_details.prod.discount > 0 }">
 											<th class="price"><b> $<fmt:formatNumber
 														type="number" maxFractionDigits="2"
-														value="${ order_details.prod.price - order_details.prod.price * order_details.prod.discount/100 }" />
+														value="${ receipt_details.prod.price - receipt_details.prod.price * receipt_details.prod.discount/100 }" />
 											</b></th>
 										</c:if>
-										<c:if test="${ order_details.prod.discount <= 0 }">
+										<c:if test="${ receipt_details.prod.discount <= 0 }">
 											<th class="price"><b> $<fmt:formatNumber
 														type="number" maxFractionDigits="2"
-														value="${ order_details.prod.price }" />
+														value="${ receipt_details.prod.price }" />
 											</b></th>
 										</c:if>
-										<td class="amount"><i>x${ order_details.quantity }</i></td>
+										<td class="amount"><i>x${ receipt_details.quantity }</i></td>
 									</tr>
 								</table>
 							</div>

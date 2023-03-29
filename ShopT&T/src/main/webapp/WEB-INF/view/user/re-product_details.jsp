@@ -119,7 +119,7 @@
 
 					<div class="color-product-details">
 						<p class="name-color">
-							Color: <span>aaa</span>
+							Color: <span></span>
 						</p>
 						<div class="list-color-product-details">
 							<c:forEach var="liColor" items="${ listColor }" varStatus="index">

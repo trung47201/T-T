@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import TT.Model.Order;
+import TT.Model.Receipt;
 import TT.Service.Admin.aOrderService;
 
 @Controller
@@ -88,10 +88,10 @@ public class OrderSearchController {
 		}
 
 		if (search == null && sortby == null) {
-			List<Order> li = _aOrderService.getAllOrder();
-			Collections.sort(li, new Comparator<Order>() {
+			List<Receipt> li = _aOrderService.getAllOrder();
+			Collections.sort(li, new Comparator<Receipt>() {
 				@Override
-				public int compare(Order o1, Order o2) {
+				public int compare(Receipt o1, Receipt o2) {
 					return o2.getId()-o1.getId();
 				}
 			

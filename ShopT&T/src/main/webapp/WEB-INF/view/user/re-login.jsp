@@ -37,7 +37,6 @@
 		<img alt=""
 			src="<c:url value="/assets/images/poster/storepic2_1200x.webp"/>">
 	</div>
-
 	<div class="text">
 		<p class="cool">
 			<span data-text="Login" style="color: white;">Login</span>

@@ -61,6 +61,14 @@
 	background: #cb82a9 !important;
 	margin-top: 3px;
 }
+div.position-product {
+    margin-left: 6%;
+    margin-top: 40px;
+    display: flex;
+}
+div.section-3 {
+    margin-top: 50px;
+}
 </style>
 
 <body style="color: black;">
@@ -236,16 +244,9 @@
 		</div>
 		<div class="img_poster-new-arrivals container-xl">
 			<img
-				src="<c:url value="/assets/images/poster/poster_new_arrivals.jpg"/>"
+				src="<c:url value="/assets/images/poster/z4124954819721_a21620ad6413618390477292c680b45f_04bbb72a16b444e59f889805257a77d6.webp"/>"
 				class="img_poster-new-arrivals img-fluid"
 				alt="img_poster-new-arrivals">
-			<div class="content-poster container-xl">
-				<span class="line1-poster">New Year, New Shoes</span> <br> <span
-					class="line2-poster"><p>See what just hit the site from
-						your favorite</p></span> <br> <span class="line3-poster">famous
-					brands</span> <br> <a class="poster" id="a-poster" href="#">SHOP
-					NEW ARRIVALS</a>
-			</div>
 		</div>
 
 		<!-- ###########################     SECTION 3 - MOST LOVED PRODUCTS     ################################################### -->

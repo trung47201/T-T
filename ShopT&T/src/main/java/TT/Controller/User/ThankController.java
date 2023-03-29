@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import TT.Model.Color;
-import TT.Model.Order;
-import TT.Model.Order_details;
+import TT.Model.Receipt;
+import TT.Model.Receipt_details;
 import TT.Model.Product;
 import TT.Model.Sizes;
 import TT.Service.User.CheckoutService;
 import TT.Service.User.ColorService;
-import TT.Service.User.OrderService;
-import TT.Service.User.Order_detailsService;
+import TT.Service.User.ReceiptService;
+import TT.Service.User.Receipt_detailsService;
 import TT.Service.User.SizeService;
 import TT.Service.User.UserService;
 import TT.Service.User.VoucherService;
@@ -34,8 +34,8 @@ public class ThankController {
 	private ShoesService shoesService;
 	private VoucherService voucherService;
 	private UserService userService;
-	private OrderService orderService;
-	private Order_detailsService order_detailsService;
+	private ReceiptService receiptService;
+	private Receipt_detailsService receipt_detailsService;
 	
 	@RequestMapping(value = {"sucess-buynow"})
 	public ModelAndView loadOrder(HttpServletRequest request, HttpServletResponse response){
@@ -149,11 +149,11 @@ public class ThankController {
 	public ModelAndView loadSucessCart_user(@PathVariable String id, HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView("user/thank");
 		
-		orderService = new OrderService();
-		order_detailsService = new Order_detailsService();
+		receiptService = new ReceiptService();
+		receipt_detailsService = new Receipt_detailsService();
 		userService = new UserService();
 		
-		Order o = orderService.get_all_order_by_order_id(Integer.parseInt(id));
+		Receipt o = receiptService.get_all_order_by_order_id(Integer.parseInt(id));
 
 		double vch = o.getDiscount_at();
 		String fullname = o.getFullname();
@@ -163,9 +163,9 @@ public class ThankController {
 		String note = o.getNote();
 		String method = o.getMethod();
 		
-		List<Order_details> li = order_detailsService.get_all_order_details_by_order_id(Integer.parseInt(id));
+		List<Receipt_details> li = receipt_detailsService.get_all_order_details_by_order_id(Integer.parseInt(id));
 		double totalProd = 0;
-		for (Order_details o_details : li) {
+		for (Receipt_details o_details : li) {
 			totalProd += o_details.getPrice_at() * o_details.getQuantity();
 		}
 		
