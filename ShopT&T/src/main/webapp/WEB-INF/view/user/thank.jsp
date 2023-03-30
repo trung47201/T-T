@@ -6,37 +6,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <link rel="stylesheet"
-	href="<c:url value="/assets/css/checkoutcart.css"/>">
-<link rel="stylesheet" href="<c:url value="/assets/css/thank.css"/>">
+	href="<c:url value="/assets/css/re-checkoutcart2.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/re-thank2.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/bootstrap.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/js/bootstrap.js"/>">
 <link rel="stylesheet"
 	href="<c:url value="/assets/css/bootstrap.min.css"/>">
 <link rel="stylesheet"
 	href="<c:url value="/assets/js/bootstrap.min.js"/>">
-<link rel="stylesheet" href="<c:url value="/assets/css/login.css"/>">
+
 <link rel="stylesheet" href="<c:url value="/assets/css/color.css"/>">
 <link rel="stylesheet"
 	href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />">
 
-<body>
+<body style="color: black;">
 	<form>
 		<div class="nav">
-			<c:set var="item" value="${ back_home }"></c:set>
-			<c:if test="${ item == 'home'}">
-				<div class="back">
-					<a href="/ShopTandT"><img
-						src="<c:url value="/assets/images/icons/back52.png"/>"
-						alt="back-icon">Back</a>
-				</div>
-			</c:if>
-			<c:if test="${ item == 'cart'}">
-				<div class="back">
-					<a href="/ShopTandT/cart"><img
-						src="<c:url value="/assets/images/icons/back52.png"/>"
-						alt="back-icon">Back</a>
-				</div>
-			</c:if>
 			<c:if test="${ avatar != null }">
 				<div class="avt">
 					<img src="<c:url value="/assets/images/users/${ avatar }"/>" alt="">
@@ -44,7 +29,8 @@
 			</c:if>
 			<c:if test="${ avatar == null }">
 				<div class="avt">
-					<img src="<c:url value="/assets/images/users/avt-default.jpg"/>" alt="">
+					<img src="<c:url value="/assets/images/users/avt-default.jpg"/>"
+						alt="">
 				</div>
 			</c:if>
 		</div>
@@ -68,7 +54,7 @@
 						</tr>
 						<tr>
 
-							<td>${ fullname }-${ phone_number }</td>
+							<td>${ fullname }- ${ phone_number }</td>
 							<td rowspan="2">${ address }</td>
 						</tr>
 						<tr>
@@ -80,10 +66,10 @@
 							<th>Shipping method</th>
 						</tr>
 						<tr>
-							<c:if test="${ method == 'COD' }">
+							<c:if test="${ method == 'cod' }">
 								<td>Payment on delivery (COD)</td>
 							</c:if>
-							<c:if test="${ method == 'Credit card' }">
+							<c:if test="${ method == 'card' }">
 								<td>Payment by Credit card</td>
 							</c:if>
 							<td>Delivery to your place</td>
@@ -96,20 +82,11 @@
 						</tr>
 					</table>
 				</div>
-				<c:if test="${ userid != null }">
-					<div class="continue-shopping">
-						<a href="/ShopTandT/products/${ userid }"><input type="button"
-							name="continueShopping" id="continueShopping"
-							value="Continue Shopping"></a>
-					</div>
-				</c:if>
-				<c:if test="${ userid == null }">
-					<div class="continue-shopping">
-						<a href="/ShopTandT/products"><input type="button"
-							name="continueShopping" id="continueShopping"
-							value="Continue Shopping"></a>
-					</div>
-				</c:if>
+				<div class="continue-shopping">
+					<a href="/ShopTandT/products/new-arrivals"><input type="button"
+						name="continueShopping" id="continueShopping"
+						value="Continue Shopping"></a>
+				</div>
 			</div>
 
 			<c:if test="${ listOrder != null }">
@@ -117,7 +94,7 @@
 				<div class="order">
 					<h4>Order information</h4>
 					<div class="products-checkout">
-						<c:forEach var="order_details" items="${ listOrder }">
+						<c:forEach var="receipt_details" items="${ listOrder }">
 							<div class="list_prod_checkout">
 								<div class="img-product-checkout">
 									<img
@@ -325,22 +302,22 @@
 			</c:if>
 		</div>
 	</form>
-	
+
 	<script type="text/javascript">
-		if ( window.history.replaceState ) {
-		  window.history.replaceState( null, null, window.location.href );
+		if (window.history.replaceState) {
+			window.history.replaceState(null, null, window.location.href);
 		}
 	</script>
 	<script type="text/javascript">
-	 $(window).load(function(){
-		    $('body').backDetect(function(){
-		      // Callback function
-		      alert("Look forward to the future, not the past!");
-		    });
-		  });
+		$(window).load(function() {
+			$('body').backDetect(function() {
+				// Callback function
+				alert("Look forward to the future, not the past!");
+			});
+		});
 	</script>
-	
-	
+
+
 	<script src="js/login.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

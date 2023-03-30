@@ -3,8 +3,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.TandT</groupId>
-	<artifactId>TandT</artifactId>
+	<groupId>com.ShopTandT</groupId>
+	<artifactId>ShopTandT</artifactId>
 	<version>1.0</version>
 	<packaging>war</packaging>
 
@@ -102,7 +102,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>TandT</finalName>
+		<finalName>ShopTandT</finalName>
 		<pluginManagement>
 			<!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
 			<plugins>

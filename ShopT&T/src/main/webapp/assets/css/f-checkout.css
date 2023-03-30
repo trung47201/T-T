@@ -4,6 +4,7 @@ body {
 	padding-top: 0px;
 	margin-top: 0px;
 	overflow-x: hidden;
+	overflow-y: scroll;
 }
 
 .nav {
@@ -37,32 +38,6 @@ input.minus-plus:hover {
 	cursor: pointer !important;
 }
 
-.back {
-	margin-left: 30px;
-	color: white;
-	width: 20%;
-	height: 60px;
-	display: flex;
-	align-items: center;
-	font-size: 25px;
-	font-weight: bold;
-}
-
-.back a {
-	text-decoration: none;
-	color: white;
-	margin-left: 10px;
-}
-
-.back a img {
-	width: 48px;
-}
-
-.back a:hover {
-	text-decoration: none;
-	color: #cb82a9;
-	text-shadow: 1px 2px 2px #f9e1ee;
-}
 
 
 .avt img {
@@ -143,7 +118,7 @@ input[type='text'] {
 .village-customer input, .town-customer input, .city-customer input,
 	.mail-customer input, .phone-customer input, .name-customer input,
 	.note-customer textarea {
-	border: 1px solid black;
+	border: 1px solid #cb82a9;
 	border-left: 3px solid #cb82a9;
 }
 
@@ -295,7 +270,7 @@ input[type='text'] {
 }
 
 .input-voucher input {
-	border-left: 3px solid #0086ff;
+	border-left: 3px solid #cb82a9;
 }
 
 .input-voucher input:focus {
@@ -307,7 +282,7 @@ input[type='text'] {
 }
 
 .input-voucher input {
-	width: 95%;
+	width: 100%;
 }
 
 .apply-voucher {
@@ -355,7 +330,7 @@ td.price-free {
 }
 
 span.txt-total-payment, span.total-payment {
-	font-size: 20px;
+	font-size: 28px;
 	font-weight: bold;
 }
 
@@ -540,4 +515,8 @@ input#city {
 }
 .btn-order-effect button:focus {
 	outline-style: none;
+}
+.icon-cod {
+    display: flex;
+    align-items: center;
 }

@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="<c:url value="/assets/css/login.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/color.css"/>">
 <link rel="stylesheet"
-	href="<c:url value="/assets/css/re-size_depend_color.css"/>">
+	href="<c:url value="/assets/css/r-size_depend_color.css"/>">
 <link rel="stylesheet"
 	href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />">
 <link rel="stylesheet"
@@ -26,6 +26,10 @@
 	<link rel="stylesheet"
 	href="<c:url value="/assets/css/checkbox-radio-input.css"/>">
 <style>
+.icon-cod {
+    display: flex;
+    align-items: center;
+}
 </style>
 <body>
 	<%
@@ -38,22 +42,7 @@
 	%>
 	<form action="/ShopTandT/cart/checkout/ok/${ id }" method="post"
 		id="myform">
-		<div class="nav">
-			<c:set var="item" value="${ back_home }"></c:set>
-			<c:if test="${ item == 'home'}">
-				<div class="back">
-					<a href="/ShopTandT"><img
-						src="<c:url value="/assets/images/icons/back52.png"/>"
-						alt="back-icon">Back</a>
-				</div>
-			</c:if>
-			<c:if test="${ item == 'cart'}">
-				<div class="back">
-					<a href="/ShopTandT/cart"><img
-						src="<c:url value="/assets/images/icons/back52.png"/>"
-						alt="back-icon">Back</a>
-				</div>
-			</c:if>
+		<div class="header">
 			<c:if test="${ sessionScope.userid != null }">
 				<c:if test="${ sessionScope.avatar != null }">
 					<div class="avt">
@@ -575,7 +564,6 @@
 
 				<c:if test="${ sessionScope.userid != null || userID != null}">
 					<div class="shipping" id="radio3" onclick="radio(this)">
-
 						<div class="icon-credit">
 							<c:if test="${ method == 'card' }">
 								<input type="radio" name="paymentmethods" id="rad3" value="card"
@@ -698,6 +686,15 @@
 					<div class="btn-order-effect">
 						<button type="button" name="order" id="order" value="">Order</button>
 					</div>
+					
+				</div>
+				<div class="backtocart">
+					<c:if test="${ sessionScope.userid != null }">
+						<a href="/ShopTandT/cart/${ sessionScope.userid }">Cancel</a>
+					</c:if>
+					<c:if test="${ sessionScope.userid == null }">
+						<a href="/ShopTandT/cart">Cancel</a>
+					</c:if>
 				</div>
 			</div>
 		</div>

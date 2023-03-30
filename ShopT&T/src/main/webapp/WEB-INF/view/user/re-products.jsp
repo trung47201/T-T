@@ -39,8 +39,8 @@
 <link rel="stylesheet"
 	href="<c:url value="/assets/css/checkbox-radio-input.css"/>">
 <body style="color: #222121;">
-	<c:if test="${ userID != null}">
-		<c:set var="id_user" value="${ userID }" />
+	<c:if test="${ sessionScope.userid != null}">
+		<c:set var="id_user" value="${ sessionScope.userid }" />
 	</c:if>
 
 	<jsp:include page="../layouts/user/re-menu.jsp"></jsp:include>
@@ -625,8 +625,8 @@
 
 	<script> // add to cart
 		var id_user = "";
-		if(${ id_user != null }) {
-			id_user = "${ id_user }";
+		if(${ sessionScope.userid != null }) {
+			id_user = "${ sessionScope.userid }";
 		}
 		if(id_user != "") {
 			$(".add-to-cart").click(function() {
@@ -655,8 +655,8 @@
 
 	<script> // buy now
 		var id_user = "";
-		if(${ userID != null }) {
-			id_user = "${ userID }";
+		if(${ sessionScope.userid != null }) {
+			id_user = "${ sessionScope.userid }";
 		}
 		if(id_user != "") {
 			$(".buy-now").click(function(e) {
@@ -721,8 +721,8 @@
 
 	<script> // click name style in product
 		var id_user = 0;
-		if(${ id_user != null }) {
-			id_user = "${ id_user }";
+		if(${ sessionScope.userid != null }) {
+			id_user = "${ sessionScope.userid }";
 		}
 		$("div.brand-product-products").click(
 			function() {
@@ -744,8 +744,8 @@
 
 	<script> // click name product
 		var id_user = "";
-		if(${userID != null }) {
-			id_user = "${ id_user }";
+		if(${ sessionScope.userid != null }) {
+			id_user = "${ sessionScope.userid }";
 		}
 		$("div.name-product-products").click(
 			function() {
@@ -1257,8 +1257,8 @@
 
 	<script type="text/javascript"> // reset menu
 		var id_user = "";
-		if(${userID != null }) {
-			id_user = "${ id_user }";
+		if(${ sessionScope.userid != null }) {
+			id_user = "${ sessionScope.userid }";
 		}
 		function resetAll() {
 			var url = window.location.href;
@@ -1304,35 +1304,6 @@
 	</script>
 
 	<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-
-	<!-- Initialize Swiper -->
-	<script>
-		var swiper = new Swiper(".mySwiper", {
-			effect : "coverflow",
-			grabCursor : true,
-			centeredSlides : true,
-			slidesPerView : "auto",
-			coverflowEffect : {
-				rotate : 0,
-				stretch : 0,
-				depth : 150,
-				modifier : 1,
-				slideShadows : true,
-			},
-			loop : true,
-		});
-	</script>
-	<!-- auto play header slide -->
-	<script type="text/javascript">
-		var counter = 1;
-		setInterval(function() {
-			document.getElementById('radio' + counter).checked = true;
-			counter++;
-			if (counter > 4) {
-				counter = 1;
-			}
-		}, 5000);
-	</script>
 
 	<script
 		src="<c:url value="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"/>"></script>

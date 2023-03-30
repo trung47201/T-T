@@ -49,16 +49,20 @@ public class CheckoutCartController {
 
 		HttpSession session = request.getSession();
 
-		String fullname = request.getParameter("fullname");
+		String firstname = request.getParameter("firstname");
+		String lastname = request.getParameter("lastname");
 		String phone_number = request.getParameter("phone");
 		String email = request.getParameter("email");
 		String city = request.getParameter("city");
-		String town = request.getParameter("town");
-		String village = request.getParameter("village");
+		String district = request.getParameter("district");
+		String address = request.getParameter("address");
 		String note = request.getParameter("note");
-		String method = request.getParameter("method");
+		String method = request.getParameter("paymentmethods");
 		String vccode = request.getParameter("vccode");
-
+		String fullname = "";
+		if (firstname != null && lastname != null) {
+			fullname = firstname + " " + lastname;
+		}
 		double total = 0;
 		List<Cart> liCart = cartService.get_all_cart_by_string(id);
 		if (liCart.size() > 0) {
@@ -108,13 +112,13 @@ public class CheckoutCartController {
 			dis = (double) Math.round(vch_discount * total) / 100;
 		}
 
-		if (city != null && town != null && village != null && fullname != null && phone_number != null
+		if (city != null && address != null && district != null && fullname != null && phone_number != null
 				&& email != null) {
-			String address = city + " - " + town + " - " + village;
+			String adr = address + " - " + district + " - " + city;
 			if (vc_id == 0) {
 				vc_id = 1;
 			}
-			if (receiptService.insertIntoOrder(fullname, email, phone_number, address, vc_id, note, method, dis)) {
+			if (receiptService.insertIntoOrder(fullname, email, phone_number, adr, vc_id, note, method, dis)) {
 				if (vc_id != 1) {
 					voucherService.update_limit_voucher(vc_id);
 				}
@@ -158,7 +162,7 @@ public class CheckoutCartController {
 
 	@RequestMapping(value = { "checkout-cart" })
 	public ModelAndView checkout_cart_not_login(HttpServletRequest request, HttpServletResponse response) {
-		ModelAndView mv = new ModelAndView("user/checkout-cart");
+		ModelAndView mv = new ModelAndView("user/re-checkout-cart");
 
 		postsService = new PostsService();
 		checkoutService = new CheckoutService();
@@ -199,25 +203,32 @@ public class CheckoutCartController {
 		checkoutService = new CheckoutService();
 		receiptService = new ReceiptService();
 		receipt_detailsService = new Receipt_detailsService();
+		product_color_sizeService = new Product_color_sizeService();
+		
 		String process = String.valueOf(request.getParameter("process"));
-
-		String fullname = request.getParameter("fullname");
+		String firstname = request.getParameter("firstname");
+		String lastname = request.getParameter("lastname");
 		String phone_number = request.getParameter("phone");
 		String email = request.getParameter("email");
 		String city = request.getParameter("city");
-		String town = request.getParameter("town");
-		String village = request.getParameter("village");
+		String district = request.getParameter("district");
+		String address = request.getParameter("address");
 		String note = request.getParameter("note");
-		String method = request.getParameter("method");
-		String address = city + " - " + town + " - " + village;
+		String method = request.getParameter("paymentmethods");
+		String fullname = "";
+		if (firstname != null && lastname != null) {
+			fullname = firstname + " " + lastname;
+		}
+		String adr = address + " - " + district + " - " + city;
+		
 		HashMap<Product_color_size, Integer> hm = checkoutService.get_list_color_size_qty_by_string_process(process);
 		if (method == null) {
-			method = "COD";
+			method = "cod";
 		}
 
-		if (city != null && town != null && village != null && fullname != null && phone_number != null
+		if (city != null && district != null && address != null && firstname != null && lastname != null && phone_number != null
 				&& email != null) {
-			if (receiptService.insertIntoOrder(fullname, email, phone_number, address, 1, note, method, 0)) {
+			if (receiptService.insertIntoOrder(fullname, email, phone_number, adr, 1, note, method, 0)) {
 				for (Product_color_size c : hm.keySet()) {
 					double price_at = 0;
 					if (c.getProd().getDiscount() > 0) {

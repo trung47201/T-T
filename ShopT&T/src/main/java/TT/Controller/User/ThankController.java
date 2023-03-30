@@ -154,7 +154,7 @@ public class ThankController {
 		userService = new UserService();
 		
 		Receipt o = receiptService.get_all_order_by_order_id(Integer.parseInt(id));
-
+		System.out.println(id);
 		double vch = o.getDiscount_at();
 		String fullname = o.getFullname();
 		String phone_number = o.getPhone_number();
@@ -163,9 +163,10 @@ public class ThankController {
 		String note = o.getNote();
 		String method = o.getMethod();
 		
-		List<Receipt_details> li = receipt_detailsService.get_all_order_details_by_order_id(Integer.parseInt(id));
+		List<Receipt_details> li = receipt_detailsService.get_all_order_details_by_order_id(Integer.parseInt(id.trim()));
 		double totalProd = 0;
 		for (Receipt_details o_details : li) {
+			System.out.println("li: "+o_details.getId());
 			totalProd += o_details.getPrice_at() * o_details.getQuantity();
 		}
 		

@@ -216,7 +216,7 @@
 	<form action="" method="post">
 		<div class="footer">
 			<div class="logo-footer">
-				<a href="index.html"><img class="logo-footer"
+				<a href="/ShopTandT/"><img class="logo-footer"
 					src="<c:url value="/assets/images/logo/Thnk.png"/>"
 					alt="logo-footer"></a>
 			</div>

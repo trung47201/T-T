@@ -178,7 +178,7 @@ public class Receipt_detailsService implements Order_detailsRepository {
 			receiptService = new ReceiptService();
 			connectService = new ConnectService();
 			Connection conn = connectService.getConnect();
-			String sql = "INSERT INTO `order_details`(`order_id`, `price_at`, `quantity`, `prod_id`, `size_id`, `color_id`) "
+			String sql = "INSERT INTO `receipt_details`(`receipt_id`, `price_at`, `quantity`, `prod_id`, `size_id`, `color_id`) "
 					+ "VALUES (?, ?, ?, ?, ?, ?)";
 			PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
 			preparedStmt.setInt(1, receiptService.get_last_order_id_by(phone_number, email));
@@ -248,7 +248,7 @@ public class Receipt_detailsService implements Order_detailsRepository {
 //		for (Order_details od : o.get_all_order_details_by_user_id(1)) {
 //			System.out.println(od.getReceipt().getId());
 //		}
-		for (Receipt_details od : o.get_all_order_details_by_order_id(7)) {
+		for (Receipt_details od : o.get_all_order_details_by_order_id(174)) {
 			System.out.println(od.getReceipt().getId() +"==" + od.getPrice_at() +"="+od.getProd().getDiscount());
 		}
 	}

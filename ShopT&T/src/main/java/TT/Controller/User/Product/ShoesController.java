@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -149,7 +150,7 @@ public class ShoesController {
 	}
 	
 
-	@RequestMapping(value = { "products/{id}" })
+	@RequestMapping(value = { "products/shoes/{id}" })
 	public ModelAndView loadProductsByUser(@PathVariable String id, HttpServletRequest request,
 			HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("user/re-products");

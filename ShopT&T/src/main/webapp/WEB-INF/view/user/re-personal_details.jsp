@@ -8,7 +8,7 @@
 	pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="<c:url value="/assets/css/bootstrap.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/js/bootstrap.js"/>">
-<link rel="stylesheet" href="<c:url value="/assets/css/index.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/f-index.css"/>">
 <link rel="stylesheet"
 	href="<c:url value="/assets/css/bootstrap.min.css"/>">
 <link rel="stylesheet"
@@ -21,9 +21,18 @@
 <link rel="stylesheet" href="<c:url value="/assets/css/home.css"/>">
 <link rel="stylesheet"
 	href='<c:url value="/assets/css/login-icon.css"/>'>
-<link rel="stylesheet" href='<c:url value="/assets/css/personal-details.css"/>'>
+<link rel="stylesheet" href='<c:url value="/assets/css/re-profile.css"/>'>
 <link rel="stylesheet" href='<c:url value="/assets/css/message.css"/>'>
-<link rel="stylesheet" href='<c:url value="/assets/css/navscroll.css"/>'>
+	<link rel="stylesheet"
+	href="<c:url value="/assets/css/f-zoom-img.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/r-header.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/re-menu.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/f-effect.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/r-footer.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/text.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/r-posts.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/re-text.css"/>">
+
 <style>
 .ok-btn button {
 	border: 1px solid;
@@ -37,24 +46,33 @@
 	box-shadow: 0px 5px 15px;
 }
 </style>
-<body style="color: white;">
+<body style="color: black;">
+	<jsp:include page="../layouts/user/re-menu.jsp"></jsp:include>
+
+	<div class="back-header">
+		<jsp:include page="../layouts/user/re-header.jsp"></jsp:include>
+	</div>
+	
+	<div class="img-header">
+		<img alt=""
+			src="<c:url value="/assets/images/poster/storepic2_1200x.webp"/>">
+	</div>
+
+	<div class="text">
+		<p class="cool">
+			<span data-text="Profile" style="color: white;">Profile</span>
+		</p>
+	</div>
 	<header class="container-xl header-content">
 		<form method="post">
-			<jsp:include page="../layouts/user/re-header.jsp"></jsp:include>
 			<!--########################################3   START page CONTACT ###########################################-->
-			<div class="title-page">
-				<h3>PERSONAL DETAILS</h3>
-				<span><a href="/ShopTandT/">Home</a> / <a
-					href="">Personal Details</a></span>
-			</div>
-
 			<div class="content-account">
 				<div class="content-left">
 					<div class="content-left-top">
 						<div class="title">Profile</div>
 						<div class="settings">
 							<button type="button" class="" id="settings">Settings</button>
-							<div class="menu-user none" id="menu">
+							<div class="menu-user none" id="profile-menu">
                                 <ul>
                                     <li><a class="p-menu" id="add-intro">Add intro</a></li>
                                     <li><a class="p-menu" id="change-pw">Change password</a></li>
@@ -76,22 +94,22 @@
 							<div class="user-info">
 								<div class="user-row">
 									<div class="user-col">
-										<p>Phone number</p>
-										<input type="number" id="" name="" readonly value="${ user.phone_number }">
+										<p>First name</p>
+										<input type="text" id="" name="" readonly value="${ user.firstname }">
 									</div>
 									<div class="user-col">
-										<p>Full name</p>
-										<input type="text" id="" name="" readonly value="${ user.fullname }">
+										<p>Last name</p>
+										<input type="text" id="" name="" readonly value="${ user.lastname }">
 									</div>
 								</div>
 								<div class="user-row">
 									<div class="user-col">
-										<p>Email</p>
-										<input type="text" id="" name="" readonly value="${ user.email }">
+										<p>Phone number</p>
+										<input type="number" id="" name="" readonly value="${ user.phone_number }">
 									</div>
 									<div class="user-col">
-										<p>Password</p>
-										<input type="password" id="" name="" readonly value="${ user.password }">
+										<p>Email</p>
+										<input type="text" id="" name="" readonly value="${ user.email }">
 									</div>
 								</div>
 							</div>
@@ -103,17 +121,17 @@
 								<div class="user-row">
 									<div class="user-col user-col2">
 										<p>Address</p>
-										<input type="text" id="" name="" readonly value="${ address }">
+										<input type="text" id="" name="" readonly value="${ user.address }">
 									</div>
 								</div>
 								<div class="user-row">
 									<div class="user-col user-col1">
 										<p>City</p>
-										<input type="text" id="" name="" readonly value="${ city }">
+										<input type="text" id="" name="" readonly value="${ user.city }">
 									</div>
 									<div class="user-col user-col1">
-										<p>Country</p>
-										<input type="text" id="" name="" readonly value="${ country }">
+										<p>District</p>
+										<input type="text" id="" name="" readonly value="${ user.district }">
 									</div>
 									<div class="user-col user-col1">
 										<p>Postal code</p>
@@ -163,7 +181,7 @@
 					</div>
 					<div class="line">
 						<div class="myname">
-							Thu Teng <img src="<c:url value="/assets/images/icons/icons8-edit-64.png"/>" alt="">
+							${ user.firstname } <img src="<c:url value="/assets/images/icons/icons8-edit-64.png"/>" alt="">
 						</div>
 						<div class="story">Hin</div>
 						<div class="educate">Hanoi University of Industry</div>
@@ -221,51 +239,12 @@
     
     <script>
         $("#settings").click(function () {
-            $("#menu").toggle("none");
+            $("#profile-menu").toggle("none");
         });
     </script>
-	<script>
-		function test($a) {
-			for (let i = 1; i <= 10; i++) {
-				if (i == $a) {
-					var span_Text = document.getElementById("span_Id" + $a).innerText;
-					document.querySelector('input[name="search"]').value = span_Text;
-				}
-			}
-		}
-	</script>
 
 	<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-
-	<!-- Initialize Swiper -->
-	<script>
-		var swiper = new Swiper(".mySwiper", {
-			effect : "coverflow",
-			grabCursor : true,
-			centeredSlides : true,
-			slidesPerView : "auto",
-			coverflowEffect : {
-				rotate : 0,
-				stretch : 0,
-				depth : 150,
-				modifier : 1,
-				slideShadows : true,
-			},
-			loop : true,
-		});
-	</script>
-	<!-- auto play header slide -->
 	<script type="text/javascript">
-		var counter = 1;
-		setInterval(function() {
-			document.getElementById('radio' + counter).checked = true;
-			counter++;
-			if (counter > 4) {
-				counter = 1;
-			}
-		}, 5000);
-	</script>
-<script type="text/javascript">
 		if ( window.history.replaceState ) {
 		  window.history.replaceState( null, null, window.location.href );
 		}

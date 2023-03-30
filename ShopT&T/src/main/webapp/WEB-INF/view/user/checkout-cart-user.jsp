@@ -7,7 +7,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <link rel="stylesheet"
-	href="<c:url value="/assets/css/checkoutcart.css"/>">
+	href="<c:url value="/assets/css/re-checkoutcart2.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/bootstrap.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/js/bootstrap.js"/>">
 <link rel="stylesheet"
@@ -18,39 +18,14 @@
 <link rel="stylesheet" href="<c:url value="/assets/css/color.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/message.css"/>">
 <link rel="stylesheet"
+	href="<c:url value="/assets/css/f-btn-effect.css"/>">
+<link rel="stylesheet"
+	href="<c:url value="/assets/css/checkbox-radio-input.css"/>">
+<link rel="stylesheet"
 	href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />">
 <style>
-.none {
-	display: none;
-}
-
-div#avatar-user img {
-	width: 80px;
-	height: 80px;
-	margin-top: 10px;
-	border-radius: 50px;
-}
-
-input.cancel, input.ok {
-	width: 120px;
-}
-
-input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
-	-webkit-appearance: none;
-	margin: 0;
-}
-
-/* Firefox */
-input[type=number] {
-	-moz-appearance: textfield;
-}
-
-input#phone {
-	font-size: 20px !important;
-}
 </style>
 <body>
-
 	<%
 	response.setHeader("Cache-Control", "no-cache, no-store");
 	String userid = "";
@@ -59,29 +34,14 @@ input#phone {
 	}
 	if (session.getAttribute("checkoutcart") != null && session.getAttribute("checkoutcart") != "") {
 		if (String.valueOf(session.getAttribute("checkoutcart")).equals("end")) {
-			response.sendRedirect("/ShopTandT/cart/"+userid);
+			response.sendRedirect("/ShopTandT/cart/" + userid);
 		}
 	}
 	%>
 
 	<form action="/ShopTandT/cart/checkout/user-cart/${ id }" method="post"
 		id="myform">
-		<div class="nav">
-			<c:set var="item" value="${ back_home }"></c:set>
-			<c:if test="${ item == 'home'}">
-				<div class="back">
-					<a href="/ShopTandT"><img
-						src="<c:url value="/assets/images/icons/back52.png"/>"
-						alt="back-icon">Back</a>
-				</div>
-			</c:if>
-			<c:if test="${ item == 'cart'}">
-				<div class="back">
-					<a href="/ShopTandT/cart/${ user.id }"><img
-						src="<c:url value="/assets/images/icons/back52.png"/>"
-						alt="back-icon">Back</a>
-				</div>
-			</c:if>
+		<div class="header">
 			<c:if test="${ user != null }">
 				<div class="avt" id="avatar-user">
 					<img src="<c:url value="/assets/images/users/${ user.avatar }"/>"
@@ -94,185 +54,16 @@ input#phone {
 						alt="">
 				</div>
 			</c:if>
-			<c:if test="${ user != null }">
-				<div class="login none">
-					<div class="container-xl icon-user">
-						<button type="button" class="icon-user btn btn-primary"
-							data-toggle="modal" data-target="#login">
-							<img class="icon-user"
-								src="<c:url value="/assets/images/icons/user48.png"/>"
-								alt="icon-user">
-						</button>
-						<div class="modal fade" id="login" tabindex="-1" role="dialog"
-							aria-labelledby="exampleModalLabel" aria-hidden="true">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-									<button type="button" class="btn btn-secondary close"
-										data-dismiss="modal">
-										<img class="close-login-icon"
-											src="<c:url value="/assets/images/icons/close48.png"/>"
-											alt="icon-close" width="32px">
-									</button>
-									<div class="login_form_container">
-										<div class="login_form">
-											<h2>Login</h2>
-											<div class="input_group">
-												<i class="fa fa-user"></i> <input type="text"
-													placeholder="Username" class="input_text"
-													autocomplete="off" />
-											</div>
-											<div class="input_group">
-												<i class="fa fa-unlock-alt"></i> <input type="password"
-													placeholder="Password" class="input_text"
-													autocomplete="off" />
-											</div>
-											<div class="button_group" id="login_button">
-												<a>Login</a>
-											</div>
-											<div class="fotter">
-												<a>Forgot Password ?</a> <a>SingUp</a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</c:if>
 			<c:if test="${ user == null }">
-				<div class="login">
-					<div class="container-xl icon-user">
-						<button type="button" class="icon-user btn btn-primary"
-							data-toggle="modal" data-target="#login">
-							<img class="icon-user"
-								src="<c:url value="/assets/images/icons/user48.png"/>"
-								alt="icon-user">
-						</button>
-						<div class="modal fade" id="login" tabindex="-1" role="dialog"
-							aria-labelledby="exampleModalLabel" aria-hidden="true">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-									<button type="button" class="btn btn-secondary close"
-										data-dismiss="modal">
-										<img class="close-login-icon"
-											src="<c:url value="/assets/images/icons/close48.png"/>"
-											alt="icon-close" width="32px">
-									</button>
-									<div class="login_form_container">
-										<div class="login_form">
-											<h2>Login</h2>
-											<div class="input_group">
-												<i class="fa fa-user"></i> <input type="text"
-													placeholder="Username" class="input_text"
-													autocomplete="off" />
-											</div>
-											<div class="input_group">
-												<i class="fa fa-unlock-alt"></i> <input type="password"
-													placeholder="Password" class="input_text"
-													autocomplete="off" />
-											</div>
-											<div class="button_group" id="login_button">
-												<a>Login</a>
-											</div>
-											<div class="fotter">
-												<a>Forgot Password ?</a> <a>SingUp</a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+
 			</c:if>
 		</div>
 		<div class="checkout">
-			<!-- Consignee information -->
-			<div class="customer-info">
-				<h4>Consignee information</h4>
-				<div class="name-customer">
-					<input type="text" id="fullname" name="fullname"
-						value="" placeholder="Full name">
-				</div>
-				<div class="phone-customer">
-					<input type="number" id="phone" name="phone"
-						value="${ user.phone_number }" placeholder="Phone number" min="0">
-				</div>
-				<div class="mail-customer">
-					<input type="text" id="email" name="email" value="${ user.email }"
-						placeholder="Email">
-				</div>
-				<div class="city-customer">
-					<input type="text" id="city" name="city" value="${ city }"
-						placeholder="City">
-				</div>
-				<div class="town-customer">
-					<input type="text" id="town" name="town" value="${ town }"
-						placeholder="Town">
-				</div>
-				<div class="village-customer">
-					<input type="text" id="village" name="village" value="${ village }"
-						placeholder="Village">
-				</div>
-				<div class="note-customer">
-					<textarea id="note" name="note" placeholder="Note"></textarea>
-				</div>
-			</div>
-
-			<!-- Payment methods -->
-			<div class="payment-method">
-				<h4>Shipping methods</h4>
-				<div class="shipping" id="radio1">
-					<input type="radio" name="Delivery" id="rad1" checked>
-					<div>&emsp;Delivery to your place</div>
-					<div>&emsp;&emsp;&emsp;$11.00</div>
-
-				</div>
-				<div class="content-sm" id="content-sm">Buy products over $50
-					will get free shipping</div>
-
-				<h4 class="pm">Payment methods</h4>
-				<div class="shipping" id="radio2" onclick="radio(this)">
-					<input type="radio" name="paymentmethods" id="rad2" value="cod"
-						checked>
-					<div class="icon-cod">
-						&emsp;Payment on delivery (COD) <img
-							src="<c:url value="/assets/images/icons/cash-on-delivery.png"/>"
-							alt="">
-					</div>
-				</div>
-				<div class="content-pm" id="content-pm" style="visibility: visible;">You
-					only have to pay when you receive the goods.</div>
-				<div class="shipping" id="radio3" onclick="radio(this)">
-					<input type="radio" name="paymentmethods" id="rad3"
-						value="payByCard">
-					<div class="icon-credit">
-						&emsp; Pay by credit card <img
-							src="<c:url value="/assets/images/icons/credit-card.png"/>"
-							alt="">
-					</div>
-				</div>
-				<div class="content-bank none" id="content-bank"
-					style="visibility: visible;">
-					<div>Choose a</div>
-					<div class="bank">
-						<div class="bank" id="Paypal" onclick="bank(this)">
-							<img
-								src="<c:url value="/assets/images/icons/icons8-paypal-96.png"/>"
-								alt="">
-						</div>
-					</div>
-				</div>
-			</div>
-
 			<!-- Order -->
 			<div class="order">
-
 				<input type="hidden" name="id_prod" id="id_prod"
 					value="${ prod_checkout.id }">
 				<h4>Order information</h4>
-
 				<div class="products-checkout">
 					<c:forEach var="cart" items="${ listCart }">
 						<div class="list_prod_checkout">
@@ -309,15 +100,13 @@ input#phone {
 							id="${ cart.color_size.prod.id }" name="${ cart.quantity }">
 					</c:forEach>
 				</div>
-
-
 				<div class="voucher">
 					<div class="input-voucher">
-						<input type="text" name="vccode" id="voucher_code"
-							value="${ voucher }" placeholder="Voucher">
+						<input type="text" name="voucher" id="voucher"
+							placeholder="Voucher">
 					</div>
-					<div class="apply-voucher">
-						<input type="button" name="apply" id="apply" value="Apply">
+					<div class="btn-effect">
+						<button type="button" name="apply" id="apply">Apply</button>
 					</div>
 				</div>
 				<hr>
@@ -387,16 +176,114 @@ input#phone {
 				</div>
 			</div>
 			<!--  end div class order -->
+			<div class="customer-info">
+				<!-- Consignee information -->
+				<h4>Shipping methods</h4>
+				<div class="shipping radio-checked" id="radio1">
+					<div class=wrapper-shipping>
+						<input type="radio" name="Delivery" id="rad1" checked>
+						<div>&emsp;Delivery to your place</div>
+					</div>
+					<div>&emsp;&emsp;&emsp;$11.00</div>
+				</div>
+				<div class="content-sm" id="content-sm">Buy products over $50
+					will get free shipping</div>
+
+				<h4 class="pm">Payment methods</h4>
+				<div class="shipping radio-checked" id="radio2"
+					onclick="radio(this)">
+					<div class=wrapper-shipping>
+						<input type="radio" name="paymentmethods" id="rad2" value="cod"
+							checked>
+						<div class="icon-cod">&emsp;Payment on delivery (COD)</div>
+
+					</div>
+					<img
+						src="<c:url value="/assets/images/icons/cash-on-delivery.png"/>"
+						alt="">
+				</div>
+				<div class="content-pm" id="content-pm" style="visibility: visible;">You
+					only have to pay when you receive the goods.</div>
+				<div class="shipping" id="radio3" onclick="radio(this)">
+					<div class=wrapper-shipping>
+						<input type="radio" name="paymentmethods" id="rad3"
+							value="payByCard">
+						<div class="icon-credit">&emsp; Pay by credit card</div>
+					</div>
+					<img src="<c:url value="/assets/images/icons/credit-card.png"/>"
+						alt="">
+				</div>
+				<div class="content-bank none" id="content-bank"
+					style="visibility: visible;">
+					<div>Choose a</div>
+					<div class="bank">
+						<div class="bank" id="Paypal" onclick="bank(this)">
+							<img
+								src="<c:url value="/assets/images/icons/icons8-paypal-96.png"/>"
+								alt="">
+						</div>
+					</div>
+				</div>
+				<h4>Consignee information</h4>
+				<div class="name-customer">
+					<input type="text" id="firstname" name="firstname"
+						value="${ user.firstname }" placeholder="First name"> <input
+						type="text" id="lastname" name="lastname"
+						value="${ user.lastname }" placeholder="Last name">
+				</div>
+				<div class="phone-customer">
+					<input type="number" id="phone" name="phone" min="0"
+						value="${ user.phone_number }" placeholder="Phone number">
+				</div>
+				<div class="mail-customer">
+					<input type="text" id="email" name="email" value="${ user.email }"
+						placeholder="Email">
+				</div>
+				<div class="city-customer">
+					<!-- city -->
+					<select class="none" name="calc_shipping_provinces"
+						id="selected-city">
+						<option value="" disabled="disabled" selected>Province /
+							City</option>
+					</select> <input class="billing_address_1" name="" type="hidden"> <input
+						type="text" id="city" name="city" placeholder="City"
+						value="${ user.city }">
+					<!-- district -->
+					<select class="none" name="calc_shipping_district"
+						id="selected-district">
+						<option value="" disabled="disabled" selected>District</option>
+					</select> <input class="billing_address_2" name="" type="hidden"> <input
+						type="text" id="district" name="district" placeholder="District"
+						value="${ user.district }">
+					<!-- address -->
+					<input type="text" id="address" name="address"
+						placeholder="Address" value="${ user.address }">
+				</div>
+				<div class="note-customer">
+					<textarea id="note" name="note" placeholder="Note"></textarea>
+				</div>
+				<div class="btn-order">
+					<div class="btn-order-effect">
+						<button type="button" name="order" id="order" value="">Order</button>
+					</div>
+
+				</div>
+				<div class="backtocart">
+					<c:if test="${ sessionScope.userid != null }">
+						<a href="/ShopTandT/cart/${ sessionScope.userid }">Cancel</a>
+					</c:if>
+					<c:if test="${ sessionScope.userid == null }">
+						<a href="/ShopTandT/cart">Cancel</a>
+					</c:if>
+				</div>
+			</div>
 		</div>
 		<!--  end div class checkout -->
-		<div class="btn-order">
-			<input type="button" name="order" id="order" value="Order">
-		</div>
-		<input type="hidden" name="cartid" value="${ id }">
-		
-		<input type="hidden" name="total" id="total" value="${ total }">
-		<input type="hidden" name="userid" id="userid" value="${ user_id }">
-		
+
+		<input type="hidden" name="cartid" value="${ id }"> <input
+			type="hidden" name="total" id="total" value="${ total }"> <input
+			type="hidden" name="userid" id="userid" value="${ user_id }">
+
 		<c:if test="${ vchprice != null }">
 			<input type="hidden" name="vchprice" id="vchprice"
 				value="${ vchprice }">
@@ -459,10 +346,14 @@ input#phone {
 			document.getElementById("rad2").checked = true;
 			$("#content-pm").removeClass("none");
 			$("#content-bank").addClass("none");
+			$("#radio2").addClass("radio-checked");
+			$("#radio3").removeClass("radio-checked");
 		} else if(x.id == "radio3") {
 			document.getElementById("rad3").checked = true;
 			$("#content-pm").addClass("none");
 			$("#content-bank").removeClass("none");
+			$("#radio2").removeClass("radio-checked");
+			$("#radio3").addClass("radio-checked");
 		}
 		
 	}
@@ -527,17 +418,20 @@ input#phone {
 		};
 		$("#order").click(function() {
 			var get = $(this);
-			var fullname = $("#fullname").val();
+			var firstname = $("#firstname").val();
+			var lastname = $("#lastname").val();
 			var email = $("#email").val();
 			var phone = $("#phone").val();
 			var city = $("#city").val();
-			var town = $("#town").val();
-			var village = $("#village").val();
+			var district = $("#district").val();
+			var address = $("#address").val();
 			var method = document.getElementById("rad3").checked;
 			
 			var error = "";
-			if(fullname == "") {
-				error = "Full name is empty!";
+			if(firstname == "") {
+				error = "First name is empty!";
+			} else if(lastname == "") {
+				error = "Lastname is empty!";
 			} else if(phone == "") {
 				error = "Phone number is empty!";
 			} else if(email == "") {
@@ -546,10 +440,8 @@ input#phone {
 				error = "Invalid email format!";
 			} else if(city == "") {
 				error = "City is empty!";
-			} else if(town == "") {
-				error = "Town is empty!";
-			} else if(village == "") {
-				error = "Village is empty!";
+			} else if(district == "") {
+				error = "District is empty!";
 			}
 			if (error == "") {
 				var status = "${ vcstatus }";
@@ -617,11 +509,44 @@ input#phone {
 					}
 				});
 	</script>
+	<script type="text/javascript"> // address infor
+		$("select option[value='District']").attr('disabled', true);
+		$("#city").hover(function() {
+			$(this).attr("type", "hidden");
+			$("#selected-city").removeClass("none");
+		});
+		$("#selected-city").mouseout(function() {
+			$("#city").attr("type", "text");
+			$(this).addClass("none");
+		});
+		$("#selected-city").change(function() {
+			 var city = $(this).find('option:selected').text();
+			 $("#city").val(city);
+		});
+		
+		$("#district").hover(function() {
+			$(this).attr("type", "hidden");
+			$("#selected-district").removeClass("none");
+		});
+		$("#selected-district").mouseout(function() {
+			$("#district").attr("type", "text");
+			$(this).addClass("none");
+		});
+		$("#selected-district").change(function() {
+			 var district = $(this).find('option:selected').text();
+			 $("#district").val(district);
+		});
+	</script>
+	
 	<script type="text/javascript">
 		if ( window.history.replaceState ) {
 		  window.history.replaceState( null, null, window.location.href );
 		}
 	</script>
+
+	<script
+		src='https://cdn.jsdelivr.net/gh/vietblogdao/js/districts.min.js'></script>
+	<script src="<c:url value="/assets/js/re-select-address.js" />"></script>
 	<script src="<c:url value="/assets/js/color.js" />" defer></script>
 	<script src="js/login.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

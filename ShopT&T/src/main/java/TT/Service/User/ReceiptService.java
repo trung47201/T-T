@@ -102,7 +102,7 @@ public class ReceiptService implements OrderRepository {
 			if (!md5Service.decodeText(method).equals("")) {
 				method = md5Service.decodeText(method);
 			}
-			String sql = "INSERT INTO `order`(`fullname`, `email`, `phone_number`, `address`, `order_date`, `updated_at`, `voucher_id`, `note`, `status_id`, `method`, `bill`, `discount_at`, `request`) "
+			String sql = "INSERT INTO `receipt`(`fullname`, `email`, `phone_number`, `address`, `order_date`, `updated_at`, `voucher_id`, `note`, `status_id`, `method`, `bill`, `discount_at`, `request`) "
 					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
 			preparedStmt.setString(1, fullname);
@@ -152,7 +152,7 @@ public class ReceiptService implements OrderRepository {
 			if (!md5Service.decodeText(method).equals("")) {
 				method = md5Service.decodeText(method);
 			}
-			String sql = "INSERT INTO `order`(`fullname`, `email`, `phone_number`, `address`, `order_date`, `updated_at`, `voucher_id`, `note`, `status_id`, `method`, `bill`) "
+			String sql = "INSERT INTO `receipt`(`fullname`, `email`, `phone_number`, `address`, `order_date`, `updated_at`, `voucher_id`, `note`, `status_id`, `method`, `bill`) "
 					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
 			preparedStmt.setString(1, fullname);

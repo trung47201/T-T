@@ -54,7 +54,7 @@ public class CartController {
 				return new ModelAndView("redirect: /ShopTandT/cart/"+userid);
 			}
 		} else {
-			System.out.println("null");
+			return new ModelAndView("redirect: /ShopTandT/cart");
 		}
 		
 		String size = request.getParameter("size");

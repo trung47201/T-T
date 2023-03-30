@@ -357,7 +357,7 @@ public class CheckoutController {
 		}
 
 		ModelAndView mv = new ModelAndView("user/checkout-cart-user");
-		System.out.println("checkout cart -> order with user id (294)");
+		System.out.println("checkout cart -> order with user id (360)");
 
 		userService = new UserService();
 		cartService = new CartService();

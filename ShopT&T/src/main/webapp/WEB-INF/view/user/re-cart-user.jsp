@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="<c:url value="/assets/css/login.css"/>">
 <link rel="stylesheet"
 	href="<c:url value="/assets/css/swiper-bundle.min.css"/>">
-<link rel="stylesheet" href="<c:url value="/assets/css/cart3.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/re-cart.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/home.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/message.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/navscroll.css"/>">
@@ -71,7 +71,6 @@
 				<div class="cart-empty">
 					<h5>Cart is empty. Please add products so that the cart is not
 						empty.</h5>
-
 				</div>
 				<div class="cart-empty">
 					<div class="btn-effect">
@@ -81,8 +80,6 @@
 				</div>
 			</c:if>
 			<c:if test="${ getProdCountCart != 0 }">
-
-
 				<div class="list-products">
 					<table>
 						<tr>
@@ -466,7 +463,7 @@
 				xhr.open("GET","");
 				// What to do when server responds
 				xhr.onload = function() {
-					window.location.assign("/ShopTandT/products/"+user_id);
+					window.location.assign("/ShopTandT/products/new-arrivals");
 				};
 				xhr.send(); 
 			});
@@ -529,37 +526,7 @@
 			}
 		</script>
 	</c:if>
-
 	<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-
-	<!-- Initialize Swiper -->
-	<script>
-		var swiper = new Swiper(".mySwiper", {
-			effect : "coverflow",
-			grabCursor : true,
-			centeredSlides : true,
-			slidesPerView : "auto",
-			coverflowEffect : {
-				rotate : 0,
-				stretch : 0,
-				depth : 150,
-				modifier : 1,
-				slideShadows : true,
-			},
-			loop : true,
-		});
-	</script>
-	<!-- auto play header slide -->
-	<script type="text/javascript">
-		var counter = 1;
-		setInterval(function() {
-			document.getElementById('radio' + counter).checked = true;
-			counter++;
-			if (counter > 4) {
-				counter = 1;
-			}
-		}, 5000);
-	</script>
 	<script type="text/javascript">
 		if ( window.history.replaceState ) {
 		  window.history.replaceState( null, null, window.location.href );

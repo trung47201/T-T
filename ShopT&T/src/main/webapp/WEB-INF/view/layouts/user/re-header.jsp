@@ -85,7 +85,7 @@
 	<div class="list-menu">
 		<ul>
 			<li><a href="/ShopTandT/order/${ sessionScope.userid }" class="receipt">ORDER</a></li>
-			<li><a href="#">PROFILE</a></li>
+			<li><a href="/ShopTandT/profile/${ sessionScope.userid }" class="profile">PROFILE</a></li>
 			<li><a href="/ShopTandT/account/logout">LOGOUT</a></li>
 		</ul>
 	</div>
@@ -97,6 +97,17 @@
 			href="#"> <i class="fab fa-youtube" aria-hidden="true"></i></a>
 	</div>
 </div>
+
+<script type="text/javascript">
+var userid = "${ sessionScope.userid }";
+$(".profile").click(function() {
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "/ShopTandT/profile/block/"+userid);
+	xhr.onload = function() {
+	};
+	xhr.send();
+});
+</script>
 
 <script type="text/javascript">
 var userid = "${ sessionScope.userid }";
