@@ -1,0 +1,20 @@
+.circle-progress-value {
+	stroke-width: 17px;
+	stroke: #cb82a9;
+	stroke-dasharray: 4 4;
+}
+
+.circle-progress-circle {
+	stroke-width: 17px;
+	stroke: none;
+}
+
+.circle-progress-text {
+	font-weight: bold;
+	fill: #cb82a9;
+}
+
+svg.circle-progress {
+	width: 200px;
+	height: 200px;
+}

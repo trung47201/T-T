@@ -19,13 +19,18 @@
 .widthDes {
 	width: 98% !important;
 }
+
 #save {
-padding: 10px 10px 10px 5px !important;
+	padding: 10px 10px 10px 5px !important;
 }
 </style>
 
 <body>
-	<jsp:include page="../layouts/admin/login.jsp"></jsp:include>
+	<%
+	if (session.getAttribute("adminID") == null) {
+		response.sendRedirect("/ShopTandT/login");
+	}
+	%>
 	<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
 	<div class="admin-body">
 		<jsp:include page="../layouts/admin/nav.jsp"></jsp:include>

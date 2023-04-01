@@ -27,7 +27,7 @@
 <link rel="stylesheet" href="<c:url value="/assets/css/home.css"/>">
 <link rel="stylesheet"
 	href="<c:url value="/assets/css/re-receipt_details.css"/>">
-<link rel="stylesheet" href="<c:url value="/assets/css/message.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/re-message.css"/>">
 <link rel="stylesheet"
 	href="<c:url value="/assets/css/f-zoom-img.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/r-header.css"/>">

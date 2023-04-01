@@ -11,6 +11,9 @@
 	href="<c:url value='/assets/css/admin-login.css'/>">
 <link rel="stylesheet" href="<c:url value='/assets/css/search.css'/>">
 <link rel="stylesheet" href="<c:url value='/assets/css/message.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/re-admin3.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/re-dashboard2.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/admin-nav2.css'/>">
 <c:if test="${ management == 'true' }">
 	<title>Order management :)</title>
 </c:if>
@@ -133,14 +136,19 @@ div#status-select {
 </style>
 
 <body>
-	<jsp:include page="../layouts/admin/login.jsp"></jsp:include>
-	<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
+	<%
+		if(session.getAttribute("adminID") == null) {
+			response.sendRedirect("/ShopTandT/login");
+		}
+	%>
+	
 	<div class="admin-body">
 		<jsp:include page="../layouts/admin/nav.jsp"></jsp:include>
 		<!-- ORDER MANAGEMENT -->
 
 		<c:if test="${ management == 'true' }">
 			<section class="admin-order-management">
+			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
 				<div class="title title-order-management">
 					<img
 						src="<c:url value="/assets/images/icons/icons8-calendar-96.png"/>"
@@ -150,6 +158,7 @@ div#status-select {
 		</c:if>
 		<c:if test="${ editorder == 'true' }">
 			<section class="admin-order-management">
+			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
 				<div class="title title-edit-new">
 					<img
 						src="<c:url value="/assets/images/icons/icons8-edit-100-title.png"/>"
@@ -159,6 +168,7 @@ div#status-select {
 		</c:if>
 		<c:if test="${ orderdetails == 'true' }">
 			<section class="admin-order-management">
+			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
 				<div class="title title-edit-new">
 					<img
 						src="<c:url value="/assets/images/icons/icons8-eye-64-title.png"/>"
@@ -170,6 +180,7 @@ div#status-select {
 		<c:if
 			test="${ editorder == 'false' &&  management == 'false' && orderdetails == 'false' }">
 			<section class="admin-order-management importantNone">
+			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
 		</c:if>
 
 

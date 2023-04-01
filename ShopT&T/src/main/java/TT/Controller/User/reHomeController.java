@@ -31,9 +31,14 @@ public class reHomeController {
 		aStatisticsService = new aStatisticsService();
 		
 		String buy = request.getParameter("buynow");
+		String blockid = request.getParameter("blockid");
+		HttpSession session = request.getSession();
 		if (buy != null) {
-			HttpSession session = request.getSession();
 			session.setAttribute("order", "start");
+		}
+		if (blockid != null) {
+			session.setAttribute("blockid", blockid);
+			System.out.println("blockid: "+blockid);
 		}
 
 		if (!aStatisticsService.check_date_of_today_exist()) { // not exists

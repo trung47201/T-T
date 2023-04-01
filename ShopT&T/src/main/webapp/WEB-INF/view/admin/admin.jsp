@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@page import="org.springframework.web.servlet.ModelAndView"%>
 <html lang="en">
 <meta charset="UTF-8">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -7,32 +8,60 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <title>Admin :) ?</title>
-<link rel="stylesheet" href="<c:url value='/assets/css/admin.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/re-admin4.css'/>">
 <link rel="stylesheet"
-	href="<c:url value='/assets/css/admin-login.css'/>">
-<link rel="stylesheet" href="<c:url value='/assets/css/dashboard.css'/>">
-
+	href="<c:url value='/assets/css/re-dashboard3.css'/>">
+<link rel="stylesheet"
+	href="<c:url value='/assets/css/admin-nav2.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/chart2.css'/>">
 <style>
-#msg-login-admin {
-	color: red;
-	text-align: center;
-	font-size: 13px;
-}
 .green {
-color: green !important;
+	color: green !important;
 }
+ select option:hover{background-color: #cb82a9;}
+ selecet#sl-month option:hover {
+	 box-shadow: 0 0 10px 100px #1882A8 inset;
+}
+ 
 </style>
 
 <body>
-	<jsp:include page="../layouts/admin/login.jsp"></jsp:include>
-
-	<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
+	<%
+	if (session.getAttribute("adminID") == null) {
+		response.sendRedirect("/ShopTandT/login");
+	}
+	%>
 	<div class="admin-body">
 		<jsp:include page="../layouts/admin/nav.jsp"></jsp:include>
 		<section>
+			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
 			<div class="section-dashboard">
 				<div class="dashboard-table">
-					<div class="db-row">
+					<div class="db-row1">
+						<div class="wrapoer-row">
+							<div class="text">
+								<div class="text-title">
+									<p>Congratulations John!</p>
+									<div>
+										<img alt=""
+											src="<c:url value='/assets/images/icons/icons8-confetti-94.png'/>">
+									</div>
+								</div>
+								<div class="text-content">
+									<p>You have done 72% more sales today. Check your new badge
+										in your profile.</p>
+								</div>
+								<div class="text-btn">
+									<button>View Orders</button>
+								</div>
+							</div>
+							<div class="img">
+								<img alt=""
+									src="<c:url value='/assets/images/poster/man-with-laptop-light.png'/>">
+							</div>
+						</div>
+					</div>
+					<div class="db-row2">
 						<div class="dashboard-col">
 							<div class="dashboard-row-1">
 								<div class="dashboard-col-icon icon-revenue">
@@ -47,8 +76,11 @@ color: green !important;
 										<p>Today's Revenue</p>
 									</div>
 									<div class="dashboard-row-parameter">
-										<p>$<fmt:formatNumber type="number" maxFractionDigits="2"
-								value="${ revenueofday }" /></p>
+										<p>
+											$
+											<fmt:formatNumber type="number" maxFractionDigits="2"
+												value="${ revenueofday }" />
+										</p>
 									</div>
 								</div>
 							</div>
@@ -99,78 +131,65 @@ color: green !important;
 							</div>
 						</div>
 					</div>
-					<!-- USER -->
-					<div class="db-row">
-						<div class="dashboard-col">
-							<div class="dashboard-row-1">
-								<div class="dashboard-col-icon icon-customer">
-									<div class="wrapper-icon">
-										<img
-											src="<c:url value="/assets/images/icons/icons8-customer-64-db.png"/>"
-											alt="images-order">
-									</div>
-								</div>
-								<div class="dashboard-col-text">
-									<div class="dashboard-row-title">
-										<p>New Customer</p>
-									</div>
-									<div class="dashboard-row-parameter">
-										<p>+${ userofday }</p>
+				</div>
+
+				<div class="infor-table">
+					<div class="table-row">
+						<div class="table-col col2">
+							<div class="table-chart">
+								<div class="chart-title">Total Revenue</div>
+								<div class="chart-row color-green" id="chart-revenue">
+									<div class="chart">
+										<canvas id="chart-line" class="chart-canvas" height="170"></canvas>
 									</div>
 								</div>
 							</div>
-							<hr class="shadow-hr">
-							<div class="dashboard-row-2">
-								<div class="compare">
-									<p>
-										<c:if test="${ percentuser >= 0}">
-											<span class="green">+${ percentuser }%</span> than yesterday
-										</c:if>
-										<c:if test="${ percentuser < 0}">
-											<span class="red">${ percentuser }%</span> than yesterday
-										</c:if>
-									</p>
+							<div class="growth">
+								<select id="sl-month">
+									<option value="1">Jan</option>
+									<option value="2">Feb</option>
+								</select>
+								<div class="growth-chart">
+									<div class="example">
+										<div class="example-figure">
+											<div class="progress progress-2"></div>
+										</div>
+									</div>
+								</div>
+								<div class="bottom-growth">
+									<div class="revenue-month">
+										<div class="growth-revenue this-month">
+											<img
+											src="<c:url value="/assets/images/icons/icons8-stocks-growth-48.png"/>"
+											alt="images-order">
+										</div>
+										<div class="growth-chart-content">
+											<h4>This</h4>
+											<p id="revenue-price">$32.5k</p>
+										</div>
+									</div>
+									<div class="revenue-month">
+										<div class="growth-revenue not-this-month">
+											<img
+											src="<c:url value="/assets/images/icons/icons8-banknotes-60.png"/>"
+											alt="images-order">
+										</div>
+										<div class="growth-chart-content">
+											<h4>Jan</h4>
+											<p id="revenue-price">$32.5k</p>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
-						<div class="dashboard-col">
-							<div class="dashboard-row-1">
-								<div class="dashboard-col-icon">
-									<div class="wrapper-icon">
-										<img
-											src="<c:url value="/assets/images/icons/icons8-sales-performance-100.png"/>"
-											alt="images-order">
-									</div>
-								</div>
-								<div class="dashboard-col-text">
-									<div class="dashboard-row-title">
-										<p>Month's Revenue</p>
-									</div>
-									<div class="dashboard-row-parameter">
-										<p>$${ revenueofmonth }</p>
-									</div>
-								</div>
-							</div>
-							<hr class="shadow-hr">
-							<div class="dashboard-row-2">
-								<div class="compare">
-									<p>
-										<c:if test="${ percentrevenuemonth >= 0 }">
-											<span class="green">+${ percentrevenuemonth }%</span> than last month
-										</c:if>
-										<c:if test="${ percentrevenuemonth < 0 }">
-											<span class="red">${ percentrevenuemonth }%</span> than last month
-										</c:if>
-									</p>
-								</div>
-							</div>
+						<div>
+						
 						</div>
 					</div>
 				</div>
 
-
 				<div class="chart-table">
-					<div class="chart-col">
+					<div class="chart-col chart-order">
 						<div class="chart-row">
 							<div class="chart">
 								<canvas id="chart-bars" class="chart-canvas" height="170"></canvas>
@@ -212,47 +231,12 @@ color: green !important;
 							</div>
 						</div>
 					</div>
-					<div class="chart-col">
-						<div class="chart-row color-green">
-							<div class="chart">
-								<canvas id="chart-line" class="chart-canvas" height="170"></canvas>
+					<div class="table-col col1">
+							<div class="wrapper-chart-tbl">
+								<canvas id="myChart"></canvas>
 							</div>
-						</div>
-						<div class="chart-row-1">
-							<div class="text-row">
-								<div class="title-row">
-									<p>Revenue</p>
-								</div>
-								<div class="content">
-									<p>Last Campaign Performance</p>
-								</div>
-							</div>
-							<hr class="shadow-hr">
-							<div class="schedule">
-								<div class="schedule-img">
-									<img
-										src="<c:url value="/assets/images/icons/icons8-time-machine-48.png"/>"
-										alt="icon-history">
-								</div>
-								<c:if test="${ revenueDays != null }">
-									<p>Campaign sent ${ revenueDays } days ago</p>
-								</c:if>
-								<c:if test="${ revenueHours != null }">
-									<p>Campaign sent ${ revenueHours } hours ago</p>
-								</c:if>
-								<c:if test="${ revenueMinute != null }">
-									<p>Campaign sent ${ revenueMinute } minute ago</p>
-								</c:if>
-								<c:if test="${ revenueSeconds != null }">
-									<p>Campaign sent ${ revenueSeconds } seconds ago</p>
-								</c:if>
-								<c:if test="${ revenueJust != null }">
-									<p>Just updated</p>
-								</c:if>
-							</div>
-						</div>
 					</div>
-					<div class="chart-col">
+					<div class="chart-col" id=chart-view>
 						<div class="chart-row color-black">
 							<div class="chart">
 								<canvas id="chart-line-tasks" class="chart-canvas" height="170"></canvas>
@@ -279,15 +263,8 @@ color: green !important;
 						</div>
 					</div>
 				</div>
-				
-				<div class="infor-table">
-					<div class="table-row">
-						<div class="table-col col2"></div>
-						<div class="table-col col1">
-							<canvas id="myChart"></canvas>
-						</div>
-					</div>
-				</div>
+
+
 			</div>
 		</section>
 	</div>
@@ -307,49 +284,13 @@ color: green !important;
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="<c:url value="assets/js/chartjs.min.js"/>"></script>
 
-	<script type="text/javascript">
-	$('#password').keydown(function(event) {
-	    // enter has keyCode = 13, change it if you want to use another button
-	    if (event.keyCode == 13) {
-	      	this.form.submit();
-	      	return false;
-	    }
-	});
-	</script>
-
-	<c:if test="${ sessionScope.login == false}">
-		<script type="text/javascript">
-			$("#msg-login-admin").removeClass("none");
-			$("#msg-login-admin").text("User name or password is not correct!");
-		</script>
-	</c:if>
-
-	<script type="text/javascript">
-		function login() {
-			var username = $("#username").val();
-			var password = $("#password").val();
-			if (username == "") {
-				$("#msg-login-admin").removeClass("none");
-				$("#msg-login-admin").text("User name is empty!");
-			} else if (password == "") {
-				$("#msg-login-admin").removeClass("none");
-				$("#msg-login-admin").text("Password is empty!");
-			} else {
-				 $('#my_form').attr('action', '/ShopTandT/admin/login');
-				 document.getElementById('my_form').submit();
-			}
-		}
-	</script>
-
 	<script>
-		var xValues = [ "Italy", "France", "Spain", "USA" ];
-		var yValues = [ 70, 49, 44, 14 ];
+		var yValues = [ 1, 1, 1, 1 ];
 		var barColors = [ "#1a73e8", "#43a047", "#DA2868", "#191919" ];
 
 		new Chart("myChart", {
 			type : "pie",
 			data : {
-				labels : xValues,
 				datasets : [ {
 					backgroundColor : barColors,
 					data : yValues
@@ -377,7 +318,7 @@ color: green !important;
 					borderRadius : 4,
 					borderSkipped : false,
 					backgroundColor : "rgba(255, 255, 255, .8)",
-					data : ${ listorderofweek },
+					data : [-10, 20, 10, 15, 5, 0, 0], //${ listorderofweek }
 					maxBarThickness : 6
 				}, ],
 			},
@@ -446,23 +387,23 @@ color: green !important;
 		
 		var ctx2 = document.getElementById("chart-line").getContext("2d");
 		new Chart(ctx2, {
-			type : "line",
+			type : "bar",
 			data : {
 				labels : ${ listmonthname },
 				datasets : [ {
-					label : "Mobile apps",
+					label : "Revenues",
 					tension : 0,
-					borderWidth : 0,
+					borderWidth : 5,
 					pointRadius : 5,
-					pointBackgroundColor : "rgba(255, 255, 255, .8)",
-					pointBorderColor : "transparent",
-					borderColor : "rgba(255, 255, 255, .8)",
-					borderColor : "rgba(255, 255, 255, .8)",
-					borderWidth : 4,
-					backgroundColor : "transparent",
+					pointBackgroundColor : "#555",
+					pointBorderColor : "#cb82a9",
+					borderColor : "white",
+					borderColor : "white",
+					hoverBorderColor : "white",
+					backgroundColor : "#cb82a9",
 					fill : true,
 					data : ${ listrevenueofmonth },
-					maxBarThickness : 6
+					maxBarThickness : 50
 
 				} ],
 			},
@@ -485,12 +426,12 @@ color: green !important;
 							display : true,
 							drawOnChartArea : true,
 							drawTicks : false,
-							borderDash : [ 5, 5 ],
-							color : 'rgba(255, 255, 255, .2)'
+							color : 'lightgray'
+							
 						},
 						ticks : {
 							display : true,
-							color : '#f8f9fa',
+							color : '#555',
 							padding : 10,
 							font : {
 								size : 14,
@@ -504,14 +445,13 @@ color: green !important;
 					x : {
 						grid : {
 							drawBorder : false,
-							display : false,
-							drawOnChartArea : false,
+							display : true,
+							drawOnChartArea : true,
 							drawTicks : false,
-							borderDash : [ 5, 5 ]
 						},
 						ticks : {
 							display : true,
-							color : '#f8f9fa',
+							color : '#555',
 							padding : 10,
 							font : {
 								size : 14,
@@ -607,7 +547,11 @@ color: green !important;
 				},
 			},
 		});
+		
+		
 	</script>
+
+
 	<script>
 		$('.other').click(function() {
 			$(".other-menu").removeClass("none", 10000, "easeInBack");
@@ -630,27 +574,35 @@ color: green !important;
 			});
 		});
 	</script>
+
+	<script src="<c:url value="/assets/js/circle-progress.js"/>"></script>
+
 	<script>
-		var arrDiv = document.getElementsByClassName("menu");
-		var arrP = document.getElementsByClassName("dropdown-menu");
-		$(document).ready(function() {
-			$(".menu").click(function() {
-				var classSubMenu = "." + this.id;
-				$(classSubMenu).toggle("none");
-				for (let i = 0; i < arrP.length; i++) {
-					if (arrP[i].className.includes(this.id)) {
-						$(arrP[i]).toggleClass("rotate");
-					}
+		var ts = 60;
+		var options = [
+			{ max: 100, value: ts, textFormat: 'percent' },
+		];
+		options.forEach(function (opts, i) {
+			var exampleEl = document.querySelector('.example:nth-child(' + (i + 1) + ')');
+			new CircleProgress(exampleEl.querySelector('.progress'), opts);
+			var optsStr = '{\n';
+			for (var name in opts) {
+				var value = opts[name];
+				if (typeof value === 'string') {
+					value = '\'' + value + '\'';
 				}
-			});
+				optsStr += '\t' + name + ': ' + value + ',\n';
+			}
+			optsStr += '}';
 		});
 	</script>
+
 </body>
 
 </html>
 
 
-	<!-- 	// push value into data in chart bars
+<!-- 	// push value into data in chart bars
 		const pushvalue = document.getElementById("pushvalue");
 		const push = document.getElementById("push");
 

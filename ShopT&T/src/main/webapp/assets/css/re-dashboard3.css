@@ -1,0 +1,441 @@
+body { 
+    background: rgb(222, 222, 222);
+}
+section {
+    overflow-y: scroll;
+}
+
+section::-webkit-scrollbar {
+  width: 15px;
+}
+
+/* Track */
+section::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+}
+ 
+/* Handle */
+section::-webkit-scrollbar-thumb {
+  background: #999; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+section::-webkit-scrollbar-thumb:hover {
+  background: #16222d; 
+}
+.section-dashboard { 
+	border: 0 !important;
+}
+
+.chart-table {
+    display: flex;
+    margin-top: 25px;
+}
+.chart-table {
+    flex-wrap: wrap;
+}
+.dashboard-col {
+    width: 100%;
+    height: 185px;
+    border-radius: 7px;
+    background-color: white;
+    margin-left: 20px;
+}
+
+.dashboard-row-1 {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 20px;
+}
+.dashboard-col-icon {
+   	display: flex;
+    max-width: 47px;
+    min-width: 47px;
+    min-height: 47px;
+    max-height: 47px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    margin-top: 13px;
+    background-image: linear-gradient(195deg,#6bb1ee,#1a73e8);
+    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14),0 7px 10px -5px rgba(64,64,64,.4) !important;
+}
+.icon-order {
+    background-image: linear-gradient(195deg,#84c687,#43a047);
+    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14),0 7px 10px -5px rgba(64,64,64,.4) !important;
+}
+.icon-customer {
+    background-image: linear-gradient(195deg,#de6b92,#d81b60) !important;
+    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14),0 7px 10px -5px rgba(64,64,64,.4) !important;
+}
+.icon-revenue {
+    background-image: linear-gradient(195deg,#42424a,#191919);
+    box-shadow: 0 4px 20px 0 rgba(0,0,0,.14),0 7px 10px -5px rgba(64,64,64,.4) !important;
+}
+.wrapper-icon {
+    width: 37%;
+}
+.wrapper-icon img {
+    width: 100%;
+}
+
+.dashboard-row-title p {
+    color: #666;
+    margin-bottom: 0;
+    margin-top: 12px;
+}
+.dashboard-row-parameter p {
+    color: black;
+    font-size: 28px;
+    font-weight: bold;
+    margin: 5px 0 10px 0;
+    float: right;
+}
+hr.shadow-hr {
+    background-image: linear-gradient(90deg,transparent,rgba(0,0,0,.3),transparent);
+    background-color: transparent;
+    height: 1.8px;
+    border: 0;
+    opacity: .3;
+}
+.chart-col hr.shadow-hr {
+    background-image: linear-gradient(90deg,transparent,rgba(0,0,0,.3),transparent);
+    background-color: transparent;
+    height: 1.8px;
+    border: 0;
+    opacity: .5;
+}
+.dashboard-row-2 {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 14px;
+}
+.compare {
+    font-size: 14px;
+}
+span.green {
+    color: #4caf50;
+    font-size: 16px;
+}
+span.green {
+    color: #4caf50;
+    font-size: 16px;
+}
+span.red {
+    color: #f44335 !important;
+    font-size: 16px;
+}
+.chart-col {
+    flex: 1 1 290px;
+    width: 30%;
+    min-width: 300px;
+    height: 312px;
+    border-radius: 13px;
+    background: white;
+    margin-top: 25px;
+    padding: 0 20px;
+    margin-bottom: 25px;
+}
+.chart-col-mid {
+    flex: 1 1 290px;
+    width: 30%;
+    min-width: 300px;
+    height: 312px;
+    border-radius: 13px;
+    background: white;
+    margin-top: 25px;
+    margin-right: 20px;
+    margin-left: 20px;
+    padding: 0 20px;
+    margin-bottom: 25px;
+}
+.chart-row {
+    width: 100%;
+    height: 95%;
+    border-radius: 10px;
+}
+.chart-title {
+    font-size: 20px;
+}
+.color-black {
+    background-image: linear-gradient(195deg,#42424a,#191919);
+}
+.chart {
+	height: 100%;
+    padding: 15px 10px 10px 0;
+}
+.text-row {
+    margin-top: 30px;
+}
+.content p {
+    margin: 1px 0 15px 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.schedule {
+    display: flex;
+    align-items: center;
+    margin-top: 14px;
+}
+.schedule-img{
+    width: 14px;
+    height: 14px;
+    margin-top: -7px;
+}
+.title-row p {
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+
+.schedule-img img{
+    width: 100%;
+}
+.schedule p{
+    color: #666;
+    margin: 0;
+    margin-left: 5px;
+    font-size: 14px;
+}
+.chart-row-1 {
+    margin-left: 12px;
+    margin-right: 12px;
+}
+
+.infor-table {
+    display: flex;
+    height: 390px;
+    margin-top: 20px;
+}
+.table-row {
+    width: 100%;
+    display: flex;
+    height: 100%;
+}
+.table-col.col2 {
+	display: flex;
+    width: 66.3%;
+    background: white;
+    border-radius: 7px;
+    
+}
+.table-chart {
+    width: 66%;
+    padding: 25px;
+}
+.table-col.col1 {
+    width: 33.3%;
+}
+.wrapper-chart-tbl {
+    margin-left: 20px;
+    background: white;
+    border-radius: 7px;
+}
+canvas#myChart {
+	display: block;
+    box-sizing: border-box;
+    width: 100%;
+}
+.growth {
+    width: 33.3%;
+    text-align: center;
+    padding: 25px 25px 25px 0;
+    border-left: 0.5px solid lightgray;
+}
+.growth-chart {
+    display: flex;
+    justify-content: center;
+    padding: 25px 25px 25px 0;
+    border-left: 0.5px solid lightgray;
+}	
+.growth select {
+    height: 32px;
+    width: 60px;
+    background: white;
+    color: #cb82a9;
+    font-size: 17px;
+    border-radius: 4px;
+    text-align: center;
+    border: 1px solid #cb82a9;
+}
+
+.growth select:hover {
+    background: #cb82a9;
+    color: white;
+    font-size: 17px;
+    border: 0;
+}
+.growth select:focus {
+	outline-style: none;
+}
+.growth select option {
+	background: white;
+	color: black;
+}
+
+selecet#sl-month option:hover {
+	background-color: #cb82a9;
+    color: white;
+}
+.revenue-month {
+    display: flex;
+}
+.growth-revenue {
+    background: #f9e1ee;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+}
+.not-this-month {
+	 background: #f9e1ee;
+}
+.growth-revenue img {
+   
+    border-radius: 4px;
+    width: 28px;
+    height: 28px;
+}
+.growth-chart-content {
+    text-align: left;
+    margin-left: 7px;
+}
+.growth-chart-content p {
+    font-size: 20px;
+    color: #cb82a9;
+    font-weight: bold;
+}
+.growth-chart-content h4 {
+    font-weight: 100;
+    color: gray;
+}
+.bottom-growth {
+    display: flex;
+    width: 100%;
+    margin-left: 10px;
+    justify-content: space-around;
+}
+@media (min-width: 362px) and (max-width: 561.98px) {
+	.db-row {
+        width: 100%;
+        margin-bottom: 25px;
+        padding-right: 25px;
+    }
+    .admin-notify-icon {
+	    position: absolute;
+	    right: 100px;
+	    width: 32px;
+	    height: 32px;
+	}
+	.admin-avatar {
+	    position: absolute;
+	    right: 40px;
+	    width: 45px;
+	    height: 45px;
+	}
+    .admin-infor {
+	    display: none;
+	}
+	.admin-search-form {
+		display: none;
+	}
+	.navigation {
+		display: none;
+	}
+}
+
+@media (min-width: 562px) and (max-width: 799.98px) {
+  	.db-row {
+        width: 100%;
+        margin-bottom: 25px;
+        padding-right: 25px;
+    }
+    .admin-notify-icon {
+	    position: absolute;
+	    right: 100px;
+	    width: 32px;
+	    height: 32px;
+	}
+	.admin-avatar {
+	    position: absolute;
+	    right: 40px;
+	    width: 45px;
+	    height: 45px;
+	}
+    .admin-infor {
+	    display: none;
+	}
+}
+
+@media (min-width: 800px) and (max-width: 1349.98px) {
+    .db-row {
+        display: flex;
+        width: 100%;
+        margin-bottom: 25px;
+    }
+}
+@media (min-width: 1350px) {
+    .dashboard-table{
+	    display: flex;
+		margin-top: 20px;
+	}
+    .db-row1 {
+        display: flex;
+        width: 66.3%;
+    }
+    .db-row2 {
+        display: flex;
+        width: 33.3%;
+    }
+}
+
+
+
+
+@media (max-width: 575.98px) {
+  
+}
+/* #######################################       START           ########################################################################*/
+/* // Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  
+}
+/* #######################################       END           ########################################################################*/
+/* // Medium devices (tablets, 768px and up) */
+
+
+
+
+/* #######################################       START           ########################################################################*/
+@media (min-width: 768px) and (max-width: 991.98px) {
+
+}
+/* #######################################       END           ########################################################################*/
+
+
+
+
+
+
+/* // Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+ 
+}
+
+
+
+
+
+/* #######################################       START           ########################################################################*/
+/* // X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) and (max-width: 1399.98px) {
+ 
+}

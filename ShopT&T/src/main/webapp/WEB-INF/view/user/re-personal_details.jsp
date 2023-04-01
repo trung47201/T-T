@@ -22,7 +22,7 @@
 <link rel="stylesheet"
 	href='<c:url value="/assets/css/login-icon.css"/>'>
 <link rel="stylesheet" href='<c:url value="/assets/css/re-profile.css"/>'>
-<link rel="stylesheet" href='<c:url value="/assets/css/message.css"/>'>
+<link rel="stylesheet" href='<c:url value="/assets/css/re-message.css"/>'>
 	<link rel="stylesheet"
 	href="<c:url value="/assets/css/f-zoom-img.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/r-header.css"/>">

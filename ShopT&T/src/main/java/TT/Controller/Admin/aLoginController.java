@@ -15,8 +15,9 @@ public class aLoginController {
 	
 	private aUserService aUserService;
 	
-	@RequestMapping(value = { "/admin/login" })
+	@RequestMapping(value = { "login" })
 	public ModelAndView loadLogin(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView("admin/login");
 		aUserService = new aUserService();
 
 		HttpSession session = request.getSession();
@@ -31,6 +32,7 @@ public class aLoginController {
 				session.setAttribute("adminID", adminID);
 				session.setAttribute("msgLogin", "true");
 				System.out.println("login_t: true");
+				return new ModelAndView("redirect: /ShopTandT/admin");
 			} else {
 				session.setAttribute("adminID", 0);
 				if(username.contains("@")) {
@@ -43,6 +45,6 @@ public class aLoginController {
 				System.out.println("login_t: false");
 			}
 		}
-		return new ModelAndView("redirect: /ShopTandT/admin");
+		return mv;
 	}
 }

@@ -166,6 +166,14 @@ public class CheckoutController {
 	@RequestMapping(value = { "cart/checkout/{id}" }) // buy now login and not login
 	public ModelAndView checkout_buy_now(@PathVariable String id, HttpServletRequest request,
 			HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		if(session.getAttribute("blockid") != null) {
+			String blockid = String.valueOf(session.getAttribute("blockid"));
+			if(!blockid.equals(id)) {
+				return new ModelAndView("redirect: /ShopTandT/cart/checkout/"+blockid);
+			}
+		}
+		
 		ModelAndView mv = new ModelAndView("user/re-buynow");
 		product_color_sizeService = new Product_color_sizeService();
 		shoesService = new ShoesService();
@@ -182,7 +190,7 @@ public class CheckoutController {
 		String method = request.getParameter("paymentmethods");
 		String login = request.getParameter("login");
 		
-		HttpSession session = request.getSession();
+		
 		if(login != null) {
 			session.setAttribute("buynowlogin", id);
 			System.out.println(login);

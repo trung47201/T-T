@@ -152,8 +152,18 @@ public class CartController {
 		String order_id = request.getParameter("order-id");
 		String id = request.getParameter("id");
 		String login = request.getParameter("login");
+		String block = request.getParameter("block");
+		String checkout = request.getParameter("checkout");
 		
 		HttpSession session = request.getSession();
+		if(checkout != null) {
+			session.setAttribute("checkoutcartnotlogin", "start");
+			System.out.println("checkout cart not login: "+session.getAttribute("checkoutcartnotlogin")+"!");
+		}
+		if(block != null) {
+			session.setAttribute("blockcheckoutcartnotlogin", block);
+			System.out.println("block checkout cart not login: "+session.getAttribute("blockcheckoutcartnotlogin")+"!");
+		}
 		if(login != null) {
 			session.setAttribute("cartlogin", "true");
 		}
@@ -221,6 +231,7 @@ public class CartController {
 					}
 				}
 			}
+			session.setAttribute("blockorderid", order_id);
 			return new ModelAndView("redirect: /ShopTandT/thank/" + order_id);
 		}
 

@@ -1,0 +1,225 @@
+body {
+    color: black;
+    padding-top: 0px;
+    margin-top: 0px;
+    background-color: #f9e1ee !important;
+}
+.nav {
+    padding: 0;
+    border: 0;
+    width: 100%;
+    height: 60px;
+    background: white;
+}
+.checkout,
+nav {
+    display: flex;
+}
+
+
+.customer-info {
+    margin-left: 4%;
+    margin-top: 80px;
+    width: 62.6%;
+    border-right: 1px solid white;
+    height: 500px;
+    color: black;
+}
+.order {
+    text-align: center;
+    margin-top: 80px;
+    width: 33.3%;
+    border-right: 1px solid white;
+    height: 500px;
+    color: black;
+}
+.checkout h4 {
+    margin-top: -45px !important;
+    padding-bottom: 10px;
+}
+.avt {
+    margin-top: 15px;
+    width: 68%;
+    text-align: center;
+    right: unset !important;
+}
+.avt img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50px;
+}
+.login {
+    height: 100%;
+    text-align: right;
+    display: flex;
+    align-items: center;
+    width: 37%;
+    justify-content: right;
+}
+.login a {
+	color: black !important;
+}
+.login a:hover {
+	color: #cb82a9 !important;
+}
+.products-checkout {
+    display: flex;
+    text-align: left;
+    width: 100%;
+    height: 100px;
+    border: 1px solid white;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.products-checkout img {
+    height: 100%;
+    border-radius: 5px 0 0 5px;
+}
+.name-product-checkout {
+    display: flex;
+    width: 55%;
+    height: 100%;
+    margin-left: 10px;
+    font-size: 18px;
+    align-items: center;
+    
+}
+.price-product-checkout {
+    display: flex;
+    height: 100%;
+    font-size: 18px;
+    text-align: left;
+    align-items: center;
+    color: #ff6200;
+    font-weight: 500;
+}
+
+hr {
+	margin-top: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+    width: 85%;
+    margin-left: 7%;
+    height: 2px !important;
+    background-color: white;
+}
+table{
+    text-align: left;
+    width: 85%;
+    margin-left: 7%;
+    font-size: 18px;
+}
+td.price {
+    text-align: right;
+    float: right;
+}
+span.txt-total-payment,span.total-payment {
+    font-size: 28px;
+    font-weight: bold;
+}
+span.total-payment {
+    color: #ff6200;
+}
+
+.request-product-checkout {
+    width: 85%;
+    margin-left: 7%;
+}
+
+input#input_Id1 {
+    border: 0;
+    background: none;
+}
+.amount-checkout,.size-checkout{
+    margin-top: 10px;
+    display: flex;
+}
+.color-checkout {
+    margin-top: 15px;
+    display: flex;
+    width: 100%;
+}
+
+.list-product-order {
+    margin-top: 10px;
+    width: 84%;
+    max-height: 50%;
+    overflow-y: scroll;
+    box-shadow: 0px 1px 0px #cb82a9;
+    margin-left: 7%;
+    border-radius: 5px;
+}
+.list-product-order::-webkit-scrollbar {
+    width: 12px;
+}
+
+/* Track */
+.list-product-order::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+/* Handle */
+.list-product-order::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: #cb82a9;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+.color {
+   
+    width: 100%;
+}
+.request-checkout {
+    margin-top: 20px;
+}
+span.color-span {
+    display: block;
+    width: 36px;
+    height: 36px;
+    background-color: #cb82a9;
+    
+    
+}
+.thank-you {
+    display: flex;
+    align-items: center;
+}
+.content-thank {
+    margin-left: 20px;
+}
+.info-customer-left {
+    width: 100%;
+    margin-top: 10px;
+}
+table.table-info-customer td {
+    padding: 5px 0;
+    font-size: 16px;
+    max-width: 240px;
+}
+table.table-info-customer th {
+    padding: 30px 0 10px 0;
+}
+.continue-shopping {
+    margin-left: 7%;
+    width: 84%;
+    text-align: center;
+    margin-top: 40px;
+}
+.continue-shopping input{
+	cursor: pointer;
+    width: 50%;
+    height: 40px;
+    background: #cb82a9;
+    border-radius: 10px;
+    border: 2px solid #cb82a9;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    box-shadow: 1px 1px 5px #cb82a9;
+}
+.continue-shopping input:hover{
+	 border: 2px solid white;
+    background-color: #cb82a9;
+}

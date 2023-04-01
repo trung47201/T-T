@@ -541,3 +541,6 @@ input#city {
     display: flex;
     align-items: center;
 }
+.backtocart a {
+	color: black !important;
+}

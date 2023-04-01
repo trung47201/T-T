@@ -6,6 +6,11 @@
 </head>
 
 <body>
+	<%
+		if(session.getAttribute("adminID") == null) {
+			response.sendRedirect("/ShopTandT/login");
+		}
+	%>
     <header>
         <div class="admin-header">
             <div class="admin-menu-icon">

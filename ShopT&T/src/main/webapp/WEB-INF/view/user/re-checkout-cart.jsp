@@ -15,18 +15,36 @@
 <link rel="stylesheet"
 	href="<c:url value="/assets/js/bootstrap.min.js"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/color.css"/>">
-<link rel="stylesheet" href="<c:url value="/assets/css/message.css"/>">
+<link rel="stylesheet"
+	href="<c:url value="/assets/css/re-message.css"/>">
 <link rel="stylesheet"
 	href="<c:url value="/assets/css/f-btn-effect.css"/>">
-<link rel="stylesheet" href="<c:url value="/assets/css/checkbox-radio-input.css"/>">
+<link rel="stylesheet"
+	href="<c:url value="/assets/css/checkbox-radio-input.css"/>">
 <link rel="stylesheet"
 	href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />">
 
 <style>
+.backtocart a {
+	color: black !important;
+}
+.backtocart a:hover {
+	color: #cb82a9 !important;
+}
 </style>
 
 
 <body style="color: black;">
+	<%
+	response.setHeader("Cache-Control", "no-cache, no-store");
+	if (session.getAttribute("checkoutcartnotlogin") != null && session.getAttribute("checkoutcart") != "") {
+		if (String.valueOf(session.getAttribute("checkoutcartnotlogin")).equals("end")) {
+			response.sendRedirect("/ShopTandT/cart");
+		}
+	} else if (session.getAttribute("checkoutcartnotlogin") == null || session.getAttribute("checkoutcart") == "") {
+		response.sendRedirect("/ShopTandT/cart");
+	}
+	%>
 	<form action="/ShopTandT/checkout-cart/ok?process=${ process }"
 		method="post">
 		<div class="nav">
@@ -128,10 +146,12 @@
 						</tr>
 					</table>
 				</div>
-			</div><!-- end if class order -->
-			
-			<div class="customer-info"><!-- Consignee information -->
-			<!-- Consignee information -->
+			</div>
+			<!-- end if class order -->
+
+			<div class="customer-info">
+				<!-- Consignee information -->
+				<!-- Consignee information -->
 				<h4>Shipping methods</h4>
 				<div class="shipping radio-checked" id="radio1">
 					<div class=wrapper-shipping>

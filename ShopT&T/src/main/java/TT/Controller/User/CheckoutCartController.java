@@ -151,6 +151,7 @@ public class CheckoutCartController {
 				System.out.println(vc_id + "_" + method);
 				session.setAttribute("checkoutcart", "end");
 				System.out.println(session.getAttribute("checkoutcart"));
+				session.setAttribute("blockorderid", order_id);
 				return new ModelAndView("redirect: /ShopTandT/thank/" + order_id);
 			} else {
 				System.out.println("buy cart unsuccess this");
@@ -163,30 +164,22 @@ public class CheckoutCartController {
 	@RequestMapping(value = { "checkout-cart" })
 	public ModelAndView checkout_cart_not_login(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("user/re-checkout-cart");
+		
+		HttpSession session = request.getSession();
+		String process = String.valueOf(request.getParameter("process"));
+		if(session.getAttribute("blockcheckoutcartnotlogin") != null && !process.equals("null")) {
+			String block = String.valueOf(session.getAttribute("blockcheckoutcartnotlogin"));
+			if(!block.equals(process)) {
+				return new ModelAndView("redirect: /ShopTandT/checkout-cart?process="+block);
+			}
+		}
 
 		postsService = new PostsService();
 		checkoutService = new CheckoutService();
-
-		String process = String.valueOf(request.getParameter("process"));
-
-		String fullname = String.valueOf(request.getParameter("fullname"));
-		String phone_number = String.valueOf(request.getParameter("phone"));
-		String email = String.valueOf(request.getParameter("email"));
-		String city = request.getParameter("city");
-		String town = request.getParameter("town");
-		String village = request.getParameter("village");
-		String note = String.valueOf(request.getParameter("note"));
-		String method = String.valueOf(request.getParameter("method"));
-		String address = city + " - " + town + " - " + village;
-
+		
 		HashMap<Product_color_size, Integer> hm = checkoutService.get_list_color_size_qty_by_string_process(process);
 
 		mv.addObject("listCart", hm);
-
-		if (method.equals("null")) {
-			method = "COD";
-		}
-
 		double totalPayment = checkoutService.get_total_by_string_process(process);
 
 		mv.addObject("totalPayment", totalPayment);

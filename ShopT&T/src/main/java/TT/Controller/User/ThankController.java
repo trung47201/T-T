@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -148,6 +149,21 @@ public class ThankController {
 	@RequestMapping(value = {"thank/{id}"})
 	public ModelAndView loadSucessCart_user(@PathVariable String id, HttpServletRequest request, HttpServletResponse response){
 		ModelAndView mv = new ModelAndView("user/thank");
+		
+		HttpSession session = request.getSession();
+		if(session.getAttribute("checkoutcartnotlogin") != null) {
+			if(String.valueOf(session.getAttribute("checkoutcartnotlogin")).equals("start")) {
+				session.setAttribute("checkoutcartnotlogin", "end");
+				System.out.println("checkout cart not login: "+session.getAttribute("checkoutcartnotlogin")+"!");
+			} else {
+				System.out.println("checkout cart not login: "+session.getAttribute("checkoutcartnotlogin")+"!");			}
+		}
+		if(session.getAttribute("blockorderid") != null) {
+			String blockid = String.valueOf(session.getAttribute("blockorderid"));
+			if(!blockid.equals(id)) {
+				return new ModelAndView("redirect: /ShopTandT/thank/"+blockid);
+			}
+		}
 		
 		receiptService = new ReceiptService();
 		receipt_detailsService = new Receipt_detailsService();

@@ -20,7 +20,7 @@
 	href="<c:url value="/assets/css/swiper-bundle.min.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/re-cart.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/home.css"/>">
-<link rel="stylesheet" href="<c:url value="/assets/css/message.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/re-message.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/navscroll.css"/>">
 <link rel="stylesheet"
 	href='<c:url value="/assets/css/login-icon.css"/>'>

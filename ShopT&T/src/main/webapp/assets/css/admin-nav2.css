@@ -1,0 +1,289 @@
+body {
+	background: rgb(222, 222, 222);
+	padding: 0 !important;
+	margin: 0 !important;
+	color: #222121;
+	overflow-x: hidden;
+	overflow-y: hidden;
+}
+
+::-moz-selection {
+	/* Firefox */
+	color: #ffffff;
+	background: #fbbee1;
+}
+
+::selection {
+	color: #ffffff;
+	background: #fbbee1;
+}
+
+nav {
+	background: white;
+	min-width: 240px;
+	max-width: 240px;
+	width: 240px;
+	overflow-y: scroll;
+	height: 800px;
+}
+
+.wrapper-nav {
+	padding: 0 15px;
+}
+
+.menu-inner-shadow {
+	position: absolute;
+	background: linear-gradient(#fff 41%, rgba(255, 255, 255, 0.11) 95%,
+		rgba(255, 255, 255, 0));
+	top: 80px;
+	height: 3rem;
+	width: 240px;
+	pointer-events: none;
+	z-index: 10;
+}
+
+nav::-webkit-scrollbar {
+	width: 3px;
+	left: 4px;
+}
+
+nav::-webkit-scrollbar:hover {
+	left: 0px;
+	width: 7px;
+}
+
+/* Track */
+nav::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}
+nav::-webkit-scrollbar-track:hover {
+	width: 7px;
+}
+/* Handle */
+nav::-webkit-scrollbar-thumb {
+	background: #888;
+}
+
+/* Handle on hover */
+nav::-webkit-scrollbar-thumb:hover {
+	background: #cb82a9 !important;
+	width: 7px;
+}
+
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: #cb82a9 !important;
+}
+
+header {
+	background: white;
+	width: 100%;
+	height: 70px;
+	border-radius: 7px;
+	box-shadow: 0 0 5px lightgray;
+}
+
+.logo {
+	display: flex;
+	height: 90px;
+	background: white;
+	width: 240px;
+	position: sticky;
+	top: 0;
+	z-index: 100;
+}
+
+.img-logo img {
+	cursor: pointer;
+	width: 100px;
+}
+
+.img-logo {
+	margin-left: 20px;
+	display: flex;
+	align-items: center;
+}
+
+nav ul:hover {
+	border-radius: 10px;
+	background-color: rgba(249, 225, 238, 0.3);
+}
+
+.selected {
+	color: #cb82a9;
+	background-color: #ffddee !important;
+}
+
+nav ul.dashboard {
+	position: sticky;
+	left: 0;
+	top: 0;
+	z-index: 2;
+	width: 100%;
+	height: 50px;
+	border-radius: 7px;
+}
+
+a {
+	color: black;
+	text-decoration: none;
+}
+
+nav ul li {
+	display: flex;
+	width: 100%;
+	align-items: center;
+}
+
+ul.dashboard .menu img {
+	width: 36px;
+	height: 36px;
+}
+
+.name-shop {
+	display: flex;
+	align-items: center;
+}
+
+.logo h2 {
+	cursor: pointer;
+	margin-left: 7px;
+	background: linear-gradient(to right, #cb82a9 0%, rgba(225, 255, 255, 0.5)
+		20%, #f9e1ee 50%), linear-gradient(rgb(97, 183, 217) 52%,
+		rgb(224, 246, 255) 50%, rgb(78, 99, 132) 50%);
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+#drop-menu {
+	display: flex;
+	align-items: center;
+}
+
+#drop-menu img {
+	width: 20px;
+	height: 18px;
+}
+
+nav ul {
+	width: 100%;
+	height: 50px;
+	border: 0;
+	display: flex;
+}
+
+.sub-menu-ul {
+	height: 40px;
+	display: flex;
+	align-items: center;
+}
+
+.tilte-cate {
+	position: relative;
+}
+
+.tilte-cate:before {
+	content: "";
+	width: 30px;
+	height: 1px;
+	color: black;
+	background: black;
+	position: absolute;
+	left: -30px;
+	top: 50%;
+}
+
+.tilte-cate h4 {
+	margin-left: 15px;
+	margin-top: 40px;
+	margin-bottom: 20px;
+}
+
+.sub-menu-ul li {
+	display: list-item;
+	margin-left: 40px;
+	padding-left: 10px;
+}
+
+.search-form {
+	display: flex;
+	margin-left: 25px;
+}
+
+.admin-search img {
+	width: 24px;
+}
+
+.admin-search {
+	display: flex;
+	align-items: center;
+}
+
+.search-form input {
+	border: 0;
+	padding: 0 20px;
+	font-size: 16px;
+}
+
+.search-form input:focus {
+	outline-style: none;
+}
+
+.admin-header {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	align-items: center;
+	border-bottom: 0;
+	justify-content: space-between;
+}
+
+.admin-avatar {
+	height: 45px;
+}
+
+.admin-notify-icon img {
+	width: 90%;
+	height: 90%;
+	cursor: pointer;
+}
+
+.admin-notify-icon {
+	width: 32px;
+	height: 32px;
+}
+
+.infor {
+	display: flex;
+	align-items: center;
+	margin-right: 30px;
+	width: 127px;
+	justify-content: space-between;
+}
+
+.admin-avatar img {
+	cursor: pointer;
+	width: 45px;
+	height: 45px;
+	border-radius: 50%;
+	box-shadow: 0 0 3px #cb82a9;
+}
+
+ul.other {
+	margin-bottom: 70px;
+}

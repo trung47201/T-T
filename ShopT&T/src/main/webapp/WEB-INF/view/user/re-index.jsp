@@ -491,7 +491,7 @@ div.section-3 {
 				var id_prod = e.target.id;
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"/ShopTandT/?buynow");
+						"/ShopTandT/?buynow&blockid="+id_user+"_"+id_prod);
 				xhr.onload = function() {
 					window.location.assign("/ShopTandT/cart/checkout/"+id_user+"_"+id_prod);
 				};
@@ -502,7 +502,7 @@ div.section-3 {
 				var id_prod = e.target.id;
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"/ShopTandT/?buynow");
+						"/ShopTandT/?buynow&blockid="+id_user+"_"+id_prod);
 				xhr.onload = function() {
 					window.location.assign("/ShopTandT/cart/checkout/"+id_user+"_"+id_prod);
 				};
@@ -512,7 +512,7 @@ div.section-3 {
 			$(".buy-now").click(function(e) {
 				var id_prod = e.target.id;
 				var xhr = new XMLHttpRequest();
-				xhr.open("GET","/ShopTandT/?buynow");
+				xhr.open("GET","/ShopTandT/?buynow&blockid="+id_prod);
 				xhr.onload = function() {
 					window.location.assign("/ShopTandT/cart/checkout/"+id_prod);
 				};
@@ -523,7 +523,7 @@ div.section-3 {
 				var id_prod = e.target.id;
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"/ShopTandT/?buynow");
+						"/ShopTandT/?buynow&blockid="+id_prod);
 				xhr.onload = function() {
 					window.location.assign("/ShopTandT/cart/checkout/"+id_prod);
 				};
