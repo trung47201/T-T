@@ -25,6 +25,7 @@ nav {
 	width: 240px;
 	overflow-y: scroll;
 	height: 800px;
+	overflow-x: hidden;
 }
 
 .wrapper-nav {

@@ -29,8 +29,8 @@
 					alt="icon-notify">
 			</div>
 			<div class="admin-avatar">
-				<img src="<c:url value="/assets/images/users/emiuuu.jpg"/>"
-					alt="img-avt">
+				<img src="<c:url value="/assets/images/users/avt-default.jpg"/>"
+					alt="avt">
 			</div>
 		</div>
 	</div>

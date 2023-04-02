@@ -10,7 +10,7 @@
 <title>Admin :) ?</title>
 <link rel="stylesheet" href="<c:url value='/assets/css/re-admin4.css'/>">
 <link rel="stylesheet"
-	href="<c:url value='/assets/css/re-dashboard3.css'/>">
+	href="<c:url value='/assets/css/re-dashboard4.css'/>">
 <link rel="stylesheet"
 	href="<c:url value='/assets/css/admin-nav2.css'/>">
 <link rel="stylesheet" href="<c:url value='/assets/css/chart2.css'/>">
@@ -18,11 +18,14 @@
 .green {
 	color: green !important;
 }
- select option:hover{background-color: #cb82a9;}
- selecet#sl-month option:hover {
-	 box-shadow: 0 0 10px 100px #1882A8 inset;
+
+select option:hover {
+	background-color: #cb82a9;
 }
- 
+
+selecet#sl-month option:hover {
+	box-shadow: 0 0 10px 100px #1882A8 inset;
+}
 </style>
 
 <body>
@@ -64,24 +67,25 @@
 					<div class="db-row2">
 						<div class="dashboard-col">
 							<div class="dashboard-row-1">
-								<div class="dashboard-col-icon icon-revenue">
-									<div class="wrapper-icon">
-										<img
-											src="<c:url value="/assets/images/icons/icons8-sales-performance-100.png"/>"
-											alt="images-order">
+								<div class="dashboard-row-top">
+									<div class="dashboard-col-icon icon-revenue">
+										<div class="wrapper-icon">
+											<img
+												src="<c:url value="/assets/images/icons/icons8-revenue-64.png"/>"
+												alt="images-order">
+										</div>
+									</div>
+									<div class="dashboard-col-text">
+										<div class="dashboard-row-parameter">
+											<p>
+												$<fmt:formatNumber type="number" maxFractionDigits="2"
+													value="${ revenueofday }" />
+											</p>
+										</div>
 									</div>
 								</div>
-								<div class="dashboard-col-text">
-									<div class="dashboard-row-title">
-										<p>Today's Revenue</p>
-									</div>
-									<div class="dashboard-row-parameter">
-										<p>
-											$
-											<fmt:formatNumber type="number" maxFractionDigits="2"
-												value="${ revenueofday }" />
-										</p>
-									</div>
+								<div class="dashboard-row-title">
+									<p>Today's Revenue</p>
 								</div>
 							</div>
 							<hr class="shadow-hr">
@@ -100,20 +104,22 @@
 						</div>
 						<div class="dashboard-col">
 							<div class="dashboard-row-1">
-								<div class="dashboard-col-icon icon-order">
-									<div class="wrapper-icon">
-										<img
-											src="<c:url value="/assets/images/icons/icons8-delivered-100.png"/>"
-											alt="images-order">
+								<div class="dashboard-row-top">
+									<div class="dashboard-col-icon icon-order">
+										<div class="wrapper-icon-order">
+											<img
+												src="<c:url value="/assets/images/icons/icons8-purchase-order-96.png"/>"
+												alt="images-order">
+										</div>
+									</div>
+									<div class="dashboard-col-text">
+										<div class="dashboard-row-parameter">
+											<p>+${ orderofday }</p>
+										</div>
 									</div>
 								</div>
-								<div class="dashboard-col-text">
-									<div class="dashboard-row-title">
-										<p>Today's Order</p>
-									</div>
-									<div class="dashboard-row-parameter">
-										<p>+${ orderofday }</p>
-									</div>
+								<div class="dashboard-row-title">
+									<p>Today's Order</p>
 								</div>
 							</div>
 							<hr class="shadow-hr">
@@ -160,19 +166,19 @@
 									<div class="revenue-month">
 										<div class="growth-revenue this-month">
 											<img
-											src="<c:url value="/assets/images/icons/icons8-stocks-growth-48.png"/>"
-											alt="images-order">
+												src="<c:url value="/assets/images/icons/icons8-stocks-growth-48.png"/>"
+												alt="images-order">
 										</div>
 										<div class="growth-chart-content">
-											<h4>This</h4>
+											<h4>Currently</h4>
 											<p id="revenue-price">$32.5k</p>
 										</div>
 									</div>
 									<div class="revenue-month">
 										<div class="growth-revenue not-this-month">
 											<img
-											src="<c:url value="/assets/images/icons/icons8-banknotes-60.png"/>"
-											alt="images-order">
+												src="<c:url value="/assets/images/icons/icons8-banknotes-60.png"/>"
+												alt="images-order">
 										</div>
 										<div class="growth-chart-content">
 											<h4>Jan</h4>
@@ -182,89 +188,242 @@
 								</div>
 							</div>
 						</div>
-						<div>
-						
+						<div class="parameter-revenue">
+							<div class="db-row">
+								<!-- USER -->
+								<div class="dashboard-col">
+									<div class="dashboard-row-1">
+										<div class="dashboard-row-top">
+											<div class="dashboard-col-icon icon-customer">
+												<div class="wrapper-icon">
+													<img
+														src="<c:url value="/assets/images/icons/icons8-add-administrator-100.png"/>"
+														alt="images-order">
+												</div>
+											</div>
+											<div class="dashboard-col-text">
+												<div class="dashboard-row-parameter">
+													<p>+${ userofday }</p>
+												</div>
+											</div>
+										</div>
+										<div class="dashboard-row-title">
+											<p>New Customer</p>
+										</div>
+									</div>
+									<hr class="shadow-hr">
+									<div class="dashboard-row-2">
+										<div class="compare">
+											<p>
+												<c:if test="${ percentuser >= 0}">
+													<span class="green">+${ percentuser }%</span> than yesterday
+												</c:if>
+												<c:if test="${ percentuser < 0}">
+													<span class="red">${ percentuser }%</span> than yesterday
+												</c:if>
+											</p>
+										</div>
+									</div>
+								</div>
+								<div class="dashboard-col">
+									<div class="dashboard-row-1">
+										<div class="dashboard-row-top">
+											<div class="dashboard-col-icon">
+												<div class="wrapper-icon">
+													<img
+														src="<c:url value="/assets/images/icons/icons8-sales-balance-100.png"/>"
+														alt="images-order">
+												</div>
+											</div>
+											<div class="dashboard-col-text">
+												<div class="dashboard-row-parameter">
+													<p>$${ revenueofmonth }</p>
+												</div>
+											</div>
+										</div>
+										<div class="dashboard-row-title">
+											<p>Month's Revenue</p>
+										</div>
+									</div>
+									<hr class="shadow-hr">
+									<div class="dashboard-row-2">
+										<div class="compare">
+											<p>
+												<c:if test="${ percentrevenuemonth >= 0 }">
+													<span class="green">+${ percentrevenuemonth }%</span> than last month
+												</c:if>
+												<c:if test="${ percentrevenuemonth < 0 }">
+													<span class="red">${ percentrevenuemonth }%</span> than last month
+												</c:if>
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="profile-report">
+								<div class="profile-report-left">
+									<p id="profile-report-title">Weekly Statistics</p>
+									<p id="profile-report-name">REVENUE</p>
+									<p id="percent-revenue">
+										<img
+											src="<c:url value="/assets/images/icons/icons8-up-64.png"/>"
+											alt="up">68%
+									</p>
+									<p id="total-revenue">$84,602.5</p>
+								</div>
+								<div class="profile-report-right">
+									<div class="profile-report-chart">
+										<div class="chart" id="chart-revenue-my">
+											<canvas id="myChart-revenue" height="170"></canvas>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 
 				<div class="chart-table">
-					<div class="chart-col chart-order">
-						<div class="chart-row">
-							<div class="chart">
-								<canvas id="chart-bars" class="chart-canvas" height="170"></canvas>
-							</div>
-						</div>
-						<div class="chart-row-1">
-							<div class="text-row">
-								<div class="title-row">
-									<p>Daily Sales</p>
-								</div>
-								<div class="content">
-									<p>
-										<b>(+15%)</b> increase in today sales.
-									</p>
+					<div class="chart-table-left">
+						<div class="chart-col">
+							<div class="chart-row chart-row-view color-black">
+								<div class="chart">
+									<canvas id="chart-line-tasks" class="chart-canvas" height="170"></canvas>
 								</div>
 							</div>
-							<hr class="shadow-hr">
-							<div class="schedule">
-								<div class="schedule-img">
-									<img
-										src="<c:url value="/assets/images/icons/icons8-time-machine-48.png"/>"
-										alt="icon-history">
+							<div class="chart-row-1">
+								<div class="text-row">
+									<div class="title-row">
+										<p>Website Views</p>
+									</div>
+									<div class="content">
+										<p>Last Campaign Performance</p>
+									</div>
 								</div>
-								<c:if test="${ orderDays != null }">
-									<p>Updated ${ orderDays } days ago</p>
-								</c:if>
-								<c:if test="${ orderHours != null }">
-									<p>Updated ${ orderHours } hours ago</p>
-								</c:if>
-								<c:if test="${ orderMinute != null }">
-									<p>Updated ${ orderMinute } minute ago</p>
-								</c:if>
-								<c:if test="${ orderSeconds != null }">
-									<p>Updated ${ orderSeconds } seconds ago</p>
-								</c:if>
-								<c:if test="${ orderJust != null }">
+								<hr class="shadow-hr">
+								<div class="schedule">
+									<div class="schedule-img">
+										<img
+											src="<c:url value="/assets/images/icons/icons8-time-machine-48.png"/>"
+											alt="icon-history">
+									</div>
 									<p>Just updated</p>
-								</c:if>
+								</div>
 							</div>
 						</div>
 					</div>
-					<div class="table-col col1">
-							<div class="wrapper-chart-tbl">
-								<canvas id="myChart"></canvas>
+					<div class="chart-table-right">
+						<div class="table-col col1">
+							<div class="title-chart-pie">
+								<p id="profile-report-title">Category Statistics</p>
+								<h4>42.82k Total Sales</h4>
 							</div>
-					</div>
-					<div class="chart-col" id=chart-view>
-						<div class="chart-row color-black">
-							<div class="chart">
-								<canvas id="chart-line-tasks" class="chart-canvas" height="170"></canvas>
-							</div>
-						</div>
-						<div class="chart-row-1">
-							<div class="text-row">
-								<div class="title-row">
-									<p>Website Views</p>
+							<div class="table-col1 col1">
+								<div class="total-qty">
+									<p id="total-revenue">9,035</p>
+									<h4 id="title-total-qty">Total Orders</h4>
 								</div>
-								<div class="content">
-									<p>Last Campaign Performance</p>
+								<div class="wrapper-chart-tbl">
+									<div class="percent-of-mychart" id="hoverval">60%</div>
+									<div>
+										<canvas id="myChart"></canvas>
+									</div>
 								</div>
 							</div>
-							<hr class="shadow-hr">
-							<div class="schedule">
-								<div class="schedule-img">
-									<img
-										src="<c:url value="/assets/images/icons/icons8-time-machine-48.png"/>"
-										alt="icon-history">
+							<div class="list-statistics">
+								<div class="list-left">
+									<div class="list-ele">
+										<div class="list-ele-left">
+											<div class="list-ele-img clothing-color">
+												<img
+													src="<c:url value="/assets/images/icons/icons8-t-shirt-64.png"/>"
+													alt="icon-history">
+											</div>
+											<div class="list-ele-content">
+												<p id="list-ele-title">Clothing</p>
+												<p id="list-ele-sub">Dresses, Tops,...</p>
+											</div>
+										</div>
+										<div class="list-ele-right">+3,371</div>
+									</div>
+									<div class="list-ele">
+										<div class="list-ele-left">
+											<div class="list-ele-img shoes-color">
+												<img
+													src="<c:url value="/assets/images/icons/icons8-women-shoes-100.png"/>"
+													alt="icon-history">
+											</div>
+											<div class="list-ele-content">
+												<p id="list-ele-title">Shoes</p>
+												<p id="list-ele-sub">Lifestyle, Sneaker,...</p>
+											</div>
+										</div>
+										<div class="list-ele-right">+2,757</div>
+									</div>
+									<div class="list-ele">
+										<div class="list-ele-left">
+											<div class="list-ele-img handbags-color">
+												<img src="<c:url value="/assets/images/icons/handbag.png"/>"
+													alt="icon-history">
+											</div>
+											<div class="list-ele-content">
+												<p id="list-ele-title">Handbags</p>
+												<p id="list-ele-sub">Clutches, Satchels,...</p>
+											</div>
+										</div>
+										<div class="list-ele-right">+1,503</div>
+									</div>
+									<div class="list-ele">
+										<div class="list-ele-left">
+											<div class="list-ele-img jewelry-color">
+												<img
+													src="<c:url value="/assets/images/icons/icons8-ring-and-earrings-64.png"/>"
+													alt="icon-history">
+											</div>
+											<div class="list-ele-content">
+												<p id="list-ele-title">Jewelry</p>
+												<p id="list-ele-sub">Necklaces, Rings,...</p>
+											</div>
+										</div>
+										<div class="list-ele-right">+873</div>
+									</div>
+									<div class="list-ele">
+										<div class="list-ele-left">
+											<div class="list-ele-img accessories-color">
+												<img
+													src="<c:url value="/assets/images/icons/icons8-watches-front-view-32.png"/>"
+													alt="icon-history">
+											</div>
+											<div class="list-ele-content">
+												<p id="list-ele-title">Accessories</p>
+												<p id="list-ele-sub">Hats, Sunglasses,...</p>
+											</div>
+										</div>
+										<div class="list-ele-right">+359</div>
+									</div>
+									<div class="list-ele">
+										<div class="list-ele-left">
+											<div class="list-ele-img gifts-color">
+												<img
+													src="<c:url value="/assets/images/icons/icons8-gift-100.png"/>"
+													alt="icon-history">
+											</div>
+											<div class="list-ele-content">
+												<p id="list-ele-title">Gifts</p>
+												<p id="list-ele-sub">Candles, Self Care,...</p>
+											</div>
+										</div>
+										<div class="list-ele-right">+172</div>
+									</div>
 								</div>
-								<p>Just updated</p>
 							</div>
 						</div>
 					</div>
 				</div>
 
-
+				<div class="footer-section">
+					<p>T&T © 2023 All rights reserved.</p>
+				</div>
 			</div>
 		</section>
 	</div>
@@ -284,43 +443,47 @@
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="<c:url value="assets/js/chartjs.min.js"/>"></script>
 
-	<script>
-		var yValues = [ 1, 1, 1, 1 ];
-		var barColors = [ "#1a73e8", "#43a047", "#DA2868", "#191919" ];
-
+	<script> // chart statistics by category
+		var yValues = [ 3371, 2757, 1503, 873, 359, 172 ];
 		new Chart("myChart", {
-			type : "pie",
+			type : "doughnut",
 			data : {
+				labels: [
+					    'Clothing',
+					    'Shoes',
+					    'Handbags',
+					    'Jewelry',
+					    'Accessories',
+					    'Gifts',
+					  ],
 				datasets : [ {
-					backgroundColor : barColors,
+					backgroundColor: [
+				          'rgba(255, 26, 104, 0.2)',
+				          'rgba(255, 206, 86, 0.2)',
+				          'rgba(153, 102, 255, 0.2)',
+				          'rgba(75, 192, 192, 0.2)',
+				          'rgba(255, 159, 64, 0.2)',
+				          'rgba(54, 162, 235, 0.2)',
+				        ],
+				    borderColor: [
+				    	  'rgba(255, 26, 104, 1)',
+				          'rgba(255, 206, 86, 1)',
+				          'rgba(153, 102, 255, 1)',
+				          'rgba(75, 192, 192, 1)',
+				          'rgba(255, 159, 64, 1)',
+				          'rgba(54, 162, 235, 1)',
+				        ],
+				    hoverBackgroundColor: [
+				    	  'rgba(255, 26, 104, 0.9)',
+				          'rgba(255, 206, 86, 0.9)',
+				          'rgba(153, 102, 255, 0.9)',
+				          'rgba(75, 192, 192, 0.9)',
+				          'rgba(255, 159, 64, 0.9)',
+				          'rgba(54, 162, 235, 0.9)',
+				        ],
+				    hoverOffset: 4,
 					data : yValues
 				} ]
-			},
-			options : {
-				title : {
-					display : true,
-					text : "World Wide Wine Production 2023"
-				}
-			}
-		});
-	</script>
-
-	<script>
-		var ctx = document.getElementById("chart-bars").getContext("2d");
-		const myChartBars = new Chart(ctx, {
-			type : "bar",
-			data : {
-				labels : [ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"  ],
-				datasets : [ {
-					label : "Sales",
-					tension : 0.6,
-					borderWidth : 0,
-					borderRadius : 4,
-					borderSkipped : false,
-					backgroundColor : "rgba(255, 255, 255, .8)",
-					data : [-10, 20, 10, 15, 5, 0, 0], //${ listorderofweek }
-					maxBarThickness : 6
-				}, ],
 			},
 			options : {
 				responsive : true,
@@ -328,63 +491,28 @@
 				plugins : {
 					legend : {
 						display : false,
+					},
+					tooltip : {
+						callbacks : {
+							afterFooter: function(chart) {
+								var v = chart[0].parsed;
+								var n = chart[0].dataset.data.length;
+								const arr = chart[0].dataset.data;
+								var total=0;
+								for (let i=0; i < n; i++) {
+									total += arr[i];
+								}
+								var t = parseFloat(Math.round(v/total*100*10)/10);
+								$("#hoverval").text(t+"%");
+							}
+						}
 					}
 				},
-				interaction : {
-					intersect : false,
-					mode : 'index',
-				},
-				scales : {
-					y : {
-						grid : {
-							drawBorder : false,
-							display : true,
-							drawOnChartArea : true,
-							drawTicks : false,
-							borderDash : [ 5, 5 ],
-							color : 'rgba(255, 255, 255, .2)'
-						},
-						ticks : {
-							suggestedMin : 0,
-							suggestedMax : 500,
-							beginAtZero : true,
-							padding : 10,
-							font : {
-								size : 14,
-								weight : 300,
-								family : "Roboto",
-								style : 'normal',
-								lineHeight : 2
-							},
-							color : "#fff"
-						},
-					},
-					x : {
-						grid : {
-							drawBorder : false,
-							display : true,
-							drawOnChartArea : true,
-							drawTicks : false,
-							borderDash : [ 5, 5 ],
-							color : 'rgba(255, 255, 255, .2)'
-						},
-						ticks : {
-							display : true,
-							color : '#f8f9fa',
-							padding : 10,
-							font : {
-								size : 14,
-								weight : 300,
-								family : "Roboto",
-								style : 'normal',
-								lineHeight : 2
-							},
-						}
-					},
-				},
-			},
+			}
 		});
-		
+	</script>
+
+	<script> // chart revenue -> month
 		var ctx2 = document.getElementById("chart-line").getContext("2d");
 		new Chart(ctx2, {
 			type : "bar",
@@ -465,7 +593,9 @@
 				},
 			},
 		});
+	</script>
 
+	<script> // 
 		var ctx3 = document.getElementById("chart-line-tasks").getContext("2d");
 		new Chart(ctx3, {
 			type : "line",
@@ -473,7 +603,7 @@
 				labels : [ "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct",
 						"Nov", "Dec" ],
 				datasets : [ {
-					label : "Mobile apps",
+					label : "Viewer",
 					tension : 0,
 					borderWidth : 0,
 					pointRadius : 5,
@@ -485,7 +615,6 @@
 					fill : true,
 					data : [ 50, 40, 300, 220, 500, 250, 400, 230, 500 ],
 					maxBarThickness : 6
-
 				} ],
 			},
 			options : {
@@ -547,10 +676,70 @@
 				},
 			},
 		});
-		
-		
 	</script>
 
+	<script> //daily order
+		var ctx_re = document.getElementById("myChart-revenue").getContext('2d');
+		var myChart_re = new Chart(ctx_re, {
+			type : "line",
+			data : {
+				labels : [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+				datasets : [ {
+					label : "Order",
+					tension : 0,
+					borderWidth : 0,
+					pointRadius : 5,
+					pointBackgroundColor : "#cb82a9",
+					pointBorderColor : "#f9e1ee",
+					borderColor : "#cb82a9",
+					borderWidth : 4,
+					backgroundColor : "transparent",
+					fill : true,
+					data : [ 50, 40, 300, 220, 500, 250, 400 ],
+					maxBarThickness : 6
+				} ],
+			},
+			options : {
+				responsive : true,
+				maintainAspectRatio : false,
+				plugins : {
+					legend : {
+						display : false,
+					}
+				},
+				interaction : {
+					intersect : false,
+					mode : 'index',
+				},
+				scales : {
+					y : {
+						grid : {
+							drawBorder : false,
+							display : false,
+							drawOnChartArea : false,
+							drawTicks : false,
+							borderDash : [ 5, 5 ]
+						},
+						ticks : {
+							display : false,
+						}
+					},
+					x : {
+						grid : {
+							drawBorder : false,
+							display : false,
+							drawOnChartArea : false,
+							drawTicks : false,
+							borderDash : [ 5, 5 ]
+						},
+						ticks : {
+							display : false,
+						}
+					},
+				},
+			},
+		});
+	</script>
 
 	<script>
 		$('.other').click(function() {
