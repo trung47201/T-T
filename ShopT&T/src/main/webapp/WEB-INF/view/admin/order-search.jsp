@@ -6,52 +6,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <link rel="stylesheet"
-	href="<c:url value ="/assets/css/admin-order.css"/>">
+	href="<c:url value ="/assets/css/re-admin-order3.css"/>">
 <link rel="stylesheet"
-	href="<c:url value='/assets/css/admin-login.css'/>">
-<link rel="stylesheet" href="<c:url value='/assets/css/search.css'/>">
-<link rel="stylesheet" href="<c:url value='/assets/css/message.css'/>">
+	href="<c:url value='/assets/css/re-admin-login.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/re-search3.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/re-message.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/re-admin3.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/re-dashboard4.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/admin-nav2.css'/>">
 
 <title>Search order :)</title>
 
 <style>
-#search-voucher {
-	width: 100% !important;
-	background-size: 400% 100% !important;
-}
 
-.arrow-sort {
-	display: flex;
-	width: 100%;
-	height: 20px;
-}
-
-th#date {
-	min-width: 120px;
-}
-
-.rotate180 {
-	rotate: 180deg;
-}
-
-.arrow-sort:hover {
-	cursor: pointer;
-}
-
-#img-id:hover img, #img-fullname:hover img, #img-email:hover img,
-	#img-address:hover img, #img-status:hover img, #img-order-date:hover img
-	{
-	rotate: 180deg;
-}
-
-th.th-action {
-	text-align: center;
-}
-
-.message input {
-	width: 111px !important;
-	height: 36px !important;
-}
 </style>
 
 <body>
@@ -60,13 +27,13 @@ th.th-action {
 			response.sendRedirect("/ShopTandT/login");
 		}
 	%>
-	<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
 	<div class="admin-body">
 		<jsp:include page="../layouts/admin/nav.jsp"></jsp:include>
 		<!-- ORDER MANAGEMENT -->
 
 		<!-- ORDER SEARCH -->
 		<section class="admin-order-search">
+			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
 			<div class="title">
 				<img
 					src="<c:url value="/assets/images/icons/icons8-search-client-60.png"/>"
@@ -193,6 +160,7 @@ th.th-action {
 					</tbody>
 				</table>
 			</div>
+			<jsp:include page="../layouts/admin/admin-footer.jsp"></jsp:include>
 		</section>
 	</div>
 
@@ -529,36 +497,6 @@ th.th-action {
 							};
 							xhr.send();
 						});
-	</script>
-	<script>
-		$('.other').click(function() {
-			$(".other-menu").removeClass("none", 10000, "easeInBack");
-		});
-	</script>
-
-
-	<script>
-		$(document).ready(function() {
-			$(".admin-menu-icon").click(function() {
-				$(".navigation").toggle("none");
-			});
-		});
-	</script>
-	<script>
-		var arrDiv = document.getElementsByClassName("menu");
-		var arrP = document.getElementsByClassName("dropdown-menu");
-
-		$(document).ready(function() {
-			$(".menu").click(function() {
-				var classSubMenu = "." + this.id;
-				$(classSubMenu).toggle("none");
-				for (let i = 0; i < arrP.length; i++) {
-					if (arrP[i].className.includes(this.id)) {
-						$(arrP[i]).toggleClass("rotate");
-					}
-				}
-			});
-		});
 	</script>
 </body>
 

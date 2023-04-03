@@ -36,8 +36,8 @@ public class aOrderService implements aOrderRepository {
 			Statement stmt;
 			stmt = (Statement) con.createStatement();
 			ResultSet rs = stmt
-					.executeQuery("select * from order " + "Inner join voucher on receipt.voucher_id = voucher.id "
-							+ "Inner join status on receipt.status_id = status.id " + "group by order.id");
+					.executeQuery("select * from receipt " + "Inner join voucher on receipt.voucher_id = voucher.id "
+							+ "Inner join status on receipt.status_id = status.id " + "group by receipt.id");
 			while (rs.next()) {
 				receipt = new Receipt();
 				voucher = new Voucher();
@@ -87,7 +87,7 @@ public class aOrderService implements aOrderRepository {
 			java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
 			connectService = new ConnectService();
 			Connection conn = connectService.getConnect();
-			String sql = "INSERT INTO `order`(`fullname`, `email`, `phone_number`, `address`, `order_date`, `updated_at`, `voucher_id`, `note`, `status`, `method` , `discount_at`) "
+			String sql = "INSERT INTO `receipt`(`fullname`, `email`, `phone_number`, `address`, `order_date`, `updated_at`, `voucher_id`, `note`, `status`, `method` , `discount_at`) "
 					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
 			preparedStmt.setString(1, fullname);
@@ -182,7 +182,7 @@ public class aOrderService implements aOrderRepository {
 				}
 			}
 			if (check) {
-				String query = "update order set status_id = ? where id = ?";
+				String query = "update receipt set status_id = ? where id = ?";
 				PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(query);
 				preparedStmt.setInt(1, status_id);
 				preparedStmt.setInt(2, order_id);

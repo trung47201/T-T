@@ -43,7 +43,7 @@ public class aProductController {
 		brandService = new BrandService();
 		genderService = new GenderService();
 
-		mv.addObject("style", subCategoryService.getAllSubCategory());
+		mv.addObject("subcategory", subCategoryService.getAllSubCategory());
 		mv.addObject("brand", brandService.getAllBrand());
 		mv.addObject("gender", genderService.getAllGender());
 		mv.addObject("product", shoesService.getProduct(Integer.parseInt(id)));

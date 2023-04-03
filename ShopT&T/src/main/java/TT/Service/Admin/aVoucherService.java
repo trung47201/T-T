@@ -137,4 +137,9 @@ public class aVoucherService implements aVoucherRepository {
 		}
 		return new_vc;
 	}
+	
+	public static void main(String[] args) {
+		aVoucherService a = new aVoucherService();
+		System.out.println(a.get_voucher_by_id_vc(1).getEnd_date());
+	}
 }

@@ -8,10 +8,14 @@
 <c:if test="${ productedit == 'true' }">
 	<title>Update :)</title>
 </c:if>
+<link rel="stylesheet" href="<c:url value='/assets/css/re-admin-edit-product.css'/>">
 <link rel="stylesheet"
-	href="<c:url value='/assets/css/admin-product.css'/>">
-<link rel="stylesheet"
-	href="<c:url value='/assets/css/admin-login.css'/>">
+	href="<c:url value='/assets/css/re-admin-login.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/re-search3.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/re-message.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/re-admin3.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/re-dashboard4.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/admin-nav2.css'/>">
 
 <style>
 td {
@@ -26,10 +30,6 @@ td#colspan2 .id-new-product {
 	width: 96%;
 }
 
-.disable-bg {
-	background: lightcyan;
-}
-
 .id-new-product input {
 	width: 100% !important;
 }
@@ -40,29 +40,8 @@ td#colspan2 .id-new-product {
 	margin-top: 15px;
 }
 
-.phone-number textarea {
-    width: 96%;
-    max-width: 96%;
-    max-height: 250px;
-    height: 250px;
-    min-height: 250px;
-}
-.phone-number, .id-new-product {
-    margin-top: 15px;
-}
 .table-add-new-product {
     margin-top: 0px !important;
-}
-.btn-add-new-product input {
-    float: right;
-    padding: 8px 30px;
-    font-size: 18px;
-    border: 1px solid white;
-    color: white;
-    font-weight: bold;
-    background: #0086ff;
-    border-radius: 5px;
-    box-shadow: 0 0 5px #0086ff;
 }
 .btn-add-new-product input:hover {
 cursor: pointer;
@@ -75,7 +54,7 @@ cursor: pointer;
 			response.sendRedirect("/ShopTandT/login");
 		}
 	%>
-	<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
+	
 	<div class="admin-body">
 		<jsp:include page="../layouts/admin/nav.jsp"></jsp:include>
 
@@ -83,6 +62,7 @@ cursor: pointer;
 
 		<c:if test="${ productedit == 'true' }">
 			<section class="admin-shoes-product">
+			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
 				<div class="title">
 					<img
 						src="<c:url value="/assets/images/icons/icons8-edit-100-title.png"/>"
@@ -92,6 +72,7 @@ cursor: pointer;
 		</c:if>
 		<c:if test="${ productedit == 'false'}">
 			<section class="admin-shoes-product none">
+			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
 		</c:if>
 
 		<div class="nav-history">
@@ -259,6 +240,7 @@ cursor: pointer;
 		</form>
 
 	</div>
+	<jsp:include page="../layouts/admin/admin-footer.jsp"></jsp:include>
 	</section>
 	</div>
 
@@ -283,8 +265,6 @@ cursor: pointer;
 			<input class="ok ok-done hover-btn" type="button" value="OK">
 		</div>
 	</div>
-
-
 
 	<div class="msg-done importantNone">Done!</div>
 
@@ -346,40 +326,7 @@ cursor: pointer;
 		});
 	</script>
 
-	<script>
-		$('.other').click(function() {
-			$(".other-menu").removeClass("none", 10000, "easeInBack");
-		});
-	</script>
-
-	<script>
-		$(document).ready(function() {
-			$(".admin-menu-icon").click(function() {
-				$(".navigation").toggle("none");
-			});
-		});
-	</script>
-
-
-	<script>
-		var arrDiv = document.getElementsByClassName("menu");
-		var arrP = document.getElementsByClassName("dropdown-menu");
-		$(document).ready(function() {
-			$(".menu").click(function() {
-				var classSubMenu = "." + this.id;
-				$(classSubMenu).toggle("none");
-				for (let i = 0; i < arrP.length; i++) {
-					if (arrP[i].className.includes(this.id)) {
-						$(arrP[i]).toggleClass("rotate");
-					}
-				}
-			});
-		});
-	</script>
-
-
-	<!-- choose image and display -->
-	<script>
+	<script><!-- choose image and display -->
 		var fileTag = document.getElementById("filetag"), preview = document
 				.getElementById("preview");
 

@@ -5,9 +5,14 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="<c:url value ="/assets/css/voucher.css"/>">
+<link rel="stylesheet" href="<c:url value ="/assets/css/re-voucher2.css"/>">
 <link rel="stylesheet"
-	href="<c:url value='/assets/css/admin-login.css'/>">
+	href="<c:url value='/assets/css/re-admin-login.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/re-search3.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/re-message.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/re-admin3.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/re-dashboard4.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/admin-nav2.css'/>">
 
 <c:if test="${ voucher == 'true' }">
 	<title>Voucher :)</title>
@@ -31,13 +36,14 @@
 		response.sendRedirect("/ShopTandT/login");
 	}
 	%>
-	<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
+	
 	<div class="admin-body">
 		<jsp:include page="../layouts/admin/nav.jsp"></jsp:include>
 		<!-- ORDER MANAGEMENT -->
 
 		<c:if test="${ voucher == 'true' }">
 			<section class="admin-order-management">
+				<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
 				<div class="title title-order-management">
 					<img
 						src="<c:url value="/assets/images/icons/icons8-voucher-96.png"/>"
@@ -47,6 +53,7 @@
 		</c:if>
 		<c:if test="${ editvoucher == 'true' }">
 			<section class="admin-order-management">
+				<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
 				<div class="title title-order-management">
 					<img
 						src="<c:url value="/assets/images/icons/icons8-edit-100-title.png"/>"
@@ -162,23 +169,12 @@
 								<p>Apply for</p>
 								<input type="number" id="applyfor" name="applyfor">
 							</div>
-						</div>
-						<div class="customer-infor-form">
-							<div class="fullname">
-								<p>Start date</p>
-								<input type="datetime-local" id="start-date" name="start-date"
-									value="">
-							</div>
 							<div class="fullname">
 								<p>End date</p>
 								<input type="datetime-local" id="end-date" name="end-date">
 							</div>
 						</div>
 						<div class="customer-infor-form">
-							<div class="fullname">
-								<p>Discount</p>
-								<input type="number" min="0" id="discount" name="discount">
-							</div>
 							<div class="fullname">
 								<p>Limit</p>
 								<input class="none" type="number" min="0" id="limit-input"
@@ -197,6 +193,15 @@
 									<option value="other">Other</option>
 								</select>
 							</div>
+							<div class="fullname">
+								<p>Discount</p>
+								<input type="number" min="0" id="discount" name="discount">
+							</div>
+							<div class="fullname">
+								<p>Start date</p>
+								<input type="datetime-local" id="start-date" name="start-date"
+									value="">
+							</div>
 						</div>
 						<div class="customer-infor-form">
 							<div class="fullname">
@@ -204,17 +209,18 @@
 								<input class="widthDes" type="text" id="description"
 									name="description">
 							</div>
+							<div class="btn-add-new-vc">
+								<button class="addneworder" id="addnewvoucher"
+									name="addnewvoucher" type="button">
+									<img
+										src="<c:url value="/assets/images/icons/icons8-add-64.png"/>"
+										alt="icon-plus"> Add Voucher
+								</button>
+							</div>
 						</div>
 					</div>
-					<div class="btn-add-new-vc">
-						<button class="addneworder" id="addnewvoucher"
-							name="addnewvoucher" type="button">
-							<img
-								src="<c:url value="/assets/images/icons/icons8-add-64.png"/>"
-								alt="icon-plus"> Add New
-						</button>
-					</div>
 				</div>
+				
 			</form>
 		</c:if>
 
@@ -230,16 +236,26 @@
 									value="${ vch.id }">
 							</div>
 							<div class="fullname">
-								<p>Apply for</p>
-								<input type="text" id="applyfor" name="applyfor"
-									value="${ vch.applyfor }">
+								<p>Code</p>
+								<input class="readonly-bg" type="text" id="code" name="code"
+									readonly value="${ vch.code }">
 							</div>
-						</div>
-						<div class="customer-infor-form">
 							<div class="fullname">
 								<p>Start date</p>
 								<input type="datetime-local" id="start-date" name="start-date"
 									value="${ start_date }">
+							</div>
+						</div>
+						<div class="customer-infor-form">
+						<div class="fullname">
+								<p>Discount</p>
+								<input type="number" min="0" id="discount" name="discount"
+									value="${ vch.vcdiscount }">
+							</div>
+							<div class="fullname">
+								<p>Apply for</p>
+								<input type="text" id="applyfor" name="applyfor"
+									value="${ vch.applyfor }">
 							</div>
 							<div class="fullname">
 								<p>End date</p>
@@ -249,41 +265,29 @@
 						</div>
 						<div class="customer-infor-form">
 							<div class="fullname">
-								<p>Discount</p>
-								<input type="number" min="0" id="discount" name="discount"
-									value="${ vch.vcdiscount }">
-							</div>
-							<div class="fullname">
 								<p>Limit</p>
 								<input type="number" min="0" id="limit-input" name="limit-input"
 									placeholder="Enter the limit you want..."
 									value="${ vch.limit }">
-							</div>
-						</div>
-						<div class="customer-infor-form">
-							<div class="fullname">
-								<p>Code</p>
-								<input class="readonly-bg" type="text" id="code" name="code"
-									readonly value="${ vch.code }">
 							</div>
 							<div class="fullname">
 								<p>Description</p>
 								<input type="text" id="description" name="description"
 									value="${ vch.description }">
 							</div>
+							<div class="fullname btn-save-voucher">
+								<button class="addneworder" id="save" name="save" type="button">
+									<img
+										src="<c:url value="/assets/images/icons/icons8-save-100.png"/>"
+										alt="icon-plus"> Save
+								</button>
+							</div>
 						</div>
-					</div>
-					<div>
-						<button class="addneworder" id="save" name="save" type="button">
-							<img
-								src="<c:url value="/assets/images/icons/icons8-save-100.png"/>"
-								alt="icon-plus"> Save
-						</button>
 					</div>
 				</div>
 			</form>
 		</c:if>
-
+			<jsp:include page="../layouts/admin/admin-footer.jsp"></jsp:include>
 		</section>
 
 
@@ -508,31 +512,11 @@
 			}
 		});
 	</script>
-
-
-		<script>
-		//important not delate (click hide/show navigation)
-		$(document).ready(function() {
-			$(".admin-menu-icon").click(function() {
-				$(".navigation").toggle("none");
-			});
-		});
-	</script>
-		<script>
-		var arrDiv = document.getElementsByClassName("menu");
-		var arrP = document.getElementsByClassName("dropdown-menu");
-
-		$(document).ready(function() {
-			$(".menu").click(function() {
-				var classSubMenu = "." + this.id;
-				$(classSubMenu).toggle("none");
-				for (let i = 0; i < arrP.length; i++) {
-					if (arrP[i].className.includes(this.id)) {
-						$(arrP[i]).toggleClass("rotate");
-					}
-				}
-			});
-		});
+	
+	<script type="text/javascript">
+		if ( window.history.replaceState ) {
+		  window.history.replaceState( null, null, window.location.href );
+		}
 	</script>
 </body>
 

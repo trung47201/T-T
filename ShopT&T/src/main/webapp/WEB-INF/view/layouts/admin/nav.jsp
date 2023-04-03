@@ -264,8 +264,8 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript">
-if ('scrollRestoration' in history) {
-	  history.scrollRestoration = 'manual';
+	if ('scrollRestoration' in history) {
+		history.scrollRestoration = 'manual';
 	}
 </script>
 <script>
@@ -283,15 +283,19 @@ if ('scrollRestoration' in history) {
 		});
 	});
 </script>
-
 <script type="text/javascript">
 	document.getElementById('navigation').addEventListener('scroll',
 			function() {
 				let x = this.scrollTop;
-				if(parseInt(x)<=40) {
+				if (parseInt(x) <= 40) {
 					$("#shadow-nav").removeClass("menu-inner-shadow");
 				} else {
 					$("#shadow-nav").addClass("menu-inner-shadow");
 				}
 			}, false);
+</script>
+<script>
+	$('.other').click(function() {
+		$(".other-menu").removeClass("none", 10000, "easeInBack");
+	});
 </script>

@@ -15,6 +15,9 @@
 	href="<c:url value='/assets/css/admin-nav2.css'/>">
 <link rel="stylesheet" href="<c:url value='/assets/css/chart2.css'/>">
 <style>
+* {
+	font-family: "Poppins", sans-serif;
+}
 .green {
 	color: green !important;
 }
@@ -420,10 +423,7 @@ selecet#sl-month option:hover {
 						</div>
 					</div>
 				</div>
-
-				<div class="footer-section">
-					<p>T&T © 2023 All rights reserved.</p>
-				</div>
+				<jsp:include page="../layouts/admin/admin-footer.jsp"></jsp:include>
 			</div>
 		</section>
 	</div>
@@ -738,29 +738,6 @@ selecet#sl-month option:hover {
 					},
 				},
 			},
-		});
-	</script>
-
-	<script>
-		$('.other').click(function() {
-			$(".other-menu").removeClass("none", 10000, "easeInBack");
-		});
-	</script>
-
-	<script>
-		var arrSec = document.getElementsByTagName("section");
-		$(document).ready(function() {
-			$(".sub-menu-ul").click(function() {
-				window.location.href = this.id;
-			});
-		});
-	</script>
-
-	<script>
-		$(document).ready(function() {
-			$(".admin-menu-icon").click(function() {
-				$(".navigation").toggle("none");
-			});
 		});
 	</script>
 

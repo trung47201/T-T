@@ -22,11 +22,27 @@
 <c:if test="${ newProduct == 'true' }">
 	<title>Add new product :)</title>
 </c:if>
-<link rel="stylesheet" href="<c:url value='/assets/css/admin-product.css'/>">
-<link rel="stylesheet" href="<c:url value='/assets/css/admin-login.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/re-admin-product2.css'/>">
+<link rel="stylesheet"
+	href="<c:url value='/assets/css/re-admin-login.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/re-search3.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/re-message.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/re-admin3.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/re-dashboard4.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/admin-nav2.css'/>">
+
 <style>
 	td.td-date {
     min-width: 95px;
+}
+table.table-new-product td {
+    width: 20%;
+}
+.id-new-product input {
+    width: 100%;
+}
+.message input {
+    width: 127px;
 }
 </style>
 <body>
@@ -35,7 +51,7 @@
 			response.sendRedirect("/ShopTandT/login");
 		}
 	%>
-	<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
+	
 	<div class="admin-body">
 		<jsp:include page="../layouts/admin/nav.jsp"></jsp:include>
 
@@ -43,6 +59,7 @@
 
 		<c:if test="${ product == 'true' }">
 			<section class="admin-shoes-product">
+			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
 			<div class="title">
 				<img
 					src="<c:url value="/assets/images/icons/icons8-used-product-100-title.png"/>"
@@ -52,6 +69,7 @@
 		</c:if>
 		<c:if test="${ newProduct == 'true' }">
 			<section class="admin-shoes-product">
+			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
 			<div class="title">
 				<img
 					src="<c:url value="/assets/images/icons/icons8-add-64-title.png"/>"
@@ -61,6 +79,7 @@
 		</c:if>
 		<c:if test="${ product == 'false' && newProduct == 'false' }">
 			<section class="admin-shoes-product none">
+			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
 		</c:if>
 		
 		<div class="nav-history">
@@ -147,7 +166,7 @@
 							<td>${ liProduct.title }</td>
 							<td>${ liProduct.price }</td>
 							<td>${ liProduct.discount }</td>
-							<td>${ liProduct.style.sub_category_name }</td>
+							<td>${ liProduct.sub_category.sub_category_name }</td>
 							<td>${ liProduct.brand.brand_name }</td>
 							<td>${ liProduct.gender.gender_name }</td>
 							<td class="td-date">${ liProduct.created_at }</td>
@@ -241,7 +260,7 @@
 									<option value="" disabled="disabled" selected>Choose user</option>
 									<c:forEach var="liUser" items="${ listUser }">
 										<c:if test="${ liUser.role.id == 1 }">
-											<option value="${ liUser.id }">${ liUser.fullname }</option>
+											<option value="${ liUser.id }">${ liUser.lastname} ${liUser.firstname }</option>
 										</c:if>
 									</c:forEach>
 								</select>
@@ -320,8 +339,8 @@
 					
 				</table>
 			</form>
-			
 		</div>
+		<jsp:include page="../layouts/admin/admin-footer.jsp"></jsp:include>
 		</section>
 		<div class="behind-zoom-img importantNone">
 			
@@ -332,9 +351,11 @@
 		<!-- Color - Size -->
 		<c:if test="${ colorSize == 'true' }">
 			<section class="admin-shoes-color-size">
+			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
 		</c:if>
 		<c:if test="${ colorSize == 'false' }">
 			<section class="admin-shoes-color-size none">
+			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
 		</c:if>
 
 
@@ -498,13 +519,16 @@
 				</table>
 			</div>
 		</div>
+		<jsp:include page="../layouts/admin/admin-footer.jsp"></jsp:include>
 		</section>
 		<!-- Gallery -->
 		<c:if test="${ gallery == 'true' }">
 			<section class="admin-shoes-gallery">
+			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
 		</c:if>
 		<c:if test="${ gallery == 'false' }">
 			<section class="admin-shoes-gallery none">
+			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
 		</c:if>
 
 		<div class="title">
@@ -586,13 +610,16 @@
 			</table>
 
 		</div>
+		<jsp:include page="../layouts/admin/admin-footer.jsp"></jsp:include>
 		</section>
 		<!-- BRAND - STYLE - GENDER -->
 		<c:if test="${ bsg == 'true' }">
 			<section class="admin-shoes-brand-style-gender">
+			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
 		</c:if>
 		<c:if test="${ bsg == 'false' }">
 			<section class="admin-shoes-brand-style-gender none">
+			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
 		</c:if>
 
 
@@ -742,6 +769,7 @@
 				</table>
 			</div>
 		</div>
+		<jsp:include page="../layouts/admin/admin-footer.jsp"></jsp:include>
 		</section>
 
 	</div>
@@ -933,39 +961,6 @@
 			location.reload();
 		});
 	</script>
-
-	<script>
-		$('.other').click(function() {
-			$(".other-menu").removeClass("none", 10000, "easeInBack");
-		});
-	</script>
-
-	<script>
-		$(document).ready(function() {
-			$(".admin-menu-icon").click(function() {
-				$(".navigation").toggle("none");
-			});
-		});
-	</script>
-
-
-	<script>
-		var arrDiv = document.getElementsByClassName("menu");
-		var arrP = document.getElementsByClassName("dropdown-menu");
-		$(document).ready(function() {
-			$(".menu").click(function() {
-				var classSubMenu = "." + this.id;
-				$(classSubMenu).toggle("none");
-				for (let i = 0; i < arrP.length; i++) {
-					if (arrP[i].className.includes(this.id)) {
-						$(arrP[i]).toggleClass("rotate");
-					}
-				}
-			});
-		});
-	</script>
-	
-
 	<!-- choose image and display -->
   <script>
 

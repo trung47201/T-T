@@ -6,13 +6,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <link rel="stylesheet"
-	href="<c:url value ="/assets/css/admin-order.css"/>">
+	href="<c:url value ="/assets/css/re-admin-order3.css"/>">
 <link rel="stylesheet"
-	href="<c:url value='/assets/css/admin-login.css'/>">
-<link rel="stylesheet" href="<c:url value='/assets/css/search.css'/>">
-<link rel="stylesheet" href="<c:url value='/assets/css/message.css'/>">
+	href="<c:url value='/assets/css/re-admin-login.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/re-search3.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/re-message.css'/>">
 <link rel="stylesheet" href="<c:url value='/assets/css/re-admin3.css'/>">
-<link rel="stylesheet" href="<c:url value='/assets/css/re-dashboard2.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/re-dashboard4.css'/>">
 <link rel="stylesheet" href="<c:url value='/assets/css/admin-nav2.css'/>">
 <c:if test="${ management == 'true' }">
 	<title>Order management :)</title>
@@ -234,7 +234,7 @@ div#status-select {
 					<th>Fullname</th>
 					<th>Email</th>
 					<th>Phone number</th>
-					<th>Address</th>
+					<th style="min-width: 150px;">Address</th>
 					<th id="date" style="min-width: 105px;">Order date</th>
 					<th>Note</th>
 					<th>Status</th>
@@ -456,15 +456,18 @@ div#status-select {
 				<p id="total">$${ total }</p>
 			</div>
 		</div>
-		<c:if test="${ editorder == 'true'}">
+		
+
+
+	</div>
+	
+	</div>
+	<c:if test="${ editorder == 'true'}">
 			<div class="saved-order">
 				<button class="btn-save" name="" id="${ orderById.id }">Save</button>
 			</div>
 		</c:if>
-
-
-	</div>
-	</div>
+		<jsp:include page="../layouts/admin/admin-footer.jsp"></jsp:include>
 	</section>
 
 	</div>
@@ -687,38 +690,7 @@ div#status-select {
 					xhr.send();
 				});
 	</script>
-	<script>
-		$('.other').click(function() {
-			$(".other-menu").removeClass("none", 10000, "easeInBack");
-		});
-	</script>
-
-
-	<script>
-		$(document).ready(function() {
-			$(".admin-menu-icon").click(function() {
-				$(".navigation").toggle("none");
-			});
-		});
-	</script>
-	<script>
-		var arrDiv = document.getElementsByClassName("menu");
-		var arrP = document.getElementsByClassName("dropdown-menu");
-
-		$(document).ready(function() {
-			$(".menu").click(function() {
-				var classSubMenu = "." + this.id;
-				$(classSubMenu).toggle("none");
-				for (let i = 0; i < arrP.length; i++) {
-					if (arrP[i].className.includes(this.id)) {
-						$(arrP[i]).toggleClass("rotate");
-					}
-				}
-			});
-		});
-	</script>
-
-
+	
 </body>
 
 </html>
