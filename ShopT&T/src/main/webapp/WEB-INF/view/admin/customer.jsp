@@ -18,13 +18,16 @@
 
 
 <link rel="stylesheet" href="<c:url value='/assets/css/role.css'/>">
-<link rel="stylesheet" href="<c:url value='/assets/css/customer.css'/>">
-<link rel="stylesheet" href="<c:url value='/assets/css/admin-login.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/re-customer3.css'/>">
+<link rel="stylesheet"
+	href="<c:url value='/assets/css/re-admin-login.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/re-search3.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/re-message.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/re-admin3.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/re-dashboard4.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/admin-nav2.css'/>">
 
 <style>
-* {
-font-family: unset !important;
-}
 img.eye-show-hide, img.eye-show-hide-pw {
     right: 7% !important;
 }
@@ -39,17 +42,11 @@ img.eye-show-hide, img.eye-show-hide-pw {
 			response.sendRedirect("/ShopTandT/login");
 		}
 	%>
-	<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
 	<div class="admin-body">
 		<jsp:include page="../layouts/admin/nav.jsp"></jsp:include>
-
-		<!-- PRODUCT -->
-
-		<!--
-            USER
-        -->
 		<c:if test="${ user == 'true' }">
 			<section class="admin-customer-user">
+			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
 			<div class="title">
 			<img
 				src="<c:url value="/assets/images/icons/icons8-customer-64.png"/>"
@@ -60,6 +57,7 @@ img.eye-show-hide, img.eye-show-hide-pw {
 		
 		<c:if test="${ addnewuser == 'true' }">
 			<section class="admin-customer-user">
+			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
 			<div class="title">
 			<img
 				src="<c:url value="/assets/images/icons/icons8-add-64-title.png"/>"
@@ -70,6 +68,7 @@ img.eye-show-hide, img.eye-show-hide-pw {
 		
 		<c:if test="${ user == 'false' && addnewuser == 'false' }">
 			<section class="admin-customer-user none">
+			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
 		</c:if>
 		
 		<div class="nav-history">
@@ -144,7 +143,7 @@ img.eye-show-hide, img.eye-show-hide-pw {
 									</div>
 								</td>
 								<td>${ liUser.id }</td>
-								<td>${ liUser.fullname }</td>
+								<td>${ liUser.lastname } ${ liUser.firstname }</td>
 								<td>${ liUser.email }</td>
 								<td>${ liUser.phone_number }</td>
 								<td>${ liUser.address }</td>
@@ -292,8 +291,7 @@ img.eye-show-hide, img.eye-show-hide-pw {
 				</form>
 				
 			</div>
-			
-			
+			<jsp:include page="../layouts/admin/admin-footer.jsp"></jsp:include>
 		</section>
 		
 		<div class="behind-zoom-img importantNone">
@@ -307,9 +305,11 @@ img.eye-show-hide, img.eye-show-hide-pw {
         -->
 		<c:if test="${ role == 'true' }">
 			<section class="admin-customer-role">
+			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
 		</c:if>
 		<c:if test="${ role == 'false' }">
 			<section class="admin-customer-role none">
+			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
 		</c:if>
 
 		
@@ -443,6 +443,7 @@ img.eye-show-hide, img.eye-show-hide-pw {
 				</table>
 			</div>
 		</div>
+		<jsp:include page="../layouts/admin/admin-footer.jsp"></jsp:include>
 		</section>
 		<!-- REVENUE -->
 
@@ -851,9 +852,6 @@ img.eye-show-hide, img.eye-show-hide-pw {
 		});
 	</script>
 	
-	
-	
-	
 	<script>
 		$(".btn-remove-role").click(function () {
 			var xhr = new XMLHttpRequest();
@@ -959,54 +957,6 @@ img.eye-show-hide, img.eye-show-hide-pw {
 
 		});
 	</script>
-	<script>
-		$('.other').click(function() {
-			$(".other-menu").removeClass("none", 10000, "easeInBack");
-		});
-	</script>
-	<script>
-		$('.dashboard').click(function() {
-			window.location.href = "admin.html";
-		});
-		$('.admin-logo').click(function() {
-			window.location.href = "admin.html";
-		});
-	</script>
-
-	<script>
-		var arrSec = document.getElementsByTagName("section");
-		$(document).ready(function() {
-			$(".sub-menu-ul").click(function() {
-				window.location.href = this.id;
-			});
-		});
-	</script>
-
-	<script>
-		$(document).ready(function() {
-			$(".admin-menu-icon").click(function() {
-				$(".navigation").toggle("none");
-			});
-		});
-	</script>
-
-
-	<script>
-		var arrDiv = document.getElementsByClassName("menu");
-		var arrP = document.getElementsByClassName("dropdown-menu");
-		$(document).ready(function() {
-			$(".menu").click(function() {
-				var classSubMenu = "." + this.id;
-				$(classSubMenu).toggle("none");
-				for (let i = 0; i < arrP.length; i++) {
-					if (arrP[i].className.includes(this.id)) {
-						$(arrP[i]).toggleClass("rotate");
-					}
-				}
-			});
-		});
-	</script>
-	
 
 	<script>
 	<!--  BLOCK-UNLOCK user -->

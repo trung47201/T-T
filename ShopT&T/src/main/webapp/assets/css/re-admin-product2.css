@@ -326,8 +326,8 @@ table.table-new-product {
 .phone-number textarea {
 	width: 94%;
 	max-width: 94%;
-	max-height: 180px;
-	height: 180px;
+	max-height: 170px;
+	height: 170px;
 	padding: 5px 5px 5px 5px;
 	border: 0;
 	font-size: 18px;
@@ -451,7 +451,7 @@ section {
 .table-order {
 	display: flex;
 	width: 100%;
-	max-height: 535px;
+	max-height: 521px;
 	overflow-y: scroll;
 	overflow-x: hidden;
 	margin-top: 15px;
@@ -461,7 +461,7 @@ section {
 .table-color {
 	display: flex;
 	min-width: 25%;
-	max-height: 535px;
+	max-height: 521px;
 	margin-left: 20px;
 	overflow-y: scroll;
 	overflow-x: hidden;
@@ -472,7 +472,7 @@ section {
 .table-size {
 	display: flex;
 	min-width: 20%;
-	max-height: 535px;
+	max-height: 521px;
 	margin-left: 20px;
 	overflow-y: scroll;
 	overflow-x: hidden;
@@ -483,7 +483,7 @@ section {
 .table-brand, .table-style, .table-gender {
 	display: flex;
 	min-width: 32.4%;
-	max-height: 535px;
+	max-height: 521px;
 	overflow-y: scroll;
 	overflow-x: hidden;
 	margin-top: 15px;
