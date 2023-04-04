@@ -28,7 +28,7 @@ public class FileUploadService{
 				byte[] bytes = file.getBytes();
 				//String rootpath = System.getProperty("catalina.home");
 				
-				File dir = new File("D:\\TTTN\\ShopTandT-14-2\\ShopTandT\\src\\main\\webapp\\assets\\images\\products");
+				File dir = new File("D:\\TTTN\\ShopTandT\\src\\main\\webapp\\assets\\images\\products");
 				if(!dir.exists()) {
 					dir.mkdir();
 				}

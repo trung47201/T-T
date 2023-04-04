@@ -39,6 +39,7 @@ public class RoleController {
 
 		if(txt_search != null) {
 			System.out.println(txt_search);
+			mv.addObject("keywords", txt_search);
 			mv.addObject("listRole", aRoleService.findRoleByString(txt_search.trim()));
 		} else {
 			mv.addObject("listRole", aRoleService.getAllRole());

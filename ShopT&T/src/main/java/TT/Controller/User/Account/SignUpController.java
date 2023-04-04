@@ -25,16 +25,17 @@ public class SignUpController {
 		aUserService = new aUserService();
 		statisticsService = new aStatisticsService();
 
-		String fullname = request.getParameter("fullname");
+		String firstname = request.getParameter("firstname");
+		String lastname = request.getParameter("lastname");
 		String password = request.getParameter("password");
 		String email = request.getParameter("email");
 		String phone_number = request.getParameter("phonenumber");
 
-		if (fullname != null && password != null && email != null && phone_number != null) {
+		if (firstname != null && lastname != null && password != null && email != null && phone_number != null) {
 			if (aUserService.existUser(email, phone_number)) {
 				mv.addObject("message", "exist");
 			} else {
-				if (aUserService.insert(fullname, email, phone_number, "", password, "", 2)) {
+				if (aUserService.insert(firstname, lastname, email, phone_number, "", "","", password, "", 2)) {
 					System.out.println("Sign up success!");
 					mv.addObject("message", "true");
 					if (statisticsService.check_date_of_today_exist()) { // exists

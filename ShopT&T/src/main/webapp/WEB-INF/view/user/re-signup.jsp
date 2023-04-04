@@ -44,8 +44,12 @@
 				<div class="form-input">
 					<div class="right-form-input">
 						<div class="input_group">
-							<i class="fa fa-user"></i> <input type="text" id="fullname"
-								name="fullname" placeholder="Full name" class="input_text">
+							<i class="fa fa-user"></i> <input type="text" id="firstname"
+								name="firstname" placeholder="First name" class="input_text">
+						</div>
+						<div class="input_group">
+							<i class="fa fa-user"></i> <input type="text" id="lastname"
+								name="lastname" placeholder="Last name" class="input_text">
 						</div>
 						<div class="input_group">
 							<i class="fa fa-envelope"></i> <input type="text" id="email"

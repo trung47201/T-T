@@ -763,6 +763,7 @@ td.choose-img-avt {
     border-radius: 4px;
     padding: 5px 15px;
     font-size: 18px;
+    cursor: pointer;
 }
 .input-img {
 	margin-top: 10px;
@@ -778,7 +779,7 @@ td.choose-img-avt {
     border-radius: 4px;
     padding: 10px 10px;
     font-size: 18px;
-    background: white;
+    background: #f9e1ee;
     transition: 1s;
 }
 
@@ -825,7 +826,6 @@ h2.msg-h2 img {
 p.msg-required {
     font-size: 13px;
     color: #ff6200;
-    margin-top: 5px;
 }
 .pw-form {
     display: flex;

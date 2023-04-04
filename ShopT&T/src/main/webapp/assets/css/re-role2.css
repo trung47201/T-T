@@ -1,0 +1,175 @@
+.table-role {
+    display: flex;
+    width: 50%;
+    max-height: 480px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    border-radius: 5px 5px 0 0;
+    margin-left: 20px;
+}
+.table-role::-webkit-scrollbar {
+     width: 17px;
+}
+.table-role::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+}
+.table-role::-webkit-scrollbar-thumb {
+    background: #666;
+}
+.table-role::-webkit-scrollbar-thumb:hover {
+    background: #16222d;
+}
+.search-role {
+	display: flex;
+	width: 90%;
+	margin-left: 5%;
+}
+.td-color-product {
+    border: 1px solid pink;
+}
+tr.tr-search-role {
+    background: linear-gradient(45deg, black, transparent);
+    position: sticky;
+    z-index: 10;
+    top: 0;
+    box-shadow: 0 1.5px 4px black;
+}
+
+.search-role-input input:focus {
+	outline-style: none;
+}
+.search-role-img {
+    display: flex;
+    background: white;
+    height: 30px;
+    width: 30px;
+    border-radius: 20px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 0px 3px #666;
+    z-index: 10;
+}
+.search-role-img:hover {
+	cursor: pointer;
+}
+.search-role-img img {
+    width: 24px;
+    height: 24px;
+}
+
+.search-role-input {
+    display: flex;
+    width: 100%;
+    height: 32px;
+}
+.search-role-input input {
+    width: 90%;
+    height: 100%;
+    border: 0;
+    padding: 0px 40px;
+    margin-left: -32px;
+    border-radius: 20px;
+    background: none;
+    color: white;
+    font-size: 17px;
+}
+.role-form {
+	height: 535px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    margin-top: 10px;
+}
+.role-func-form {
+    width: 40%;
+    margin-left: 4%;
+}
+.form-input {
+	margin-bottom: 20px;
+    width: 100%;
+}
+.form-input input {
+    width: 90%;
+    height: 40px;
+    border: 0;
+    border-left: 2px solid #cb82a9;
+    border-radius: 3px;
+    font-size: 18px;
+    color: black;
+    padding: 0 15px;
+}
+.img-add {
+    width: 96.4%;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    margin-top: -30px;
+}
+.btn-input{
+	margin-top: 50px;
+}
+.btn-input input {
+	cursor: pointer;
+    display: flex;
+    width: 56.4%;
+    height: 40px;
+    border: 1px solid #cb82a9;
+    border-radius: 3px;
+    font-size: 18px;
+    color: #cb82a9;
+    text-align: center;
+    font-weight: bold;
+    justify-content: center;
+    background: white;
+    margin-left: 20%;
+}
+.btn-input input:hover {
+	color: white;
+    background: #cb82a9;
+}
+input#roleid {
+    background: #f9e1ee !important;
+}
+.form-input input:focus {
+	outline-style: none;
+}
+thead {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 0 7px black;
+}
+input#search-role {
+    width: 100%;
+    border-radius: 3px 0 0 3px;
+}
+.input-role-search {
+    width: 70%;
+}
+.form-input.input-role {
+    display: flex;
+}
+.btn-search-role img {
+    height: 28px;
+}
+.btn-search-role {
+	cursor: pointer;
+    display: flex;
+    width: 20%;
+    min-width: 60px;
+    justify-content: center;
+    background: #222121;
+    align-items: center;
+    border-radius: 0 3px 3px 0;
+}
+input#btn-search:hover {
+	color: white;
+    background: #cb82a9;
+}
+input#btn-search {
+    cursor: pointer;
+    width: 100%;
+    border: 0;
+    border-radius: 0 3px 3px 0;
+}

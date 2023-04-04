@@ -64,53 +64,51 @@ public class UserController {
 	
 	@RequestMapping(value = "/admin/customer/add-new-user/savefile", method = RequestMethod.POST)
 	public ModelAndView upload(@RequestParam(value="filetag", required = false) MultipartFile file ,HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		ModelAndView mv = new ModelAndView("admin/customer");
-		
 		aUserService = new aUserService();
 		
-		String fullname = request.getParameter("fullname");
+		String firstname = request.getParameter("firstname");
+		String lastname = request.getParameter("lastname");
 		String email = request.getParameter("email");
 		String phone_number = request.getParameter("phonenumber");
 		String address = request.getParameter("address");
 		String password = request.getParameter("password");
 		String role_id = request.getParameter("role");
+		String district = request.getParameter("district");
+		String city = request.getParameter("city");
 		//String avatar = request.getParameter("avatar");
-		
-		if(fullname != null) {
-			System.out.println(fullname);
-		}
-		if(email != null) {
-			System.out.println(email);
-		}
-		if(phone_number != null) {
-			System.out.println(phone_number);
-		}
-		if(address != null) {
-			System.out.println(address);
-		}
-		if(password != null) {
-			System.out.println(password);
-		}
-		if(role_id != null) {
-			System.out.println(role_id);
-		}
 		
 		String image = saveFile(file);
 		if(image != null) {
-			if (fullname != null && email != null && phone_number != null && address != null && password != null
-					&& role_id != null) {
-				if (aUserService.insert(fullname, email, phone_number, address, password, image,
+			if (firstname != null && lastname != null && email != null && phone_number != null && address != null && password != null
+					&& role_id != null && district != null && city != null) {
+				if (aUserService.insert(firstname, lastname, email, phone_number, address, district, city, password, image,
 						Integer.parseInt(role_id))) {
 					System.out.println("Add uesr success");
+					return new ModelAndView("redirect: /ShopTandT/admin/customer");
 				} else {
 					System.out.println("Add uesr unsuccess");
+					return new ModelAndView("redirect: /ShopTandT/admin/customer/add-new-user");
 				}
+			} else{
+				System.out.println("Add uesr unsuccess element null");
+				return new ModelAndView("redirect: /ShopTandT/admin/customer/add-new-user");
 			}
-			return new ModelAndView("redirect: /ShopTandT/admin/customer/add-new-user");
+		} else {
+			if (firstname != null && lastname != null && email != null && phone_number != null && address != null && password != null
+					&& role_id != null && district != null && city != null) {
+				if (aUserService.insert(firstname, lastname, email, phone_number, address, district, city, password, "avt-default.jpg",
+						Integer.parseInt(role_id))) {
+					System.out.println("Add uesr success");
+					return new ModelAndView("redirect: /ShopTandT/admin/customer");
+				} else {
+					System.out.println("Add uesr unsuccess");
+					return new ModelAndView("redirect: /ShopTandT/admin/customer/add-new-user");
+				}
+			} else{
+				System.out.println("Add uesr unsuccess element null");
+				return new ModelAndView("redirect: /ShopTandT/admin/customer/add-new-user");
+			}
 		}
-		
-		
-		return mv;
 	}
 	
 	private String saveFile(MultipartFile file) {
@@ -120,7 +118,7 @@ public class UserController {
 				byte[] bytes = file.getBytes();
 				//String rootpath = System.getProperty("catalina.home");
 				
-				File dir = new File("D:\\TTTN\\ShopTandT-14-2\\ShopTandT\\src\\main\\webapp\\assets\\images\\users");
+				File dir = new File("D:\\TTTN\\ShopTandT\\src\\main\\webapp\\assets\\images\\users");
 				if(!dir.exists()) {
 					dir.mkdir();
 				}

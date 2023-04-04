@@ -166,15 +166,14 @@
 		<div class="tilte-cate">
 			<h4>PAGES</h4>
 		</div>
-
 		<ul>
 			<!-- PARAMETERS -->
 			<li>
 				<div class="menu" id="sub-menu-parameters">
 					<img
-						src="<c:url value="/assets/images/icons/icons8-setting-100.png"/>"
-						alt="">
-					<h3>Parameters</h3>
+						src="<c:url value="/assets/images/icons/icons8-template-96.png"/>"
+						alt="" style="width: 36px; height: 36px; margin-left: 7px;">
+					<h3>Layout</h3>
 					<p class="dropdown-sub-menu-parameters dropdown-menu"
 						id="drop-menu">
 						<img
@@ -185,49 +184,55 @@
 
 			</li>
 		</ul>
-		<!-- SUB MENU PARAMETERS -->
 		<div class="sub-menu-parameters none">
-			<a href="/ShopTandT/admin/revenue">
+			<!-- SUB MENU PARAMETERS -->
+			<a href="/ShopTandT/admin/layout/slider">
 				<ul class="sub-menu-ul" id="">
-					<li>Revenue</li>
+					<li>Slider</li>
 				</ul>
-			</a> <a href="/ShopTandT/admin/selling-products">
+			</a> <a href="/ShopTandT/admin/layout/poster">
 				<ul class="sub-menu-ul" id="">
-					<li>Selling products</li>
+					<li>Poster</li>
 				</ul>
 			</a>
 		</div>
-
-		<ul class="other-menu none">
+		<ul>
+			<!-- PARAMETERS -->
 			<li>
-				<div class="menu" id="sub-menu-news">
+				<div class="menu" id="sub-menu-content">
 					<img
-						src="<c:url value="/assets/images/icons/icons8-newspaper-64.png"/>"
+						src="<c:url value="/assets/images/icons/icons8-content-64.png"/>"
 						alt="">
-					<h3>New</h3>
-					<p class="dropdown-sub-menu-news dropdown-menu" id="drop-menu">
+					<h3>Content</h3>
+					<p class="dropdown-sub-menu-content dropdown-menu" id="drop-menu">
 						<img
 							src="<c:url value="/assets/images/icons/icons8-more-than-100.png"/>"
 							alt="">
 					</p>
 				</div>
+
 			</li>
 		</ul>
-		<!-- SUB MENU NEWS -->
-		<div class="sub-menu-news none">
-			<ul class="sub-menu-ul" id="news.html?revenue">
-				<li>Revenue</li>
-			</ul>
-			<ul class="sub-menu-ul" id="news.html?selling">
-				<li>Selling products</li>
-			</ul>
+		<!-- SUB MENU PARAMETERS -->
+		<div class="sub-menu-content none">
+			<a href="/ShopTandT/admin/content/header">
+				<ul class="sub-menu-ul" id="">
+					<li>Header</li>
+				</ul>
+			</a> <a href="/ShopTandT/admin/content/footer">
+				<ul class="sub-menu-ul" id="">
+					<li>Footer</li>
+				</ul>
+			</a>
 		</div>
-
-		<ul class="other-menu none">
+		<div class="tilte-cate">
+			<h4>Other</h4>
+		</div>
+		<ul class="other-menu">
 			<li>
 				<div class="menu" id="sub-menu-poster">
 					<img
-						src="<c:url value="/assets/images/icons/icons8-poster-64.png"/>"
+						src="<c:url value="/assets/images/icons/icons8-poster-64-re.png"/>"
 						alt="">
 					<h3>Poster</h3>
 					<p class="dropdown-sub-menu-poster dropdown-menu" id="drop-menu">
@@ -240,25 +245,50 @@
 		</ul>
 		<!-- SUB MENU POSTER -->
 		<div class="sub-menu-poster none">
-			<ul class="sub-menu-ul" id="poster.html?revenue">
-				<li>Revenue</li>
-			</ul>
-			<ul class="sub-menu-ul" id="poster.html?selling">
-				<li>Selling products</li>
-			</ul>
+			<a href="/ShopTandT/admin/poster/most-loved">
+				<ul class="sub-menu-ul" id="">
+					<li>Most loved</li>
+				</ul>
+			</a> <a href="/ShopTandT/admin/poster/new-arrivals">
+				<ul class="sub-menu-ul" id="">
+					<li>New arrivals</li>
+				</ul>
+			</a>
 		</div>
-
-		<!-- OTHER -->
-		<ul class="other">
+		
+		<ul class="other-menu">
 			<li>
-				<div class="menu">
+				<div class="menu" id="sub-menu-news">
 					<img
-						src="<c:url value="/assets/images/icons/icons8-view-more-100.png"/>"
+						src="<c:url value="/assets/images/icons/icons8-setting-64.png"/>"
 						alt="">
-					<h3>Other</h3>
+					<h3>Menu</h3>
+					<p class="dropdown-sub-menu-news dropdown-menu" id="drop-menu">
+						<img
+							src="<c:url value="/assets/images/icons/icons8-more-than-100.png"/>"
+							alt="">
+					</p>
 				</div>
 			</li>
 		</ul>
+		<!-- SUB MENU NEWS -->
+		<div class="sub-menu-news none">
+			<a href="/ShopTandT/admin/menu/about">
+				<ul class="sub-menu-ul">
+					<li>About</li>
+				</ul>
+			</a>
+			<a href="/ShopTandT/admin/menu/size-chart">
+				<ul class="sub-menu-ul" id="">
+					<li>Size chart</li>
+				</ul>
+			</a>
+			<a href="/ShopTandT/admin/menu/contact">
+				<ul class="sub-menu-ul" id="">
+					<li>Contact</li>
+				</ul>
+			</a>
+		</div>
 	</div>
 </nav>
 <script
