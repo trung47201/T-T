@@ -38,12 +38,12 @@
 	%>
 	
 	<div class="admin-body">
-		<jsp:include page="../layouts/admin/nav.jsp"></jsp:include>
+		<jsp:include page="../layouts/admin/a-nav.jsp"></jsp:include>
 		<!-- ORDER MANAGEMENT -->
 
 		<c:if test="${ voucher == 'true' }">
 			<section class="admin-order-management">
-				<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
+				<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
 				<div class="title title-order-management">
 					<img
 						src="<c:url value="/assets/images/icons/icons8-voucher-96.png"/>"
@@ -53,7 +53,7 @@
 		</c:if>
 		<c:if test="${ editvoucher == 'true' }">
 			<section class="admin-order-management">
-				<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
+				<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
 				<div class="title title-order-management">
 					<img
 						src="<c:url value="/assets/images/icons/icons8-edit-100-title.png"/>"
@@ -287,7 +287,7 @@
 				</div>
 			</form>
 		</c:if>
-			<jsp:include page="../layouts/admin/admin-footer.jsp"></jsp:include>
+			<jsp:include page="../layouts/admin/a-footer.jsp"></jsp:include>
 		</section>
 
 

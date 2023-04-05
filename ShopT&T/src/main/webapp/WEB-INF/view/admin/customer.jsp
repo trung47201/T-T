@@ -53,10 +53,10 @@ img.eye-show-hide, img.eye-show-hide-pw {
 	}
 	%>
 	<div class="admin-body">
-		<jsp:include page="../layouts/admin/nav.jsp"></jsp:include>
+		<jsp:include page="../layouts/admin/a-nav.jsp"></jsp:include>
 		<c:if test="${ user == 'true' }">
 			<section class="admin-customer-user">
-				<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
+				<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
 				<div class="title">
 					<img
 						src="<c:url value="/assets/images/icons/icons8-customer-64.png"/>"
@@ -67,7 +67,7 @@ img.eye-show-hide, img.eye-show-hide-pw {
 
 		<c:if test="${ addnewuser == 'true' }">
 			<section class="admin-customer-user">
-				<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
+				<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
 				<div class="title">
 					<img
 						src="<c:url value="/assets/images/icons/icons8-add-64-title.png"/>"
@@ -78,7 +78,7 @@ img.eye-show-hide, img.eye-show-hide-pw {
 
 		<c:if test="${ user == 'false' && addnewuser == 'false' }">
 			<section class="admin-customer-user none">
-				<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
+				<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
 		</c:if>
 
 		<div class="nav-history">
@@ -351,7 +351,7 @@ img.eye-show-hide, img.eye-show-hide-pw {
 	</form>
 
 	</div>
-	<jsp:include page="../layouts/admin/admin-footer.jsp"></jsp:include>
+	<jsp:include page="../layouts/admin/a-footer.jsp"></jsp:include>
 	</section>
 
 	<div class="behind-zoom-img importantNone"></div>
@@ -364,11 +364,11 @@ img.eye-show-hide, img.eye-show-hide-pw {
         -->
 	<c:if test="${ role == 'true' }">
 		<section class="admin-customer-role">
-			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
+			<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
 	</c:if>
 	<c:if test="${ role == 'false' }">
 		<section class="admin-customer-role none">
-			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
+			<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
 	</c:if>
 
 
@@ -511,7 +511,7 @@ img.eye-show-hide, img.eye-show-hide-pw {
 			</table>
 		</div>
 	</div>
-	<jsp:include page="../layouts/admin/admin-footer.jsp"></jsp:include>
+	<jsp:include page="../layouts/admin/a-footer.jsp"></jsp:include>
 	</section>
 	<!-- REVENUE -->
 

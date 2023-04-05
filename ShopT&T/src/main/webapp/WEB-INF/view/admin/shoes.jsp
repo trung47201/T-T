@@ -53,13 +53,13 @@ table.table-new-product td {
 	%>
 	
 	<div class="admin-body">
-		<jsp:include page="../layouts/admin/nav.jsp"></jsp:include>
+		<jsp:include page="../layouts/admin/a-nav.jsp"></jsp:include>
 
 		<!-- PRODUCT -->
 
 		<c:if test="${ product == 'true' }">
 			<section class="admin-shoes-product">
-			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
+			<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
 			<div class="title">
 				<img
 					src="<c:url value="/assets/images/icons/icons8-used-product-100-title.png"/>"
@@ -69,7 +69,7 @@ table.table-new-product td {
 		</c:if>
 		<c:if test="${ newProduct == 'true' }">
 			<section class="admin-shoes-product">
-			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
+			<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
 			<div class="title">
 				<img
 					src="<c:url value="/assets/images/icons/icons8-add-64-title.png"/>"
@@ -79,7 +79,7 @@ table.table-new-product td {
 		</c:if>
 		<c:if test="${ product == 'false' && newProduct == 'false' }">
 			<section class="admin-shoes-product none">
-			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
+			<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
 		</c:if>
 		
 		<div class="nav-history">
@@ -340,7 +340,7 @@ table.table-new-product td {
 				</table>
 			</form>
 		</div>
-		<jsp:include page="../layouts/admin/admin-footer.jsp"></jsp:include>
+		<jsp:include page="../layouts/admin/a-footer.jsp"></jsp:include>
 		</section>
 		<div class="behind-zoom-img importantNone">
 			
@@ -351,11 +351,11 @@ table.table-new-product td {
 		<!-- Color - Size -->
 		<c:if test="${ colorSize == 'true' }">
 			<section class="admin-shoes-color-size">
-			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
+			<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
 		</c:if>
 		<c:if test="${ colorSize == 'false' }">
 			<section class="admin-shoes-color-size none">
-			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
+			<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
 		</c:if>
 
 
@@ -519,16 +519,16 @@ table.table-new-product td {
 				</table>
 			</div>
 		</div>
-		<jsp:include page="../layouts/admin/admin-footer.jsp"></jsp:include>
+		<jsp:include page="../layouts/admin/a-footer.jsp"></jsp:include>
 		</section>
 		<!-- Gallery -->
 		<c:if test="${ gallery == 'true' }">
 			<section class="admin-shoes-gallery">
-			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
+			<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
 		</c:if>
 		<c:if test="${ gallery == 'false' }">
 			<section class="admin-shoes-gallery none">
-			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
+			<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
 		</c:if>
 
 		<div class="title">
@@ -610,16 +610,16 @@ table.table-new-product td {
 			</table>
 
 		</div>
-		<jsp:include page="../layouts/admin/admin-footer.jsp"></jsp:include>
+		<jsp:include page="../layouts/admin/a-footer.jsp"></jsp:include>
 		</section>
 		<!-- BRAND - STYLE - GENDER -->
 		<c:if test="${ bsg == 'true' }">
 			<section class="admin-shoes-brand-style-gender">
-			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
+			<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
 		</c:if>
 		<c:if test="${ bsg == 'false' }">
 			<section class="admin-shoes-brand-style-gender none">
-			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
+			<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
 		</c:if>
 
 
@@ -769,7 +769,7 @@ table.table-new-product td {
 				</table>
 			</div>
 		</div>
-		<jsp:include page="../layouts/admin/admin-footer.jsp"></jsp:include>
+		<jsp:include page="../layouts/admin/a-footer.jsp"></jsp:include>
 		</section>
 
 	</div>

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import TT.Service.Admin.aOrderService;
+import TT.Service.Admin.aReceiptService;
 import TT.Service.Admin.aStatisticsService;
 import TT.Service.Admin.aUserService;
 

@@ -34,7 +34,6 @@ public class aLoginController {
 				System.out.println("login_t: true");
 				return new ModelAndView("redirect: /ShopTandT/admin");
 			} else {
-				session.setAttribute("adminID", 0);
 				if(username.contains("@")) {
 					session.setAttribute("msgLogin", "email");
 					session.setMaxInactiveInterval(60);

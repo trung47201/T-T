@@ -56,13 +56,13 @@ cursor: pointer;
 	%>
 	
 	<div class="admin-body">
-		<jsp:include page="../layouts/admin/nav.jsp"></jsp:include>
+		<jsp:include page="../layouts/admin/a-nav.jsp"></jsp:include>
 
 		<!-- PRODUCT -->
 
 		<c:if test="${ productedit == 'true' }">
 			<section class="admin-shoes-product">
-			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
+			<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
 				<div class="title">
 					<img
 						src="<c:url value="/assets/images/icons/icons8-edit-100-title.png"/>"
@@ -72,7 +72,7 @@ cursor: pointer;
 		</c:if>
 		<c:if test="${ productedit == 'false'}">
 			<section class="admin-shoes-product none">
-			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
+			<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
 		</c:if>
 
 		<div class="nav-history">
@@ -240,7 +240,7 @@ cursor: pointer;
 		</form>
 
 	</div>
-	<jsp:include page="../layouts/admin/admin-footer.jsp"></jsp:include>
+	<jsp:include page="../layouts/admin/a-footer.jsp"></jsp:include>
 	</section>
 	</div>
 

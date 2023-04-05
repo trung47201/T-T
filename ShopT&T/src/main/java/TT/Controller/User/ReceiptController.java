@@ -10,21 +10,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import TT.Model.Receipt;
-import TT.Service.Admin.aOrderService;
+import TT.Service.Admin.aReceiptService;
 import TT.Service.User.ReceiptService;
 import TT.Service.User.PostsService;
 @Controller
 public class ReceiptController {
 	private ReceiptService receiptService;
-	private aOrderService aOrderService;
+	private aReceiptService aReceiptService;
 	
 	@RequestMapping(value = { "order/countermand/{id}" })
 	public void countermand_order(@PathVariable String id) {
 		receiptService = new ReceiptService();
-		aOrderService = new aOrderService();
+		aReceiptService = new aReceiptService();
 		Receipt o = receiptService.get_all_order_by_order_id(Integer.parseInt(id));
 		if (o.getStatus().getId() == 1) {
-			aOrderService.editStatusOrderById(Integer.parseInt(id), 6);
+			aReceiptService.editStatusOrderById(Integer.parseInt(id), 6);
 		} else {
 			receiptService.confirm_request(Integer.parseInt(id));
 		}

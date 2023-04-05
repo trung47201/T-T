@@ -143,12 +143,12 @@ div#status-select {
 	%>
 	
 	<div class="admin-body">
-		<jsp:include page="../layouts/admin/nav.jsp"></jsp:include>
+		<jsp:include page="../layouts/admin/a-nav.jsp"></jsp:include>
 		<!-- ORDER MANAGEMENT -->
 
 		<c:if test="${ management == 'true' }">
 			<section class="admin-order-management">
-			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
+			<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
 				<div class="title title-order-management">
 					<img
 						src="<c:url value="/assets/images/icons/icons8-calendar-96.png"/>"
@@ -158,7 +158,7 @@ div#status-select {
 		</c:if>
 		<c:if test="${ editorder == 'true' }">
 			<section class="admin-order-management">
-			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
+			<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
 				<div class="title title-edit-new">
 					<img
 						src="<c:url value="/assets/images/icons/icons8-edit-100-title.png"/>"
@@ -168,7 +168,7 @@ div#status-select {
 		</c:if>
 		<c:if test="${ orderdetails == 'true' }">
 			<section class="admin-order-management">
-			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
+			<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
 				<div class="title title-edit-new">
 					<img
 						src="<c:url value="/assets/images/icons/icons8-eye-64-title.png"/>"
@@ -180,7 +180,7 @@ div#status-select {
 		<c:if
 			test="${ editorder == 'false' &&  management == 'false' && orderdetails == 'false' }">
 			<section class="admin-order-management importantNone">
-			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
+			<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
 		</c:if>
 
 
@@ -467,7 +467,7 @@ div#status-select {
 				<button class="btn-save" name="" id="${ orderById.id }">Save</button>
 			</div>
 		</c:if>
-		<jsp:include page="../layouts/admin/admin-footer.jsp"></jsp:include>
+		<jsp:include page="../layouts/admin/a-footer.jsp"></jsp:include>
 	</section>
 
 	</div>

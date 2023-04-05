@@ -17,6 +17,8 @@ public class Receipt {
 	private String method;
 	private String bill;
 	private int request;
+
+	private String qrcode;
 	
 	public Receipt() {
 		// TODO Auto-generated constructor stub
@@ -107,8 +109,11 @@ public class Receipt {
 	public void setRequest(int request) {
 		this.request = request;
 	}
-	@Override
-	public String toString() {
-		return fullname+"+"+phone_number+"+"+email+"+"+address+"+"+note;
+	public String getQrcode() {
+		return qrcode;
 	}
+	public void setQrcode(String qrcode) {
+		this.qrcode = qrcode;
+	}
+	
 }

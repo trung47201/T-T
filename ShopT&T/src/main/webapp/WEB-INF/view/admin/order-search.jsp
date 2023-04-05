@@ -28,12 +28,12 @@
 		}
 	%>
 	<div class="admin-body">
-		<jsp:include page="../layouts/admin/nav.jsp"></jsp:include>
+		<jsp:include page="../layouts/admin/a-nav.jsp"></jsp:include>
 		<!-- ORDER MANAGEMENT -->
 
 		<!-- ORDER SEARCH -->
 		<section class="admin-order-search">
-			<jsp:include page="../layouts/admin/header.jsp"></jsp:include>
+			<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
 			<div class="title">
 				<img
 					src="<c:url value="/assets/images/icons/icons8-search-client-60.png"/>"
@@ -160,7 +160,7 @@
 					</tbody>
 				</table>
 			</div>
-			<jsp:include page="../layouts/admin/admin-footer.jsp"></jsp:include>
+			<jsp:include page="../layouts/admin/a-footer.jsp"></jsp:include>
 		</section>
 	</div>
 

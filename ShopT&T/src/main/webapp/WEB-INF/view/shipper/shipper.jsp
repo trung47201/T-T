@@ -7,10 +7,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<title>Admin :) ?</title>
+<title>Nice to meet you :)?</title>
 <link rel="stylesheet" href="<c:url value='/assets/css/re-admin4.css'/>">
 <link rel="stylesheet"
-	href="<c:url value='/assets/css/re-dashboard4.css'/>">
+	href="<c:url value='/assets/css/re-dashboard-shipper.css'/>">
 <link rel="stylesheet"
 	href="<c:url value='/assets/css/admin-nav2.css'/>">
 <link rel="stylesheet" href="<c:url value='/assets/css/chart2.css'/>">
@@ -33,28 +33,28 @@ selecet#sl-month option:hover {
 
 <body>
 	<%
-	if (session.getAttribute("adminID") == null) {
-		response.sendRedirect("/ShopTandT/login");
+	if (session.getAttribute("shipperID") == null) {
+		response.sendRedirect("/ShopTandT/shipper");
 	}
 	%>
 	<div class="admin-body">
-		<jsp:include page="../layouts/admin/a-nav.jsp"></jsp:include>
+		<jsp:include page="../layouts/shipper/s-nav.jsp"></jsp:include>
 		<section>
-			<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
+			<jsp:include page="../layouts/shipper/s-header.jsp"></jsp:include>
 			<div class="section-dashboard">
 				<div class="dashboard-table">
 					<div class="db-row1">
 						<div class="wrapoer-row">
 							<div class="text">
 								<div class="text-title">
-									<p>Congratulations John!</p>
+									<p>Congratulations ${ user.firstname }!</p>
 									<div>
 										<img alt=""
 											src="<c:url value='/assets/images/icons/icons8-confetti-94.png'/>">
 									</div>
 								</div>
 								<div class="text-content">
-									<p>You have done 72% more sales today. Check your new badge
+									<p>You have accomplished 70% of your goal today. Check your new badge
 										in your profile.</p>
 								</div>
 								<div class="text-btn">
@@ -285,145 +285,7 @@ selecet#sl-month option:hover {
 						</div>
 					</div>
 				</div>
-
-				<div class="chart-table">
-					<div class="chart-table-left">
-						<div class="chart-col">
-							<div class="chart-row chart-row-view color-black">
-								<div class="chart">
-									<canvas id="chart-line-tasks" class="chart-canvas" height="170"></canvas>
-								</div>
-							</div>
-							<div class="chart-row-1">
-								<div class="text-row">
-									<div class="title-row">
-										<p>Website Views</p>
-									</div>
-									<div class="content">
-										<p>Last Campaign Performance</p>
-									</div>
-								</div>
-								<hr class="shadow-hr">
-								<div class="schedule">
-									<div class="schedule-img">
-										<img
-											src="<c:url value="/assets/images/icons/icons8-time-machine-48.png"/>"
-											alt="icon-history">
-									</div>
-									<p>Just updated</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="chart-table-right">
-						<div class="table-col col1">
-							<div class="title-chart-pie">
-								<p id="profile-report-title">Category Statistics</p>
-								<h4>42.82k Total Sales</h4>
-							</div>
-							<div class="table-col1 col1">
-								<div class="total-qty">
-									<p id="total-revenue">9,035</p>
-									<h4 id="title-total-qty">Total Orders</h4>
-								</div>
-								<div class="wrapper-chart-tbl">
-									<div class="percent-of-mychart" id="hoverval">60%</div>
-									<div>
-										<canvas id="myChart"></canvas>
-									</div>
-								</div>
-							</div>
-							<div class="list-statistics">
-								<div class="list-left">
-									<div class="list-ele">
-										<div class="list-ele-left">
-											<div class="list-ele-img clothing-color">
-												<img
-													src="<c:url value="/assets/images/icons/icons8-t-shirt-64.png"/>"
-													alt="icon-history">
-											</div>
-											<div class="list-ele-content">
-												<p id="list-ele-title">Clothing</p>
-												<p id="list-ele-sub">Dresses, Tops,...</p>
-											</div>
-										</div>
-										<div class="list-ele-right">+3,371</div>
-									</div>
-									<div class="list-ele">
-										<div class="list-ele-left">
-											<div class="list-ele-img shoes-color">
-												<img
-													src="<c:url value="/assets/images/icons/icons8-women-shoes-100.png"/>"
-													alt="icon-history">
-											</div>
-											<div class="list-ele-content">
-												<p id="list-ele-title">Shoes</p>
-												<p id="list-ele-sub">Lifestyle, Sneaker,...</p>
-											</div>
-										</div>
-										<div class="list-ele-right">+2,757</div>
-									</div>
-									<div class="list-ele">
-										<div class="list-ele-left">
-											<div class="list-ele-img handbags-color">
-												<img src="<c:url value="/assets/images/icons/handbag.png"/>"
-													alt="icon-history">
-											</div>
-											<div class="list-ele-content">
-												<p id="list-ele-title">Handbags</p>
-												<p id="list-ele-sub">Clutches, Satchels,...</p>
-											</div>
-										</div>
-										<div class="list-ele-right">+1,503</div>
-									</div>
-									<div class="list-ele">
-										<div class="list-ele-left">
-											<div class="list-ele-img jewelry-color">
-												<img
-													src="<c:url value="/assets/images/icons/icons8-ring-and-earrings-64.png"/>"
-													alt="icon-history">
-											</div>
-											<div class="list-ele-content">
-												<p id="list-ele-title">Jewelry</p>
-												<p id="list-ele-sub">Necklaces, Rings,...</p>
-											</div>
-										</div>
-										<div class="list-ele-right">+873</div>
-									</div>
-									<div class="list-ele">
-										<div class="list-ele-left">
-											<div class="list-ele-img accessories-color">
-												<img
-													src="<c:url value="/assets/images/icons/icons8-watches-front-view-32.png"/>"
-													alt="icon-history">
-											</div>
-											<div class="list-ele-content">
-												<p id="list-ele-title">Accessories</p>
-												<p id="list-ele-sub">Hats, Sunglasses,...</p>
-											</div>
-										</div>
-										<div class="list-ele-right">+359</div>
-									</div>
-									<div class="list-ele">
-										<div class="list-ele-left">
-											<div class="list-ele-img gifts-color">
-												<img
-													src="<c:url value="/assets/images/icons/icons8-gift-100.png"/>"
-													alt="icon-history">
-											</div>
-											<div class="list-ele-content">
-												<p id="list-ele-title">Gifts</p>
-												<p id="list-ele-sub">Candles, Self Care,...</p>
-											</div>
-										</div>
-										<div class="list-ele-right">+172</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<jsp:include page="../layouts/admin/a-footer.jsp"></jsp:include>
+				<jsp:include page="../layouts/shipper/s-footer.jsp"></jsp:include>
 			</div>
 		</section>
 	</div>
