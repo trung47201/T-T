@@ -158,4 +158,11 @@ public class OrderManagementController {
 			System.out.println("Countermand unsuccess! (order management controller)");
 		}
 	}
+	
+	@RequestMapping(value = { "/admin/order-management/bill" })
+	public ModelAndView bill(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView("admin/bill");
+		
+		return mv;
+	}
 }

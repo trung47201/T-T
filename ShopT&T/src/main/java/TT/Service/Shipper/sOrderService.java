@@ -79,7 +79,7 @@ public class sOrderService {
 			stmt = (Statement) con.createStatement();
 			ResultSet rs = stmt
 					.executeQuery("select * from receipt " + "Inner join voucher on receipt.voucher_id = voucher.id "
-							+ "Inner join status on receipt.status_id = status.id " +"Where status.id = 2 or status.id = 3 or status.id = 4 and request = 0 "+ "group by receipt.id");
+							+ "Inner join status on receipt.status_id = status.id " +"Where status.id = 3 and request = 0 "+ "group by receipt.id");
 			while (rs.next()) {
 				receipt = new Receipt();
 				voucher = new Voucher();
@@ -123,11 +123,5 @@ public class sOrderService {
 		return li;
 	}
 	
-	public static void main(String[] args) {
-		sOrderService s = new sOrderService();
-		for (Receipt r : s.getAllOrder()) {
-			System.out.println(r.getId() +"---"+ (r.getQrcode()==null));
-		}
-	}
 
 }

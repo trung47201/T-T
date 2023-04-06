@@ -152,12 +152,22 @@
 								<td>${ liOrder.order_date }</td>
 								<td>${ liOrder.note }</td>
 								<td class="td-action">
-									<button class="btn-edit-product confirmdeliveried"
-										id="${liOrder.id }">
-										<img
-											src="<c:url value="/assets/images/icons/icons8-done-64.png"/>"
-											alt="">
-									</button>
+									<c:if test="${ liOrder.status.id != 4 }">
+										<button class="btn-edit-product confirmdeliveried"
+											id="${liOrder.id }" style="background-color: #666;" disabled="disabled">
+											<img
+												src="<c:url value="/assets/images/icons/icons8-done-64.png"/>"
+												alt="">
+										</button>
+									</c:if>
+									<c:if test="${ liOrder.status.id == 4 }">
+										<button class="btn-edit-product confirmdeliveried"
+											id="${liOrder.id }">
+											<img
+												src="<c:url value="/assets/images/icons/icons8-done-64.png"/>"
+												alt="">
+										</button>
+									</c:if>
 									<button class="btn-details-order" id="${liOrder.id }">
 										<img
 											src="<c:url value="/assets/images/icons/icons8-eye-64.png"/>"

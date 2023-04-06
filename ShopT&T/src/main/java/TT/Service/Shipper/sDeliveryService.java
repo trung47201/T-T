@@ -16,8 +16,10 @@ import com.mysql.jdbc.Statement;
 
 import TT.Model.Receipt;
 import TT.Model.Status;
+import TT.Model.User;
 import TT.Model.Voucher;
 import TT.Service.User.ConnectService;
+import TT.Service.User.ReceiptService;
 
 public class sDeliveryService {
 
@@ -25,6 +27,8 @@ public class sDeliveryService {
 	private Receipt receipt;
 	private Voucher voucher;
 	private Status status;
+	private User shipper;
+	private ReceiptService receiptService;
 
 	public List<Receipt> getAllOrder_by_shipper_id(int shipper_id) {
 		List<Receipt> li = null;
@@ -37,12 +41,14 @@ public class sDeliveryService {
 			ResultSet rs = stmt.executeQuery("select * from receipt "
 					+ "Inner join voucher on receipt.voucher_id = voucher.id "
 					+ "Inner join status on receipt.status_id = status.id "
+					+ "Inner join user on receipt.shipper_id = user.id "
 					+ "Where request = 2 and shipper_id = "+ shipper_id + " group by receipt.id");
 			while (rs.next()) {
 				receipt = new Receipt();
 				voucher = new Voucher();
 				status = new Status();
-
+				shipper = new User();
+				
 				status.setId(rs.getInt("status_id"));
 				status.setStatus_name(rs.getString("status_name"));
 
@@ -57,6 +63,8 @@ public class sDeliveryService {
 				voucher.setUpdated_at(rs.getTimestamp("updated_at"));
 				voucher.setDescription(rs.getString("description"));
 
+				shipper.setId(rs.getInt("shipper_id"));
+				
 				receipt.setId(rs.getInt("id"));
 				receipt.setFullname(rs.getString("fullname"));
 				receipt.setEmail(rs.getString("email"));
@@ -70,6 +78,7 @@ public class sDeliveryService {
 				receipt.setStatus(status);
 				receipt.setMethod(rs.getString("method"));
 				receipt.setBill(rs.getString("bill"));
+				receipt.setShipper(shipper);
 				receipt.setRequest(rs.getInt("request"));
 
 				li.add(receipt);
@@ -262,4 +271,39 @@ public class sDeliveryService {
 		}
 		return false;
 	}
+	
+	public boolean delivered (int order_id) {
+		try {
+			connectService = new ConnectService();
+			Connection conn = connectService.getConnect();
+			String query = "update `receipt` set `request` = 0, `status_id` = 5 where id = ?";
+			PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(query);
+			preparedStmt.setInt(1, order_id);
+			preparedStmt.executeUpdate();
+			conn.close();
+			return true;
+		} catch (Exception e) {
+			System.err.println("delivered this order shipper success! ");
+			System.err.println(e.getMessage());
+		}
+		return false;
+	}
+	
+	public boolean check_receipt (int order_id) {
+		receiptService = new ReceiptService();
+		Receipt r = receiptService.get_all_order_by_order_id(order_id);
+		if(r != null) {
+			if(r.getStatus().getId()==4 && r.getRequest() == 2 && r.getQrcode() != null && r.getShipper().getId() != 0) {
+				System.out.println(r.getId());
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static void main(String[] args) {
+		sDeliveryService s = new sDeliveryService();
+		System.out.println(s.check_receipt(111));
+	}
 }
+

@@ -1,0 +1,203 @@
+body {
+	overflow: hidden;
+}
+
+h1 {
+	color: #cb82a9;
+	letter-spacing: 2px;
+	font-weight: bold;
+}
+
+.status img {
+	width: 150px;
+}
+
+.status {
+	margin-top: -70px;
+}
+
+#preview {
+	width: 700px;
+	height: 440px;
+}
+
+.wrapper-background {
+	display: flex;
+	position: relative;
+	text-align: center;
+	justify-content: center;
+	height: 800px;
+	background: #f9e1ee;
+	align-items: center;
+}
+
+.wrap {
+	position: absolute;
+	width: 320px;
+	height: 440px;
+	border-radius: 30px;
+}
+
+.wrapper-video {
+	width: 320px;
+	height: 440px;
+	background: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+	border-radius: 30px;
+}
+
+.frame1-video {
+	top: 0;
+	border-radius: 30px 30px 0 0;
+}
+
+.frame2-video {
+	bottom: 0;
+	border-radius: 0 0 30px 30px;
+}
+
+.frame1-video, .frame2-video {
+	position: absolute;
+	background: black;
+	width: 320px;
+	height: 110px;
+	opacity: .5;
+}
+
+.frame3-video {
+	left: 0;
+}
+
+.frame4-video {
+	right: 0;
+}
+
+.frame3-video, .frame4-video {
+	position: absolute;
+	background: black;
+	width: 50px;
+	height: 220px;
+	opacity: .5;
+	top: 110px;
+}
+
+.angle-1 {
+	position: absolute;
+	bottom: 0;
+	left: 1px;
+}
+
+.angle-2 {
+	position: absolute;
+	top: 0;
+	left: 0;
+	rotate: 90deg;
+}
+
+.angle-3 {
+	position: absolute;
+	top: 0;
+	right: 0;
+	rotate: 180deg;
+}
+
+.angle-4 {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	rotate: 270deg;
+}
+
+.angle img {
+	width: 50px;
+}
+
+.wrap-angle {
+	position: absolute;
+	width: 260px;
+	height: 260px;
+}
+
+.wrap-img {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.wrap-angle, .wrap, .wrapper-video {
+	margin-top: -88px;
+	z-index: 100;
+}
+
+.frame {
+	position: absolute;
+	z-index: 10;
+	background: #cb82a9;
+	width: 370px;
+	height: 650px;
+	border-radius: 20px;
+	margin-top: -30px;
+}
+.frame-top {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    font-weight: bold !important;
+    height: 88px;
+    padding: 0 25px;
+}
+.back {
+	cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-left: -13px;
+}
+
+.back img {
+    width: 40px;
+}
+.menu img {
+	cursor: pointer;
+    width: 24px;
+}
+.bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 320px;
+    height: 130px;
+    position: absolute;
+    bottom: 0;
+    color: white;
+    padding: 0 25px;
+}
+.bottom img {
+    width: 32px;
+}
+.file img {
+    width: 36px;
+}
+.bottom p {
+    margin: 0;
+    margin-top: 3px;
+}
+.flash, .scan, .file {
+	cursor: pointer;
+	width: 33.3%;
+}
+.selected {
+    border: 1px solid white;
+    padding: 7px 0;
+    border-radius: 7px;
+}
+hr.strike {
+    position: absolute;
+    bottom: 105px;
+    width: 100%;
+    border: 1px solid white;
+}

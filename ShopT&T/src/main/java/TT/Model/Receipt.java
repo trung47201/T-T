@@ -16,6 +16,7 @@ public class Receipt {
 	private Status status;
 	private String method;
 	private String bill;
+	private User shipper;
 	private int request;
 
 	private String qrcode;
@@ -108,6 +109,12 @@ public class Receipt {
 	}
 	public void setRequest(int request) {
 		this.request = request;
+	}
+	public User getShipper() {
+		return shipper;
+	}
+	public void setShipper(User shipper) {
+		this.shipper = shipper;
 	}
 	public String getQrcode() {
 		return qrcode;

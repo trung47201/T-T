@@ -24,6 +24,7 @@ public class ReceiptService implements OrderRepository {
 	private Receipt receipt;
 	private Voucher voucher;
 	private Status status;
+	private User shipper;
 	private MD5Service md5Service;
 
 	@Override
@@ -37,12 +38,14 @@ public class ReceiptService implements OrderRepository {
 			stmt = (Statement) con.createStatement();
 			ResultSet rs = stmt
 					.executeQuery("select * from receipt " + "Inner join voucher on receipt.voucher_id = voucher.id "
-							+ "Inner join status on receipt.status_id = status.id");
+							+ "Inner join status on receipt.status_id = status.id "
+							+ "Inner join user on receipt.shipper_id = user.id");
 			while (rs.next()) {
 				receipt = new Receipt();
 				voucher = new Voucher();
 				status = new Status();
-
+				shipper = new User();
+				
 				status.setId(rs.getInt("status_id"));
 				status.setStatus_name(rs.getString("status_name"));
 
@@ -57,6 +60,8 @@ public class ReceiptService implements OrderRepository {
 				voucher.setUpdated_at(rs.getTimestamp("updated_at"));
 				voucher.setDescription(rs.getString("description"));
 
+				shipper.setId(rs.getInt("shipper_id"));
+				
 				receipt.setId(rs.getInt("id"));
 				receipt.setFullname(rs.getString("fullname"));
 				receipt.setEmail(rs.getString("email"));
@@ -71,6 +76,8 @@ public class ReceiptService implements OrderRepository {
 				receipt.setMethod(rs.getString("method"));
 				receipt.setBill(rs.getString("bill"));
 				receipt.setRequest(rs.getInt("request"));
+				receipt.setShipper(shipper);
+				receipt.setQrcode(rs.getString("qrcode"));
 
 				li.add(receipt);
 			}

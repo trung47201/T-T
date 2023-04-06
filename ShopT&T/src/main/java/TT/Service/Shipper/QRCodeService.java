@@ -18,7 +18,7 @@ public class QRCodeService {
 	public String create_qr_code (String order_id) {
 		try {
             String qrCodeData = order_id;
-            String name = String.valueOf("qrcode"+new Date().getTime()+".jpg" );
+            String name = String.valueOf("qrcode"+order_id+".jpg" );
             String filePath = "D:\\TTTN\\ShopTandT\\src\\main\\webapp\\assets\\images\\qrcode\\"+name;
             String charset = "UTF-8"; // or "ISO-8859-1"
             Map < EncodeHintType, ErrorCorrectionLevel > hintMap = new HashMap < EncodeHintType, ErrorCorrectionLevel > ();

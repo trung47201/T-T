@@ -9,11 +9,15 @@
 	href="<c:url value ="/assets/css/re-admin-order3.css"/>">
 <link rel="stylesheet"
 	href="<c:url value='/assets/css/re-admin-login.css'/>">
-<link rel="stylesheet" href="<c:url value='/assets/css/re-search3.css'/>">
-<link rel="stylesheet" href="<c:url value='/assets/css/re-message.css'/>">
+<link rel="stylesheet"
+	href="<c:url value='/assets/css/re-search3.css'/>">
+<link rel="stylesheet"
+	href="<c:url value='/assets/css/re-message.css'/>">
 <link rel="stylesheet" href="<c:url value='/assets/css/re-admin3.css'/>">
-<link rel="stylesheet" href="<c:url value='/assets/css/re-dashboard4.css'/>">
-<link rel="stylesheet" href="<c:url value='/assets/css/admin-nav2.css'/>">
+<link rel="stylesheet"
+	href="<c:url value='/assets/css/re-dashboard4.css'/>">
+<link rel="stylesheet"
+	href="<c:url value='/assets/css/admin-nav2.css'/>">
 <c:if test="${ management == 'true' }">
 	<title>Order management :)</title>
 </c:if>
@@ -94,11 +98,28 @@ p#total {
 .btn-details-order {
 	background-color: purple !important;
 }
+
 .status-input {
 	width: 100% !important;
 	min-width: 200px;
 }
+
 .btn-confirm {
+	background-color: #0086ff;
+	border: 0;
+	width: 32px;
+	height: 32px;
+	border-radius: 5px 0 0 5px;
+	box-shadow: -1px 0 2px #29333f;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 10px;
+	cursor: pointer;
+}
+
+.btn-packed-order {
+	cursor: pointer;
 	background-color: #0086ff;
 	border: 0;
 	width: 32px;
@@ -111,7 +132,21 @@ p#total {
 	margin-top: 10px;
 }
 
-.btn-confirm img {
+.btn-shipped-order {
+	cursor: pointer;
+	background-color: tomato;
+	border: 0;
+	width: 32px;
+	height: 32px;
+	border-radius: 5px 0 0 5px;
+	box-shadow: -1px 0 2px #29333f;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 10px;
+}
+
+.btn-confirm img, .btn-packed-order img, .btn-shipped-order img {
 	width: 80%;
 }
 
@@ -133,22 +168,26 @@ p#total {
 div#status-select {
 	width: 37.2%;
 }
+
+.color-green {
+	background: green;
+}
 </style>
 
 <body>
 	<%
-		if(session.getAttribute("adminID") == null) {
-			response.sendRedirect("/ShopTandT/login");
-		}
+	if (session.getAttribute("adminID") == null) {
+		response.sendRedirect("/ShopTandT/login");
+	}
 	%>
-	
+
 	<div class="admin-body">
 		<jsp:include page="../layouts/admin/a-nav.jsp"></jsp:include>
 		<!-- ORDER MANAGEMENT -->
 
 		<c:if test="${ management == 'true' }">
 			<section class="admin-order-management">
-			<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
+				<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
 				<div class="title title-order-management">
 					<img
 						src="<c:url value="/assets/images/icons/icons8-calendar-96.png"/>"
@@ -158,7 +197,7 @@ div#status-select {
 		</c:if>
 		<c:if test="${ editorder == 'true' }">
 			<section class="admin-order-management">
-			<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
+				<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
 				<div class="title title-edit-new">
 					<img
 						src="<c:url value="/assets/images/icons/icons8-edit-100-title.png"/>"
@@ -168,7 +207,7 @@ div#status-select {
 		</c:if>
 		<c:if test="${ orderdetails == 'true' }">
 			<section class="admin-order-management">
-			<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
+				<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
 				<div class="title title-edit-new">
 					<img
 						src="<c:url value="/assets/images/icons/icons8-eye-64-title.png"/>"
@@ -180,7 +219,7 @@ div#status-select {
 		<c:if
 			test="${ editorder == 'false' &&  management == 'false' && orderdetails == 'false' }">
 			<section class="admin-order-management importantNone">
-			<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
+				<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
 		</c:if>
 
 
@@ -231,7 +270,7 @@ div#status-select {
 			<thead>
 				<tr>
 					<th>ID</th>
-					<th>Fullname</th>
+					<th>Full name</th>
 					<th>Email</th>
 					<th>Phone number</th>
 					<th style="min-width: 150px;">Address</th>
@@ -253,14 +292,15 @@ div#status-select {
 						<td>${ liOrder.note }</td>
 						<td>${ liOrder.status.status_name }</td>
 						<td class="td-action"><c:if
-								test="${ liOrder.status.id == 6 }">
+								test="${ liOrder.status.id == 6 || liOrder.status.id == 5}">
 								<button class="btn-details-order" id="${liOrder.id }"
 									style="border-radius: 5px;">
 									<img
 										src="<c:url value="/assets/images/icons/icons8-eye-64.png"/>"
 										alt="">
 								</button>
-							</c:if> <c:if test="${ liOrder.status.id != 6 }">
+							</c:if> <c:if
+								test="${ liOrder.status.id != 6 && liOrder.status.id != 5 }">
 								<c:if test="${ liOrder.status.id == 1 }">
 									<button class="btn-confirm-order" id="${ liOrder.id }">
 										<img
@@ -268,7 +308,34 @@ div#status-select {
 											alt="">
 									</button>
 								</c:if>
-								<c:if test="${ liOrder.status.id != 1 }">
+								<c:if test="${ liOrder.status.id == 2 }">
+									<button class="btn-packed-order" id="${ liOrder.id }"
+										style="background-color: #0086ff;">
+										<img
+											src="<c:url value="/assets/images/icons/icons8-packing-100.png"/>"
+											alt="">
+									</button>
+								</c:if>
+								<c:if test="${ liOrder.status.id == 3 }">
+									<c:if test="${ liOrder.request == 2 }">
+										<button class="btn-shipped-order" id="${ liOrder.id }"
+											style="background-color: tomato;">
+											<img
+												src="<c:url value="/assets/images/icons/icons8-print-100.png"/>"
+												alt="">
+										</button>
+									</c:if>
+									<c:if test="${ liOrder.request != 2 }">
+										<button class="btn-shipped-order confirm-shipped" id="${ liOrder.id }"
+											style="background-color: #666;" disabled="disabled">
+											<img
+												src="<c:url value="/assets/images/icons/icons8-print-100.png"/>"
+												alt="">
+										</button>
+									</c:if>
+								</c:if>
+								<c:if
+									test="${ liOrder.status.id != 1 && liOrder.status.id != 2 && liOrder.status.id != 3 }">
 									<c:if test="${ liOrder.request == 1 }">
 										<button class="btn-confirm" style="background: red;"
 											id="${ liOrder.id }" name="${ liOrder.id }">
@@ -386,7 +453,12 @@ div#status-select {
 				</div>
 				<div class="id">
 					<p>Request</p>
-					<input type="text" value="${ orderById.request }" readonly>
+					<c:if test="${ orderById.request == 0 }">
+						<input type="text" value="No request" readonly>
+					</c:if>
+					<c:if test="${ orderById.request != 0 }">
+						<input type="text" value="${ orderById.request }" readonly>
+					</c:if>
 				</div>
 			</div>
 		</c:if>
@@ -396,12 +468,19 @@ div#status-select {
 				<div class="id" id="status-select">
 					<p>Status</p>
 					<c:if test="${ orderById.status.id == 6 }">
-						<input class="status-input" type="text" value="${ orderById.status.status_name }"
-							readonly style="color: red;">
+						<input class="status-input" type="text"
+							value="${ orderById.status.status_name }" readonly
+							style="color: red;">
 					</c:if>
-					<c:if test="${ orderById.status.id != 6 }">
-						<input class="status-input" type="text" value="${ orderById.status.status_name }"
-							readonly>
+					<c:if test="${ orderById.status.id == 5 }">
+						<input class="status-input" type="text"
+							value="${ orderById.status.status_name }" readonly
+							style="color: green;">
+					</c:if>
+					<c:if
+						test="${ orderById.status.id != 6 && orderById.status.id != 5 }">
+						<input class="status-input" type="text"
+							value="${ orderById.status.status_name }" readonly>
 					</c:if>
 				</div>
 				<div class="fullname">
@@ -414,7 +493,12 @@ div#status-select {
 				</div>
 				<div class="id">
 					<p>Request</p>
-					<input type="text" value="${ orderById.request }" readonly>
+					<c:if test="${ orderById.request == 0 }">
+						<input type="text" value="No request" readonly>
+					</c:if>
+					<c:if test="${ orderById.request != 0 }">
+						<input type="text" value="${ orderById.request }" readonly>
+					</c:if>
 				</div>
 			</div>
 		</c:if>
@@ -456,18 +540,18 @@ div#status-select {
 				<p id="total">$${ total }</p>
 			</div>
 		</div>
-		
+
 
 
 	</div>
-	
+
 	</div>
 	<c:if test="${ editorder == 'true'}">
-			<div class="saved-order">
-				<button class="btn-save" name="" id="${ orderById.id }">Save</button>
-			</div>
-		</c:if>
-		<jsp:include page="../layouts/admin/a-footer.jsp"></jsp:include>
+		<div class="saved-order">
+			<button class="btn-save" name="" id="${ orderById.id }">Save</button>
+		</div>
+	</c:if>
+	<jsp:include page="../layouts/admin/a-footer.jsp"></jsp:include>
 	</section>
 
 	</div>
@@ -491,7 +575,36 @@ div#status-select {
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
+	<script>
+		//confirm packing
+		$('.btn-shipped-order').click(function() {
+			var id_order = this.id;
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", "");
+			xhr.onload = function() {
+				window.location.assign("/ShopTandT/admin/order-management/bill");
+			};
+			xhr.send();
+		});
+	</script>
+
+	<script>
+		//confirm packing
+		$('.btn-packed-order').click(function() {
+			var id_order = this.id;
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", "/ShopTandT/admin/order-management?id_order="
+					+ id_order
+					+ "&status=3");
+			xhr.onload = function() {
+				window.location.assign("/ShopTandT/admin/order-management");
+			};
+			xhr.send();
+		});
+	</script>
+
 	<script type="text/javascript">
+		//confirm countermand
 		$(".btn-confirm").click(
 				function() {
 					var url = window.location.href;
@@ -543,16 +656,14 @@ div#status-select {
 										xhr
 												.open(
 														"GET",
-														origin
-																+ "/ShopTandT/admin/order-management?id_order="
+														"/ShopTandT/admin/order-management?id_order="
 																+ id_order
 																+ "&status="
 																+ status);
 										// What to do when server responds
 										xhr.onload = function() {
 											window.location
-													.assign(origin
-															+ "/ShopTandT/admin/order-management");
+													.assign("/ShopTandT/admin/order-management");
 										};
 										xhr.send();
 									}, 500);
@@ -561,34 +672,14 @@ div#status-select {
 	</script>
 
 	<script>
-		function delProdInOrder(x) {
-			$(".message").removeClass("none");
-			$(".content-msg").text(
-					"Are you sure you want to delete this order?");
-			var id_prod = x.id;
-			$('.ok').click(function() {
-				$(".message").addClass("none");
-				setTimeout(function() {
-					$(".msg-done").removeClass("importantNone");
-
-				}, 0);
-				setTimeout(function() {
-					$(".msg-done").addClass("importantNone");
-
-				}, 500);
-				$('.ok').removeData('clicked', true);
-				location.reload();
-			});
-		}
-	</script>
-
-	<script>
 		$('.cancel').click(function() {
 			$(".message").addClass("none");
 			location.reload();
 		});
 	</script>
+
 	<script>
+		//confirm order
 		$('.btn-confirm-order')
 				.click(
 						function() {
@@ -615,15 +706,13 @@ div#status-select {
 															xhr
 																	.open(
 																			"GET",
-																			origin
-																					+ "/ShopTandT/admin/order-management?id_order="
+																			"/ShopTandT/admin/order-management?id_order="
 																					+ id_order
 																					+ "&status=2");
 															// What to do when server responds
 															xhr.onload = function() {
 																window.location
-																		.assign(origin
-																				+ "/ShopTandT/admin/order-management");
+																		.assign("/ShopTandT/admin/order-management");
 															};
 															xhr.send();
 														}, 500);
@@ -633,6 +722,7 @@ div#status-select {
 			$(".message").addClass("none");
 		});
 	</script>
+
 	<script>
 		$('.cancel').hover(function() {
 			$(".ok").removeClass("hover-btn");
@@ -649,22 +739,6 @@ div#status-select {
 	</script>
 	<!-- ADD NEW ONCLICK-->
 	<script>
-		$('#addnewshoes-product').click(function() {
-			$(".addneworder-nav").removeClass("importantNone");
-			$(".table-order-add").addClass("importantNone");
-			$(".title-add-new").removeClass("importantNone");
-			$(".title-order-management").addClass("importantNone");
-			$(".add-new-order-form").removeClass("importantNone");
-
-		});
-		$('#addneworder').click(function() {
-			$(".addneworder-nav").removeClass("importantNone");
-			$(".table-order-add").addClass("importantNone");
-			$(".title-add-new").removeClass("importantNone");
-			$(".title-order-management").addClass("importantNone");
-			$(".add-new-order-form").removeClass("importantNone");
-
-		});
 		$('.editneworder').click(
 				function() {
 					var id_order = this.id;
@@ -690,7 +764,7 @@ div#status-select {
 					xhr.send();
 				});
 	</script>
-	
+
 </body>
 
 </html>

@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -18,7 +16,7 @@
 			</div>
 		</div>
 		<div class="infor" style="width: 200px;">
-			<div class="admin-notify-icon">
+			<div class="admin-notify-icon" id="delivery-qr">
 				<img
 					src="<c:url value="/assets/images/icons/icons8-qr-code-96.png"/>"
 					alt="qr">
@@ -34,9 +32,17 @@
 					alt="msg">
 			</div>
 			<div class="admin-avatar">
-				<img src="<c:url value="/assets/images/users/${ sessionScope.avatarshipper }"/>"
+				<img
+					src="<c:url value="/assets/images/users/${ sessionScope.avatarshipper }"/>"
 					alt="avt">
 			</div>
 		</div>
 	</div>
 </header>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$("#delivery-qr").click(function() {
+		window.location.assign("/ShopTandT/shipper/confirm-delivery");
+	});
+</script>
