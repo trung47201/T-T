@@ -15,7 +15,7 @@ import TT.Service.User.UserService;
 public class ShipperController {
 	private UserService userService;
 
-	@RequestMapping(value = { "shipper" })
+	@RequestMapping(value = { "/shipper" })
 	public ModelAndView signup(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("shipper/shipper");
 		userService = new UserService();

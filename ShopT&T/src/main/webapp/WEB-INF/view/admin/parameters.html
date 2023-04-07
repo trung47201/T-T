@@ -24,7 +24,7 @@
                     <input type="text" name="" id="" placeholder="Search...">
                 </div>
                 <div class="admin-search-icon">
-                    <img src="assets/icons/icons8-search-50-blue.png" alt="icon-search">
+                    <img src="assets/icons/icons8-search-100.png" alt="icon-search">
                 </div>
             </div>
             <div class="admin-notify-icon">

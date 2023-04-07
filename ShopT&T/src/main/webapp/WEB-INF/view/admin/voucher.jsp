@@ -99,7 +99,7 @@
 							<div class="search-role">
 								<div class="search-role-img">
 									<img
-										src="<c:url value="/assets/images/icons/icons8-search-50-blue.png"/>"
+										src="<c:url value="/assets/images/icons/icons8-search-100.png"/>"
 										alt="icon-search">
 								</div>
 								<div class="search-role-input">

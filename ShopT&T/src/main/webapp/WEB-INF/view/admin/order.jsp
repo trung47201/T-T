@@ -580,9 +580,9 @@ div#status-select {
 		$('.btn-shipped-order').click(function() {
 			var id_order = this.id;
 			var xhr = new XMLHttpRequest();
-			xhr.open("GET", "");
+			xhr.open("GET", "/ShopTandT/admin/order-management?bill="+id_order);
 			xhr.onload = function() {
-				window.location.assign("/ShopTandT/admin/order-management/bill");
+				window.location.assign("/ShopTandT/admin/order-management/bill/"+id_order);
 			};
 			xhr.send();
 		});

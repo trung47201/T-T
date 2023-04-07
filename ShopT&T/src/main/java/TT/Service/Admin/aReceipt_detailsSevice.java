@@ -231,13 +231,9 @@ public class aReceipt_detailsSevice implements aOrder_detailsRepository{
 	
 	public static void main(String[] args) {
 		aReceipt_detailsSevice a = new aReceipt_detailsSevice();
-		HashMap<Integer, List<Product_color_size>> hm = a.getListColorByOrder_detail(4);
-		for (Integer i : hm.keySet()) {
-			System.out.println(i +": {");
-			for (Product_color_size c : hm.get(i)) {
-				System.out.printf(c.getColor().getId()+",");
-			}
-			System.out.println("}");
+		List<Receipt_details> li = a.getOrder_detailsByIdOrder(186);
+		for (Receipt_details i : li) {
+			System.out.println(i.getProd().getTitle());
 		}
 	}
 }

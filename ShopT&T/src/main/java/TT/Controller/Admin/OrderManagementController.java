@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +22,7 @@ import TT.Service.User.Receipt_detailsService;
 @Controller
 public class OrderManagementController {
 	private aReceiptService _aReceiptService;
-	private aReceipt_detailsSevice _aOrder_detailsSevice;
+	private aReceipt_detailsSevice _aReceipt_detailsSevice;
 	private aStatusService _aStatusService;
 	private Receipt_detailsService receipt_detailsService;
 
@@ -33,7 +34,17 @@ public class OrderManagementController {
 
 		String id_order = String.valueOf(request.getParameter("id_order"));
 		String status = String.valueOf(request.getParameter("status"));
-
+		String bill = request.getParameter("bill");
+		String endbill = request.getParameter("endbill");
+		
+		HttpSession session = request.getSession();
+		if(bill != null) {
+			session.setAttribute("bill", bill);
+		}
+		if(endbill != null) {
+			session.setAttribute("bill", "false");
+		}
+		
 		if (!id_order.equals("null") && !status.equals("null")) {
 			if (_aReceiptService.editStatusOrderById(Integer.parseInt(id_order), Integer.parseInt(status))) {
 				System.out.println("Update status order success!");
@@ -50,6 +61,7 @@ public class OrderManagementController {
 			}
 		
 		});
+		
 		mv.addObject("listOrder", li);
 
 		return mv;
@@ -60,7 +72,7 @@ public class OrderManagementController {
 		ModelAndView mv = new ModelAndView("admin/order");
 
 		_aReceiptService = new aReceiptService();
-		_aOrder_detailsSevice = new aReceipt_detailsSevice();
+		_aReceipt_detailsSevice = new aReceipt_detailsSevice();
 		_aStatusService = new aStatusService();
 		receipt_detailsService = new Receipt_detailsService();
 
@@ -70,9 +82,9 @@ public class OrderManagementController {
 			if (_aReceiptService.getOrderByID(Integer.parseInt(id_order)) != null) {
 				mv.addObject("orderById", o);
 			}
-			if (!_aOrder_detailsSevice.getOrder_detailsByIdOrder(Integer.parseInt(id_order)).isEmpty()) {
+			if (!_aReceipt_detailsSevice.getOrder_detailsByIdOrder(Integer.parseInt(id_order)).isEmpty()) {
 				mv.addObject("orderDetailsById",
-						_aOrder_detailsSevice.getOrder_detailsByIdOrder(Integer.parseInt(id_order)));
+						_aReceipt_detailsSevice.getOrder_detailsByIdOrder(Integer.parseInt(id_order)));
 			}
 			double total = receipt_detailsService.total_order_by_id_order(Integer.parseInt(id_order));
 			if (total < 50) {
@@ -106,7 +118,7 @@ public class OrderManagementController {
 		ModelAndView mv = new ModelAndView("admin/order");
 
 		_aReceiptService = new aReceiptService();
-		_aOrder_detailsSevice = new aReceipt_detailsSevice();
+		_aReceipt_detailsSevice = new aReceipt_detailsSevice();
 		_aStatusService = new aStatusService();
 		receipt_detailsService = new Receipt_detailsService();
 
@@ -116,9 +128,9 @@ public class OrderManagementController {
 			if (_aReceiptService.getOrderByID(Integer.parseInt(id_order)) != null) {
 				mv.addObject("orderById", o);
 			}
-			if (!_aOrder_detailsSevice.getOrder_detailsByIdOrder(Integer.parseInt(id_order)).isEmpty()) {
+			if (!_aReceipt_detailsSevice.getOrder_detailsByIdOrder(Integer.parseInt(id_order)).isEmpty()) {
 				mv.addObject("orderDetailsById",
-						_aOrder_detailsSevice.getOrder_detailsByIdOrder(Integer.parseInt(id_order)));
+						_aReceipt_detailsSevice.getOrder_detailsByIdOrder(Integer.parseInt(id_order)));
 			}
 			double total = receipt_detailsService.total_order_by_id_order(Integer.parseInt(id_order));
 			if (total < 50) {
@@ -159,10 +171,46 @@ public class OrderManagementController {
 		}
 	}
 	
-	@RequestMapping(value = { "/admin/order-management/bill" })
-	public ModelAndView bill(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = { "/admin/order-management/bill/{id}" })
+	public ModelAndView bill(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
+		
+		HttpSession session = request.getSession();
+		if(session.getAttribute("bill") != null) {
+			String bill = String.valueOf(session.getAttribute("bill"));
+			if(bill.equals("") ||bill.equals("false")) {
+				return new ModelAndView("redirect: /ShopTandT/admin/order-management");
+			}
+		} else {
+			return new ModelAndView("redirect: /ShopTandT/admin/order-management");
+		}
+		
 		ModelAndView mv = new ModelAndView("admin/bill");
 		
+		_aReceiptService = new aReceiptService();
+		_aReceipt_detailsSevice = new aReceipt_detailsSevice();
+		_aStatusService = new aStatusService();
+		receipt_detailsService = new Receipt_detailsService();
+
+		String id_order = id;
+		if (!id_order.equals("null")) {
+			Receipt o = _aReceiptService.getOrderByID(Integer.parseInt(id_order));
+			if (_aReceiptService.getOrderByID(Integer.parseInt(id_order)) != null) {
+				mv.addObject("orderById", o);
+			}
+			if (!_aReceipt_detailsSevice.getOrder_detailsByIdOrder(Integer.parseInt(id_order)).isEmpty()) {
+				mv.addObject("orderDetailsById",
+						_aReceipt_detailsSevice.getOrder_detailsByIdOrder(Integer.parseInt(id_order)));
+			}
+			double total = receipt_detailsService.total_order_by_id_order(Integer.parseInt(id_order));
+			if (total < 50) {
+				total = total + 11.0 - o.getDiscount_at();
+				mv.addObject("total", (double) Math.round(total*100)/100);
+			} else {
+				mv.addObject("total", (double) Math.round((total - o.getDiscount_at())*100)/100);
+			}
+		}
+		
+		mv.addObject("orderid", id);
 		return mv;
 	}
 }

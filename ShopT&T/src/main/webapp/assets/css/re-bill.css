@@ -1,0 +1,173 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	background: #f9e1ee;
+}
+
+.wrap {
+	min-width: 480px;
+	max-width: 480px;
+	min-height: 600px;
+	max-height: 600px;
+	height: 600px;
+	background: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	top: 70px;
+}
+
+.wrapper {
+	width: 94%;
+	height: 97%;
+	background: white;
+	border: 3px solid black;
+}
+
+.row {
+	display: flex;
+	width: 100%;
+}
+
+.row1 {
+	justify-content: space-around;
+	height: 70px;
+	align-items: center;
+}
+
+.logo img {
+	width: 100px;
+}
+
+.row.row2 {
+	height: 130px;
+}
+
+.row.row3 {
+	height: 270px;
+}
+
+.col {
+	padding: 5px;
+}
+
+.row2-col1, .row2-col2 {
+	width: 50%;
+}
+
+.row2-col2 {
+	border-left: 2px dashed black;
+	border-top: 2px dashed black;
+	border-bottom: 2px dashed black;
+}
+
+.row2-col1 {
+	border-top: 2px dashed black;
+	border-bottom: 2px dashed black;
+}
+
+.col.row3-col1 {
+	width: 100%;
+	position: relative;
+}
+
+.col.row3-col2 {
+	border-left: 2px dashed black;
+	width: 140px;
+}
+
+.qrcode {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 140px;
+	overflow: hidden;
+	border-bottom: 2px dashed black;
+}
+
+.row-1 {
+	height: 100px;
+	display: flex;
+	border-top: 2px dashed black;
+	display: flex;
+}
+
+p {
+	font-size: 14px;
+}
+
+.order-date p {
+	font-size: 16px;
+	margin-top: 7px;
+	margin-bottom: 12px;
+}
+
+.order-date {
+	text-align: center;
+	font-size: 24px;
+}
+
+.row-1-col1 {
+	text-align: center;
+	width: 50%;
+	border-right: 2px dashed black;
+	height: 100%;
+	width: 50%;
+}
+
+.col.row-1-col2 {
+	text-align: center;
+	width: 50%;
+	height: 100%;
+}
+
+.signature {
+	height: 100%;
+	border: 1px solid;
+}
+
+h1 {
+	padding-top: 17px;
+}
+
+.note {
+	position: absolute;
+	bottom: 0;
+}
+
+.header {
+	display: flex;
+	width: 495px;
+	justify-content: space-between;
+	align-items: center;
+	height: 94px;
+	padding-right: 20px;
+}
+
+.back img {
+	cursor: pointer;
+	width: 44px;
+}
+
+.print {
+	cursor: pointer; background : #cb82a9;
+	border-radius: 4px;
+	width: 37px;
+	height: 37px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #cb82a9;
+}
+
+.print img {
+	width: 32px;
+}

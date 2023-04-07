@@ -9,151 +9,33 @@
 <title>Bill :)</title>
 </head>
 
+<link rel="stylesheet" href="<c:url value='/assets/css/re-bill.css'/>">
 <style>
-* {
-	margin: 0;
-	padding: 0;
-}
 
-body {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	overflow: hidden;
-	background: #f9e1ee;
-}
-
-.wrap {
-	min-width: 480px;
-	max-width: 480px;
-	min-height: 600px;
-	max-height: 600px;
-	height: 600px;
-	background: white;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	position: absolute;
-    top: 70px;
-}
-
-.wrapper {
-	width: 94%;
-	height: 97%;
-	background: white;
-	border: 3px solid black;
-}
-
-.row {
-	display: flex;
-	width: 100%;
-}
-
-.row1 {
-	justify-content: space-around;
-	height: 70px;
-	align-items: center;
-}
-
-.logo img {
-	width: 100px;
-}
-
-.row.row2 {
-	height: 130px;
-}
-
-.row.row3 {
-	height: 270px;
-}
-
-.col {
-	padding: 5px;
-}
-
-.row2-col1, .row2-col2 {
-	width: 50%;
-}
-
-.row2-col2 {
-	border-left: 2px dashed black;
-	border-top: 2px dashed black;
-	border-bottom: 2px dashed black;
-}
-
-.row2-col1 {
-	border-top: 2px dashed black;
-	border-bottom: 2px dashed black;
-}
-
-.col.row3-col1 {
-	width: 100%;
-	position: relative;
-}
-
-.col.row3-col2 {
-	border-left: 2px dashed black;
-	width: 140px;
-}
-
-.qrcode {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	height: 140px;
-	overflow: hidden;
-	border-bottom: 2px dashed black;
-}
-
-.row-1 {
-	height: 100px; display : flex;
-	border-top: 2px dashed black;
-	display: flex;
-}
-
-p {
-	font-size: 14px;
-}
-
-.order-date p {
-	font-size: 16px;
-	margin-top: 7px;
-	margin-bottom: 12px;
-}
-
-.order-date {
-	text-align: center;
-	font-size: 24px;
-}
-
-.row-1-col1 {
-	text-align: center; width : 50%;
-	border-right: 2px dashed black;
-	height: 100%;
-	width: 50%;
-}
-
-.col.row-1-col2 {
-	text-align: center;
-	width: 50%;
-	height: 100%;
-}
-
-.signature {
-	height: 100%;
-	border: 1px solid;
-}
-
-h1 {
-	padding-top: 17px;
-}
-.note {
-    position: absolute;
-    bottom: 0;
-}
 </style>
 
 <body>
+	<%
+		response.setHeader("Cache-Control", "no-cache, no-store");
+		if(session.getAttribute("bill") != null) {
+			String bill = String.valueOf(session.getAttribute("bill"));
+			if(bill.equals("false")) {
+				response.sendRedirect("/ShopTandT/admin/order-management");
+			}
+		}
+	%>
+
+	<div class="header">
+		<div class="back">
+			<img
+				src="<c:url value="/assets/images/icons/icons8-up-arrow-96.png"/>"
+				alt="">
+		</div>
+		<div class="print">
+			<img src="<c:url value="/assets/images/icons/icons8-print-100.png"/>"
+				alt="">
+		</div>
+	</div>
 	<div class="wrap">
 		<div class="wrapper">
 			<div class="row row1">
@@ -162,28 +44,30 @@ h1 {
 				</div>
 				<div class="col">
 					<p>
-						Bill or lading: <b>TT43OADG</b>
+						Bill of lading: <b>${ orderById.bill }</b>
 					</p>
 				</div>
 			</div>
 			<div class="row row2">
 				<div class="col row2-col1">
 					<h4>From:</h4>
-					<p>T&T</p>
-					<p>5A/2 Trần Phú, P. 4 - Quận 5 - Thành phố Hồ Chí Minh</p>
+					<p>T&T store</p>
+					<p>Ngoa Long Village, Minh Khai, Bac Tu Liem, Hanoi</p>
 					<p>TEL: 036 97 96 359</p>
 				</div>
 				<div class="col row2-col2">
 					<h4>To:</h4>
-					<p>Do Van Trung</p>
-					<p>Xom Choi, Xuan Ky, Dong Xuan - Soc Son - Ha Noi</p>
-					<p>TEL: 036 97 96 359</p>
+					<p>${ orderById.fullname }</p>
+					<p>${ orderById.address }</p>
+					<p>TEL: ${ orderById.phone_number }</p>
 				</div>
 			</div>
 			<div class="row row3">
 				<div class="col row3-col1">
 					<h4>Description (QTY: 2)</h4>
-					<p>1. Nike Air Max 90 LTR, QTY: 1</p>
+					<c:forEach var="item" items="${ orderDetailsById }" varStatus="index">
+						<p>${ index.getIndex() + 1 }. ${ item.prod.title }, QTY: ${ item.quantity }</p>
+					</c:forEach>
 					<div class="note">
 						<p>Note: Some products may be hidden due to the long list.</p>
 					</div>
@@ -195,14 +79,14 @@ h1 {
 					</div>
 					<div class="order-date">
 						<p>Order date:</p>
-						20-10-2023 17:59:00
+						${ orderById.order_date }
 					</div>
 				</div>
 			</div>
 			<div class="row-1">
 				<div class="col row-1-col1">
 					<p>Total payment</p>
-					<h1>$100.55</h1>
+					<h1>$${ total }</h1>
 				</div>
 				<div class="col row-1-col2">
 					<div class="signature">
@@ -214,5 +98,29 @@ h1 {
 		</div>
 	</div>
 </body>
-
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(".back").click(function () {
+		history.back();
+	});
+</script>
+<script type="text/javascript">
+	var id_order="";
+	if(${ orderid != null }) {
+		id_order = "${ orderid }";
+	}
+	$(".print").click(function () {
+		if(id_order != "") {
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", "/ShopTandT/admin/order-management?id_order="
+					+ id_order
+					+ "&status=4&endbill");
+			xhr.onload = function() {
+				window.location.assign("/ShopTandT/admin/order-management");
+			};
+			xhr.send();
+		}
+	});
+</script>
 </html>

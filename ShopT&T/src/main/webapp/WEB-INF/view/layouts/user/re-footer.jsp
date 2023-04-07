@@ -232,7 +232,8 @@
 					<div class="col2">
 						ADDRESS
 						<div class="content-col">
-							dovantrung47201@gmail.com <br> Mr. Trung - 036 97 96 359
+							Ngoa Long Village, Minh Khai, Bac Tu Liem, Hanoi<br>
+							tandt.store@gmail.com <br> TEL. 036 97 96 359
 						</div>
 					</div>
 					<div class="col3">

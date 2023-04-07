@@ -34,7 +34,7 @@ selecet#sl-month option:hover {
 <body>
 	<%
 	if (session.getAttribute("shipperID") == null) {
-		response.sendRedirect("/ShopTandT/shipper");
+		response.sendRedirect("/ShopTandT/shipper/login");
 	}
 	%>
 	<div class="admin-body">
