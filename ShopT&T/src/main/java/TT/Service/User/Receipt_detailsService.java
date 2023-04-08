@@ -181,6 +181,7 @@ public class Receipt_detailsService implements Order_detailsRepository {
 			String sql = "INSERT INTO `receipt_details`(`receipt_id`, `price_at`, `quantity`, `prod_id`, `size_id`, `color_id`) "
 					+ "VALUES (?, ?, ?, ?, ?, ?)";
 			PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
+			System.out.println(receiptService.get_last_order_id_by(phone_number, email));
 			preparedStmt.setInt(1, receiptService.get_last_order_id_by(phone_number, email));
 			preparedStmt.setDouble(2, (double) Math.round(price_at*100)/100);
 			preparedStmt.setInt(3, quantity);
@@ -191,11 +192,8 @@ public class Receipt_detailsService implements Order_detailsRepository {
 			conn.close();
 			return true;
 		} catch (Exception e) {
-			System.err.println("Got an exception!");
-			// printStackTrace method
-			// prints line numbers + call stack
+			System.err.println("insert into receipt details!");
 			e.printStackTrace();
-			// Prints what exception has been thrown
 			System.out.println(e);
 		}
 		return false;

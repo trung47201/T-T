@@ -385,7 +385,7 @@ section {
 .table-order {
     display: flex;
     width: 100%;
-    max-height: 521px;
+    max-height: 563px;
     overflow-y: scroll;
     overflow-x: hidden;
     margin-top: 15px;
@@ -394,7 +394,7 @@ section {
 .table-color {
     display: flex;
     min-width: 25%;
-    max-height: 521px;
+    max-height: 563px;
     margin-left: 8px;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -404,7 +404,7 @@ section {
 .table-size {
     display: flex;
     min-width: 20%;
-    max-height: 521px;
+    max-height: 563px;
     margin-left: 8px;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -417,7 +417,7 @@ section {
 .table-gender {
     display: flex;
     min-width: 32.4%;
-    max-height: 521px;
+    max-height: 563px;
     margin-left: 8px;
     overflow-y: scroll;
     overflow-x: hidden;

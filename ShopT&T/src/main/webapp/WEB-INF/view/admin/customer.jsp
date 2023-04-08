@@ -44,6 +44,10 @@ img.eye-show-hide, img.eye-show-hide-pw {
 .message input {
 	width: 117px;
 }
+th.td-addnewshoes a {
+    display: flex;
+    width: 140px !important;
+}
 </style>
 
 <body>
@@ -57,23 +61,11 @@ img.eye-show-hide, img.eye-show-hide-pw {
 		<c:if test="${ user == 'true' }">
 			<section class="admin-customer-user">
 				<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
-				<div class="title">
-					<img
-						src="<c:url value="/assets/images/icons/icons8-customer-64.png"/>"
-						alt="">
-					<h1>USER</h1>
-				</div>
 		</c:if>
 
 		<c:if test="${ addnewuser == 'true' }">
 			<section class="admin-customer-user">
 				<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
-				<div class="title">
-					<img
-						src="<c:url value="/assets/images/icons/icons8-add-64-title.png"/>"
-						alt="">
-					<h1>ADD NEW USER</h1>
-				</div>
 		</c:if>
 
 		<c:if test="${ user == 'false' && addnewuser == 'false' }">

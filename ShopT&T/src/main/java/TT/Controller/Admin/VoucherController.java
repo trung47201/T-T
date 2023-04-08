@@ -1,6 +1,8 @@
 package TT.Controller.Admin;
 
 import java.sql.Timestamp;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,14 +40,14 @@ public class VoucherController {
 			if (code != null && discount != null && limit != null && start_date != null && end_date != null
 					&& description != null) {
 				if (aVoucherService.insert(code, Integer.parseInt(discount), Integer.parseInt(limit),
-						getTimestamp_by_string(start_date), getTimestamp_by_string(end_date), description, Integer.parseInt(apply_for))) {
+						getTimestamp_by_string(start_date), getTimestamp_by_string(end_date), description,
+						Integer.parseInt(apply_for))) {
 					mv.addObject("addVoucher", "true");
 				} else {
 					mv.addObject("addVoucher", "false");
 				}
 			}
 		}
-		
 
 		if (search != null) {
 			List<Voucher> liVC = aVoucherService.find_voucher_by_string(search);
@@ -58,6 +60,13 @@ public class VoucherController {
 			}
 		} else {
 			List<Voucher> liVC = aVoucherService.getAllVoucher();
+			Collections.sort(liVC, new Comparator<Voucher>() {
+				@Override
+				public int compare(Voucher o1, Voucher o2) {
+					return o2.getId() - o1.getId();
+				}
+
+			});
 			mv.addObject("listVoucher", liVC);
 		}
 
@@ -67,11 +76,12 @@ public class VoucherController {
 	}
 
 	@RequestMapping(value = { "/admin/voucher/edit-voucher/{id}" })
-	public ModelAndView edit_voucher(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView edit_voucher(@PathVariable String id, HttpServletRequest request,
+			HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("admin/voucher");
 
 		aVoucherService = new aVoucherService();
-		
+
 		String search = request.getParameter("search");
 		String editvoucher = request.getParameter("editvoucher");
 		String save = request.getParameter("save");
@@ -81,28 +91,29 @@ public class VoucherController {
 		String end_date = request.getParameter("end-date");
 		String description = request.getParameter("description");
 		String apply_for = request.getParameter("applyfor");
-		
+
 		System.out.println(apply_for);
-		
-		if(description != null) {
+
+		if (description != null) {
 			description = description.trim();
 		}
-		if(limit != null) {
+		if (limit != null) {
 			limit = limit.trim();
 		}
-		if(discount != null) {
+		if (discount != null) {
 			discount = discount.trim();
 		}
-		
-		if(editvoucher == null && save == null) {
+
+		if (editvoucher == null && save == null) {
 			return new ModelAndView("redirect: /ShopTandT/admin/voucher");
 		}
-		
+
 		if (save != null) {
-			if (discount != null && limit != null && start_date != null && end_date != null
-					&& description != null && apply_for != null) {
+			if (discount != null && limit != null && start_date != null && end_date != null && description != null
+					&& apply_for != null) {
 				if (aVoucherService.update(Integer.parseInt(id), Integer.parseInt(discount), Integer.parseInt(limit),
-						getTimestamp_by_string(start_date), getTimestamp_by_string(end_date), description, Integer.parseInt(apply_for) )) {
+						getTimestamp_by_string(start_date), getTimestamp_by_string(end_date), description,
+						Integer.parseInt(apply_for))) {
 					mv.addObject("editVoucher", "true");
 					System.out.println("true");
 				} else {
@@ -111,7 +122,7 @@ public class VoucherController {
 				}
 			}
 		}
-		
+
 		if (search != null) {
 			List<Voucher> liVC = aVoucherService.find_voucher_by_string(search);
 			if (liVC.size() > 0) {
@@ -125,10 +136,10 @@ public class VoucherController {
 			List<Voucher> liVC = aVoucherService.getAllVoucher();
 			mv.addObject("listVoucher", liVC);
 		}
-		
+
 		Voucher vc = aVoucherService.get_voucher_by_id_vc(Integer.parseInt(id));
-		
-		if(vc != null) {
+
+		if (vc != null) {
 			mv.addObject("vch", vc);
 			mv.addObject("start_date", vc.getStart_date().toString());
 			mv.addObject("end_date", vc.getEnd_date().toString());
@@ -136,8 +147,7 @@ public class VoucherController {
 
 		mv.addObject("voucher", "false");
 		mv.addObject("editvoucher", "true");
-		
-		
+
 		return mv;
 	}
 

@@ -574,16 +574,18 @@ public class Product_color_sizeService implements Product_color_sizeRepository {
 			Connection conn = connectService.getConnect();
 			HashMap<Integer, Integer> hm = getSize_Quantity(size_quantity);
 			for (Integer i : hm.keySet()) {
-				if (checkColor_size(i, color_id, prod_id)) {
-				} else {
-					String sql = "INSERT INTO `color_size`(`size_id`, `color_id`, `prod_id`, `quantity`) "
-							+ "VALUES (?, ?, ?, ?)";
-					PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
-					preparedStmt.setInt(1, i);
-					preparedStmt.setInt(2, color_id);
-					preparedStmt.setInt(3, prod_id);
-					preparedStmt.setInt(4, hm.get(i));
-					preparedStmt.execute();
+				if(hm.get(i) > 0) {
+					if (checkColor_size(i, color_id, prod_id)) {
+					} else {
+						String sql = "INSERT INTO `product_color_size`(`size_id`, `color_id`, `prod_id`, `quantity`) "
+								+ "VALUES (?, ?, ?, ?)";
+						PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
+						preparedStmt.setInt(1, i);
+						preparedStmt.setInt(2, color_id);
+						preparedStmt.setInt(3, prod_id);
+						preparedStmt.setInt(4, hm.get(i));
+						preparedStmt.execute();
+					}
 				}
 			}
 			conn.close();

@@ -144,6 +144,9 @@ public class CheckoutCartController {
 							&& statisticsService.update_order_revenue_product_num_in_statistics_DB(cart.getQuantity(),
 									(double) Math.round(vch_discount * price_at) / 100)
 							&& cartService.delete_cart_by_cart_id(cart.getId())) {
+						System.out.println("success 147 checkoutcontroller");
+					} else {
+						System.out.println("unsucess 149 checkoutcontroller");
 					}
 				}
 				int order_id = receiptService.get_last_order_id_by(phone_number, email);

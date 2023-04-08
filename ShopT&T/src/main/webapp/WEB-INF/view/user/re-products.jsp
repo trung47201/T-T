@@ -732,9 +732,9 @@
 				xhr.open("GET", "");
 				xhr.onload = function() {
 					if(id_user == 0) {
-						window.location.assign("/ShopTandT/products?stylename="+ id_style);
+						window.location.assign("/ShopTandT/products/new-arrivals?stylename="+ id_style);
 					} else {
-						window.location.assign("/ShopTandT/products/"+id_user+"?stylename="+ id_style);
+						window.location.assign("/ShopTandT/products/new-arrivals/"+id_user+"?stylename="+ id_style);
 					}
 					
 				};

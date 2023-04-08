@@ -38,8 +38,67 @@ public class ReceiptService implements OrderRepository {
 			stmt = (Statement) con.createStatement();
 			ResultSet rs = stmt
 					.executeQuery("select * from receipt " + "Inner join voucher on receipt.voucher_id = voucher.id "
+							+ "Inner join status on receipt.status_id = status.id ");
+			while (rs.next()) {
+				receipt = new Receipt();
+				voucher = new Voucher();
+				status = new Status();
+				shipper = new User();
+				
+				status.setId(rs.getInt("status_id"));
+				status.setStatus_name(rs.getString("status_name"));
+
+				voucher.setId(rs.getInt("voucher_id"));
+				voucher.setCode(rs.getString("code"));
+				voucher.setVcdiscount(rs.getInt("vcdiscount"));
+				voucher.setLimit(rs.getInt("limit"));
+				voucher.setApplyfor(rs.getInt("applyfor"));
+				voucher.setStart_date(rs.getTimestamp("start_date"));
+				voucher.setEnd_date(rs.getTimestamp("end_date"));
+				voucher.setCreated_at(rs.getTimestamp("created_at"));
+				voucher.setUpdated_at(rs.getTimestamp("updated_at"));
+				voucher.setDescription(rs.getString("description"));
+
+				shipper.setId(rs.getInt("shipper_id"));
+				
+				receipt.setId(rs.getInt("id"));
+				receipt.setFullname(rs.getString("fullname"));
+				receipt.setEmail(rs.getString("email"));
+				receipt.setPhone_number(rs.getString("phone_number"));
+				receipt.setAddress(rs.getString("address"));
+				receipt.setOrder_date(rs.getDate("order_date"));
+				receipt.setUpdated_at(rs.getDate("updated_at"));
+				receipt.setVoucher(voucher);
+				receipt.setDiscount_at(rs.getDouble("discount_at"));
+				receipt.setNote(rs.getString("note"));
+				receipt.setStatus(status);
+				receipt.setMethod(rs.getString("method"));
+				receipt.setBill(rs.getString("bill"));
+				receipt.setRequest(rs.getInt("request"));
+				receipt.setShipper(shipper);
+				receipt.setQrcode(rs.getString("qrcode"));
+
+				li.add(receipt);
+			}
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return li;
+	}
+	
+	public List<Receipt> getAllOrder_of_shipper() {
+		List<Receipt> li = null;
+		try {
+			connectService = new ConnectService();
+			li = new ArrayList<>();
+			Connection con = connectService.getConnect();
+			Statement stmt;
+			stmt = (Statement) con.createStatement();
+			ResultSet rs = stmt
+					.executeQuery("select * from receipt " + "Inner join voucher on receipt.voucher_id = voucher.id "
 							+ "Inner join status on receipt.status_id = status.id "
-							+ "Inner join user on receipt.shipper_id = user.id");
+							+ "Inner join user on receipt.shipper_id = user.id group by receipt.id");
 			while (rs.next()) {
 				receipt = new Receipt();
 				voucher = new Voucher();
@@ -314,6 +373,7 @@ public class ReceiptService implements OrderRepository {
 		List<Receipt> o = getAllOrder();
 		int id = 0;
 		for (Receipt ord : o) {
+			System.out.println(ord.getId()+"=="+ord.getPhone_number() +"==="+ord.getEmail());
 			if (ord.getEmail().trim().equals(email.trim())
 					&& ord.getPhone_number().trim().equals(phone_number.trim())) {
 				id = ord.getId();
@@ -341,7 +401,7 @@ public class ReceiptService implements OrderRepository {
 
 	public static void main(String[] args) {
 		ReceiptService c = new ReceiptService();
-		System.out.println(c.check_voucher_used_by_user_id(4, "TISHOESTET2023"));
+		System.out.println(c.get_last_order_id_by("0903903233", "sitechvn-nqvinh@hcm.vnn.vn"));
 
 	}
 

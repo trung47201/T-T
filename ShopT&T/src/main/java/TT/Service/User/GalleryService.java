@@ -10,6 +10,7 @@ import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
 import TT.Model.Brand;
+import TT.Model.Color;
 import TT.Model.Gallery;
 import TT.Model.Gender;
 import TT.Model.Product;
@@ -27,6 +28,8 @@ public class GalleryService implements GalleryRepository {
 	private Product product;
 	private Sub_category sub_category;
 	private Gender gender;
+	private Color color;
+	
 	@Override
 	public List<Gallery> getAllGallery() {
 		List<Gallery> li= null;
@@ -38,6 +41,7 @@ public class GalleryService implements GalleryRepository {
 			stmt = (Statement) con.createStatement();
 			ResultSet rs = stmt.executeQuery("select * from gallery "
 					+ "Inner join product on gallery.product_id = product.id "
+					+ "Inner join color on gallery.color_id = color.id "
 					+ "Inner join brand on product.brand_id = brand.id "
 					+ "Inner join sub_category on product.sub_category_id = sub_category.id "
 					+ "Inner join user on product.user_id = user.id "
@@ -52,6 +56,11 @@ public class GalleryService implements GalleryRepository {
 				role = new Role();
 				sub_category = new Sub_category();
 				gender = new Gender();
+				color = new Color();
+				
+				color.setId(rs.getInt("color_id"));
+				color.setColor_name(rs.getString("color_name"));
+				color.setRgb(rs.getString("rgb"));
 				
 				gender.setId(rs.getInt("gender_id"));
 				gender.setGender_name(rs.getString("gender_name"));
@@ -99,6 +108,7 @@ public class GalleryService implements GalleryRepository {
 				gallery.setId(rs.getInt("id"));
 				gallery.setThumbnail(rs.getString("thumbnail"));
 				gallery.setProduct(product);
+				gallery.setColor(color);
 				li.add(gallery);
 			}
 			con.close();

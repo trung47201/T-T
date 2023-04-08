@@ -57,7 +57,7 @@ public class SizeService implements SizeRepository {
 	public int get_size_id_by_size_number(String size_number) {
 		int id = 0;
 		for (Sizes sizes : getAllSize()) {
-			if (sizes.getSize_number() == size_number) {
+			if (sizes.getSize_number().equals(size_number)) {
 				id = sizes.getId();			}
 		}
 		return id;

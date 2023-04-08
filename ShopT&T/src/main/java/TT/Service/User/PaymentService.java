@@ -243,7 +243,7 @@ public class PaymentService {
 
 	private RedirectUrls getRedirectURLs(int user_id) {
 		RedirectUrls redirectUrls = new RedirectUrls();
-		redirectUrls.setCancelUrl("http://localhost:8888/ShopTandT/products/"+user_id);
+		redirectUrls.setCancelUrl("http://localhost:8888/ShopTandT/products/new-arrivals/"+user_id);
 		redirectUrls.setReturnUrl("http://localhost:8888/ShopTandT/review_payment/"+user_id);
 		return redirectUrls;
 	}

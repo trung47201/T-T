@@ -442,6 +442,8 @@
 				error = "City is empty!";
 			} else if(district == "") {
 				error = "District is empty!";
+			} else if(address == "") {
+				error = "Address is empty!";
 			}
 			if (error == "") {
 				var status = "${ vcstatus }";

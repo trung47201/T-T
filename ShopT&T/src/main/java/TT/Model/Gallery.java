@@ -4,6 +4,7 @@ public class Gallery {
 	private int id;
 	private String thumbnail;
 	private Product product;
+	private Color color;
 	
 
 	public Gallery() {
@@ -33,5 +34,15 @@ public class Gallery {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+	
+	
 	
 }

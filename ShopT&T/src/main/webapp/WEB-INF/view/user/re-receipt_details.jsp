@@ -302,7 +302,7 @@
 				</div>
 			</div>
 			<div class="continue-cancel">
-				<a href="/ShopTandT/products/${ userid }"><i
+				<a href="/ShopTandT/products/new-arrivals/${ userid }"><i
 					class="fa fa-angle-left"></i> Continue Shopping</a> <a
 					class="countermand" id="${ order.id }">Countermand <i
 					class="fa fa-angle-right"></i></a>
