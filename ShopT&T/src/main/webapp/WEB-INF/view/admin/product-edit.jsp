@@ -85,7 +85,7 @@ cursor: pointer;
 			<div>
 				<p>/</p>
 				<img
-					src="<c:url value="/assets/images/icons/icons8-trainers-100-title.png"/>"
+					src="<c:url value="/assets/images/icons/icons8-dirty-clothes-100.png"/>"
 					alt=""> <a href="">Shoes</a>
 			</div>
 

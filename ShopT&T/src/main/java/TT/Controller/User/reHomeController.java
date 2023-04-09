@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import TT.Service.Admin.aStatisticsService;
 import TT.Service.User.PostsService;
 import TT.Service.User.SlidesService;
-import TT.Service.User.SubCategoryService;
+import TT.Service.User.Product.ProductService;
 import TT.Service.User.Product.ShoesService;
 
 @Controller
@@ -21,6 +21,8 @@ public class reHomeController {
 	private ShoesService shoesService;
 	private aStatisticsService aStatisticsService;
 	private PostsService postsService;
+	private ProductService productService;
+	
 
 	@RequestMapping(value = { "/" })
 	public ModelAndView load_home_without_id(HttpServletRequest request, HttpServletResponse response) {
@@ -29,6 +31,8 @@ public class reHomeController {
 		slidesService = new SlidesService();
 		shoesService = new ShoesService();
 		aStatisticsService = new aStatisticsService();
+		productService = new ProductService();
+		
 		
 		String buy = request.getParameter("buynow");
 		String blockid = request.getParameter("blockid");
@@ -38,11 +42,17 @@ public class reHomeController {
 		}
 		if (blockid != null) {
 			session.setAttribute("blockid", blockid);
-			System.out.println("blockid: "+blockid);
+			System.out.println("blockid: " + blockid);
 		}
 
 		if (!aStatisticsService.check_date_of_today_exist()) { // not exists
 			aStatisticsService.insert_new_statistics();
+		}
+		
+		if(session.getAttribute("favorite") != null) {
+			String txt = String.valueOf(session.getAttribute("favorite"));
+			System.out.println("a"+txt);
+			mv.addObject("listProduct", productService.get_product_by_str(txt));
 		}
 
 		mv.addObject("slides", slidesService.getAllSlides());

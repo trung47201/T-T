@@ -108,8 +108,11 @@ div.section-3 {
 	font-weight: bold;
 	font-family: "Poppins", sans-serif;
 	cursor: pointer;
+	border: 0;
 }
-
+.favorite-number:focus {
+	outline-style: none;
+}
 .wrap-favorite {
 	width: 100%;
 	height: 800px;
@@ -122,7 +125,7 @@ div.section-3 {
 }
 
 .wrap-list {
-	width: 77%;
+	width: 66%;
 	height: 90%;
 	background: white;
 	position: fixed;
@@ -211,9 +214,8 @@ hr {
     display: flex;
     width: 100%;
     margin-top: 20px;
-    padding: 0 65px 0 80px;
+    padding: 0 80px 0 80px;
     overflow-x: hidden;
-    justify-content: space-between;
     margin-bottom: 32px;
 }
 
@@ -250,26 +252,36 @@ hr {
 	width: 100%;
 }
 
-h5 {
+.ele-content h5 {
 	font-size: 14px;
 	margin-bottom: 3px;
 }
 
 .ele-content {
+    position: relative;
 	height: 70px;
 	overflow: hidden;
 	padding: 5px;
 }
 
-h3 {
+.ele-content h3 {
+	position: absolute;
 	font-size: 20px;
 	color: #ff6200;
+	bottom: 0;
 }
 .none {
-display: none;
+	display: none;
 }
+.favorite-color {
+	color: #cb82a9 !important;
+}
+i.fa.fa-heart:hover {
+	color: #f9e1ee;
+}
+
 </style>
-<jsp:include page="../layouts/user/favorite.jsp"></jsp:include>
+<jsp:include page="../layouts/user/re-favorite.jsp"></jsp:include>
 <body style="color: black;">
 	<jsp:include page="../layouts/user/re-menu.jsp"></jsp:include>
 
@@ -422,7 +434,7 @@ display: none;
 								<div class="favorite-product-products">
 									<c:set var="vfirstColor" value="${ firstColor }"></c:set>
 									<div class="show-function" style="margin-left: 5px;">
-										<button class="favorite-product">
+										<button class="favorite-product" id="${ it.id }">
 											<i class="fa fa-heart" aria-hidden="true"></i>
 										</button>
 										<button type="button" class="add-to-cart" name="add-to-cart"
@@ -630,6 +642,36 @@ display: none;
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
+<script type="text/javascript">
+	$(".favorite-product").click(function(){
+		var get = this;
+		var classc = $(get).children().attr('class');
+		var prod_id = get.id;
+		var num = $("#favorite-number").val();
+		if(num == "") {
+			num = 1;
+		}
+		if(classc.includes("favorite-color")) {
+			$(get).children().removeClass("favorite-color");
+			var nnum = parseInt(num) - 1;
+			$("#favorite-number").val(nnum);
+		} else {
+			$(get).children().addClass("favorite-color");
+			var nnum = parseInt(num) + 1;
+			$("#favorite-number").val(nnum);
+		}
+		
+		// send data to server
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET",
+				"/ShopTandT/favorite/"+prod_id);
+		xhr.onload = function() {
+			location.reload();
+		};
+		xhr.send();
+	});
+</script>
 
 	<script> // add to cart
 		var id_user = "";

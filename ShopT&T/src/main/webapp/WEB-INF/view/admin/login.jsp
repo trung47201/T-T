@@ -26,7 +26,7 @@
 	</div>
 	<div class="caixa__login">
 		<h2>Admin T&T</h2>
-		<form id="my_form" method="post" action="/ShopTandT/login">
+		<form id="my_form" method="post" action="/ShopTandT/verify">
 			<div class="caixa__login-input">
 				<input type="text" id="username" name="username" autocomplete="off"
 					required /> <label>Email or Phone number</label>
@@ -91,7 +91,7 @@
 				$("#msg-login-admin").removeClass("none");
 				$("#msg-login-admin").text("Password is empty!");
 			} else {
-				$('#my_form').attr('action', '/ShopTandT/login');
+				$('#my_form').attr('action', '/ShopTandT/verify');
 				document.getElementById('my_form').submit();
 			}
 		}

@@ -12,9 +12,9 @@ import TT.Service.Admin.aUserService;
 
 @Controller
 public class aLoginController {
-	
+
 	private aUserService aUserService;
-	
+
 	@RequestMapping(value = { "login" })
 	public ModelAndView loadLogin(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("admin/login");
@@ -24,17 +24,12 @@ public class aLoginController {
 
 		String username = request.getParameter("username");
 		String pw = request.getParameter("password");
-		
-		int adminID = 0;
+		String id = request.getParameter("id");
+
 		if (username != null && pw != null) {
 			if (aUserService.check_login(username, pw) != 0) {
-				adminID = aUserService.check_login(username, pw);
-				session.setAttribute("adminID", adminID);
-				session.setAttribute("msgLogin", "true");
-				System.out.println("login_t: true");
-				return new ModelAndView("redirect: /ShopTandT/admin");
 			} else {
-				if(username.contains("@")) {
+				if (username.contains("@")) {
 					session.setAttribute("msgLogin", "email");
 					session.setMaxInactiveInterval(60);
 				} else {
@@ -44,6 +39,13 @@ public class aLoginController {
 				System.out.println("login_t: false");
 			}
 		}
+
+		if (id != null) {
+			session.setAttribute("msgLogin", "true");
+			session.setAttribute("adminID", id);
+			return new ModelAndView("redirect: /ShopTandT/admin");
+		}
+
 		return mv;
 	}
 }

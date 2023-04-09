@@ -84,21 +84,6 @@ public class aShoesController {
 		return mv;
 	}
 
-	@RequestMapping(value = { "/admin/gallery" })
-	public ModelAndView loadGallery(HttpServletRequest request, HttpServletResponse response) {
-		ModelAndView mv = new ModelAndView("admin/product");
-
-		aGalleryService = new aGalleryService();
-
-		mv.addObject("listGallery", aGalleryService.getAllGallery());
-
-		mv.addObject("newProduct", "false");
-		mv.addObject("product", "false");
-		mv.addObject("colorSize", "false");
-		mv.addObject("gallery", "true");
-		mv.addObject("bsg", "false");
-		return mv;
-	}
 
 	@RequestMapping(value = { "/admin/brand-style-gender" })
 	public ModelAndView loadBSG(HttpServletRequest request, HttpServletResponse response) {

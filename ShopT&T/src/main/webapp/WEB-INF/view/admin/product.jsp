@@ -159,7 +159,7 @@ cursor: pointer;
 			<div>
 				<p>/</p>
 				<img
-					src="<c:url value="/assets/images/icons/icons8-trainers-100-title.png"/>"
+					src="<c:url value="/assets/images/icons/icons8-dirty-clothes-100.png"/>"
 					alt=""> <a href="">Shoes</a>
 			</div>
 
@@ -278,7 +278,7 @@ cursor: pointer;
 		<p>/</p>
 		<div>
 			<img
-				src="<c:url value="/assets/images/icons/icons8-trainers-100-title.png"/>"
+				src="<c:url value="/assets/images/icons/icons8-dirty-clothes-100.png"/>"
 				alt=""> <a href="">Shoes</a>
 		</div>
 		<p>/</p>
@@ -288,6 +288,7 @@ cursor: pointer;
 				alt=""> <a href="">Color - Size</a>
 		</div>
 	</div>
+	
 	<div class="list-table">
 		<div class="table-order">
 			<table class="order">
@@ -446,7 +447,7 @@ cursor: pointer;
 		<p>/</p>
 		<div>
 			<img
-				src="<c:url value="/assets/images/icons/icons8-trainers-100-title.png"/>"
+				src="<c:url value="/assets/images/icons/icons8-dirty-clothes-100.png"/>"
 				alt=""> <a href="">Shoes</a>
 		</div>
 		<p>/</p>
@@ -461,7 +462,7 @@ cursor: pointer;
 			<thead>
 				<tr>
 					<th colspan="1000" class="td-addnewshoes">
-						<button class="addnewshoes">
+						<button class="addnewshoes" id="addgallery">
 							<img
 								src="<c:url value="/assets/images/icons/icons8-add-64.png"/>"
 								alt="icon-plus"> Add New
@@ -532,7 +533,7 @@ cursor: pointer;
 		<p>/</p>
 		<div>
 			<img
-				src="<c:url value="/assets/images/icons/icons8-trainers-100-title.png"/>"
+				src="<c:url value="/assets/images/icons/icons8-dirty-clothes-100.png"/>"
 				alt=""> <a href="">Shoes</a>
 		</div>
 		<p>/</p>
@@ -724,6 +725,12 @@ cursor: pointer;
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+<script type="text/javascript">
+	$("#addgallery").click(function() {
+		window.location.href =  "/ShopTandT/admin/gallery/add";
+	});
+</script>
 
 	<script>
 	<!-- zoom img when click -->

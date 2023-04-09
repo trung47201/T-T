@@ -49,6 +49,21 @@
 .welcome {
 	box-shadow: 0px 5px 15px;
 }
+.product-ele {
+    display: flex;
+    margin: 10px;
+    height: 130px;
+    border-bottom: 1px solid;
+    border-top: 1px solid;
+    border-radius: 4px;
+}
+
+.img {
+    min-width: 115px;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+}
 </style>
 <body style="color: black;">
 	<c:set var="id_user" value="${ sessionScope.userid }"></c:set>
@@ -134,7 +149,6 @@
 	<script type="text/javascript">
 	$(".view-receipt").click(function() {
 		var vid = this.id;
-		alert(vid);
 		var xhr = new XMLHttpRequest();
 		xhr.open("GET", "/ShopTandT/order-details/block/"+vid);
 		xhr.onload = function() {
@@ -147,7 +161,6 @@
 	$(document).ready(function(){
 		 $(".form-check-input").click(function(){
 			 var rememberme = this.checked;
-			 alert(rememberme);
 			  var xhr = new XMLHttpRequest();
 				xhr.open("GET",
 						"http://localhost:8888/ShopTandT/home?rememberme="+rememberme);
@@ -201,9 +214,7 @@
 	
 	if(${ message != null }) {
 		if(${message == "true"}) {
-			alert("Welcome to Ti Shoes!");
 		} else if(${message == "false"}){
-			alert("Login unsuccess!");
 			$(document).ready(function() {
 				$('#login').modal('toggle');
 			});			
@@ -235,33 +246,6 @@
 			
 		}
 		
-	</script>
-	<script>
-		function test($a) {
-			for (let i = 1; i <= 10; i++) {
-				if (i == $a) {
-					var span_Text = document.getElementById("span_Id" + $a).innerText;
-					document.querySelector('input[name="search"]').value = span_Text;
-				}
-			}
-		}
-	</script>
-
-	<script type="text/javascript">
-		window.addEventListener("scroll", function() {
-			var div = document.getElementById('nav-search');
-			var div1 = document.getElementsByClassName('hidden-poster2');
-			if (window.scrollY > 80) {
-				div.style.visibility = 'visible';
-			} else {
-				div.style.visibility = 'hidden';
-			}
-			if (window.scrollY > 2280 && window.scrollY < 2380) {
-				div1.style.visibility = 'hidden';
-			} else {
-				div1.style.visibility = 'visible';
-			}
-		})
 	</script>
 	<script type="text/javascript">
 		if ( window.history.replaceState ) {

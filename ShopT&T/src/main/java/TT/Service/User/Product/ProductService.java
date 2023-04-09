@@ -23,7 +23,7 @@ import TT.Model.Product_color_size;
 import TT.Model.Rating;
 import TT.Model.Role;
 import TT.Model.Sizes;
-import TT.Model.Style;
+import TT.Model.Sub_category;
 import TT.Model.User;
 import TT.Repository.User.ProductRepository;
 import TT.Service.User.Product_color_sizeService;
@@ -40,7 +40,7 @@ public class ProductService implements ProductRepository {
 	private Brand brand;
 	private User user;
 	private Role role;
-	private Style style;
+	private Sub_category sub_category;
 	private Product_color_size product_color_size;
 	private Color color;
 	private Sizes size;
@@ -61,7 +61,7 @@ public class ProductService implements ProductRepository {
 							+ "Inner join sizes on sizes.id = product_color_size.size_id "
 							+ "Inner join color on color.id = product_color_size.color_id "
 							+ "Inner join brand on product.brand_id = brand.id "
-							+ "Inner join style on product.style_id = style.id "
+							+ "Inner join sub_category on product.sub_category_id = sub_category.id "
 							+ "Inner join user on product.user_id = user.id "
 							+ "Inner join gender on product.gender_id = gender.id "
 							+ "Inner join role on role.id = user.role_id " + "Where product_color_size.quantity > 0 " + "");
@@ -73,7 +73,7 @@ public class ProductService implements ProductRepository {
 				brand = new Brand();
 				user = new User();
 				role = new Role();
-				style = new Style();
+				sub_category = new Sub_category();
 				gender = new Gender();
 
 				gender.setId(rs.getInt("gender_id"));
@@ -98,8 +98,8 @@ public class ProductService implements ProductRepository {
 				brand.setId(rs.getInt("brand_id"));
 				brand.setBrand_name(rs.getString("brand_name"));
 
-				style.setId(rs.getInt("style_id"));
-				style.setStyle_name(rs.getString("style_name"));
+				sub_category.setId(rs.getInt("sub_category_id"));
+				sub_category.setSub_category_name(rs.getString("sub_category_name"));
 
 				color.setId(rs.getInt("color_id"));
 				color.setColor_name(rs.getString("color_name"));
@@ -114,7 +114,7 @@ public class ProductService implements ProductRepository {
 				product.setTitle(rs.getString("title"));
 				product.setPrice(rs.getDouble("price"));
 				product.setDiscount(rs.getInt("discount"));
-				product.setStyle(style);
+				product.setSub_category(sub_category);
 				product.setThumbnail(rs.getString("thumbnail"));
 				product.setDescription(rs.getString("description"));
 				product.setBrand(brand);
@@ -152,7 +152,7 @@ public class ProductService implements ProductRepository {
 			stmt = (Statement) con.createStatement();
 			ResultSet rs = stmt
 					.executeQuery("select * from product " + "Inner join brand on product.brand_id = brand.id "
-							+ "Inner join style on product.style_id = style.id "
+							+ "Inner join sub_category on product.sub_category_id = sub_category.id "
 							+ "Inner join user on product.user_id = user.id "
 							+ "Inner join gender on product.gender_id = gender.id "
 							+ "Inner join role on role.id = user.role_id group by product.id");
@@ -161,7 +161,7 @@ public class ProductService implements ProductRepository {
 				brand = new Brand();
 				user = new User();
 				role = new Role();
-				style = new Style();
+				sub_category = new Sub_category();
 				gender = new Gender();
 
 				gender.setId(rs.getInt("gender_id"));
@@ -186,14 +186,14 @@ public class ProductService implements ProductRepository {
 				brand.setId(rs.getInt("brand_id"));
 				brand.setBrand_name(rs.getString("brand_name"));
 
-				style.setId(rs.getInt("style_id"));
-				style.setStyle_name(rs.getString("style_name"));
+				sub_category.setId(rs.getInt("sub_category_id"));
+				sub_category.setSub_category_name(rs.getString("sub_category_name"));
 
 				product.setId(rs.getInt("id"));
 				product.setTitle(rs.getString("title"));
 				product.setPrice(rs.getDouble("price"));
 				product.setDiscount(rs.getInt("discount"));
-				product.setStyle(style);
+				product.setSub_category(sub_category);
 				product.setThumbnail(rs.getString("thumbnail"));
 				product.setDescription(rs.getString("description"));
 				product.setBrand(brand);
@@ -355,7 +355,7 @@ public class ProductService implements ProductRepository {
 				Collections.sort(li, new Comparator<Product>() {
 					@Override
 					public int compare(Product o1, Product o2) {
-						return o1.getStyle().getStyle_name().compareTo(o2.getStyle().getStyle_name());
+						return o1.getSub_category().getSub_category_name().compareTo(o2.getSub_category().getSub_category_name());
 					}
 				});
 				for (Product product : li) {
@@ -372,7 +372,7 @@ public class ProductService implements ProductRepository {
 						p.setDiscount(i.getDiscount());
 						p.setThumbnail(i.getThumbnail());
 						p.setDescription(i.getDescription());
-						p.setStyle(i.getStyle());
+						p.setSub_category(i.getSub_category());
 						p.setUser(i.getUser());
 						p.setBrand(i.getBrand());
 						p.setCreated_at(i.getCreated_at());
@@ -463,7 +463,7 @@ public class ProductService implements ProductRepository {
 				Collections.sort(li, new Comparator<Product>() {
 					@Override
 					public int compare(Product o1, Product o2) {
-						return o1.getStyle().getStyle_name().compareTo(o2.getStyle().getStyle_name());
+						return o1.getSub_category().getSub_category_name().compareTo(o2.getSub_category().getSub_category_name());
 					}
 				});
 				for (Product product : li) {
@@ -483,7 +483,7 @@ public class ProductService implements ProductRepository {
 								p.setDiscount(getProduct(i).getDiscount());
 								p.setThumbnail(getProduct(i).getThumbnail());
 								p.setDescription(getProduct(i).getDescription());
-								p.setStyle(getProduct(i).getStyle());
+								p.setSub_category(getProduct(i).getSub_category());
 								p.setUser(getProduct(i).getUser());
 								p.setBrand(getProduct(i).getBrand());
 								p.setCreated_at(getProduct(i).getCreated_at());
@@ -507,7 +507,7 @@ public class ProductService implements ProductRepository {
 							p.setDiscount(getProduct(i).getDiscount());
 							p.setThumbnail(getProduct(i).getThumbnail());
 							p.setDescription(getProduct(i).getDescription());
-							p.setStyle(getProduct(i).getStyle());
+							p.setSub_category(getProduct(i).getSub_category());
 							p.setUser(getProduct(i).getUser());
 							p.setBrand(getProduct(i).getBrand());
 							p.setCreated_at(getProduct(i).getCreated_at());
@@ -648,7 +648,7 @@ public class ProductService implements ProductRepository {
 		List<Integer> list = new ArrayList<>();
 		if (!txt.equals("")) {
 			for (Product_color_size c : li) {
-				if (c.getProd().getStyle().getId() == Integer.parseInt(txt)) {
+				if (c.getProd().getSub_category().getId() == Integer.parseInt(txt)) {
 					if (!hm.containsKey(c.getProd().getId())) {
 						hm.put(c.getProd().getId(), 1);
 					} else {
@@ -979,14 +979,14 @@ public class ProductService implements ProductRepository {
 		List<Product> li = new LinkedList<>();
 		List<Product> liProd = getAllProducts();
 		for (Product p : liProd) {
-			if(p.getTitle().toLowerCase().contains(kw.toLowerCase()) || p.getStyle().getStyle_name().toLowerCase().contains(kw.toLowerCase()) || p.getBrand().getBrand_name().toLowerCase().contains(kw.toLowerCase())) {
+			if(p.getTitle().toLowerCase().contains(kw.toLowerCase()) || p.getSub_category().getSub_category_name().toLowerCase().contains(kw.toLowerCase()) || p.getBrand().getBrand_name().toLowerCase().contains(kw.toLowerCase())) {
 				li.add(p);
 			}
 		}
 		String arr[] = kw.split("\\s+");
 		for (Product p : liProd) {
 			for (String s : arr) {
-				if(p.getTitle().toLowerCase().contains(s.toLowerCase()) || p.getStyle().getStyle_name().toLowerCase().contains(s.toLowerCase()) || p.getBrand().getBrand_name().toLowerCase().contains(s.toLowerCase())) {
+				if(p.getTitle().toLowerCase().contains(s.toLowerCase()) || p.getSub_category().getSub_category_name().toLowerCase().contains(s.toLowerCase()) || p.getBrand().getBrand_name().toLowerCase().contains(s.toLowerCase())) {
 					if(!li.contains(p)) {
 						li.add(p);
 					}
@@ -995,6 +995,20 @@ public class ProductService implements ProductRepository {
 		}
 		return li;
 	}
+	
+
+	public List<Product> get_product_by_str(String txt) {
+		List<Product> li = new ArrayList<>();
+		String a[] = txt.split("/");
+		for (String s : a) {
+			if(!s.equals("")) {
+				li.add(getProduct(Integer.parseInt(s)));
+			}
+		}
+		return li;
+	}
+	
+	
 	public static void main(String[] args) {
 		ProductService p = new ProductService();
 		List<Product> li = p.getAllProducts();

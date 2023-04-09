@@ -91,7 +91,7 @@ public class ProductColorSizeController {
 			}
 		}
 		if (size3XL != null) {
-			if (!size2XL.equals("")) {
+			if (!size3XL.equals("")) {
 				li_size += "3XL_" + size3XL + "/";
 			} else {
 				li_size += "3XL_0/";
@@ -104,7 +104,7 @@ public class ProductColorSizeController {
 			if (product_color_sizeService.insertIntoColor_Size(li_size, Integer.parseInt(color),
 					Integer.parseInt(product))) {
 				System.out.println("add color size success");
-				return new ModelAndView("redirect: /ShopTandT/admin/product");
+				return new ModelAndView("redirect: /ShopTandT/admin/gallery/add");
 			} else {
 				mv.addObject("unsuccess", "false");
 			}
@@ -112,7 +112,6 @@ public class ProductColorSizeController {
 
 		mv.addObject("listProduct", shoesService.getAllProducts());
 		mv.addObject("listColor", aProd_Color_SizeService.getAllColor());
-		mv.addObject("listSize", aProd_Color_SizeService.getAllSize());
 
 		return mv;
 	}
