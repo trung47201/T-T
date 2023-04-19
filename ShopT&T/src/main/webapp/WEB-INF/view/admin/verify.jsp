@@ -15,7 +15,11 @@ div {
 }
 </style>
 <body>
-
+	<%
+	if (session.getAttribute("adminID") != null) {
+		response.sendRedirect("/ShopTandT/admin");
+	}
+	%>
 	<div>We have sent a link for verification, please check your
 		email.</div>
 

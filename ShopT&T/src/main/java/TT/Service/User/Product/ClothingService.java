@@ -9,32 +9,20 @@ import java.util.List;
 import com.mysql.jdbc.Statement;
 
 import TT.Model.Brand;
-import TT.Model.Color;
 import TT.Model.Gender;
 import TT.Model.Product;
-import TT.Model.Product_color_size;
 import TT.Model.Role;
-import TT.Model.Sizes;
 import TT.Model.Sub_category;
 import TT.Model.User;
-import TT.Service.User.Product_color_sizeService;
 import TT.Service.User.ConnectService;
-import TT.Service.User.RatingService;
-import TT.Service.User.VoucherService;
 
 public class ClothingService {
 	private ConnectService connectService;
-	private RatingService ratingService;
-	private Product_color_sizeService product_color_sizeService;
-	private VoucherService voucherService;
 	private Product product;
 	private Brand brand;
 	private User user;
 	private Role role;
 	private Sub_category sub_category;
-	private Product_color_size product_color_size;
-	private Color color;
-	private Sizes size;
 	private Gender gender;
 
 	public List<Product> getAllProductsClothing() {
@@ -69,7 +57,7 @@ public class ClothingService {
 				role.setDescription(rs.getString("description"));
 				role.setCreated_at(rs.getDate("created_at"));
 				role.setUpdated_at(rs.getDate("updated_at"));
-				
+
 				user.setId(rs.getInt("user_id"));
 				user.setFirstname(rs.getString("firstname"));
 				user.setLastname(rs.getString("lastname"));

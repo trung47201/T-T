@@ -7,7 +7,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <link rel="stylesheet"
-	href="<c:url value="/assets/css/buynow-thank.css"/>">
+	href="<c:url value="/assets/css/r-buynow-thank.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/bootstrap.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/js/bootstrap.js"/>">
 <link rel="stylesheet"
@@ -16,7 +16,7 @@
 	href="<c:url value="/assets/js/bootstrap.min.js"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/login.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/color.css"/>">
-<link rel="stylesheet" href="<c:url value="/assets/css/thank-pay.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/r-thank-pay.css"/>">
 <link rel="stylesheet"
 	href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />">
 

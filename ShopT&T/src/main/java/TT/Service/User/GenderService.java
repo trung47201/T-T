@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
 import TT.Model.Gender;
@@ -37,5 +38,22 @@ public class GenderService implements GenderRepository {
 			e.printStackTrace();
 		}
 		return li;
+	}
+	
+	public boolean insert(String name) {
+		try {
+			connectService = new ConnectService();
+			Connection conn = connectService.getConnect();
+			String sql = "INSERT INTO `gender`(`gender_name`) " + "VALUES (?)";
+			PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
+			preparedStmt.setString(1, name);
+			preparedStmt.execute();
+			conn.close();
+			return true;
+		} catch (Exception e) {
+			System.out.println("got an exception (54) genderService");
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

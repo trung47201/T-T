@@ -351,11 +351,11 @@
 			$("#message-notify #ok-notify").click(function() {
 				$("#message-notify").addClass("none");
 				$("#message-done").removeClass("none");
-				if(${ order.status.id == 1 }) {
+				if(${ order.status.id == 1 || order.status.id == 2 || order.status.id == 3 }) {
 					$("#msg-done").text("Success countermand!!!");
 					var xhr = new XMLHttpRequest();
 					xhr.open("GET",
-							"http://localhost:8888/ShopTandT/order/countermand/"+order_id);
+							"/ShopTandT/order/countermand/"+order_id);
 					xhr.onload = function() {
 						//window.location.assign("http://localhost:8888/ShopTandT/");
 					};
@@ -364,7 +364,7 @@
 					$("#msg-done").text("Please wait for confirmation!!!");
 					var xhr = new XMLHttpRequest();
 					xhr.open("GET",
-							"http://localhost:8888/ShopTandT/order/countermand/"+order_id);
+							"/ShopTandT/order/countermand/"+order_id);
 					xhr.onload = function() {
 						//window.location.assign("http://localhost:8888/ShopTandT/");
 					};

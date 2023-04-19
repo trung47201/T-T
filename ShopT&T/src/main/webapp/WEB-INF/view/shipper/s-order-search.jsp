@@ -22,14 +22,10 @@
 <title>Delivery :)</title>
 
 <style>
-.btn-edit-product {
-	background-color: green;
-	border-radius: 4px 0 0 4px;
-}
 
 .btn-details-order {
 	background-color: purple;
-	border-radius: 0;
+	border-radius:4px 0 0 4px;
 }
 
 .btn-canceled-order {
@@ -152,23 +148,7 @@
 								<td>${ liOrder.order_date }</td>
 								<td>${ liOrder.note }</td>
 								<td class="td-action">
-									<c:if test="${ liOrder.status.id != 4 }">
-										<button class="btn-edit-product confirmdeliveried"
-											id="${liOrder.id }" style="background-color: #666;" disabled="disabled">
-											<img
-												src="<c:url value="/assets/images/icons/icons8-done-64.png"/>"
-												alt="">
-										</button>
-									</c:if>
-									<c:if test="${ liOrder.status.id == 4 }">
-										<button class="btn-edit-product confirmdeliveried"
-											id="${liOrder.id }">
-											<img
-												src="<c:url value="/assets/images/icons/icons8-done-64.png"/>"
-												alt="">
-										</button>
-									</c:if>
-									<button class="btn-details-order" id="${liOrder.id }">
+									<button class="btn-details-order border-radius" id="${liOrder.id }">
 										<img
 											src="<c:url value="/assets/images/icons/icons8-eye-64.png"/>"
 											alt="">
@@ -516,7 +496,9 @@
 			$('.ok').click(function() {
 				$(".message-notify").addClass("none");
 				var xhr = new XMLHttpRequest();
-				xhr.open("GET", "/ShopTandT/shipper/delivery?canceled="+ id_order);
+				xhr.open("GET", "/ShopTandT/admin/order-management?id_order="
+						+ id_order
+						+ "&status=6");
 				xhr.onload = function() {
 					window.location.assign("/ShopTandT/shipper/delivery");
 				};
@@ -525,11 +507,6 @@
 		});
 	</script>
 	
-	<script>
-		$('.confirmdeliveried').click(function() {
-			window.location.assign("/ShopTandT/shipper/confirm-delivery");
-		});
-	</script>
 </body>
 
 </html>

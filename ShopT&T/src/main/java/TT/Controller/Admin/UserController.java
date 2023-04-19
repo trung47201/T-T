@@ -118,7 +118,7 @@ public class UserController {
 				byte[] bytes = file.getBytes();
 				//String rootpath = System.getProperty("catalina.home");
 				
-				File dir = new File("D:\\TTTN\\ShopTandT\\src\\main\\webapp\\assets\\images\\users");
+				File dir = new File("D:\\DATN\\ShopTandT\\src\\main\\webapp\\assets\\images\\users");
 				if(!dir.exists()) {
 					dir.mkdir();
 				}

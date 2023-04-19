@@ -71,7 +71,8 @@ public class aReceiptService implements aOrderRepository {
 				receipt.setMethod(rs.getString("method"));
 				receipt.setBill(rs.getString("bill"));
 				receipt.setRequest(rs.getInt("request"));
-
+				receipt.setQrcode(rs.getString("qrcode"));
+				receipt.setBarcode(rs.getString("barcode"));
 				li.add(receipt);
 			}
 			con.close();
@@ -362,6 +363,26 @@ public class aReceiptService implements aOrderRepository {
 			}
 		});
 		return get;
+	}
+	
+	public boolean packing_generator_qrcode(int order_id, String qrcode, String barcode) {
+		try {
+			connectService = new ConnectService();
+			Connection conn = connectService.getConnect();
+			String query = "update `receipt` set `qrcode`= ?, `barcode`= ? where id = ?";
+			PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(query);
+			preparedStmt.setString(1, qrcode);
+			preparedStmt.setString(2, barcode);
+			preparedStmt.setInt(3, order_id);
+			preparedStmt.executeUpdate();
+			conn.close();
+			return true;
+
+		} catch (Exception e) {
+			System.err.println("Got an exception 377 aOrderService! ");
+			System.err.println(e.getMessage());
+		}
+		return false;
 	}
 
 	public static void main(String[] args) {

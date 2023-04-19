@@ -42,7 +42,7 @@ public class sDeliveryService {
 					+ "Inner join voucher on receipt.voucher_id = voucher.id "
 					+ "Inner join status on receipt.status_id = status.id "
 					+ "Inner join user on receipt.shipper_id = user.id "
-					+ "Where request = 2 and shipper_id = "+ shipper_id + " group by receipt.id");
+					+ "Where request = 2 and receipt.status_id <> 6 and shipper_id = "+ shipper_id + " group by receipt.id");
 			while (rs.next()) {
 				receipt = new Receipt();
 				voucher = new Voucher();

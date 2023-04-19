@@ -4,9 +4,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
+import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
 import TT.Model.Category;
@@ -91,6 +91,22 @@ public class SubCategoryService implements StyleRepository {
 			}
 		}
 		return cate_id;
+	}
+	public boolean insert(String name) {
+		try {
+			connectService = new ConnectService();
+			Connection conn = connectService.getConnect();
+			String sql = "INSERT INTO `sub_category`(`sub_category_name`) " + "VALUES (?)";
+			PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
+			preparedStmt.setString(1, name);
+			preparedStmt.execute();
+			conn.close();
+			return true;
+		} catch (Exception e) {
+			System.out.println("got an exception (54) styleService");
+			e.printStackTrace();
+		}
+		return false;
 	}
 	
 	public static void main(String[] args) {

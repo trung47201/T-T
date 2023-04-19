@@ -172,6 +172,10 @@ div#status-select {
 .color-green {
 	background: green;
 }
+
+.border-radius {
+	border-radius: 5px !important;
+}
 </style>
 
 <body>
@@ -290,76 +294,40 @@ div#status-select {
 						<td>${ liOrder.address }</td>
 						<td>${ liOrder.order_date }</td>
 						<td>${ liOrder.note }</td>
-						<td>${ liOrder.status.status_name }</td>
+						<c:if test="${ liOrder.status.id == 1 }">
+							<td style="background: #cb82a9; color: white; border: 1px solid white;">${ liOrder.status.status_name }</td>
+						</c:if>
+						<c:if test="${ liOrder.status.id == 3 }">
+							<td style="background: purple; color: white; border: 1px solid white;">${ liOrder.status.status_name }</td>
+						</c:if>
+						<c:if test="${ liOrder.status.id == 4 }">
+							<td style="background: brown; color: white; border: 1px solid white;">${ liOrder.status.status_name }</td>
+						</c:if>
+						<c:if test="${ liOrder.status.id == 5 }">
+							<td style="background: green; color: white; border: 1px solid white;">${ liOrder.status.status_name }</td>
+						</c:if>
+						<c:if test="${ liOrder.status.id == 6 }">
+							<td style="background: red; color: white; border: 1px solid white;">${ liOrder.status.status_name }</td>
+						</c:if>
+						<c:if test="${ liOrder.status.id != 1 && liOrder.status.id != 5 && liOrder.status.id != 6 && liOrder.status.id != 3 && liOrder.status.id != 4}">
+							<td style="border: 1px solid white;">${ liOrder.status.status_name }</td>
+						</c:if>
 						<td class="td-action"><c:if
-								test="${ liOrder.status.id == 6 || liOrder.status.id == 5}">
-								<button class="btn-details-order" id="${liOrder.id }"
-									style="border-radius: 5px;">
+								test="${ liOrder.status.id == 1 }">
+								<button class="btn-confirm-order confirm-order"
+									id="${ liOrder.id }">
+									<img
+										src="<c:url value="/assets/images/icons/icons8-done-64.png"/>"
+										alt="">
+								</button>
+								<button class="btn-details-order" id="${liOrder.id }">
 									<img
 										src="<c:url value="/assets/images/icons/icons8-eye-64.png"/>"
 										alt="">
 								</button>
-							</c:if> <c:if
-								test="${ liOrder.status.id != 6 && liOrder.status.id != 5 }">
-								<c:if test="${ liOrder.status.id == 1 }">
-									<button class="btn-confirm-order" id="${ liOrder.id }">
-										<img
-											src="<c:url value="/assets/images/icons/icons8-done-64.png"/>"
-											alt="">
-									</button>
-								</c:if>
-								<c:if test="${ liOrder.status.id == 2 }">
-									<button class="btn-packed-order" id="${ liOrder.id }"
-										style="background-color: #0086ff;">
-										<img
-											src="<c:url value="/assets/images/icons/icons8-packing-100.png"/>"
-											alt="">
-									</button>
-								</c:if>
-								<c:if test="${ liOrder.status.id == 3 }">
-									<c:if test="${ liOrder.request == 2 }">
-										<button class="btn-shipped-order" id="${ liOrder.id }"
-											style="background-color: tomato;">
-											<img
-												src="<c:url value="/assets/images/icons/icons8-print-100.png"/>"
-												alt="">
-										</button>
-									</c:if>
-									<c:if test="${ liOrder.request != 2 }">
-										<button class="btn-shipped-order confirm-shipped" id="${ liOrder.id }"
-											style="background-color: #666;" disabled="disabled">
-											<img
-												src="<c:url value="/assets/images/icons/icons8-print-100.png"/>"
-												alt="">
-										</button>
-									</c:if>
-								</c:if>
-								<c:if
-									test="${ liOrder.status.id != 1 && liOrder.status.id != 2 && liOrder.status.id != 3 }">
-									<c:if test="${ liOrder.request == 1 }">
-										<button class="btn-confirm" style="background: red;"
-											id="${ liOrder.id }" name="${ liOrder.id }">
-											<img
-												src="<c:url value="/assets/images/icons/icons8-close-64.png"/>"
-												alt="">
-										</button>
-									</c:if>
-									<c:if test="${ liOrder.request != 1 }">
-										<button class="btn-confirm-order" style="background: #666;"
-											id="${ liOrder.id }" disabled="disabled">
-											<img
-												src="<c:url value="/assets/images/icons/icons8-done-64.png"/>"
-												alt="">
-										</button>
-									</c:if>
-								</c:if>
-								<button class="btn-edit-product editneworder"
+							</c:if> <c:if test="${ liOrder.status.id != 1 }">
+								<button class="btn-details-order border-radius"
 									id="${liOrder.id }">
-									<img
-										src="<c:url value="/assets/images/icons/icons8-edit-100.png"/>"
-										alt="">
-								</button>
-								<button class="btn-details-order" id="${liOrder.id }">
 									<img
 										src="<c:url value="/assets/images/icons/icons8-eye-64.png"/>"
 										alt="">
@@ -575,66 +543,6 @@ div#status-select {
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-	<script>
-		//confirm packing
-		$('.btn-shipped-order').click(function() {
-			var id_order = this.id;
-			var xhr = new XMLHttpRequest();
-			xhr.open("GET", "/ShopTandT/admin/order-management?bill="+id_order);
-			xhr.onload = function() {
-				window.location.assign("/ShopTandT/admin/order-management/bill/"+id_order);
-			};
-			xhr.send();
-		});
-	</script>
-
-	<script>
-		//confirm packing
-		$('.btn-packed-order').click(function() {
-			var id_order = this.id;
-			var xhr = new XMLHttpRequest();
-			xhr.open("GET", "/ShopTandT/admin/order-management?id_order="
-					+ id_order
-					+ "&status=3");
-			xhr.onload = function() {
-				window.location.assign("/ShopTandT/admin/order-management");
-			};
-			xhr.send();
-		});
-	</script>
-
-	<script type="text/javascript">
-		//confirm countermand
-		$(".btn-confirm").click(
-				function() {
-					var url = window.location.href;
-					$(".message").removeClass("none");
-					var id_order = this.id;
-					$('.ok').click(
-							function() {
-								$(".message").addClass("none");
-								setTimeout(
-										function() {
-											$(".msg-done").removeClass(
-													"importantNone");
-
-										}, 0);
-								setTimeout(function() {
-									$(".msg-done").addClass("importantNone");
-
-								}, 500);
-								var xhr = new XMLHttpRequest();
-								xhr.open("GET",
-										"http://localhost:8888/ShopTandT/admin/order-management/countermand/"
-												+ id_order);
-								xhr.onload = function() {
-									location.reload();
-								};
-								xhr.send();
-							});
-				});
-	</script>
-
 	<script type="text/javascript">
 		$('.btn-save')
 				.click(
@@ -653,13 +561,10 @@ div#status-select {
 							setTimeout(
 									function() {
 										var xhr = new XMLHttpRequest();
-										xhr
-												.open(
-														"GET",
-														"/ShopTandT/admin/order-management?id_order="
-																+ id_order
-																+ "&status="
-																+ status);
+										xhr.open("GET",
+												"/ShopTandT/admin/order-management?id_order="
+														+ id_order + "&status="
+														+ status);
 										// What to do when server responds
 										xhr.onload = function() {
 											window.location
@@ -680,7 +585,7 @@ div#status-select {
 
 	<script>
 		//confirm order
-		$('.btn-confirm-order')
+		$('.confirm-order')
 				.click(
 						function() {
 							$(".message").removeClass("none");
@@ -703,16 +608,12 @@ div#status-select {
 												setTimeout(
 														function() {
 															var xhr = new XMLHttpRequest();
-															xhr
-																	.open(
-																			"GET",
-																			"/ShopTandT/admin/order-management?id_order="
-																					+ id_order
-																					+ "&status=2");
+															xhr.open("GET", "");
 															// What to do when server responds
 															xhr.onload = function() {
 																window.location
-																		.assign("/ShopTandT/admin/order-management");
+																		.assign("/ShopTandT/admin/order-management?print&bill="
+																				+ id_order);
 															};
 															xhr.send();
 														}, 500);

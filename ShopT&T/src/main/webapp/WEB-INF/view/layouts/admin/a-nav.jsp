@@ -59,9 +59,14 @@
 				<ul class="sub-menu-ul" id="">
 					<li>Search</li>
 				</ul>
-			</a> <a href="/ShopTandT/admin/voucher">
+			<a href="/ShopTandT/admin/packing">
 				<ul class="sub-menu-ul">
-					<li>Voucher</li>
+					<li>Packing</li>
+				</ul>
+			</a>
+			<a href="/ShopTandT/admin/shipping">
+				<ul class="sub-menu-ul">
+					<li>Shipping</li>
 				</ul>
 			</a>
 		</div>
@@ -86,11 +91,42 @@
 
 		<div class="sub-menu-shoes none">
 			<!-- SUB MENU SHOES -->
-			<a href="/ShopTandT/admin/product">
+			<a href="/ShopTandT/admin/product/clothing">
 				<ul class="sub-menu-ul" id="">
-					<li>Product</li>
+					<li>Clothing</li>
 				</ul>
-			</a> <a href="/ShopTandT/admin/color-size">
+			</a>
+			<a href="/ShopTandT/admin/product/shoes">
+				<ul class="sub-menu-ul" id="">
+					<li>Shoes</li>
+				</ul>
+			</a> 
+			<a href="/ShopTandT/admin/product/gifts">
+				<ul class="sub-menu-ul" id="">
+					<li>Gifts</li>
+				</ul>
+			</a> 
+			<a href="/ShopTandT/admin/product/jewelry">
+				<ul class="sub-menu-ul" id="">
+					<li>Jewelry</li>
+				</ul>
+			</a> 
+			<a href="/ShopTandT/admin/product/handbags">
+				<ul class="sub-menu-ul" id="">
+					<li>Handbags</li>
+				</ul>
+			</a> 
+			<a href="/ShopTandT/admin/product/accessories">
+				<ul class="sub-menu-ul" id="">
+					<li>Accessories</li>
+				</ul>
+			</a>
+			</a> <a href="/ShopTandT/admin/voucher">
+				<ul class="sub-menu-ul">
+					<li>Voucher</li>
+				</ul>
+			</a>
+			 <a href="/ShopTandT/admin/color-size">
 				<ul class="sub-menu-ul" id="">
 					<li>Color-Size</li>
 				</ul>
@@ -153,13 +189,9 @@
 		</ul>
 		<div class="sub-menu-shipper none">
 			<!-- SUB MENU CUSTOMER -->
-			<a href="/ShopTandT/admin/customer">
+			<a href="/ShopTandT/admin/shipper-tables">
 				<ul class="sub-menu-ul" id="">
-					<li>User</li>
-				</ul>
-			</a> <a href="/ShopTandT/admin/role">
-				<ul class="sub-menu-ul" id="">
-					<li>Role</li>
+					<li>Tables</li>
 				</ul>
 			</a>
 		</div>

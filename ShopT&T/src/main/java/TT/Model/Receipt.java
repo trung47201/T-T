@@ -2,6 +2,10 @@ package TT.Model;
 
 import java.util.Date;
 
+/**
+ * @author Trung
+ *
+ */
 public class Receipt {
 	private int id;
 	private String fullname;
@@ -18,8 +22,8 @@ public class Receipt {
 	private String bill;
 	private User shipper;
 	private int request;
-
 	private String qrcode;
+	private String barcode;
 	
 	public Receipt() {
 		// TODO Auto-generated constructor stub
@@ -121,6 +125,12 @@ public class Receipt {
 	}
 	public void setQrcode(String qrcode) {
 		this.qrcode = qrcode;
+	}
+	public String getBarcode() {
+		return barcode;
+	}
+	public void setBarcode(String barcode) {
+		this.barcode = barcode;
 	}
 	
 }

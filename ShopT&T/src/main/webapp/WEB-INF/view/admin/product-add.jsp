@@ -6,10 +6,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<c:if test="${ newProduct == 'true' }">
-	<title>Add new product :)</title>
+<c:if test="${ clothing == 'true' }">
+	<title>Add new clothing :)</title>
 </c:if>
-
+<c:if test="${ shoes == 'true' }">
+	<title>Add new shoes :)</title>
+</c:if>
 <link rel="stylesheet"
 	href="<c:url value='/assets/css/re-admin-product2.css'/>">
 <link rel="stylesheet"
@@ -34,26 +36,33 @@
 	height: 40px;
 	padding: 0px 10px 0 10px;
 }
+
 .table-add-new-product {
-    margin-top: 0;
+	margin-top: 0;
 }
+
 .id-new-product.title-add {
-    width: 94%;
+	width: 94%;
 }
+
 .id-new-product {
 	margin-top: 10px;
 }
+
 .selected-add-new-product {
-    height: 40px;
+	height: 40px;
 }
+
 .phone-number textarea {
-    padding: 5px 10px;
+	padding: 5px 10px;
 }
-.btn-add-new-product input{
+
+.btn-add-new-product input {
 	cursor: pointer;
 }
+
 table.table-new-product td {
-    width: 30%;
+	width: 30%;
 }
 </style>
 
@@ -62,42 +71,71 @@ table.table-new-product td {
 	<div class="admin-body">
 		<jsp:include page="../layouts/admin/a-nav.jsp"></jsp:include>
 		<section class="admin-shoes-product">
-				<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
-		
-		<div class="nav-history">
-			<div class="origin">
-				<img
-					src="<c:url value="/assets/images/icons/icons8-home-page-64.png"/>"
-					alt=""> <a href="/ShopTandT/admin">Home</a>
-			</div>
+			<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
 
-			<div>
-				<p>/</p>
-				<img
-					src="<c:url value="/assets/images/icons/icons8-used-product-100-title.png"/>"
-					alt=""> <a href="/ShopTandT/admin/product">Product</a>
-			</div>
+			<div class="nav-history">
+				<div class="origin">
+					<img
+						src="<c:url value="/assets/images/icons/icons8-home-page-64.png"/>"
+						alt=""> <a href="/ShopTandT/admin">Home</a>
+				</div>
 
-
-			<c:if test="${ newProduct == 'true' }">
 				<div>
 					<p>/</p>
 					<img
-						src="<c:url value="/assets/images/icons/icons8-add-64-title.png"/>"
-						alt=""> <a href="">Add new product</a>
+						src="<c:url value="/assets/images/icons/icons8-used-product-100-title.png"/>"
+						alt=""> <a href="">Product</a>
 				</div>
+
+				<c:if test="${ clothing == 'true' }">
+					<div>
+						<p>/</p>
+						<img style="width: 24px; height: 24px; margin-top: 0px;"
+							src="<c:url value="/assets/images/icons/icons8-t-shirt-64-title.png"/>"
+							alt=""> <a href="/ShopTandT/admin/product/clothing">Clothing</a>
+					</div>
+					<div>
+						<p>/</p>
+						<img
+							src="<c:url value="/assets/images/icons/icons8-add-64-title.png"/>"
+							alt=""> <a href="">Add new clothing</a>
+					</div>
+				</c:if>
+				<c:if test="${ shoes == 'true' }">
+					<div>
+						<p>/</p>
+						<img
+							src="<c:url value="/assets/images/icons/icons8-trainers-100-title.png"/>"
+							alt=""> <a href="/ShopTandT/admin/product/shoes">Shoes</a>
+					</div>
+					<div>
+						<p>/</p>
+						<img
+							src="<c:url value="/assets/images/icons/icons8-add-64-title.png"/>"
+							alt=""> <a href="">Add new shoes</a>
+					</div>
+				</c:if>
+
+			</div>
+
+			<c:if test="${ newProduct == 'true' }">
+				<div class="table-add-new-product">
 			</c:if>
-		</div>
-		
-		<c:if test="${ newProduct == 'true' }">
-			<div class="table-add-new-product">
-		</c:if>
-		<c:if test="${ newProduct == 'false' }">
-			<div class="table-add-new-product importantNone">
-		</c:if>
-		<form
-			action="http://localhost:8888/ShopTandT/admin/product/add-new-product/savefile"
-			method="post" enctype="multipart/form-data">
+			<c:if test="${ newProduct == 'false' }">
+				<div class="table-add-new-product importantNone">
+			</c:if>
+
+			<c:if test="${ clothing == 'true' }">
+				<form
+					action="http://localhost:8888/ShopTandT/admin/product/add-new-clothing/savefile"
+					method="post" enctype="multipart/form-data">
+			</c:if>
+			<c:if test="${ shoes == 'true' }">
+				<form
+					action="http://localhost:8888/ShopTandT/admin/product/add-new-shoes/savefile"
+					method="post" enctype="multipart/form-data">
+			</c:if>
+
 			<table class="table-new-product">
 				<tr>
 					<td colspan="2">
@@ -172,7 +210,8 @@ table.table-new-product td {
 								<option value="" disabled="disabled" selected>Choose
 									style</option>
 								<c:forEach var="liStyle" items="${ listStyle }">
-									<option value="${ liStyle.id }"> ${ liStyle.category.category_name } - ${ liStyle.sub_category_name } </option>
+									<option value="${ liStyle.id }">${ liStyle.category.category_name }
+										- ${ liStyle.sub_category_name }</option>
 								</c:forEach>
 							</select>
 						</div>
@@ -209,7 +248,7 @@ table.table-new-product td {
 					</td>
 				</tr>
 			</table>
-		</form>
+			</form>
 	</div>
 	<jsp:include page="../layouts/admin/a-footer.jsp"></jsp:include>
 	</section>

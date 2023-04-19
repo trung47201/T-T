@@ -9,6 +9,12 @@
 <link rel="stylesheet" href="<c:url value='/assets/css/re-delivery.css'/>">
 <style>
 </style>
+
+<%
+	if (session.getAttribute("shipperID") == null) {
+		response.sendRedirect("/ShopTandT/shipper/login");
+	}
+	%>
 <c:if test="${ delivered == null }">
 	<div class="wrapper-background">
 		<div class="wrapper-video">

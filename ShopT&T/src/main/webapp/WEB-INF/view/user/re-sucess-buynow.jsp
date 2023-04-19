@@ -89,20 +89,13 @@ display: none;
 						</tr>
 					</table>
 				</div>
-				<c:if test="${ userID != null }">
-					<div class="continue-shopping">
-						<a href="/ShopTandT/products/new-arrivals/${ userID }"><input type="button"
-							name="continueShopping" id="continueShopping"
-							value="Continue Shopping"></a>
-					</div>
-				</c:if>
-				<c:if test="${ userID == null }">
+				
 					<div class="continue-shopping">
 						<a href="/ShopTandT/products/new-arrivals"><input type="button"
 							name="continueShopping" id="continueShopping"
 							value="Continue Shopping"></a>
 					</div>
-				</c:if>
+				
 			</div>
 
 			<!-- Order -->

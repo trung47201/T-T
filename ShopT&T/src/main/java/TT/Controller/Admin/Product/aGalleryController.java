@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import TT.Model.Gallery;
+import TT.Model.Product;
 import TT.Service.Admin.aGalleryService;
 import TT.Service.Admin.aProd_Color_SizeService;
 import TT.Service.User.Product.ShoesService;
@@ -71,7 +72,14 @@ public class aGalleryController {
 			session.setAttribute("addgallery", "false");
 			System.out.println("continue");
 		}
-		mv.addObject("listProduct", shoesService.getAllProducts());
+		List<Product> product = shoesService.getAllProducts();
+		Collections.sort(product, new Comparator<Product>() {
+			@Override
+			public int compare(Product o1, Product o2) {
+				return o2.getId() - o1.getId();
+			}
+		});
+		mv.addObject("listProduct", product);
 		mv.addObject("listColor", aProd_Color_SizeService.getAllColor());
 
 		return mv;
@@ -113,7 +121,7 @@ public class aGalleryController {
 			try {
 				byte[] bytes = file.getBytes();
 				// String rootpath = System.getProperty("catalina.home");
-				File dir = new File("D:\\TTTN\\ShopTandT\\src\\main\\webapp\\assets\\images\\products");
+				File dir = new File("D:\\DATN\\ShopTandT\\src\\main\\webapp\\assets\\images\\products");
 				if (!dir.exists()) {
 					dir.mkdir();
 				}

@@ -11,7 +11,14 @@
 
 <link rel="stylesheet" href="<c:url value='/assets/css/re-bill.css'/>">
 <style>
-
+.barcode img {
+    height: 100%;
+    width: 100%;
+}
+.barcode {
+    height: 36px;
+    display: flex;
+}
 </style>
 
 <body>
@@ -43,6 +50,11 @@
 					<img src="<c:url value="/assets/images/logo/logo.png"/>" alt="">
 				</div>
 				<div class="col">
+					<div class="barcode">
+						<img
+							src="<c:url value="/assets/images/barcode/${ orderById.barcode  }"/>"
+							alt="">
+					</div>
 					<p>
 						Bill of lading: <b>${ orderById.bill }</b>
 					</p>
@@ -74,7 +86,7 @@
 				</div>
 				<div class="col row3-col2">
 					<div class="qrcode">
-						<img src="<c:url value="/assets/images/qrcode/qrcode186.jpg"/>"
+						<img src="<c:url value="/assets/images/qrcode/${ orderById.qrcode }"/>"
 							alt="">
 					</div>
 					<div class="order-date">
@@ -115,7 +127,7 @@
 			var xhr = new XMLHttpRequest();
 			xhr.open("GET", "/ShopTandT/admin/order-management?id_order="
 					+ id_order
-					+ "&status=4&endbill");
+					+ "&status=2&endbill");
 			xhr.onload = function() {
 				window.location.assign("/ShopTandT/admin/order-management");
 			};

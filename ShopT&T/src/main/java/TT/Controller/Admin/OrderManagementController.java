@@ -17,6 +17,7 @@ import TT.Model.Receipt;
 import TT.Service.Admin.aReceiptService;
 import TT.Service.Admin.aReceipt_detailsSevice;
 import TT.Service.Admin.aStatusService;
+import TT.Service.Shipper.QRCodeService;
 import TT.Service.User.Receipt_detailsService;
 
 @Controller
@@ -25,18 +26,19 @@ public class OrderManagementController {
 	private aReceipt_detailsSevice _aReceipt_detailsSevice;
 	private aStatusService _aStatusService;
 	private Receipt_detailsService receipt_detailsService;
+	private QRCodeService qrCodeService;
 
 	@RequestMapping(value = { "/admin/order-management" })
 	public ModelAndView loadManagement(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("admin/order");
 
 		_aReceiptService = new aReceiptService();
-
+		qrCodeService = new QRCodeService();
 		String id_order = String.valueOf(request.getParameter("id_order"));
 		String status = String.valueOf(request.getParameter("status"));
 		String bill = request.getParameter("bill");
 		String endbill = request.getParameter("endbill");
-		
+		String print = request.getParameter("print");
 		HttpSession session = request.getSession();
 		if(bill != null) {
 			session.setAttribute("bill", bill);
@@ -49,6 +51,18 @@ public class OrderManagementController {
 			if (_aReceiptService.editStatusOrderById(Integer.parseInt(id_order), Integer.parseInt(status))) {
 				System.out.println("Update status order success!");
 			}
+		}
+		if(print != null && bill != null) {
+			String qrcode = qrCodeService.create_qr_code(bill);
+			String barcode = qrCodeService.create_bar_code(bill);
+			if(_aReceiptService.packing_generator_qrcode(Integer.parseInt(bill), qrcode, barcode)) {
+				System.out.println("packing success!");
+				return new ModelAndView("redirect: /ShopTandT/admin/order-management/bill/"+bill);
+			} else {
+				System.out.println("packing unsuccess!");
+			}
+		} else {
+			System.out.println("packing null!");
 		}
 		mv.addObject("management", "true");
 		mv.addObject("editorder", "false");
@@ -213,4 +227,19 @@ public class OrderManagementController {
 		mv.addObject("orderid", id);
 		return mv;
 	}
+	
+	@RequestMapping(value = { "admin/packing" })
+	public ModelAndView packing(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView("admin/barcode");
+		mv.addObject("packing", "true");
+		return mv;
+	}
+	
+	@RequestMapping(value = { "admin/shipping" })
+	public ModelAndView shipping(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView("admin/barcode");
+		mv.addObject("shipping", "true");
+		return mv;
+	}
+
 }

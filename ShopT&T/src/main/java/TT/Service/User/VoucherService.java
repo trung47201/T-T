@@ -5,14 +5,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
-import TT.Model.Product_color_size;
+import TT.Model.Product;
 import TT.Model.Voucher;
 import TT.Repository.User.VoucherRepository;
+import TT.Service.User.Product.ShoesService;
 
 public class VoucherService implements VoucherRepository {
 	private ConnectService connectService;
@@ -151,5 +154,43 @@ public class VoucherService implements VoucherRepository {
 		}
 		return false;
 	}
+	
+	public HashMap<Voucher, Integer> get_expiry_date() {
+		HashMap<Voucher, Integer> rs = new LinkedHashMap<>();
+		Timestamp datenow = new Timestamp(new java.util.Date().getTime());
+		Timestamp start_date_vch = null;
+		Timestamp end_date_vch = null;
+		List<Voucher> li = getAllVoucher();
+		for (Voucher vc : li) {
+			if (vc.getId() != 1) {
+				start_date_vch = vc.getStart_date();
+				end_date_vch = vc.getEnd_date();
+				if (datenow.compareTo(start_date_vch) >= 0 && datenow.compareTo(end_date_vch) < 0) {
+					rs.put(vc, 0);
+					System.out.println(start_date_vch);
+				} else if (datenow.compareTo(start_date_vch) < 0) {
+					rs.put(vc, 1);
+				}
+				System.out.println(end_date_vch +"===" +end_date_vch.toLocalDateTime().getDayOfMonth());
+			}
+		}
+		return rs;
+	}
+	
+	public List<Product> get_all_product_discount() {
+		ShoesService shoes = new ShoesService();
+		List<Product> rs = new ArrayList<>();
+		List<Product> li = shoes.getAllProducts();
+		for (Product p : li) {
+			if(p.getDiscount() > 0) {
+				rs.add(p);
+			}
+		}
+		return rs;
+	}
 
+	public static void main(String[] args) {
+		VoucherService v = new VoucherService();
+		v.get_all_product_discount();
+	}
 }

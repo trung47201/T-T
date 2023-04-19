@@ -21,7 +21,7 @@
 		<img alt="" src="<c:url value="/assets/images/logo/shipper.jpg"/>">
 	</div>
 	<div class="caixa__login">
-		<h2>Admin T&T</h2>
+		<h2>Shipper T&T</h2>
 		<form id="my_form" method="post" action="/ShopTandT/shipper/login">
 			<div class="caixa__login-input">
 				<input type="text" id="username" name="username" autocomplete="off"

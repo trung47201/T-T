@@ -19,7 +19,7 @@
 	<div class="favorite-header">
 		<div class="wrap-header">
 			<div class="header-link">
-				<a href="#">Login</a>&nbsp;/&nbsp;<a href="#">Sign Up</a>
+				<a href="/ShopTandT/account/login">Login</a>&nbsp;/&nbsp;<a href="/ShopTandT/account/register">Sign Up</a>
 			</div>
 			<img id="close-favorite"
 				src="<c:url value="/assets/images/icons/icons8-close-67.png"/>"
@@ -51,7 +51,7 @@
 								<h5>${ it.title }</h5>
 								<h3>$${ it.price }</h3>
 							</div>
-							<div class="ele-addtocart">ADD TO CART</div>
+							<div class="ele-addtocart" id=${ it.id }>ADD TO CART</div>
 						</div>
 					</c:if>
 					<c:if test="${ idx % 4 == 1 ||  idx % 4 == 2 }">
@@ -65,7 +65,7 @@
 								<h5>${ it.title }</h5>
 								<h3>$${ it.price }</h3>
 							</div>
-							<div class="ele-addtocart">ADD TO CART</div>
+							<div class="ele-addtocart" id=${ it.id }>ADD TO CART</div>
 						</div>
 					</c:if>
 					<c:if test="${ (idx+1) % 4 == 0 }">
@@ -79,7 +79,7 @@
 								<h5>${ it.title }</h5>
 								<h3>$${ it.price }</h3>
 							</div>
-							<div class="ele-addtocart">ADD TO CART</div>
+							<div class="ele-addtocart" id=${ it.id }>ADD TO CART</div>
 						</div>
 						</div>
 					</c:if>
@@ -95,7 +95,12 @@
 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-
+<script type="text/javascript">
+	$(".ele-addtocart").click(function() {
+		var id = this.id;
+		alert(id);
+	});
+</script>
 
 <script type="text/javascript">
 	$(".favorite-number").click(function() {

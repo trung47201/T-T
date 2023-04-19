@@ -27,7 +27,7 @@ public class aVerifyEmailController {
 		if (username != null && pw != null) {
 			if (aUserService.check_login(username, pw) != 0) {
 				int adminID = aUserService.check_login(username, pw);
-				emailService.sendEmail("dovantrung47201@gmail.com", "dovantrung47201@gmail.com", "Verify",
+				emailService.sendEmail("dotr47201@gmail.com", "dovantrung47201@gmail.com", "Verify",
 						"http://localhost:8888/ShopTandT/login?id="+adminID);
 			} else {
 				return new ModelAndView("redirect: /ShopTandT/login?username=" + username + "&password=" + pw);

@@ -62,7 +62,6 @@ public class PaymentController {
 			request.setAttribute("transaction", transaction);
 			request.setAttribute("shippingAddress", shippingAddress);
 			
-			request.setAttribute("phone", payerInfo.getPhone().replace("+84 ", "0"));
 			
 			String cartid = "";
 			HashMap<Cart, Integer> liCS = new LinkedHashMap<>();

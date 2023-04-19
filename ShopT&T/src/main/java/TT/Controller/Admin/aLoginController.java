@@ -1,5 +1,6 @@
 package TT.Controller.Admin;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -21,7 +22,8 @@ public class aLoginController {
 		aUserService = new aUserService();
 
 		HttpSession session = request.getSession();
-
+		Cookie arr[] = request.getCookies();
+		
 		String username = request.getParameter("username");
 		String pw = request.getParameter("password");
 		String id = request.getParameter("id");
@@ -40,7 +42,32 @@ public class aLoginController {
 			}
 		}
 
+		boolean check = false;
+		if(arr != null) {
+			for (Cookie o : arr) {
+				if(o.getName().equals("adminID")) {
+					check = true;
+				}
+			}
+		}
+		
+		if(check) {
+			for (Cookie o : arr) {
+				if(o.getName().equals("adminID")) {
+					id = o.getValue();
+					session.setAttribute("msgLogin", "true");
+					session.setAttribute("adminID", id);
+					return new ModelAndView("redirect: /ShopTandT/admin");
+				}
+			}
+		}
+		
 		if (id != null) {
+			if(!check) {
+				Cookie admin = new Cookie("adminID", id);
+				admin.setMaxAge(60*60*24);
+				response.addCookie(admin);
+			}
 			session.setAttribute("msgLogin", "true");
 			session.setAttribute("adminID", id);
 			return new ModelAndView("redirect: /ShopTandT/admin");

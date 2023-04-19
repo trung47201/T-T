@@ -12,35 +12,40 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import TT.Model.Color;
+import TT.Model.Product;
 import TT.Model.Product_color_size;
 import TT.Model.Sizes;
-import TT.Service.Admin.aBSGService;
-import TT.Service.Admin.aGalleryService;
 import TT.Service.Admin.aProd_Color_SizeService;
+import TT.Service.Admin.aProductService;
 import TT.Service.User.Product.ShoesService;
 
 @Controller
 public class aShoesController {
 
-	private ShoesService shoesService;
 	private aProd_Color_SizeService aProd_Color_SizeService;
-	private aGalleryService aGalleryService;
-	private aBSGService aBSGService;
+	private aProductService aProductService;
 
-	@RequestMapping(value = { "/admin/product" })
+	@RequestMapping(value = { "/admin/product/shoes" })
 	public ModelAndView loadProduct(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("admin/product");
+		aProductService = new aProductService();
 
-		shoesService = new ShoesService();
-
-		mv.addObject("listProduct", shoesService.getAllProducts());
+		List<Product> product = aProductService.getAllProductsShoes();
+		Collections.sort(product, new Comparator<Product>() {
+			@Override
+			public int compare(Product o1, Product o2) {
+				return o2.getId() - o1.getId();
+			}
+		});
+		mv.addObject("listProduct", product);
 
 		mv.addObject("newProduct", "false");
 		mv.addObject("product", "true");
 		mv.addObject("colorSize", "false");
 		mv.addObject("gallery", "false");
 		mv.addObject("bsg", "false");
-
+		mv.addObject("shoes", "true");
+		mv.addObject("clothing", "false");
 		return mv;
 	}
 
@@ -53,7 +58,7 @@ public class aShoesController {
 		List<Product_color_size> listPCS = aProd_Color_SizeService.getAllPCS();
 		List<Color> listColor = aProd_Color_SizeService.getAllColor();
 		List<Sizes> listSize = aProd_Color_SizeService.getAllSize();
-		
+
 		Collections.sort(listPCS, new Comparator<Product_color_size>() {
 			@Override
 			public int compare(Product_color_size o1, Product_color_size o2) {
@@ -81,25 +86,6 @@ public class aShoesController {
 		mv.addObject("colorSize", "true");
 		mv.addObject("gallery", "false");
 		mv.addObject("bsg", "false");
-		return mv;
-	}
-
-
-	@RequestMapping(value = { "/admin/brand-style-gender" })
-	public ModelAndView loadBSG(HttpServletRequest request, HttpServletResponse response) {
-		ModelAndView mv = new ModelAndView("admin/product");
-
-		aBSGService = new aBSGService();
-
-		mv.addObject("listBrand", aBSGService.getAllBrand());
-		mv.addObject("listStyle", aBSGService.getAllSubCategory());
-		mv.addObject("listGender", aBSGService.getAllGender());
-
-		mv.addObject("newProduct", "false");
-		mv.addObject("product", "false");
-		mv.addObject("colorSize", "false");
-		mv.addObject("gallery", "false");
-		mv.addObject("bsg", "true");
 		return mv;
 	}
 }

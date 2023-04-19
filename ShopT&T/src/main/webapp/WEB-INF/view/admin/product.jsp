@@ -7,8 +7,11 @@
 	pageEncoding="UTF-8"%>
 
 
-<c:if test="${ product == 'true' }">
-	<title>Product management :)</title>
+<c:if test="${ clothing == 'true' }">
+	<title>Clothing :)</title>
+</c:if>
+<c:if test="${ shoes == 'true' }">
+	<title>Shoes :)</title>
 </c:if>
 <c:if test="${ colorSize == 'true' }">
 	<title>Color - Size :)</title>
@@ -36,9 +39,10 @@
 
 <style>
 th.td-addnewshoes a {
-    display: flex;
-    width: 140px !important;
+	display: flex;
+	width: 140px !important;
 }
+
 td.td-date {
 	min-width: 95px;
 }
@@ -50,9 +54,11 @@ table.table-new-product td {
 .id-new-product input {
 	width: 100%;
 }
+
 .message {
-z-index: 105;
+	z-index: 105;
 }
+
 .message input {
 	width: 127px;
 }
@@ -79,10 +85,12 @@ z-index: 105;
 	border-radius: 7px;
 	text-align: center;
 }
+
 .bg-c p {
-    color: red;
-    margin-top: 12px;
+	color: red;
+	margin-top: 12px;
 }
+
 .input {
 	margin-top: 20px;
 }
@@ -99,17 +107,20 @@ z-index: 105;
 .title-c {
 	color: #cb82a9;
 }
+
 .close {
-    height: 24px;
-    display: flex;
-    justify-content: right;
-    width: 100%;
-    margin-left: -15px;
-    margin-top: 15px;
+	height: 24px;
+	display: flex;
+	justify-content: right;
+	width: 100%;
+	margin-left: -15px;
+	margin-top: 15px;
 }
+
 .close img {
-cursor: pointer;
+	cursor: pointer;
 }
+
 .btn-add input {
 	background: #cb82a9;
 	color: white;
@@ -120,11 +131,12 @@ cursor: pointer;
 	border-radius: 4px;
 	margin-top: 0;
 }
+
 .input p {
-    color: black;
-    text-align: left;
-    margin-left: 15%;
-    margin-bottom: 3px;
+	color: black;
+	text-align: left;
+	margin-left: 15%;
+	margin-bottom: 3px;
 }
 </style>
 <body>
@@ -160,15 +172,24 @@ cursor: pointer;
 				<p>/</p>
 				<img
 					src="<c:url value="/assets/images/icons/icons8-dirty-clothes-100.png"/>"
-					alt=""> <a href="">Shoes</a>
+					alt=""> <a href="">Products</a>
 			</div>
-
-			<div>
-				<p>/</p>
-				<img
-					src="<c:url value="/assets/images/icons/icons8-used-product-100-title.png"/>"
-					alt=""> <a href="/ShopTandT/admin/product">Product</a>
-			</div>
+			<c:if test="${ clothing == 'true' }">
+				<div>
+					<p>/</p>
+					<img
+						src="<c:url value="/assets/images/icons/icons8-used-product-100-title.png"/>"
+						alt=""> <a href="/ShopTandT/admin/product/clothing">Clothing</a>
+				</div>
+			</c:if>
+			<c:if test="${ shoes == 'true' }">
+				<div>
+					<p>/</p>
+					<img
+						src="<c:url value="/assets/images/icons/icons8-used-product-100-title.png"/>"
+						alt=""> <a href="/ShopTandT/admin/product/shoes">Shoes</a>
+				</div>
+			</c:if>
 		</div>
 
 		<c:if test="${ product == 'true' }">
@@ -180,15 +201,27 @@ cursor: pointer;
 		<table class="order">
 			<thead>
 				<tr>
-					<th colspan="1000" class="td-addnewshoes"><a
-						href="/ShopTandT/admin/product/add-new-product">
-							<button class="addnewshoes addnewproduct"
-								id="addnewshoes-product">
-								<img
-									src="<c:url value="/assets/images/icons/icons8-add-64.png"/>"
-									alt="icon-plus">Add New
-							</button>
-					</a></th>
+					<th colspan="1000" class="td-addnewshoes">
+						<c:if test="${ clothing == 'true' }">
+							<a href="/ShopTandT/admin/product/add-new-clothing">
+								<button class="addnewshoes addnewproduct"
+									id="addnewshoes-product">
+									<img
+										src="<c:url value="/assets/images/icons/icons8-add-64.png"/>"
+										alt="icon-plus">Add New
+								</button>
+							</a>
+						</c:if>
+						<c:if test="${ shoes == 'true' }">
+							<a href="/ShopTandT/admin/product/add-new-shoes">
+								<button class="addnewshoes addnewproduct"
+									id="addnewshoes-product">
+									<img
+										src="<c:url value="/assets/images/icons/icons8-add-64.png"/>"
+										alt="icon-plus">Add New
+								</button>
+							</a>
+						</c:if></th>
 				</tr>
 				<tr>
 					<th></th>
@@ -288,7 +321,7 @@ cursor: pointer;
 				alt=""> <a href="">Color - Size</a>
 		</div>
 	</div>
-	
+
 	<div class="list-table">
 		<div class="table-order">
 			<table class="order">
@@ -548,7 +581,7 @@ cursor: pointer;
 				<thead>
 					<tr>
 						<th colspan="1000" class="td-addnewshoes">
-							<button class="addnewshoes">
+							<button class="addnewshoes" id="add-br">
 								<img
 									src="<c:url value="/assets/images/icons/icons8-add-64.png"/>"
 									alt="icon-plus"> Add New
@@ -588,7 +621,7 @@ cursor: pointer;
 				<thead>
 					<tr>
 						<th colspan="1000" class="td-addnewshoes">
-							<button class="addnewshoes">
+							<button class="addnewshoes" id="add-st">
 								<img
 									src="<c:url value="/assets/images/icons/icons8-add-64.png"/>"
 									alt="icon-plus"> Add New
@@ -628,7 +661,7 @@ cursor: pointer;
 				<thead>
 					<tr>
 						<th colspan="1000" class="td-addnewshoes">
-							<button class="addnewshoes">
+							<button class="addnewshoes" id="add-ge">
 								<img
 									src="<c:url value="/assets/images/icons/icons8-add-64.png"/>"
 									alt="icon-plus"> Add New
@@ -691,13 +724,14 @@ cursor: pointer;
 			<input class="ok ok-done hover-btn" type="button" value="OK">
 		</div>
 	</div>
-	
+
 
 	<div class="wrap-c none" id="wrap-c"></div>
 	<!-- =========================== ADD COLOR ============================ -->
 	<div class="bg-c none" id="bg-c">
 		<div class="close">
-			<img id="close-c" src="<c:url value="/assets/images/icons/icons8-close-68.png"/>"
+			<img id="close-c"
+				src="<c:url value="/assets/images/icons/icons8-close-68.png"/>"
 				alt="icon-plus">
 		</div>
 		<div class="title-c">
@@ -713,7 +747,8 @@ cursor: pointer;
 					<p>RGB</p>
 					<input type="text" id="color_rgb" name="colorrgb">
 				</div>
-				<p id="msg-error" style="visibility: hidden;">Color name is empty!</p>
+				<p id="msg-error" style="visibility: hidden;">Color name is
+					empty!</p>
 				<div class="input btn-add">
 					<input type="button" id="add-color" name="addcolor" value="ADD">
 				</div>
@@ -721,19 +756,235 @@ cursor: pointer;
 		</div>
 	</div>
 	<!-- =========================== END - ADD COLOR ============================ -->
+
+	<div class="wrap-c none" id="wrap-s"></div>
+	<!-- =========================== ADD SIZE ============================ -->
+	<div class="bg-c none" id="bg-s">
+		<div class="close">
+			<img id="close-s"
+				src="<c:url value="/assets/images/icons/icons8-close-68.png"/>"
+				alt="icon-plus">
+		</div>
+		<div class="title-s">
+			<h2>ADD SIZE</h2>
+		</div>
+		<div class="form-input">
+			<form action="/ShopTandT/admin/color-size/add-size" method="post">
+				<div class="input">
+					<p>Size number</p>
+					<input type="text" id="sizenumber" name="sizenumber">
+				</div>
+				<p id="msg-error-s" style="visibility: hidden;">Size number is
+					empty!</p>
+				<div class="input btn-add">
+					<input type="button" id="add-size" name="addsize" value="ADD">
+				</div>
+			</form>
+		</div>
+	</div>
+	<!-- =========================== END - ADD SIZE ============================ -->
+
+	<div class="wrap-c none" id="wrap-br"></div>
+	<!-- =========================== ADD SIZE ============================ -->
+	<div class="bg-c none" id="bg-br">
+		<div class="close">
+			<img id="close-br"
+				src="<c:url value="/assets/images/icons/icons8-close-68.png"/>"
+				alt="icon-plus">
+		</div>
+		<div class="title-c">
+			<h2>ADD BRAND</h2>
+		</div>
+		<div class="form-input">
+			<form action="/ShopTandT/admin/brand-style-gender/add-brand"
+				method="post">
+				<div class="input">
+					<p>Brand</p>
+					<input type="text" id="brand" name="brand">
+				</div>
+				<p id="msg-error-br" style="visibility: hidden;">Size number is
+					empty!</p>
+				<div class="input btn-add">
+					<input type="button" id="add-brand" name="addbrand" value="ADD">
+				</div>
+			</form>
+		</div>
+	</div>
+	<!-- =========================== END - ADD SIZE ============================ -->
+
+	<div class="wrap-c none" id="wrap-st"></div>
+	<!-- =========================== ADD SIZE ============================ -->
+	<div class="bg-c none" id="bg-st">
+		<div class="close">
+			<img id="close-st"
+				src="<c:url value="/assets/images/icons/icons8-close-68.png"/>"
+				alt="icon-plus">
+		</div>
+		<div class="title-c">
+			<h2>ADD STYLE</h2>
+		</div>
+		<div class="form-input">
+			<form action="/ShopTandT/admin/brand-style-gender/add-style"
+				method="post">
+				<div class="input">
+					<p>Style</p>
+					<input type="text" id="style" name="style">
+				</div>
+				<p id="msg-error-st" style="visibility: hidden;">Size number is
+					empty!</p>
+				<div class="input btn-add">
+					<input type="button" id="add-style" name="addstyle" value="ADD">
+				</div>
+			</form>
+		</div>
+	</div>
+	<!-- =========================== END - ADD SIZE ============================ -->
+
+	<div class="wrap-c none" id="wrap-ge"></div>
+	<!-- =========================== ADD SIZE ============================ -->
+	<div class="bg-c none" id="bg-ge">
+		<div class="close">
+			<img id="close-ge"
+				src="<c:url value="/assets/images/icons/icons8-close-68.png"/>"
+				alt="icon-plus">
+		</div>
+		<div class="title-c">
+			<h2>ADD GENDER</h2>
+		</div>
+		<div class="form-input">
+			<form action="/ShopTandT/admin/brand-style-gender/add-gender"
+				method="post">
+				<div class="input">
+					<p>Gender</p>
+					<input type="text" id="gender" name="gender">
+				</div>
+				<p id="msg-error-ge" style="visibility: hidden;">Size number is
+					empty!</p>
+				<div class="input btn-add">
+					<input type="button" id="add-gender" name="addgender" value="ADD">
+				</div>
+			</form>
+		</div>
+	</div>
+	<!-- =========================== END - ADD SIZE ============================ -->
 	<div class="msg-done importantNone">Done!</div>
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+	<script type="text/javascript">
+		// show form add size
+		$("#addcolorsize-s").click(function() {
+			$("#wrap-s").removeClass("none");
+			$("#bg-s").removeClass("none");
+		});
+		$("#close-s").click(function() {
+			$("#wrap-s").addClass("none");
+			$("#bg-s").addClass("none");
+		});
+	</script>
+	<script type="text/javascript">
+		// show form add brand
+		$("#add-br").click(function() {
+			$("#wrap-br").removeClass("none");
+			$("#bg-br").removeClass("none");
+		});
+		$("#close-br").click(function() {
+			$("#wrap-br").addClass("none");
+			$("#bg-br").addClass("none");
+		});
+	</script>
+	<script type="text/javascript">
+		// show form add style
+		$("#add-st").click(function() {
+			$("#wrap-st").removeClass("none");
+			$("#bg-st").removeClass("none");
+		});
+		$("#close-st").click(function() {
+			$("#wrap-st").addClass("none");
+			$("#bg-st").addClass("none");
+		});
+	</script>
+	<script type="text/javascript">
+		// show form add style
+		$("#add-ge").click(function() {
+			$("#wrap-ge").removeClass("none");
+			$("#bg-ge").removeClass("none");
+		});
+		$("#close-ge").click(function() {
+			$("#wrap-ge").addClass("none");
+			$("#bg-ge").addClass("none");
+		});
+	</script>
 
-<script type="text/javascript">
-	$("#addgallery").click(function() {
-		window.location.href =  "/ShopTandT/admin/gallery/add";
-	});
-</script>
+	<script type="text/javascript">
+		$("#add-style").click(function() {
+			var name = $("#style").val();
+			var error = "";
+			if (name == "") {
+				error += "Style is empty!";
+			}
+			if (error == "") {
+				$(this).attr('type', 'submit');
+			} else {
+				$("#msg-error-st").css("visibility", "visible");
+				$("#msg-error-st").text(error);
+			}
+		});
+	</script>
+
+	<script type="text/javascript">
+		$("#add-gender").click(function() {
+			var name = $("#gender").val();
+			var error = "";
+			if (name == "") {
+				error += "Gender is empty!";
+			}
+			if (error == "") {
+				$(this).attr('type', 'submit');
+			} else {
+				$("#msg-error-ge").css("visibility", "visible");
+				$("#msg-error-ge").text(error);
+			}
+		});
+	</script>
+
+	<script type="text/javascript">
+		$("#add-brand").click(function() {
+			var name = $("#brand").val();
+			var error = "";
+			if (name == "") {
+				error += "Brand is empty!";
+			}
+			if (error == "") {
+				$(this).attr('type', 'submit');
+			} else {
+				$("#msg-error-br").css("visibility", "visible");
+				$("#msg-error-br").text(error);
+			}
+		});
+	</script>
+	<script type="text/javascript">
+		$("#add-size").click(function() {
+			var name = $("#sizenumber").val();
+			var error = "";
+			if (name == "") {
+				error += "Size number is empty!";
+			}
+			if (error == "") {
+				$(this).attr('type', 'submit');
+			} else {
+				$("#msg-error-s").css("visibility", "visible");
+				$("#msg-error-s").text(error);
+			}
+		});
+	</script>
+	<script type="text/javascript">
+		$("#addgallery").click(function() {
+			window.location.href = "/ShopTandT/admin/gallery/add";
+		});
+	</script>
 
 	<script>
-	<!-- zoom img when click -->
 		$(".td-img-avt img").click(function() {
 			var get = this.src;
 			$("#display-img-onclick").attr("src", get);
@@ -797,22 +1048,24 @@ cursor: pointer;
 									.assign("/ShopTandT/admin/product/add-product-color-size");
 						});
 	</script>
-	<script type="text/javascript"> // show form add color
+	<script type="text/javascript">
+		// show form add color
 		$("#addcolorsize-c").click(function() {
 			$("#wrap-c").removeClass("none");
 			$("#bg-c").removeClass("none");
 		});
-		$("#close-c").click(function () {
+		$("#close-c").click(function() {
 			$("#wrap-c").addClass("none");
 			$("#bg-c").addClass("none");
 		});
 	</script>
-	<script type="text/javascript"> // show form add size
+	<script type="text/javascript">
+		// show form add size
 		$("#addcolorsize-s").click(function() {
 			$("#wrap-s").removeClass("none");
 			$("#bg-s").removeClass("none");
 		});
-		$("#close-s").click(function () {
+		$("#close-s").click(function() {
 			$("#wrap-s").addClass("none");
 			$("#bg-s").addClass("none");
 		});
@@ -822,12 +1075,12 @@ cursor: pointer;
 			var name = $("#color_name").val();
 			var rgb = $("#color_rgb").val();
 			var error = "";
-			if(name == "") {
+			if (name == "") {
 				error += "Color name is empty!";
 			} else if (rgb == "") {
 				error += "Rgb is empty!";
 			}
-			if(error == "") {
+			if (error == "") {
 				$(this).attr('type', 'submit');
 			} else {
 				$("#msg-error").css("visibility", "visible");
