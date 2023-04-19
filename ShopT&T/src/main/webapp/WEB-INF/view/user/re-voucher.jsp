@@ -19,7 +19,8 @@
 <link rel="stylesheet"
 	href="<c:url value="/assets/css/swiper-bundle.min.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/home.css"/>">
-<link rel="stylesheet" href="<c:url value="/assets/css/re-message.css"/>">
+<link rel="stylesheet"
+	href="<c:url value="/assets/css/re-message.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/navscroll.css"/>">
 <link rel="stylesheet"
 	href='<c:url value="/assets/css/login-icon.css"/>'>
@@ -34,158 +35,14 @@
 <link rel="stylesheet" href="<c:url value="/assets/css/re-text.css"/>">
 <link rel="stylesheet"
 	href="<c:url value="/assets/css/checkbox-radio-input.css"/>">
+<link rel="stylesheet"
+	href="<c:url value="/assets/css/voucher1234.css"/>">
 <style>
-.ok-btn button {
-	border: 1px solid;
-	background: #0086ff;
-	color: white;
-	font-size: 20px;
-	box-shadow: 0 0 5px #666;
+.size-list span {
+	font-family: unset;
+	font-weight: normal;
+	font-size: 16px;
 }
-
-.content-products {
-	margin-top: 50px;
-}
-
-.welcome {
-	box-shadow: 0px 5px 15px;
-}
-
-.voucher img {
-	width: 100%;
-}
-
-.voucher {
-	display: flex;
-	width: 100%;
-}
-
-.vch-wrap {
-	width: 80%;
-	margin-left: 10%;
-	margin-top: 40px;
-}
-
-.vch-ele {
-	position: relative;
-	background: white;
-	width: 49%;
-	height: 170px;
-	display: flex;
-	cursor: pointer;
-}
-
-.vch-ele-left {
-	position: relative;
-	height: 100%;
-	display: flex;
-}
-
-span.half-circle-top, span.half-circle-bottom {
-	display: flex;
-	position: absolute;
-	background: #0c1022;
-	width: 26px;
-	height: 14px;
-	left: 62%;
-}
-
-span.half-circle-top {
-	border-radius: 0 0 30px 30px;
-	margin-top: -1px;
-}
-
-span.half-circle-bottom {
-	border-radius: 30px 30px 0 0;
-	bottom: 0;
-	margin-bottom: -1px;
-}
-
-.vch-list {
-	display: flex;
-	justify-content: space-between;
-	margin-bottom: 24px;
-}
-
-.vch-discount {
-	color: #2AB28A;
-	display: flex;
-	font-size: 28px;
-	font-weight: bold;
-	position: absolute;
-	top: 17px;
-	left: 60px;
-	align-items: center;
-}
-
-.vch-discount p {
-	margin: 0;
-	font-size: 50px;
-	margin-left: 12px;
-}
-
-.btn-save {
-	position: absolute;
-	bottom: 18px;
-	left: 71.3%;
-}
-
-.btn-save button {
-	cursor: pointer;
-	width: 70px;
-	height: 30px;
-	border: 0;
-	border-radius: 40px;
-	background: none;
-	color: #2ab28a;
-	font-size: 20px;
-	font-weight: bold;
-}
-
-.btn-save button:focus {
-	outline-style: none;
-}
-
-.vch-content {
-	position: absolute;
-	color: white;
-	font-size: 14px;
-	top: 81px;
-	left: 47px;
-}
-
-.line1, .vch-title {
-	display: flex;
-}
-
-.vch-title {
-	display: flex;
-	width: 100%;
-	text-align: center;
-	justify-content: center;
-}
-
-.line1 p {
-	margin: 0;
-	color: yellow;
-	font-weight: bold;
-}
-
-.vch-ele-right {
-	color: black;
-	width: 100%;
-	text-align: center;
-	padding: 38px 36px;
-}
-
-.vch-title p {
-	font-size: 18px;
-	font-weight: bold;
-}
-.img-header {
-    height: 840px !important;
-}
-
 </style>
 <body style="color: #212122;">
 	<%
@@ -201,177 +58,227 @@ span.half-circle-bottom {
 		<img alt=""
 			src="<c:url value="/assets/images/poster/voucher123.jpg"/>">
 	</div>
-		<form method="post">
-			<!--########################################3   START page CONTACT ###########################################-->
-			<div class="vch-wrap">
-				<c:set var="count" value="${ 0 }" />
-				<c:forEach var="it" items="${ listVoucher }" varStatus="index">
-					<c:set var="idx" value="${ index.getIndex() }" />
-					<c:if test="${ idx % 2 ==0  }">
-						<div class="vch-list">
-							<div class="vch-ele" id="${ it.key.id }">
-								<div class="vch-ele-left">
-									<img src="<c:url value="/assets/images/logo/bg-voucher.png"/>"
-										alt="images-order">
-									<div class="vch-discount">
-										Sales off
-										<p>${ it.key.vcdiscount }%</p>
-									</div>
-									<div class="btn-save">
-										<button id="save" name="save">Save</button>
-									</div>
-									<div class="vch-content">
-										<div class="line1">
-											Apply for orders from
-											<p>&nbsp;$${ it.key.applyfor }</p>
-										</div>
-										<div class="line1">1 slot/customer</div>
-										<div class="line1">Applies to all products.</div>
-									</div>
-								</div>
-								<div class="vch-ele-right">
-									<c:if test="${ it.value == 0 }">
-										<div class="vch-title">In effect until</div>
-										<div class="vch-title">
-											<fmt:parseDate value="${ it.key.end_date }"
-												pattern="yyyy-MM-dd HH:mm:ss" var="parsedDateTime"
-												type="both" />
-											<p>
-												<fmt:formatDate pattern="HH:mm" value="${ parsedDateTime }" />
-											</p>
-											&nbsp;day&nbsp;
-											<p>
-												<fmt:formatDate pattern="dd/MM" value="${ parsedDateTime }" />
-											</p>
-										</div>
-										<div class="vch-title">Limited</div>
-									</c:if>
-									<c:if test="${ it.value == 1 }">
-										<div class="vch-title">Start from</div>
-										<div class="vch-title">
-											<fmt:parseDate value="${ it.key.start_date }"
-												pattern="yyyy-MM-dd HH:mm:ss" var="parsedDateTime"
-												type="both" />
-											<c:if
-												test="${ parsedDateTime.hours==0 && parsedDateTime.minutes==0 }">
-												<p>
-													<fmt:formatDate pattern="HH:mm" value="${ parsedDateTime }" />
-												</p>
-											</c:if>
-											<c:if
-												test="${ parsedDateTime.hours != 0 || parsedDateTime.minutes != 0 }">
-												<p>
-													<fmt:formatDate pattern="HH:mm" value="${ parsedDateTime }" />
-												</p>
-											</c:if>
-											&nbsp;day&nbsp;
-											<p>
-												<fmt:formatDate pattern="dd/MM" value="${ parsedDateTime }" />
-											</p>
-										</div>
-										<div class="vch-title">Not Start</div>
-									</c:if>
-								</div>
-								<span class="half-circle-top"></span> <span
-									class="half-circle-bottom"></span>
-							</div>
-					</c:if>
-					<c:if test="${ idx % 2 == 1 }">
-						<div class="vch-ele" id="${ it.key.id }">
+	<form method="post">
+		<!--########################################3   START page CONTACT ###########################################-->
+		<div class="vch-wrap">
+			<c:set var="count" value="${ 0 }" />
+			<c:forEach var="it" items="${ listVoucher }" varStatus="index">
+				<c:set var="id" value="${ index.getIndex() }" />
+				<c:set var="count" value="${ index.getIndex() }" />
+				<c:if test="${ id % 4 == 0 }">
+					<div class="vch-list">
+						<div class="vch-ele">
 							<div class="vch-ele-left">
-								<img src="<c:url value="/assets/images/logo/bg-voucher.png"/>"
-									alt="images-order">
+								<img alt=""
+									src="<c:url value="/assets/images/logo/voucher.png"/>">
 								<div class="vch-discount">
-									Sales off
-									<p>${ it.key.vcdiscount }%</p>
-								</div>
-								<div class="btn-save">
-									<button id="save" name="save">Save</button>
-								</div>
-								<div class="vch-content">
-									<div class="line1">
-										Apply for orders from
-										<p>&nbsp;$${ it.key.applyfor }</p>
-									</div>
-									<div class="line1">1 slot/customer</div>
-									<div class="line1">Applies to all products.</div>
+									<div>Sale</div>
+									<p id="vch_dis">${ it.key.vcdiscount }%</p>
 								</div>
 							</div>
 							<div class="vch-ele-right">
-								<c:if test="${ it.value == 0 }">
-									<div class="vch-title">In effect until</div>
-									<div class="vch-title">
-										<fmt:parseDate value="${ it.key.end_date }"
-											pattern="yyyy-MM-dd HH:mm:ss" var="parsedDateTime"
-											type="both" />
-										<p>
-											<fmt:formatDate pattern="HH:mm" value="${ parsedDateTime }" />
-										</p>
-										&nbsp;day&nbsp;
-										<p>
-											<fmt:formatDate pattern="dd/MM" value="${ parsedDateTime }" />
-										</p>
+								<div class="vch-ele-top">
+									<div class="line1">
+										Voucher&nbsp;
+										<p>${ it.key.vcdiscount }%</p>
 									</div>
-									<div class="vch-title">Limited</div>
-								</c:if>
-								<c:if test="${ it.value == 1 }">
-									<div class="vch-title">Start from</div>
-									<div class="vch-title">
-										<fmt:parseDate value="${ it.key.start_date }"
-											pattern="yyyy-MM-dd HH:mm:ss" var="parsedDateTime"
-											type="both" />
-										<p>
-											<fmt:formatDate pattern="HH:mm" value="${ parsedDateTime }" />
-										</p>
-										&nbsp;day&nbsp;
-										<p>
-											<fmt:formatDate pattern="dd/MM" value="${ parsedDateTime }" />
-										</p>
+									<div class="vch-line">
+										Apply for orders from <span>$${ it.key.applyfor }</span>.
 									</div>
-									<div class="vch-title">Not Start</div>
-								</c:if>
+								</div>
+								<div class="vch-ele-bottom">
+									<div
+										class="vch-condition ${ it.key.vcdiscount }_${ it.key.code }_${ it.key.applyfor }_${ it.key.start_date }_${ it.key.end_date }"
+										id="${ it.key.id }">Condition</div>
+									<div class="vch-btn" id="${ it.key.id }">
+										<button type="button" id="save-vch" name="savevch">Save</button>
+									</div>
+								</div>
 							</div>
-							<span class="half-circle-top"></span> <span
-								class="half-circle-bottom"></span>
 						</div>
+				</c:if>
+				<c:if test="${ (id+2) % 4 == 0 || (id+3) % 4 == 0}">
+					<div class="vch-ele" style="margin-left: 20px;">
+						<div class="vch-ele-left">
+							<img alt=""
+								src="<c:url value="/assets/images/logo/voucher.png"/>">
+							<div class="vch-discount">
+								<div>Sale</div>
+								<p id="vch_dis">${ it.key.vcdiscount }%</p>
+							</div>
+						</div>
+						<div class="vch-ele-right">
+							<div class="vch-ele-top">
+								<div class="line1">
+									Voucher&nbsp;
+									<p>${ it.key.vcdiscount }%</p>
+								</div>
+								<div class="vch-line">
+									Apply for orders from <span>$${ it.key.applyfor }</span>.
+								</div>
+							</div>
+							<div class="vch-ele-bottom">
+								<div
+									class="vch-condition ${ it.key.vcdiscount }_${ it.key.code }_${ it.key.applyfor }_${ it.key.start_date }_${ it.key.end_date }"
+									id="${ it.key.id }">Condition</div>
+								<div class="vch-btn" id="${ it.key.id }">
+									<button type="button" id="save-vch" name="savevch">Save</button>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</c:if>
+				<c:if test="${ (id+1) % 4 == 0 }">
+					<div class="vch-ele" style="margin-left: 20px;">
+						<div class="vch-ele-left">
+							<img alt=""
+								src="<c:url value="/assets/images/logo/voucher.png"/>">
+							<div class="vch-discount">
+								<div>Sale</div>
+								<p id="vch_dis">${ it.key.vcdiscount }%</p>
+							</div>
+						</div>
+						<div class="vch-ele-right">
+							<div class="vch-ele-top">
+								<div class="line1">
+									Voucher&nbsp;
+									<p>${ it.key.vcdiscount }%</p>
+								</div>
+								<div class="vch-line">
+									Apply for orders from <span>$${ it.key.applyfor }</span>.
+								</div>
+							</div>
+							<div class="vch-ele-bottom">
+								<div
+									class="vch-condition ${ it.key.vcdiscount }_${ it.key.code }_${ it.key.applyfor }_${ it.key.start_date }_${ it.key.end_date }"
+									id="${ it.key.id }">Condition</div>
+								<div class="vch-btn" id="${ it.key.id }">
+									<button type="button" id="save-vch" name="savevch">Save</button>
+								</div>
+							</div>
+						</div>
+					</div>
+		</div>
+		</c:if>
+		</c:forEach>
+		<c:if test="${ (count+1) % 4 != 0 }">
 			</div>
-			</c:if>
-			<c:set var="count" value="${ idx }" />
-			</c:forEach>
-			<c:if test="${ count % 2 == 0}">
+		</c:if>
+		</div>
+	</form>
+
+	<div class="wrap-vc-details none" id="wrap-vc-details"></div>
+
+	<div class="vc-details none" id="vc-details">
+		<div class="box-details">
+			<div class="box-title">
+				VOUCHER&nbsp;<span id="span-discount">30%</span>
+			</div>
+			<div class="box-vch-code">
+				Code:&nbsp;<span id="span-code">VOAUDHFA134KS</span>
+			</div>
+			<div class="box-content">
+				Condition:
+				<p>
+					- Apply for orders from <span id="span-apply">$350</span>
+				</p>
+				<p>
+					- Can only be used <b>once per customer</b>
+				</p>
+				<p>
+					- Applies to <b>all</b> products.
+				</p>
+			</div>
+			<div class="box-date">
+				Expiry Date:
+				<p>
+					- Start: <span id="span-time-start">00:00</span> day <span
+						id="span-date-start">24/03/2023</span>
+				</p>
+				<p>
+					- End: <span class="end" id="span-time-end">23:59 </span> day <span
+						id="span-date-end"> 25/03/2023</span>
+				</p>
+			</div>
+			<div class="box-footer">
+				<div class="box-btn">
+					<button type="button" id="close" name="close">Close</button>
 				</div>
-			</c:if>
+				<div class="box-btn">
+					<button type="button" id="save" name="save">Save</button>
+				</div>
 			</div>
-		</form>
+			<input type="hidden" id="vch-id-ip">
+		</div>
+	</div>
 
 	<jsp:include page="re-products-body.jsp"></jsp:include>
 	<jsp:include page="../layouts/user/re-footer.jsp"></jsp:include>
 
 
+
+	<script type="text/javascript">
+		$(".vch-condition").click(function() {
+			var id = this.id;
+			var cls = this.className;
+			const arr = cls.split("_");
+			if(arr.length > 4) {
+				var dis = arr[0].split(" ")[1];
+				var code = arr[1];
+				var apply = arr[2];
+				var start = arr[3];
+				var start_time = start.split(" ")[1];
+				var start_date = start.split(" ")[0];
+				var end = arr[4];
+				var end_time = end.split(" ")[1];
+				var end_date = end.split(" ")[0];
+				$("#span-discount").text(dis+"%");
+				$("#span-code").text(code);
+				$("#span-apply").text("$"+apply);
+				$("#span-time-start").text(start_time.substring(0, 5));
+				$("#span-date-start").text(start_date.replaceAll("-", "/"));
+				$("#span-time-end").text(end_time.substring(0, 5));
+				$("#span-date-end").text(end_date.replaceAll("-", "/"));
+			}
+			$("#wrap-vc-details").removeClass("none");
+			$("#vc-details").removeClass("none");
+			$("#vch-id-ip").val(id);
+		});
+		$("#save").click(function() {
+			var id = $("#vch-id-ip").val();
+			$(this).text("Saved");
+		});
+		$("#close").click(function() {
+			$("#wrap-vc-details").addClass("none");
+			$("#vc-details").addClass("none");
+			return false;
+		});
+	</script>
+
 	<script type="text/javascript">
 		var id_user = "${ userID }";
-		$(".vch-ele").click(function() {
+		$(".vch-btn").click(function() {
 			var id = this.id;
 			var btn = $('button', this)[0];
 			$(btn).text("Saved");
 			var xhr = new XMLHttpRequest();
-
-			xhr.open("GET", "/SpringMVC/voucher/save/" + id_user + "_" + id);
+			xhr.open("GET", "/ShopTandT/voucher/save/" + id_user + "_" + id);
 			xhr.onload = function() {
 			};
 			xhr.send();
 		});
 	</script>
-	
+
 	<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 
 	<script type="text/javascript">
-		if ( window.history.replaceState ) {
-		  window.history.replaceState( null, null, window.location.href );
+		if (window.history.replaceState) {
+			window.history.replaceState(null, null, window.location.href);
 		}
 	</script>
-	
-	
+
+
 </body>
 
 </html>

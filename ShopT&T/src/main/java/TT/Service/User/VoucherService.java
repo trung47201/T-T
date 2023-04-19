@@ -188,6 +188,18 @@ public class VoucherService implements VoucherRepository {
 		}
 		return rs;
 	}
+	
+	public String get_voucher_code_by_id(int id) {
+		String code = "";
+		List<Voucher> li = getAllVoucher();
+		for (Voucher voucher : li) {
+			if (voucher.getId() == id) {
+				code = voucher.getCode();
+			}
+		}
+		return code;
+	}
+
 
 	public static void main(String[] args) {
 		VoucherService v = new VoucherService();

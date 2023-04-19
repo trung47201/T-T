@@ -25,6 +25,7 @@ import TT.Service.User.Product_color_sizeService;
 import TT.Service.User.StatisticsService;
 import TT.Service.User.UserService;
 import TT.Service.User.VoucherService;
+import TT.Service.User.Voucher_SaveService;
 import TT.Service.User.Product.ShoesService;
 
 @Controller
@@ -39,6 +40,7 @@ public class CheckoutController {
 	private CartService cartService;
 	private StatisticsService statisticsService;
 	private PostsService postsService;
+	private Voucher_SaveService voucher_saveService;
 
 	@RequestMapping(value = { "cart/checkout/ok/{id}" })
 	public ModelAndView checkout_ok(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
@@ -65,7 +67,7 @@ public class CheckoutController {
 		String size = request.getParameter("size");
 		String color = request.getParameter("color");
 		String id_prod = request.getParameter("idprod");
-		String vccode = request.getParameter("vccode");
+		String vchid = request.getParameter("vchid");
 		String quantity = request.getParameter("quantity");
 		String fullname = "";
 
@@ -90,8 +92,14 @@ public class CheckoutController {
 			user = arr[0];
 		}
 		int vc_id = 1;
-		if (vccode != null) {
-			vc_id = voucherService.getVoucherIdByCode(vccode);
+		if (vchid != null) {
+			if(!vchid.equals("")) {
+				vc_id = Integer.parseInt(vchid);
+			} else {
+				System.out.println("vch: '");
+			}
+		} else {
+			System.out.println("vch: null");
 		}
 		if (note == null) {
 			note = "";
@@ -106,10 +114,11 @@ public class CheckoutController {
 		} else {
 			price_at += p.getPrice();
 		}
-		if (id_prod != null && vccode != null && size != null && color != null && city != null && district != null
+		System.out.println("here2");
+		if (id_prod != null && vchid != null && size != null && color != null && city != null && district != null
 				&& address != null && firstname != null && lastname != null && phone_number != null && email != null) {
-			double dis = checkoutService.get_discount_at(Integer.parseInt(quantity), vccode, Integer.parseInt(id_prod));
-			double pricetotal = checkoutService.get_price_at(Integer.parseInt(quantity), vccode,
+			double dis = checkoutService.get_discount_at(Integer.parseInt(quantity), voucherService.get_voucher_code_by_id(vc_id), Integer.parseInt(id_prod));
+			double pricetotal = checkoutService.get_price_at(Integer.parseInt(quantity), voucherService.get_voucher_code_by_id(vc_id),
 					Integer.parseInt(id_prod));
 			if (vc_id == 0) {
 				vc_id = 1;
@@ -117,7 +126,9 @@ public class CheckoutController {
 			if (pricetotal < 50) {
 				pricetotal = pricetotal + 11.00;
 			}
+			System.out.println("here1");
 			if (vc_id != 1) {
+				System.out.println("here");
 				if (receiptService.insertIntoOrder(fullname, email, phone_number, adr, vc_id, note, method, dis)
 						&& voucherService.update_limit_voucher(vc_id)
 						&& receipt_detailsService.insertIntoOrder_details((double) Math.round(price_at * 100) / 100,
@@ -129,7 +140,8 @@ public class CheckoutController {
 						&& statisticsService.update_order_revenue_product_num_in_statistics_DB(
 								Integer.parseInt(quantity), pricetotal)) {
 					session.setAttribute("order", "end");
-					System.out.println("buy now success (96 checkoutController)");
+					System.out.println("buy now success (118 checkoutController)");
+					voucher_saveService.update(Integer.parseInt(user), vc_id);
 					return new ModelAndView("redirect: /ShopTandT/sucess-buynow?id_prod=" + id_prod + "&id_color=" + color
 							+ "&id_size=" + size + "&quantity=" + quantity + "&fullname=" + fullname + "&phone_number="
 							+ phone_number + "&email=" + email + "&address=" + adr + "&note=" + note + "&voucher="
@@ -180,16 +192,25 @@ public class CheckoutController {
 		checkoutService = new CheckoutService();
 		voucherService = new VoucherService();
 		userService = new UserService();
-		receiptService = new ReceiptService();
+		receiptService = new ReceiptService(	);
 		postsService = new PostsService();
-
-		String voucher = request.getParameter("voucher");
+		voucher_saveService = new Voucher_SaveService();
+		
+		String vch_id = request.getParameter("vchid");
+		String voucher = null;
+		if (vch_id != null) {
+			mv.addObject("vchid", vch_id);
+			System.out.println(vch_id);
+			voucher = voucherService.get_voucher_code_by_id(Integer.parseInt(vch_id));
+		}
+		
 		String quantity = request.getParameter("quantity");
 		String size = request.getParameter("size");
 		String color = request.getParameter("color");
 		String method = request.getParameter("paymentmethods");
 		String login = request.getParameter("login");
 		
+		System.out.println("test"+quantity);
 		
 		if(login != null) {
 			session.setAttribute("buynowlogin", id);
@@ -219,9 +240,7 @@ public class CheckoutController {
 					total = p.getPrice();
 				}
 			}
-			if (total < 50) {
-				total += 11.00;
-			}
+			mv.addObject("limit", total);
 			mv.addObject("total", total);
 		} else if (a.length == 1) {
 			id_prod = a[0];
@@ -297,7 +316,10 @@ public class CheckoutController {
 			User u = userService.get_user_by_id(Integer.parseInt(id_user));
 			if (u != null) {
 				mv.addObject("user", u);
+				mv.addObject("listVoucher",
+						voucher_saveService.get_all_voucher_save_by_user_id(Integer.parseInt(id_user)));
 			}
+			
 		}
 
 		if (quantity != null) {

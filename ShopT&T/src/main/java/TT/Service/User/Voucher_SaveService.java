@@ -105,7 +105,7 @@ public class Voucher_SaveService {
 				return true;
 			}
 		} catch (Exception e) {
-			System.out.println("got an exception (76) colorservice");
+			System.out.println("got an exception (108) voucher_save_service");
 			e.printStackTrace();
 		}
 		return false;

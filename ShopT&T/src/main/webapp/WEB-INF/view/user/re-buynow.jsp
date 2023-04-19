@@ -25,10 +25,15 @@
 	href="<c:url value="/assets/css/f-btn-effect.css"/>">
 	<link rel="stylesheet"
 	href="<c:url value="/assets/css/checkbox-radio-input.css"/>">
+<link rel="stylesheet"
+	href="<c:url value="/assets/css/f-voucher-buy-now.css"/>">
 <style>
 .icon-cod {
     display: flex;
     align-items: center;
+}
+.price-product-checkout {
+    padding-right: 10px;
 }
 </style>
 <body>
@@ -87,8 +92,7 @@
 						<b>${ prod_checkout.title }</b>
 					</div>
 					<div class="price-product-checkout">
-						$
-						<fmt:formatNumber type="number" maxFractionDigits="2"
+						$<fmt:formatNumber type="number" maxFractionDigits="2"
 							value="${ prod_checkout.price - prod_checkout.price*prod_checkout.discount/100 }" />
 					</div>
 				</div>
@@ -280,11 +284,13 @@
 				<c:if test="${ userID != null }">
 					<div class="voucher">
 						<div class="input-voucher">
-							<input type="text" name="voucher" id="voucher"
-								placeholder="Voucher">
+							<img
+								src="<c:url value="/assets/images/icons/icons8-voucher-64.png"/>"
+								alt="images-order">&nbsp;Shop voucher
 						</div>
-						<div class="btn-effect">
-							<button type="button" name="apply" id="apply">Apply</button>
+						<div class="input-voucher">
+							<p>Select or enter a voucher</p>
+							&nbsp;<b>></b>
 						</div>
 					</div>
 				</c:if>
@@ -700,7 +706,7 @@
 		</div>
 
 		<input type="hidden" name="total" id="total" value="${ total }">
-		<input type="hidden" name="vccode" id="vccode" value="${ vccode }">
+		<input type="hidden" name="vchid" id="vchid" value="${ vchid }">
 		<input type="hidden" name="idprod" id="idprod" value="${ idprod }">
 		<input type="hidden" name="userid" id="userid" value="${ id_user }">
 		<input type="hidden" name="cartid" value="${ cartid }">
@@ -725,9 +731,187 @@
 			</div>
 		</div>
 	</div>
+	
+	<div class="wrap-vc none" id="wrap-vc"></div>
+	<div class="list-vch none" id="list-vch">
+		<div class="close-vch">
+			<div>Voucher</div>
+			<img id="close-vch" alt=""
+				src="<c:url value="/assets/images/icons/icons8-close-68.png"/>">
+		</div>
+
+		<div class="vc-list">
+			<c:forEach var="it" items="${ listVoucher }" varStatus="index">
+				<c:if test="${ it.value == 1  }">
+					<div class="vc-ele disable" id="0"> 
+				</c:if>
+				<c:if test="${ it.value == 0  }">
+					<c:if test="${ it.key.voucher.applyfor <= limit }">
+						<div class="vc-ele" id="${ it.key.voucher.applyfor }">
+					</c:if>
+					<c:if test="${ it.key.voucher.applyfor > limit }">
+						<div class="vc-ele disable" id="${ it.key.voucher.applyfor }">
+					</c:if>
+				</c:if>
+				<div class="vc-discount">${ it.key.voucher.vcdiscount }%</div>
+				<div class="vc-content">
+					<div>
+						Apply for orders from <span id="price-vc">$${
+							it.key.voucher.applyfor }</span>
+					</div>
+					<div>Applies to all products</div>
+					<c:if test="${ it.value == 0 }">
+						<fmt:parseDate value="${ it.key.voucher.end_date }"
+							pattern="yyyy-MM-dd HH:mm:ss" var="parsedDateTime" type="both" />
+						<div style="color: red;">
+							Expires: <b> <fmt:formatDate pattern="HH:mm"
+									value="${ parsedDateTime }" />
+							</b> day <b> <fmt:formatDate pattern="dd/MM/yyyy"
+									value="${ parsedDateTime }" />
+							</b>
+						</div>
+					</c:if>
+					<c:if test="${ it.value == 1 }">
+						<fmt:parseDate value="${ it.key.voucher.start_date }"
+							pattern="yyyy-MM-dd HH:mm:ss" var="parsedDateTime" type="both" />
+						<c:if
+							test="${ parsedDateTime.hours==0 && parsedDateTime.minutes==0 }">
+							<div>
+								EXP: <b> <fmt:formatDate pattern="dd/MM/yyyy"
+										value="${ parsedDateTime }" />
+								</b>
+							</div>
+						</c:if>
+						<c:if
+							test="${ parsedDateTime.hours!=0 || parsedDateTime.minutes!=0 }">
+							<div>
+								EXP: <b> <fmt:formatDate pattern="HH:mm"
+										value="${ parsedDateTime }" />
+								</b> day <b> <fmt:formatDate pattern="dd/MM/yyyy"
+										value="${ parsedDateTime }" />
+								</b>
+							</div>
+						</c:if>
+					</c:if>
+				</div>
+				<div class="vc-radio-btn">
+					<c:if test="${ it.value == 0  }">
+						<c:if test="${ it.key.voucher.applyfor <= limit }">
+							<c:if test="${ vcid != null }">
+								<c:if test="${ vcid == it.key.voucher.id }">
+									<span class="vch-radio selected-vc" id="${ it.key.voucher.id }">
+										<img id="close-vch" alt=""
+										src="<c:url value="/assets/images/icons/icons8-done-64.png"/>">
+									</span>
+								</c:if>
+								<c:if test="${ vcid != it.key.voucher.id }">
+									<span class="vch-radio" id="${ it.key.voucher.id }"> <img
+										id="close-vch" alt=""
+										src="<c:url value="/assets/images/icons/icons8-done-64.png"/>">
+									</span>
+								</c:if>
+							</c:if>
+							<c:if test="${ vcid == null }">
+								<span class="vch-radio" id="${ it.key.voucher.id }"> <img
+									id="close-vch" alt=""
+									src="<c:url value="/assets/images/icons/icons8-done-64.png"/>">
+								</span>
+							</c:if>
+						</c:if>
+						<c:if test="${ it.key.voucher.applyfor > limit }">
+							<span class="vch-radio radio-disable" id="${ it.key.voucher.id }">
+								<img id="close-vch" alt=""
+								src="<c:url value="/assets/images/icons/icons8-done-64.png"/>">
+							</span>
+						</c:if>
+					</c:if>
+					<c:if test="${ it.value == 1  }">
+						<span class="vch-radio radio-disable" id="${ it.key.voucher.id }">
+							<img id="close-vch" alt=""
+							src="<c:url value="/assets/images/icons/icons8-done-64.png"/>">
+						</span>
+					</c:if>
+				</div>
+		</div>
+		</c:forEach>
+	</div>
+	<div class="apply-vc">
+		<button type="button" id="applyvch" name="applyvch">Apply</button>
+	</div>
+	</div>
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	
+	
+	<script type="text/javascript">
+		$("#applyvch").click(function() {
+			$("#wrap-vc").toggleClass("none");
+			$("#list-vch").toggleClass("none");
+			const arr = document.getElementsByClassName("vch-radio");
+			var qty = document.getElementById("input_Id1").value;
+			for (let i=0; i<arr.length; i++) {
+				var cls = $(arr[i]).attr('class');
+				if(cls.includes("selected-vc")) {
+					var url = window.location.href;
+					var txt="";
+					if(url.includes("?vchid")) {
+						const arr1 = url.split("?");
+						var vchid = arr1[1].split("&")[0];
+						txt = url.replace(vchid, "vchid="+arr[i].id);
+					} else if(url.includes("&vchid")) {
+						var arr1 = url.split("&");
+						for (let j=0; j<arr1.length; j++) {
+							if(arr1[j].includes("vchid")) {
+								txt = url.replace(arr1[j], "vchid="+arr[i].id);
+							}
+						}
+					} else if(!url.includes("vchid") && url.includes("?")) {
+						txt = url + "&vchid=" + arr[i].id;
+					} else {
+						txt = url + "?vchid=" + arr[i].id;
+					}
+					var xhr = new XMLHttpRequest();
+					xhr.open("GET", "");
+					xhr.onload = function() {
+						window.location.assign(txt+"&quantity="+qty);
+					};
+					xhr.send();
+				}
+			}
+		});
+	</script>
+
+	<script type="text/javascript">
+		$("#close-vch").click(function() {
+			$("#wrap-vc").toggleClass("none");
+			$("#list-vch").toggleClass("none");
+		});
+	</script>
+
+	<script type="text/javascript">
+		$(".input-voucher").click(function() {
+			$("#wrap-vc").toggleClass("none");
+			$("#list-vch").toggleClass("none");
+		});
+	</script>
+
+	<script type="text/javascript">
+		$(".vch-radio").click(function() {
+			var id = this.id;
+			var check = this.className;
+			if(!check.includes("disable")) {
+				const arr = document.getElementsByClassName("vch-radio");
+				for (let i=0; i<arr.length; i++) {
+					if(arr[i].id == id) {
+						$(arr[i]).toggleClass("selected-vc");
+					} else {
+						$(arr[i]).removeClass("selected-vc");
+					}
+				}
+			}
+		});
+	</script>
 
 	<script type="text/javascript">
 	$(".a-login").click(function () {
@@ -946,6 +1130,19 @@ s			});
 			var calc = parseFloat(qty) * parseFloat(price);
 			var vch_at = parseFloat(qty) * parseFloat(price) * parseFloat(vc_price) / 100;
 			$("td.p_prod b").text("$"+parseFloat(Math.round(calc * 100)/100));
+			//remove voucher
+			var applyfor = parseFloat(Math.round(calc * 100)/100);
+			const arrLimit = document.getElementsByClassName("vc-ele");
+			for (let i=0; i<arrLimit.length; i++) {
+				if(arrLimit[i].id != "0" && parseFloat(arrLimit[i].id) < applyfor) {
+					$(arrLimit[i]).removeClass("disable");
+					var btn = $('span.vch-radio', arrLimit[i])[0];
+					$(btn).removeClass("radio-disable");
+				}
+			}
+			
+			//end
+			
 			if(calc >= 50) {
 				$("td.p_total b").text("$"+parseFloat(Math.round((calc-vch_at) * 100)/100));
 				if(price < 50) {
@@ -967,6 +1164,7 @@ s			});
 					$("#content-msg-notify").text(error);
 				}
 			}
+			
 		}
 	</script>
 

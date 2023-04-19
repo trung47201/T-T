@@ -1,0 +1,172 @@
+/* .................... */
+.wrap-vc {
+	position: fixed;
+	background: black;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	opacity: .5;
+}
+
+.list-vch {
+	position: fixed;
+	width: 510px;
+	height: 100%;
+	background: white;
+	right: 0;
+	top: 0;
+}
+
+.close-vch {
+	display: flex;
+	height: 32px;
+	margin-right: 15px;
+	margin-top: 15px;
+	width: calc(100% - 58px);
+	justify-content: space-between;
+	margin-left: 30px;
+	align-items: center;
+}
+
+.close-vch div {
+	font-size: 32px;
+	font-weight: bold;
+}
+
+.close-vch img {
+	cursor: pointer;
+	height: 24px;
+}
+
+.vc-list {
+	width: 88%;
+	height: 100%;
+	margin-top: 20px;
+	margin-left: 30px;
+}
+
+.vc-list {
+	width: 88%;
+	height: 84%;
+	margin-top: 20px;
+	margin-left: 30px;
+	overflow-y: scroll;
+}
+
+.vc-ele {
+	display: flex;
+	width: 100%;
+	height: 100px;
+	border: 0.5px solid lightgray;
+	margin-bottom: 15px;
+}
+
+.vc-discount {
+	width: 100px;
+	height: 100%;
+	background: #2ab28a;
+	color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 36px;
+	font-weight: bold;
+}
+
+.vc-radio-btn span {
+	width: 28px;
+	height: 28px;
+	display: flex;
+	border-radius: 40px;
+	border: 1px solid #666;
+	cursor: pointer;
+	justify-content: center;
+	align-items: center;
+}
+
+.selected-vc {
+	background: #2ab28a;
+	border: 0 !important;
+}
+
+.vc-radio-btn {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+}
+
+span.vch-radio img {
+	width: 20px;
+	height: 20px;
+}
+
+.vc-content {
+	width: 66%;
+	padding: 14px 15px;
+	display: grid;
+}
+
+span#price-vc {
+	color: #2ab28a;
+	font-weight: bold;
+}
+
+.apply-vc {
+	width: 29%;
+	margin-left: 30px;
+	display: flex;
+	position: fixed;
+	bottom: 10px;
+	justify-content: center;
+}
+
+.apply-vc button {
+	cursor: pointer;
+	width: 150px;
+	height: 36px;
+	border: 1px solid #0085ff;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.apply-vc button:hover {
+	border: 1px solid #0085ff;
+	background: #0085ff;
+	color: white;
+}
+
+.apply-vc button:focus {
+	outline-style: none;
+}
+
+.input-voucher {
+	display: flex;
+	width: unset;
+}
+
+.input-voucher img {
+	height: 24px;
+}
+
+.voucher {
+	justify-content: space-between;
+}
+
+.input-voucher {
+	cursor: pointer;
+}
+
+.input-voucher:hover {
+	color: #0086ff;
+}
+
+.input-voucher p {
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+
+.disable {
+	opacity: .5;
+}
