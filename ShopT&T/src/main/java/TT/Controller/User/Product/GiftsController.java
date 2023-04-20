@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,14 +17,12 @@ import TT.Service.User.ColorService;
 import TT.Service.User.PostsService;
 import TT.Service.User.SizeService;
 import TT.Service.User.SubCategoryService;
-import TT.Service.User.UserService;
-import TT.Service.User.Product.ClothingService;
 import TT.Service.User.Product.GiftsService;
+import TT.Service.User.Product.ProductService;
 import TT.Service.User.Product.ShoesService;
 
 @Controller
 public class GiftsController {
-	private UserService userService;
 	private ShoesService shoesService;
 	private SubCategoryService subCategoryService;
 	private SizeService sizeService;
@@ -144,6 +143,13 @@ public class GiftsController {
 				}
 			}
 
+		}
+		HttpSession session = request.getSession();
+		ProductService productService = new ProductService();
+		if(session.getAttribute("favorite") != null) {
+			String txt1 = String.valueOf(session.getAttribute("favorite"));
+			System.out.println("a"+txt1);
+			mv.addObject("listProduct", productService.get_product_by_str(txt1));
 		}
 		mv.addObject("color", colorService.getAllColor());
 		mv.addObject("listSize", sizeService.getAllSize());

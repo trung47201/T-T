@@ -111,6 +111,7 @@ public class ProductColorSizeController {
 				System.out.println("add color size success");
 				mv.addObject("addsuccess", "true");
 			} else {
+				System.out.println("add color size unsuccess");
 				mv.addObject("unsuccess", "false");
 			}
 		}
@@ -158,7 +159,7 @@ public class ProductColorSizeController {
 		if (product != null && color != null && !li_size.equals("")) {
 			if (product_color_sizeService.insertIntoColor_Size(li_size, Integer.parseInt(color),
 					Integer.parseInt(product))) {
-				System.out.println("add color size success");
+				System.out.println("add shoes color size success");
 				return new ModelAndView("redirect: /ShopTandT/admin/gallery/add");
 			} else {
 				mv.addObject("unsuccess", "false");
@@ -255,7 +256,7 @@ public class ProductColorSizeController {
 		if (product != null && color != null && !li_size.equals("")) {
 			if (product_color_sizeService.insertIntoColor_Size(li_size, Integer.parseInt(color),
 					Integer.parseInt(product))) {
-				System.out.println("add color size success");
+				System.out.println("add cloothing color size success");
 				return new ModelAndView("redirect: /ShopTandT/admin/gallery/add");
 			} else {
 				mv.addObject("unsuccess", "false");

@@ -36,7 +36,8 @@
 <link rel="stylesheet"
 	href="<c:url value="/assets/css/checkbox-radio-input.css"/>">
 <title>${ title }:)</title>
-
+<link rel="stylesheet" href="<c:url value="/assets/css/f-favorite.css"/>">
+<jsp:include page="../layouts/user/re-favorite.jsp"></jsp:include>
 <body style="color: #222121;">
 	<c:if test="${ sessionScope.userid != null}">
 		<c:set var="id_user" value="${ sessionScope.userid }" />

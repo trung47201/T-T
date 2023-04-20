@@ -126,7 +126,7 @@ public class aProductController {
 				if (!dir.exists()) {
 					dir.mkdir();
 				}
-				String name = String.valueOf("ti_shoes_" + new Date().getTime() + ".jpg");
+				String name = String.valueOf("TandT_" + new Date().getTime() + ".jpg");
 				File serverFile = new File(dir.getAbsolutePath() + "\\" + name);
 				System.out.println("path: " + serverFile.getPath());
 				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));

@@ -133,14 +133,4 @@ public class LoginService implements LoginRepository {
 		}
 		return false;
 	}
-
-	public static void main(String[] args) {
-		LoginService l = new LoginService();
-		System.out.println(l.checkUserPass("dovantrung47201@gmail.com", "26c92f48534c591674295d6e788f014b"));
-
-		List<User> li = l.getAllUser();
-		for (User user : li) {
-			System.out.println(user.getId() + "-" + user.getPhone_number() + "==" + user.getPassword());
-		}
-	}
 }

@@ -12,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 import TT.Model.Receipt;
 import TT.Service.Admin.aReceiptService;
 import TT.Service.User.ReceiptService;
-import TT.Service.User.PostsService;
 @Controller
 public class ReceiptController {
 	private ReceiptService receiptService;

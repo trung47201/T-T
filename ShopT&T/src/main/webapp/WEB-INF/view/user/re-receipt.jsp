@@ -36,7 +36,8 @@
 <link rel="stylesheet" href="<c:url value="/assets/css/text.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/r-posts.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/re-text.css"/>">
-
+<link rel="stylesheet" href="<c:url value="/assets/css/f-favorite.css"/>">
+<jsp:include page="../layouts/user/re-favorite.jsp"></jsp:include>
 <style>
 .ok-btn button {
 	border: 1px solid;

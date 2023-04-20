@@ -10,7 +10,6 @@ import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
 import TT.Model.Brand;
-import TT.Model.Color;
 import TT.Model.Gallery;
 import TT.Model.Gender;
 import TT.Model.Product;
@@ -28,7 +27,6 @@ public class GalleryService implements GalleryRepository {
 	private Product product;
 	private Sub_category sub_category;
 	private Gender gender;
-	private Color color;
 	
 	@Override
 	public List<Gallery> getAllGallery() {
@@ -41,7 +39,6 @@ public class GalleryService implements GalleryRepository {
 			stmt = (Statement) con.createStatement();
 			ResultSet rs = stmt.executeQuery("select * from gallery "
 					+ "Inner join product on gallery.product_id = product.id "
-					+ "Inner join color on gallery.color_id = color.id "
 					+ "Inner join brand on product.brand_id = brand.id "
 					+ "Inner join sub_category on product.sub_category_id = sub_category.id "
 					+ "Inner join user on product.user_id = user.id "
@@ -56,11 +53,6 @@ public class GalleryService implements GalleryRepository {
 				role = new Role();
 				sub_category = new Sub_category();
 				gender = new Gender();
-				color = new Color();
-				
-				color.setId(rs.getInt("color_id"));
-				color.setColor_name(rs.getString("color_name"));
-				color.setRgb(rs.getString("rgb"));
 				
 				gender.setId(rs.getInt("gender_id"));
 				gender.setGender_name(rs.getString("gender_name"));
@@ -108,7 +100,6 @@ public class GalleryService implements GalleryRepository {
 				gallery.setId(rs.getInt("id"));
 				gallery.setThumbnail(rs.getString("thumbnail"));
 				gallery.setProduct(product);
-				gallery.setColor(color);
 				li.add(gallery);
 			}
 			con.close();
@@ -128,7 +119,7 @@ public class GalleryService implements GalleryRepository {
 		return li;
 	}
 	
-	public boolean checkGallary(String thumbnail, int product_id, int color_id) {
+	public boolean checkGallary(String thumbnail, int product_id) {
 		
 		for (Gallery i : getAllGallery()) {
 			if (i.getThumbnail().equals(thumbnail) && i.getProduct().getId() == product_id) {
@@ -139,20 +130,18 @@ public class GalleryService implements GalleryRepository {
 	}
 	
 
-	public boolean insertIntoGallery(String thumbnail, int product_id, int color_id) {
+	public boolean insertIntoGallery(String thumbnail, int product_id) {
 		try {
 			connectService = new ConnectService();
 			Connection conn = connectService.getConnect();
 
-			if (checkGallary(thumbnail, product_id, color_id)) {
+			if (checkGallary(thumbnail, product_id)) {
 
 			} else {
-				String sql = "INSERT INTO `gallery`(`thumbnail`, `product_id`, `color_id`) " + "VALUES (?, ?, ?)";
+				String sql = "INSERT INTO `gallery`(`thumbnail`, `product_id`) " + "VALUES (?, ?)";
 				PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
 				preparedStmt.setString(1, thumbnail);
 				preparedStmt.setInt(2, product_id);
-				preparedStmt.setInt(3, color_id);
-
 				preparedStmt.execute();
 			}
 			conn.close();

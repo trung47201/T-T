@@ -13,6 +13,7 @@ import TT.Model.User;
 import TT.Service.User.PostsService;
 import TT.Service.User.SubCategoryService;
 import TT.Service.User.UserService;
+import TT.Service.User.Product.ProductService;
 
 @Controller
 public class rePersonalDetailsController {
@@ -38,6 +39,12 @@ public class rePersonalDetailsController {
 		
 		User u = userService.get_user_by_id(id_);
 		
+		ProductService productService = new ProductService();
+		if(session.getAttribute("favorite") != null) {
+			String txt1 = String.valueOf(session.getAttribute("favorite"));
+			System.out.println("a"+txt1);
+			mv.addObject("listProduct", productService.get_product_by_str(txt1));
+		}
 		mv.addObject("user", u);
 		mv.addObject("userID", id_);
 		mv.addObject("user_id", id_);

@@ -165,7 +165,13 @@ public class VoucherController {
 		}
 
 		HashMap<Voucher, Integer> rs = voucherService.get_expiry_date();
-
+		
+		ProductService productService = new ProductService();
+		if(session.getAttribute("favorite") != null) {
+			String txt1 = String.valueOf(session.getAttribute("favorite"));
+			System.out.println("a"+txt1);
+			mv.addObject("listProduct", productService.get_product_by_str(txt1));
+		}
 		mv.addObject("listVoucher", rs);
 		mv.addObject("hmPosts", postsService.listPost());
 		return mv;

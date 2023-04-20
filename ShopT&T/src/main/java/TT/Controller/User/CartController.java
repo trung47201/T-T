@@ -24,6 +24,7 @@ import TT.Service.User.PostsService;
 import TT.Service.User.Product_color_sizeService;
 import TT.Service.User.SubCategoryService;
 import TT.Service.User.UserService;
+import TT.Service.User.Product.ProductService;
 
 @Controller
 public class CartController {
@@ -120,7 +121,12 @@ public class CartController {
 		}
 
 		int id_ = Integer.parseInt(id);
-
+		ProductService productService = new ProductService();
+		if(session.getAttribute("favorite") != null) {
+			String txt = String.valueOf(session.getAttribute("favorite"));
+			System.out.println("a"+txt);
+			mv.addObject("listProduct", productService.get_product_by_str(txt));
+		}
 		mv.addObject("style", subCategoryService.getAllSubCategory());
 		mv.addObject("userID", id_);
 		mv.addObject("user_id", id_);

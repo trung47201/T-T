@@ -59,6 +59,7 @@ public class CheckoutCartController {
 		String note = request.getParameter("note");
 		String method = request.getParameter("paymentmethods");
 		String vccode = request.getParameter("vccode");
+		String vchid = request.getParameter("vchid");
 		String fullname = "";
 		if (firstname != null && lastname != null) {
 			fullname = firstname + " " + lastname;
@@ -98,6 +99,13 @@ public class CheckoutCartController {
 		if (check_vc) {
 			vc_id = voucherService.getVoucherIdByCode(vccode);
 		}
+		if(vchid != null) {
+			if(!vchid.equals("")) {
+				vc_id = Integer.parseInt(vchid);
+			} else {
+				System.out.println("vch: '");
+			}
+		}
 
 		if (note == null) {
 			note = "";
@@ -107,6 +115,7 @@ public class CheckoutCartController {
 		}
 
 		int vch_discount = voucherService.getDiscountById_Voucher(vc_id);
+		System.out.println("---------------------------------------------------------------"+vch_discount);
 		double dis = 0;
 		if (vch_discount > 0) {
 			dis = (double) Math.round(vch_discount * total) / 100;

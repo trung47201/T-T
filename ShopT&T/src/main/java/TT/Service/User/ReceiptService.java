@@ -373,7 +373,6 @@ public class ReceiptService implements OrderRepository {
 		List<Receipt> o = getAllOrder();
 		int id = 0;
 		for (Receipt ord : o) {
-			System.out.println(ord.getId()+"=="+ord.getPhone_number() +"==="+ord.getEmail());
 			if (ord.getEmail().trim().equals(email.trim())
 					&& ord.getPhone_number().trim().equals(phone_number.trim())) {
 				id = ord.getId();

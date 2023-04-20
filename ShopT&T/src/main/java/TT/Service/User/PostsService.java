@@ -4,13 +4,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
-
-import javax.sound.sampled.Port;
-
 import com.mysql.jdbc.Statement;
 
 import TT.Model.Posts;
@@ -45,17 +43,17 @@ public class PostsService {
 		}
 		return li;
 	}
-	
+
 	public HashMap<Integer, List<Posts>> listPost() {
 		HashMap<Integer, List<Posts>> hm = new LinkedHashMap<Integer, List<Posts>>();
-		int count=1;
+		int count = 1;
 		List<Posts> li = getAllPosts();
 		List<Posts> getAll = new ArrayList<>();
 		int idx = 1;
 		for (Posts posts : li) {
-			if(count % 20 == 0) {
+			if (count % 20 == 0) {
 				getAll.add(posts);
-				if(getAll.size() > 0) {
+				if (getAll.size() > 0) {
 					hm.put(idx, getAll);
 					idx++;
 				}
@@ -65,7 +63,13 @@ public class PostsService {
 			}
 			count++;
 		}
-		if(count % 20 != 0) {
+		if (count % 20 != 0) {
+			Collections.sort(getAll, new Comparator<Posts>() {
+				@Override
+				public int compare(Posts o1, Posts o2) {
+					return o2.getId() - o1.getId();
+				}
+			});
 			hm.put(idx, getAll);
 		}
 		return hm;

@@ -37,6 +37,8 @@
 	href="<c:url value="/assets/css/checkbox-radio-input.css"/>">
 <style>
 </style>
+<link rel="stylesheet" href="<c:url value="/assets/css/f-favorite.css"/>">
+<jsp:include page="../layouts/user/re-favorite.jsp"></jsp:include>
 <body style="color: black;">
 	<%
 	response.setHeader("Cache-Control", "no-cache, no-store");

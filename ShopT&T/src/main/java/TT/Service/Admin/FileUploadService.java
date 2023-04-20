@@ -14,8 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class FileUploadService{
 
-	final static String name_of_ti_shoes = "ti_shoes_products_";
-	final static String file_imgafe_name_of_ti_shoes = "ti_shoes_products_.png";
+	final static String name_of_ti_shoes = "TandT_products_";
+	final static String file_imgafe_name_of_ti_shoes = "TandT_products_.png";
 	
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		
@@ -33,7 +33,7 @@ public class FileUploadService{
 					dir.mkdir();
 				}
 				
-				String name = String.valueOf("ti_shoes_"+new Date().getTime()+".jpg" );
+				String name = String.valueOf("TandT_"+new Date().getTime()+".jpg" );
 				File serverFile = new File(dir.getAbsolutePath()+"\\"+name);
 				
 				System.out.println("path: " + serverFile.getPath());

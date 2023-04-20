@@ -37,12 +37,9 @@
 	href="<c:url value="/assets/css/checkbox-radio-input.css"/>">
 <style>
 </style>
+<link rel="stylesheet" href="<c:url value="/assets/css/f-favorite.css"/>">
+<jsp:include page="../layouts/user/re-favorite.jsp"></jsp:include>
 <body style="color: black;">
-	<%
-	if (session.getAttribute("userid") == null) {
-		response.sendRedirect("/ShopTandT/");
-	}
-	%>
 	<jsp:include page="../layouts/user/re-menu.jsp"></jsp:include>
 	<div class="back-header">
 		<jsp:include page="../layouts/user/re-header.jsp"></jsp:include>

@@ -504,10 +504,8 @@ table.table-new-product td {
 				</tr>
 				<tr>
 					<th>ID</th>
-					<th>Thumbnail</th>
-					<th>Product</th>
-					<th>Color</th>
-					<th>Description</th>
+					<th>Image</th>
+					<th>Name</th>
 					<th class="td-action">Action</th>
 				</tr>
 			</thead>
@@ -519,9 +517,6 @@ table.table-new-product td {
 							src="<c:url value="/assets/images/products/${ liGallery.thumbnail }"/>"
 							alt=""></td>
 						<td>${ liGallery.product.title }</td>
-						<td><span class="td-color-product"
-							style="background: ${ liGallery.color.rgb };"></span></td>
-						<td></td>
 						<td class="td-action">
 							<button class="btn-details-gallery">
 								<img

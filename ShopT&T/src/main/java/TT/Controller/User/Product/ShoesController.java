@@ -19,6 +19,7 @@ import TT.Service.User.PostsService;
 import TT.Service.User.SizeService;
 import TT.Service.User.SubCategoryService;
 import TT.Service.User.UserService;
+import TT.Service.User.Product.ProductService;
 import TT.Service.User.Product.ShoesService;
 
 @Controller
@@ -141,6 +142,13 @@ public class ShoesController {
 			}
 
 		}
+		HttpSession session = request.getSession();
+		ProductService productService = new ProductService();
+		if(session.getAttribute("favorite") != null) {
+			String txt1 = String.valueOf(session.getAttribute("favorite"));
+			System.out.println("a"+txt1);
+			mv.addObject("listProduct", productService.get_product_by_str(txt1));
+		}
 		mv.addObject("color", colorService.getAllColor());
 		mv.addObject("listSize", sizeService.getAllSize());
 		mv.addObject("style", subCategoryService.getAllSubCategory());
@@ -254,6 +262,13 @@ public class ShoesController {
 					mv.addObject("listProducts", shoesService.getAllProductsColorSize(hm));
 				}
 			}
+		}
+		HttpSession session = request.getSession();
+		ProductService productService = new ProductService();
+		if(session.getAttribute("favorite") != null) {
+			String txt1 = String.valueOf(session.getAttribute("favorite"));
+			System.out.println("a"+txt1);
+			mv.addObject("listProduct", productService.get_product_by_str(txt1));
 		}
 		mv.addObject("userID", id);
 		int id_user = Integer.parseInt(id);

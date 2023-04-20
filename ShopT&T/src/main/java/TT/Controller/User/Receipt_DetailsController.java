@@ -16,6 +16,7 @@ import TT.Service.User.ReceiptService;
 import TT.Service.User.Receipt_detailsService;
 import TT.Service.User.SubCategoryService;
 import TT.Service.User.UserService;
+import TT.Service.User.Product.ProductService;
 
 @Controller
 public class Receipt_DetailsController {
@@ -70,7 +71,12 @@ public class Receipt_DetailsController {
 		for (Receipt_details i : receipt_detailsService.get_all_order_details_by_order_id(Integer.parseInt(order_id))) {
 			System.out.println(i.getProd().getDiscount() + "--" + i.getProd().getId() + "==" + i.getReceipt().getId());
 		}
-
+		ProductService productService = new ProductService();
+		if(session.getAttribute("favorite") != null) {
+			String txt = String.valueOf(session.getAttribute("favorite"));
+			System.out.println("a"+txt);
+			mv.addObject("listProduct", productService.get_product_by_str(txt));
+		}
 		mv.addObject("totalPaid", receipt_detailsService.total_order_by_id_order(Integer.parseInt(order_id)));
 		mv.addObject("total", receipt_detailsService.total_order_by_id_order(Integer.parseInt(order_id)));
 		mv.addObject("avatar", userService.getAvatarByUserID(Integer.parseInt(id)));

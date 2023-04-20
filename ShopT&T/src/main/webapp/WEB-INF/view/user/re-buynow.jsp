@@ -35,6 +35,18 @@
 .price-product-checkout {
     padding-right: 10px;
 }
+.back {
+    height: 100%;
+    padding-left: 40px;
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+.header {
+	display: flex;
+}
 </style>
 <body>
 	<%
@@ -48,6 +60,7 @@
 	<form action="/ShopTandT/cart/checkout/ok/${ id }" method="post"
 		id="myform">
 		<div class="header">
+			<div class="back"><a href="">BACK</a></div>
 			<c:if test="${ sessionScope.userid != null }">
 				<c:if test="${ sessionScope.avatar != null }">
 					<div class="avt">
@@ -1196,14 +1209,6 @@ s			});
 			 $("#district").val(district);
 		});
 	</script>
-
-	<script type="text/javascript">
-	history.pushState(null, null, location.href);
-	window.onpopstate = function () {
-	  history.go(1);
-	};
-	</script>
-
 
 	<script type="text/javascript">
 		if ( window.history.replaceState ) {

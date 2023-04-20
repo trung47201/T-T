@@ -16,6 +16,7 @@
 	value="0" readonly>
 </c:if>
 <div class="wrap-list none">
+	<div class="favorite-footer"></div>
 	<div class="favorite-header">
 		<div class="wrap-header">
 			<div class="header-link">
@@ -33,7 +34,7 @@
 				src="<c:url value="/assets/images/icons/icons8-menu-vertical-102.png"/>"
 				alt="">
 		</div>
-		<hr>
+		<hr class="favorite">
 		<c:set var="idx" value="${ 0 }" />
 		<c:if test="${ listProduct != null || sessionScope.favorite != null }">
 			<c:if test="${ sessionScope.favorite != ''}">
@@ -90,7 +91,7 @@
 			</c:if>
 		</c:if>
 	</div>
-	<div class="favorite-footer"></div>
+	
 </div>
 
 <script

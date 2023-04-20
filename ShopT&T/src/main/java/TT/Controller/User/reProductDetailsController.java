@@ -14,6 +14,7 @@ import TT.Service.User.PostsService;
 import TT.Service.User.Product_color_sizeService;
 import TT.Service.User.SubCategoryService;
 import TT.Service.User.UserService;
+import TT.Service.User.Product.ProductService;
 import TT.Service.User.Product.ShoesService;
 
 @Controller
@@ -72,8 +73,8 @@ public class reProductDetailsController {
 		String id_user = user_prod.split("_")[0];
 		String id_prod = user_prod.split("_")[1];
 		String buy = request.getParameter("buynow");
+		HttpSession session = request.getSession();
 		if (buy != null) {
-			HttpSession session = request.getSession();
 			session.setAttribute("order", "start");
 		}
 		
@@ -94,7 +95,12 @@ public class reProductDetailsController {
 			mv.addObject("userID", Integer.parseInt(id_user));
 		}
 		
-		
+		ProductService productService = new ProductService();
+		if(session.getAttribute("favorite") != null) {
+			String txt = String.valueOf(session.getAttribute("favorite"));
+			System.out.println("a"+txt);
+			mv.addObject("listProduct", productService.get_product_by_str(txt));
+		}
 		mv.addObject("subcategory", subCategoryService.getAllSubCategory());
 		mv.addObject("avatar", userService.getAvatarByUserID(Integer.parseInt(id_user)));
 		mv.addObject("user_prod", user_prod);

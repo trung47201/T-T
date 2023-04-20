@@ -319,7 +319,6 @@ public class CheckoutController {
 				mv.addObject("listVoucher",
 						voucher_saveService.get_all_voucher_save_by_user_id(Integer.parseInt(id_user)));
 			}
-			
 		}
 
 		if (quantity != null) {
@@ -355,7 +354,6 @@ public class CheckoutController {
 			mv.addObject("avatar", avt);
 			mv.addObject("userID", id_user);
 			mv.addObject("id_user", id_user);
-
 		}
 		mv.addObject("back_home", "cart");
 		mv.addObject("hmPosts", postsService.listPost());
@@ -387,7 +385,7 @@ public class CheckoutController {
 		}
 
 		ModelAndView mv = new ModelAndView("user/checkout-cart-user");
-		System.out.println("checkout cart -> order with user id (360)");
+		System.out.println("checkoutController -> order with user id (390)");
 
 		userService = new UserService();
 		cartService = new CartService();
@@ -396,13 +394,20 @@ public class CheckoutController {
 		checkoutService = new CheckoutService();
 		voucherService = new VoucherService();
 		receiptService = new ReceiptService();
+		voucher_saveService = new Voucher_SaveService();
 		
 		int user_id = 0;
 		double total = 0;
 		String address = "", city = "", district = "", village = "";
 		String voucher = request.getParameter("voucher");
+		String vchid = request.getParameter("vchid");
+		
 		if (voucher != null) {
 			mv.addObject("voucher", voucher);
+		} else if (vchid != null) {
+			mv.addObject("vchid", vchid);
+			System.out.println(vchid);
+			voucher = voucherService.get_voucher_code_by_id(Integer.parseInt(vchid));
 		}
 		List<Cart> li = cartService.get_all_cart_by_string(id);
 		if (li.size() > 0) {
@@ -417,8 +422,10 @@ public class CheckoutController {
 					total += cart.getColor_size().getProd().getPrice() * cart.getQuantity();
 				}
 			}
+			mv.addObject("limit", total);
 			mv.addObject("total", total);
 			mv.addObject("listCart", li);
+			
 		}
 
 		if (user_id != 0) {
@@ -437,6 +444,8 @@ public class CheckoutController {
 			mv.addObject("user", userService.get_user_by_id(user_id));
 			// back home
 			mv.addObject("back_home", "cart");
+			mv.addObject("listVoucher",
+					voucher_saveService.get_all_voucher_save_by_user_id((user_id)));
 		}
 		if (voucher != null) {
 			if (voucherService.voucher_exists_by_code(voucher)) {
@@ -457,8 +466,8 @@ public class CheckoutController {
 							} else {
 								if (user_id != 0) {
 									if (receiptService.check_voucher_used_by_user_id(user_id, voucher)) {
-										System.out.println(voucher);
 										int vch_discount = voucherService.get_discount_by_voucher_code(voucher);
+										System.out.println("dis: "+vch_discount +"; total: " +total);
 										mv.addObject("vcdiscount", (double) Math.round(vch_discount * total) / 100);
 										mv.addObject("vcstatus", "start");
 										System.out.println("vcstart");

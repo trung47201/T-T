@@ -14,6 +14,7 @@ import TT.Service.User.Receipt_detailsService;
 import TT.Service.User.PostsService;
 import TT.Service.User.SubCategoryService;
 import TT.Service.User.UserService;
+import TT.Service.User.Product.ProductService;
 
 
 @Controller
@@ -52,7 +53,12 @@ public class ViewReceiptController {
 		if(receipt_detailsService.get_all_order_details_by_user_id(Integer.parseInt(id)).size() > 0) {
 			mv.addObject("listReceipt_detalis", receipt_detailsService.get_all_order_details_by_user_id(Integer.parseInt(id)));
 		}
-		
+		ProductService productService = new ProductService();
+		if(session.getAttribute("favorite") != null) {
+			String txt1 = String.valueOf(session.getAttribute("favorite"));
+			System.out.println("a"+txt1);
+			mv.addObject("listProduct", productService.get_product_by_str(txt1));
+		}
 		mv.addObject("avatar", userService.getAvatarByUserID(Integer.parseInt(id)));
 		mv.addObject("userID", id);
 		mv.addObject("style", subCategoryService.getAllSubCategory());

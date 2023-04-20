@@ -21,16 +21,15 @@ public class aGalleryService implements aGalleryRepository {
 		return galleryService.getAllGallery();
 	}
 
-	public boolean insert(int prodid, int colorid, String thumbnail) {
+	public boolean insert(int prodid, String thumbnail) {
 		try {
 			connectService = new ConnectService();
 			Connection conn = connectService.getConnect();
-			String sql = "INSERT INTO `gallery`(`thumbnail`, `product_id`, `color_id`) "
-					+ "VALUES (?, ?, ?)";
+			String sql = "INSERT INTO `gallery`(`thumbnail`, `product_id`) "
+					+ "VALUES (?, ?)";
 			PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
 			preparedStmt.setString(1, thumbnail);
 			preparedStmt.setInt(2, prodid);
-			preparedStmt.setInt(3, colorid);
 			preparedStmt.execute();
 			conn.close();
 			return true;

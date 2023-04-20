@@ -37,6 +37,8 @@
 	href="<c:url value="/assets/css/f-btn-effect.css"/>">
 <style>
 </style>
+<link rel="stylesheet" href="<c:url value="/assets/css/f-favorite.css"/>">
+<jsp:include page="../layouts/user/re-favorite.jsp"></jsp:include>
 <body style="color: #222121;">
 	<jsp:include page="../layouts/user/re-menu.jsp"></jsp:include>
 

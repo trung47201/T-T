@@ -86,6 +86,16 @@ table.table-new-product {
 input.cancel {
     width: 124px;
 }
+
+.gallery {
+    width: 515px;
+    height: 537px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.gallery img {
+    width: 100%;
+}
 </style>
 
 <body>
@@ -138,35 +148,14 @@ input.cancel {
 								</div>
 							</td>
 							<td rowspan="4" class="td-img-display">
-								<div class="img-display">
-									<img src="" id="preview">
-								</div>
+								<div class="gallery"></div>
 							</td>
-						</tr>
-						<tr>
-							<td>
-								<div class="id-new-product">
-									<p>Color</p>
-									<select class="selected-add-new-product" id="select-color"
-										name="color">
-										<option value="" disabled="disabled" selected>Choose
-											color</option>
-
-										<c:forEach var="liColor" items="${ listColor }">
-											<option value="${ liColor.id }"
-												style="background-color: ${ liColor.rgb };">${ liColor.id }
-												- ${ liColor.color_name }</option>
-										</c:forEach>
-									</select>
-								</div>
-							</td>
-
 						</tr>
 						<tr>
 							<td>
 								<div class="id-new-product">
 									<p>Image</p>
-									<input type="file" id="filetag" name="filetag">
+									<input type="file" multiple id="filetag" name="filetag">
 								</div>
 							</td>
 						</tr>
@@ -216,14 +205,11 @@ input.cancel {
 		$("#btn-addnewproduct").click(
 				function() {
 					var product = $('#select-product').find(":selected").val();
-					var color = $('#select-color').find(":selected").val();
 					var file = $('input[type=file]').val();
 					var error = "";
 
 					if (product == "") {
 						error += "You haven't chosen a product yet!! \n";
-					} else if (color == "") {
-						error += "You haven't chosen a color yet!! \n";
 					} else if (file == "") {
 						error += "You haven't chosen a image yet!! \n";
 					}
@@ -266,27 +252,42 @@ input.cancel {
 	</c:if>
 	
 	<!-- choose image and display -->
-	<script>
+	<!-- <script>
 		var fileTag = document.getElementById("filetag"), preview = document
 				.getElementById("preview");
-
 		fileTag.addEventListener("change", function() {
 			changeImage(this);
 		});
-
 		function changeImage(input) {
 			var reader;
-
 			if (input.files && input.files[0]) {
 				reader = new FileReader();
-
 				reader.onload = function(e) {
 					preview.setAttribute('src', e.target.result);
 				}
-
 				reader.readAsDataURL(input.files[0]);
 			}
 		}
+	</script> -->
+	<script type="text/javascript">
+		$(function() {
+		    // Multiple images preview in browser
+		    var imagesPreview = function(input, placeToInsertImagePreview) {
+		        if (input.files) {
+		            var filesAmount = input.files.length;
+		            for (i = 0; i < filesAmount; i++) {
+		                var reader = new FileReader();
+		                reader.onload = function(event) {
+		                    $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
+		                }
+		                reader.readAsDataURL(input.files[i]);
+		            }
+		        }
+		    };
+		    $('#filetag').on('change', function() {
+		        imagesPreview(this, 'div.gallery');
+		    });
+		});
 	</script>
 	<script type="text/javascript">
 		if (window.history.replaceState) {
