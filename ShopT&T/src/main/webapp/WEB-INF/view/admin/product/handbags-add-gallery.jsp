@@ -1,4 +1,5 @@
-	<!DOCTYPE html>
+
+<!DOCTYPE html>
 <html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
@@ -6,7 +7,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<title>Add Gallery</title>
+<title>Add Handbags gallery</title>
 
 <link rel="stylesheet"
 	href="<c:url value='/assets/css/re-admin-product2.css'/>">
@@ -21,7 +22,7 @@
 	href="<c:url value='/assets/css/re-dashboard4.css'/>">
 <link rel="stylesheet"
 	href="<c:url value='/assets/css/admin-nav2.css'/>">
-
+<link rel="stylesheet" href="<c:url value='/assets/css/colorjoe.css'/>">
 <style>
 .message input {
 	width: 100px;
@@ -34,7 +35,7 @@
 }
 
 .id-new-product {
-	margin-top: 20px;
+	margin-top: 7px;
 	width: 100%;
 }
 
@@ -47,7 +48,7 @@
 }
 
 .id-new-product-size {
-	margin-top: 20px;
+	margin-top: 15px;
 }
 
 .list-size-add-new-product {
@@ -56,8 +57,8 @@
 }
 
 .btn-add-new-product {
-	margin-top: 0;
 	margin-left: -30px;
+	margin-top: 15px;
 }
 
 .list-size-add-new-product span {
@@ -65,46 +66,95 @@
 	width: 40px;
 	justify-content: unset;
 	padding: 0 10px;
+	margin-right: 18%;
 }
 
 .list-size-add-new-product input {
 	width: 80px;
-	margin-left: 10px;
+	margin-left: 30px;
+	border: 2px solid #cb82a9;
 }
+
 table.table-new-product {
-    margin-top: 30px;
-    width: 100%;
+	width: 100%;
 }
+
 .img-display {
-    max-width: 540px;
-    height: 540px;
-    overflow: hidden;
-    justify-content: center;
-    display: flex;
+	max-width: 540px;
+	height: 540px;
+	overflow: hidden;
+	justify-content: center;
+	display: flex;
+	margin-top: 15px;
 }
+
 .selected-add-new-product {
-    width: 90%;
+	width: 90%;
 }
+
 input.cancel {
-    width: 124px;
+	width: 124px;
 }
 
 .gallery {
-    width: 515px;
-    height: 537px;
-    overflow-y: scroll;
-    overflow-x: hidden;
+	width: 515px;
+	height: 510px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	margin-top: 15px;
 }
+
 .gallery img {
-    width: 100%;
+	width: 100%;
+}
+
+.container {
+	margin-left: 52px;
+	margin-top: 0px;
+	width: 527px;
+}
+
+.new-color-size-clothing td {
+	width: 50%;
+}
+
+.form-add-color input {
+	margin-top: 10px;
+	padding: 5px 10px;
+}
+
+.form-add-color button {
+	cursor: pointer;
+	margin-top: 27px;
+	padding: 5px 30px;
+	background: #cb82a9;
+	color: white;
+}
+
+.list-size-add-new-product div {
+	margin-bottom: 10px;
+	display: flex;
+	width: 100%;
+}
+
+.list-size-add-new-product {
+	width: 90%;
+	display: block;
+	height: 110px;
+	overflow-y: scroll;
+	border: 1px solid #cb82a9;
+	border-right: 0;
+	border-left: 0;
+	padding-top: 4px;
+	padding-left: 20px;
 }
 </style>
 
 <body>
 	<div class="admin-body">
-		<jsp:include page="../layouts/admin/a-nav.jsp"></jsp:include>
+		<jsp:include page="../../layouts/admin/a-nav.jsp"></jsp:include>
 		<section class="admin-shoes-product">
-			<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
+			<jsp:include page="../../layouts/admin/a-header.jsp"></jsp:include>
 
 			<div class="nav-history">
 				<div class="origin">
@@ -119,24 +169,18 @@ input.cancel {
 						src="<c:url value="/assets/images/icons/icons8-dirty-clothes-100.png"/>"
 						alt=""> <a href="">Products</a>
 				</div>
-				<div>
-					<p>/</p>
-					<img
-						src="<c:url value="/assets/images/icons/icons8-dirty-clothes-100.png"/>"
-						alt=""> <a href="/ShopTandT/admin/gallery">Gallery</a>
-				</div>
+
 				<div>
 					<p>/</p>
 					<img
 						src="<c:url value="/assets/images/icons/icons8-add-64-title.png"/>"
-						alt=""> <a href="">Add new Gallery</a>
+						alt=""> <a href="">Add new Color Size</a>
 				</div>
 			</div>
 
 			<div class="table-add-new-product">
-				<form
-					action="/ShopTandT/admin/gallery/add/savefile"
-					method="post" enctype="multipart/form-data">
+				<form action="/ShopTandT/admin/product/handbags-gallery/savefile"
+					id="myform" method="post" enctype="multipart/form-data">
 					<table class="table-new-product">
 						<tr>
 							<td>
@@ -154,7 +198,7 @@ input.cancel {
 									</select>
 								</div>
 							</td>
-							<td rowspan="4" class="td-img-display">
+							<td rowspan="6" class="td-img-display">
 								<div class="gallery"></div>
 							</td>
 						</tr>
@@ -177,7 +221,7 @@ input.cancel {
 					</table>
 				</form>
 			</div>
-			<jsp:include page="../layouts/admin/a-footer.jsp"></jsp:include>
+			<jsp:include page="../../layouts/admin/a-footer.jsp"></jsp:include>
 		</section>
 	</div>
 
@@ -222,7 +266,7 @@ input.cancel {
 					}
 
 					if (error == "") {
-						$(this).attr('type', 'submit');
+						$("#myform").submit();
 					} else {
 						$(".message-done").removeClass("none");
 						$(".content-msg-done").text(error);
@@ -235,47 +279,29 @@ input.cancel {
 					}
 				});
 	</script>
-	
-	
-	<c:if test="${ sessionScope.addgallery != null }">
+
+
+	<c:if test="${ sessionScope.addhandbags != null }">
 		<script type="text/javascript">
-			var check = "${sessionScope.addgallery}";
+			var check = "${ sessionScope.addhandbags }";
 			if(check =="true") {
 				$("#gallery-add").removeClass("none");
 				$("#gallery-add .content-msg-notify").text("Continue add gallery?");
 				$("#gallery-add .ok-notify").click(function(){
 					var xhr = new XMLHttpRequest();
-					xhr.open("GET", "/ShopTandT/admin/gallery/add?continue");
+					xhr.open("GET", "/ShopTandT/admin/product/handbags/add-gallery?continue");
 					xhr.onload = function() {
-						window.location.assign("/ShopTandT/admin/gallery/add");
+						window.location.assign("/ShopTandT/admin/product/handbags/add-gallery");
 					};
 					xhr.send();
 				});
 				$("#gallery-add .cancel").click(function(){
-					window.location.href = "/ShopTandT/admin/gallery";
+					window.location.href = "/ShopTandT/admin/product/handbags";
 				});
 			}
 		</script>
 	</c:if>
-	
-	<!-- choose image and display -->
-	<!-- <script>
-		var fileTag = document.getElementById("filetag"), preview = document
-				.getElementById("preview");
-		fileTag.addEventListener("change", function() {
-			changeImage(this);
-		});
-		function changeImage(input) {
-			var reader;
-			if (input.files && input.files[0]) {
-				reader = new FileReader();
-				reader.onload = function(e) {
-					preview.setAttribute('src', e.target.result);
-				}
-				reader.readAsDataURL(input.files[0]);
-			}
-		}
-	</script> -->
+
 	<script type="text/javascript">
 		$(function() {
 		    // Multiple images preview in browser
@@ -296,6 +322,7 @@ input.cancel {
 		    });
 		});
 	</script>
+
 	<script type="text/javascript">
 		if (window.history.replaceState) {
 			window.history.replaceState(null, null, window.location.href);

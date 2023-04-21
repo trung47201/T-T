@@ -92,18 +92,19 @@ public class SubCategoryService implements StyleRepository {
 		}
 		return cate_id;
 	}
-	public boolean insert(String name) {
+	public boolean insert(String name, int category_id) {
 		try {
 			connectService = new ConnectService();
 			Connection conn = connectService.getConnect();
-			String sql = "INSERT INTO `sub_category`(`sub_category_name`) " + "VALUES (?)";
+			String sql = "INSERT INTO `sub_category`(`sub_category_name`, `category_id`) " + "VALUES (?, ?)";
 			PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
 			preparedStmt.setString(1, name);
+			preparedStmt.setInt(2, category_id);
 			preparedStmt.execute();
 			conn.close();
 			return true;
 		} catch (Exception e) {
-			System.out.println("got an exception (54) styleService");
+			System.out.println("got an exception (107) subcategoryService");
 			e.printStackTrace();
 		}
 		return false;

@@ -4,7 +4,10 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import TT.Model.Sub_category;
 import TT.Service.Admin.aProductService;
 import TT.Service.User.BrandService;
 import TT.Service.User.GenderService;
@@ -33,7 +37,7 @@ public class aProductController {
 	private GenderService genderService;
 	private aProductService aProductService;
 
-	@RequestMapping(value = { "/admin/product/edit/{id}" })
+	@RequestMapping(value = { "/admin/product/update/{id}" })
 	public ModelAndView edit_product(@PathVariable String id, HttpServletRequest request,
 			HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("admin/product-edit");
@@ -43,7 +47,14 @@ public class aProductController {
 		brandService = new BrandService();
 		genderService = new GenderService();
 
-		mv.addObject("subcategory", subCategoryService.getAllSubCategory());
+		List<Sub_category> subcategory = subCategoryService.getAllSubCategory();
+		Collections.sort(subcategory, new Comparator<Sub_category>() {
+			@Override
+			public int compare(Sub_category o1, Sub_category o2) {
+				return o1.getCategory().getCategory_name().compareTo(o2.getCategory().getCategory_name());
+			}
+		});
+		mv.addObject("subcategory", subcategory);
 		mv.addObject("brand", brandService.getAllBrand());
 		mv.addObject("gender", genderService.getAllGender());
 		mv.addObject("product", shoesService.getProduct(Integer.parseInt(id)));

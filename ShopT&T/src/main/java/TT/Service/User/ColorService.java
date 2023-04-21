@@ -3,7 +3,6 @@ package TT.Service.User;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,4 +78,13 @@ public class ColorService implements ColorRepository {
 		return false;
 	}
 
+	public int get_last_id_color() {
+		int id=0;
+		List<Color> li = getAllColor();
+		for (Color c : li) {
+			id = c.getId();
+		}
+		return id;
+	}
+	
 }

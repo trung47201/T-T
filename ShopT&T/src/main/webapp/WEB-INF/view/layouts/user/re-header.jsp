@@ -46,14 +46,9 @@
 			</div>
 			<div class="nav-left">
 				<ul>
-					<c:if test="${ sessionScope.userid == nulll }">
-						<li class="link"><a href="/ShopTandT/products/jewelry">JEWELRY</a></li>
-					</c:if>
 					<li class="link"><a href="/ShopTandT/products/handbags">HANDBAGS</a></li>
 					<li class="link"><a href="/ShopTandT/products/accessories">ACCESSORIES</a></li>
-					<c:if test="${ sessionScope.userid != nulll }">
-						<li class="link"><a href="/ShopTandT/voucher">VOUCHER</a></li>
-					</c:if>
+					<li class="link"><a href="/ShopTandT/voucher">VOUCHER</a></li>
 					<li>
 						<div class="nav-btn">
 							<div>

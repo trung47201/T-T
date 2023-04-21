@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<title>Login :)</title>
+<title>Login</title>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -20,7 +20,16 @@
 <link rel="stylesheet" href="<c:url value="/assets/css/r-posts.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/r-footer.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/re-text.css"/>">
-<link rel="stylesheet" href="<c:url value="/assets/css/f-favorite.css"/>">
+<link rel="stylesheet"
+	href="<c:url value="/assets/css/f-favorite.css"/>">
+<style>
+.cancel-voucher {
+	cursor: pointer; font-size : 12px;
+	color: gray;
+	margin-top: 8px;
+	font-size: 12px;
+}
+</style>
 <jsp:include page="../layouts/user/re-favorite.jsp"></jsp:include>
 <body>
 	<%
@@ -48,6 +57,9 @@
 
 	<div class="wrapper-form-signup container">
 		<form action="/ShopTandT/account/login" method="post">
+			<c:if test="${ sessionScope.savelogin != null }">
+					<div class="save-vc" style="margin-top: 10px; color: #cb82a9;">Login to use Voucher!</div>
+				</c:if>
 			<div class="login_form">
 				<div class="form-input">
 					<div class="right-form-input">
@@ -80,6 +92,9 @@
 				<div class="fotter">
 					or <a href="/ShopTandT/account/register">Create an Account</a>
 				</div>
+				<c:if test="${ sessionScope.savelogin != null }">
+					<div class="cancel-voucher" id="cancel-voucher">&lt;Cancel</div>
+				</c:if>
 			</div>
 		</form>
 	</div>
@@ -88,6 +103,12 @@
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
+	<script type="text/javascript">
+		 $("#cancel-voucher").click(function(){
+			 window.history.back();
+		 });
+	</script>
+	
 	<script type="text/javascript">
 		// click to show password 
 		$("#eye-hidden-pw").click(function() {
@@ -116,7 +137,7 @@
 		}
 	}
 	</script>
-	
+
 	<script> //SIGN UP
 		$(".signup").click(function() {
 			var toSubmit = this;

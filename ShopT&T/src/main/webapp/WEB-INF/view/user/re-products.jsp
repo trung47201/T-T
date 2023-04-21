@@ -23,13 +23,14 @@
 <link rel="stylesheet"
 	href='<c:url value="/assets/css/login-icon.css"/>'>
 <link rel="stylesheet" href="<c:url value="/assets/css/navscroll.css"/>">
+<link rel="stylesheet"
+	href="<c:url value="/assets/css/f-zoom-img.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/r-header.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/re-menu.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/r-posts.css"/>">
 <link rel="stylesheet"
 	href="<c:url value="/assets/css/r-products.css"/>">
-<link rel="stylesheet"
-	href="<c:url value="/assets/css/f-zoom-img.css"/>">
+
 <link rel="stylesheet" href="<c:url value="/assets/css/f-effect.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/r-footer.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/re-text.css"/>">

@@ -4,9 +4,6 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -19,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.fileupload.FileUploadException;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,7 +26,6 @@ import org.springframework.web.servlet.ModelAndView;
 import TT.Model.Gallery;
 import TT.Model.Product;
 import TT.Service.Admin.aGalleryService;
-import TT.Service.Admin.aProd_Color_SizeService;
 import TT.Service.User.Product.ShoesService;
 
 @Controller
@@ -77,18 +74,46 @@ public class aGalleryController {
 			}
 		});
 		mv.addObject("listProduct", product);
-
 		return mv;
 	}
 
-	private final Path root = Paths.get("uploads");
+	@RequestMapping(value = { "/admin/gallery/update/{id}" })
+	public ModelAndView gallery_edit(@PathVariable String id, HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView("admin/gallery-edit");
 
-	public void save(MultipartFile file) {
-		try {
-			Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
-		} catch (Exception e) {
-			throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
+		shoesService = new ShoesService();
+		aGalleryService = new aGalleryService();
+
+		mv.addObject("gallery", aGalleryService.get_gallery_by_id(Integer.parseInt(id)));
+
+		List<Product> product = shoesService.getAllProducts();
+		Collections.sort(product, new Comparator<Product>() {
+			@Override
+			public int compare(Product o1, Product o2) {
+				return o2.getId() - o1.getId();
+			}
+		});
+		mv.addObject("listProduct", product);
+		return mv;
+	}
+
+	@RequestMapping(value = "/admin/gallery/update/savefile/{id}", method = RequestMethod.POST)
+	public ModelAndView update_gallery_save(@RequestParam(value = "filetag", required = false) MultipartFile file,
+			HttpServletRequest request, HttpServletResponse response, @PathVariable("id") String id)
+			throws IOException, ServletException, FileUploadException {
+		aGalleryService = new aGalleryService();
+		String prodid = request.getParameter("product");
+		String galleryid = request.getParameter("galleryid");
+		String image = saveFile(file);
+		if (image != null && prodid != null && galleryid != null) {
+			if(aGalleryService.update(Integer.parseInt(prodid), image, Integer.parseInt(galleryid))) {
+				return new ModelAndView("redirect: /ShopTandT/admin/gallery");
+			}
+		} else {
+			System.out.println("unsuccess image null");
 		}
+		return new ModelAndView("redirect: /ShopTandT/admin/gallery/update/"+id);
 	}
 
 	@RequestMapping(value = "/admin/gallery/add/savefile", method = RequestMethod.POST)
@@ -106,6 +131,7 @@ public class aGalleryController {
 				if (image != null) {
 					if (prodid != null) {
 						if (aGalleryService.insert(Integer.parseInt(prodid), image)) {
+							check = true;
 							System.out.println("success");
 						} else {
 							System.out.println("unsuccess");

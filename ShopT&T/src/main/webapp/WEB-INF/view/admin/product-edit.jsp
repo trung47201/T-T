@@ -8,14 +8,19 @@
 <c:if test="${ productedit == 'true' }">
 	<title>Update :)</title>
 </c:if>
-<link rel="stylesheet" href="<c:url value='/assets/css/re-admin-edit-product.css'/>">
+<link rel="stylesheet"
+	href="<c:url value='/assets/css/re-admin-edit-product.css'/>">
 <link rel="stylesheet"
 	href="<c:url value='/assets/css/re-admin-login.css'/>">
-<link rel="stylesheet" href="<c:url value='/assets/css/re-search3.css'/>">
-<link rel="stylesheet" href="<c:url value='/assets/css/re-message.css'/>">
+<link rel="stylesheet"
+	href="<c:url value='/assets/css/re-search3.css'/>">
+<link rel="stylesheet"
+	href="<c:url value='/assets/css/re-message.css'/>">
 <link rel="stylesheet" href="<c:url value='/assets/css/re-admin3.css'/>">
-<link rel="stylesheet" href="<c:url value='/assets/css/re-dashboard4.css'/>">
-<link rel="stylesheet" href="<c:url value='/assets/css/admin-nav2.css'/>">
+<link rel="stylesheet"
+	href="<c:url value='/assets/css/re-dashboard4.css'/>">
+<link rel="stylesheet"
+	href="<c:url value='/assets/css/admin-nav2.css'/>">
 
 <style>
 td {
@@ -41,20 +46,21 @@ td#colspan2 .id-new-product {
 }
 
 .table-add-new-product {
-    margin-top: 0px !important;
+	margin-top: 0px !important;
 }
+
 .btn-add-new-product input:hover {
-cursor: pointer;
+	cursor: pointer;
 }
 </style>
 
 <body>
 	<%
-		if(session.getAttribute("adminID") == null) {
-			response.sendRedirect("/ShopTandT/login");
-		}
+	if (session.getAttribute("adminID") == null) {
+		response.sendRedirect("/ShopTandT/login");
+	}
 	%>
-	
+
 	<div class="admin-body">
 		<jsp:include page="../layouts/admin/a-nav.jsp"></jsp:include>
 
@@ -62,7 +68,7 @@ cursor: pointer;
 
 		<c:if test="${ productedit == 'true' }">
 			<section class="admin-shoes-product">
-			<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
+				<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
 				<div class="title">
 					<img
 						src="<c:url value="/assets/images/icons/icons8-edit-100-title.png"/>"
@@ -72,7 +78,7 @@ cursor: pointer;
 		</c:if>
 		<c:if test="${ productedit == 'false'}">
 			<section class="admin-shoes-product none">
-			<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
+				<jsp:include page="../layouts/admin/a-header.jsp"></jsp:include>
 		</c:if>
 
 		<div class="nav-history">
@@ -155,12 +161,14 @@ cursor: pointer;
 								name="style">
 								<option value="" disabled="disabled" selected>Choose
 									style</option>
-								<c:forEach var="liStyle" items="${ style }">
-									<c:if test="${ liStyle.id == product.style.id }">
-										<option value="${ liStyle.id }" selected>${ liStyle.sub_category_name }</option>
+								<c:forEach var="liStyle" items="${ subcategory }">
+									<c:if test="${ liStyle.id == product.sub_category.id }">
+										<option value="${ liStyle.id }" selected>${ liStyle.category.category_name }
+											- ${ liStyle.sub_category_name }</option>
 									</c:if>
-									<c:if test="${ liStyle.id != product.style.id }">
-										<option value="${ liStyle.id }">${ liStyle.sub_category_name }</option>
+									<c:if test="${ liStyle.id != product.sub_category.id }">
+										<option value="${ liStyle.id }">${ liStyle.category.category_name }
+											- ${ liStyle.sub_category_name }</option>
 									</c:if>
 								</c:forEach>
 							</select>
@@ -326,7 +334,8 @@ cursor: pointer;
 		});
 	</script>
 
-	<script><!-- choose image and display -->
+	<script>
+	<!-- choose image and display -->
 		var fileTag = document.getElementById("filetag"), preview = document
 				.getElementById("preview");
 

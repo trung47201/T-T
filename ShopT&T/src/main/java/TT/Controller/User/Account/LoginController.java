@@ -17,6 +17,7 @@ import TT.Service.User.CartService;
 import TT.Service.User.LoginService;
 import TT.Service.User.PostsService;
 import TT.Service.User.Product_color_sizeService;
+import TT.Service.User.Voucher_SaveService;
 
 @Controller
 public class LoginController {
@@ -24,6 +25,7 @@ public class LoginController {
 	private LoginService loginService;
 	private Product_color_sizeService product_color_sizeService;
 	private CartService cartService;
+	private Voucher_SaveService voucher_saveService;
 
 	@RequestMapping(value = { "account/login" })
 	public ModelAndView login(HttpServletRequest request, HttpServletResponse response) {
@@ -33,7 +35,8 @@ public class LoginController {
 		postsService = new PostsService();
 		loginService = new LoginService();
 		product_color_sizeService = new Product_color_sizeService();
-
+		voucher_saveService = new Voucher_SaveService();
+		
 		HttpSession session = request.getSession();
 		String username = request.getParameter("email");
 		String password = request.getParameter("password");
@@ -81,6 +84,15 @@ public class LoginController {
 					} else if (session.getAttribute("buynowlogin") != null) {
 						String id_prod = String.valueOf(session.getAttribute("buynowlogin"));
 						return new ModelAndView("redirect: /ShopTandT/cart/checkout/" + u.getId()+"_"+id_prod);
+					} else if (session.getAttribute("savelogin") != null) {
+						String id = String.valueOf(session.getAttribute("savelogin"));
+						if (voucher_saveService.insert(u.getId(), Integer.parseInt(id))) {
+							System.out.println("save vch success! (user_id,vc_id) = (" + u.getId() + "," + id + ")");
+							session.setAttribute("savelogin", "0");
+							return new ModelAndView("redirect: /ShopTandT/voucher");
+						} else {
+							return mv;
+						}
 					} else {
 						return new ModelAndView("redirect: /ShopTandT/");
 					}

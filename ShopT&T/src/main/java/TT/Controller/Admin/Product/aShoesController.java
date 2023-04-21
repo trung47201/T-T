@@ -17,7 +17,6 @@ import TT.Model.Product_color_size;
 import TT.Model.Sizes;
 import TT.Service.Admin.aProd_Color_SizeService;
 import TT.Service.Admin.aProductService;
-import TT.Service.User.Product.ShoesService;
 
 @Controller
 public class aShoesController {

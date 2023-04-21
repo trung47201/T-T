@@ -20,7 +20,7 @@
 	<title>Gallery :)</title>
 </c:if>
 <c:if test="${ bsg == 'true' }">
-	<title>Brand - Style - Gender :)</title>
+	<title>Brand - Gender :)</title>
 </c:if>
 
 <link rel="stylesheet"
@@ -138,6 +138,11 @@ table.table-new-product td {
 	margin-left: 15%;
 	margin-bottom: 3px;
 }
+
+.table-brand, .table-style, .table-gender {
+	display: flex;
+	min-width: 49%;
+}
 </style>
 <body>
 	<%
@@ -201,8 +206,8 @@ table.table-new-product td {
 		<table class="order">
 			<thead>
 				<tr>
-					<th colspan="1000" class="td-addnewshoes">
-						<c:if test="${ clothing == 'true' }">
+					<th colspan="1000" class="td-addnewshoes"><c:if
+							test="${ clothing == 'true' }">
 							<a href="/ShopTandT/admin/product/add-new-clothing">
 								<button class="addnewshoes addnewproduct"
 									id="addnewshoes-product">
@@ -211,8 +216,7 @@ table.table-new-product td {
 										alt="icon-plus">Add New
 								</button>
 							</a>
-						</c:if>
-						<c:if test="${ shoes == 'true' }">
+						</c:if> <c:if test="${ shoes == 'true' }">
 							<a href="/ShopTandT/admin/product/add-new-shoes">
 								<button class="addnewshoes addnewproduct"
 									id="addnewshoes-product">
@@ -518,22 +522,11 @@ table.table-new-product td {
 							alt=""></td>
 						<td>${ liGallery.product.title }</td>
 						<td class="td-action">
-							<button class="btn-details-gallery">
-								<img
-									src="<c:url value="/assets/images/icons/icons8-eye-64.png"/>"
-									alt="">
-							</button>
-							<button class="btn-edit-product">
+							<button class="btn-edit-product edit-gallery" id="${ liGallery.id }">
 								<img
 									src="<c:url value="/assets/images/icons/icons8-edit-100.png"/>"
 									alt="">
 							</button>
-							<button class="btn-del-order">
-								<img
-									src="<c:url value="/assets/images/icons/icons8-remove-60.png"/>"
-									alt="">
-							</button>
-
 						</td>
 					</tr>
 				</c:forEach>
@@ -567,7 +560,7 @@ table.table-new-product td {
 		<p>/</p>
 		<div>
 			<img src="<c:url value="/assets/images/icons/icons8-brand-58.png"/>"
-				alt=""> <a href="">BRAND - STYLE - GENDER</a>
+				alt=""> <a href="">BRAND - GENDER</a>
 		</div>
 	</div>
 	<div class="list-table">
@@ -601,46 +594,6 @@ table.table-new-product td {
 										alt="">
 								</button>
 								<button class="btn-del-order" id="${ liBrand.id }">
-									<img
-										src="<c:url value="/assets/images/icons/icons8-remove-60.png"/>"
-										alt="">
-								</button>
-							</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-		</div>
-		<div class="table-style">
-			<table class="order">
-				<thead>
-					<tr>
-						<th colspan="1000" class="td-addnewshoes">
-							<button class="addnewshoes" id="add-st">
-								<img
-									src="<c:url value="/assets/images/icons/icons8-add-64.png"/>"
-									alt="icon-plus"> Add New
-							</button>
-						</th>
-					</tr>
-					<tr>
-						<th class="td-center">ID</th>
-						<th>Style</th>
-						<th class="td-action">Action</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="liStyle" items="${ listStyle }">
-						<tr>
-							<td class="td-center">${ liStyle.id }</td>
-							<td>${ liStyle.sub_category_name }</td>
-							<td class="td-action">
-								<button class="btn-edit-order" id="${ liStyle.id }">
-									<img
-										src="<c:url value="/assets/images/icons/icons8-edit-100.png"/>"
-										alt="">
-								</button>
-								<button class="btn-del-order" id="${ liStyle.id }">
 									<img
 										src="<c:url value="/assets/images/icons/icons8-remove-60.png"/>"
 										alt="">
@@ -866,6 +819,13 @@ table.table-new-product td {
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+		
+	<script type="text/javascript">
+		$(".edit-gallery").click(function(){
+			var id = this.id;
+			window.location.href = "/ShopTandT/admin/gallery/update/"+id;
+		});
+	</script>	
 	<script type="text/javascript">
 		// show form add size
 		$("#addcolorsize-s").click(function() {
@@ -1000,7 +960,8 @@ table.table-new-product td {
 			var xhr = new XMLHttpRequest();
 			xhr.open("GET", "");
 			xhr.onload = function() {
-				window.location.assign(url + "/edit/" + x.name);
+				window.location.assign("/ShopTandT/admin/product/update/"
+						+ x.name);
 			};
 			xhr.send();
 			return false;

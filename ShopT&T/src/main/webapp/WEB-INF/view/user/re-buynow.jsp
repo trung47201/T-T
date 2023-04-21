@@ -60,7 +60,7 @@
 	<form action="/ShopTandT/cart/checkout/ok/${ id }" method="post"
 		id="myform">
 		<div class="header">
-			<div class="back"><a href="">BACK</a></div>
+			<div class="back">&lt;&nbsp;<a href="/ShopTandT/" onclick="back()">BACK</a></div>
 			<c:if test="${ sessionScope.userid != null }">
 				<c:if test="${ sessionScope.avatar != null }">
 					<div class="avt">
@@ -855,7 +855,6 @@
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	
 	
 	<script type="text/javascript">
 		$("#applyvch").click(function() {

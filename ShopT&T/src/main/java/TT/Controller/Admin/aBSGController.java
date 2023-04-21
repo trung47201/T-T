@@ -85,10 +85,10 @@ public class aBSGController {
 	@RequestMapping(value = { "/admin/brand-style-gender/add-style" })
 	public ModelAndView add_style(HttpServletRequest request, HttpServletResponse response) {
 		styleService = new SubCategoryService();
-
+		String id = request.getParameter("categoryid");
 		String name = request.getParameter("style");
 		if (name != null) {
-			if (styleService.insert(name)) {
+			if (styleService.insert(name, Integer.parseInt(id))) {
 				System.out.println("add style success!");
 				return new ModelAndView("redirect: /ShopTandT/admin/brand-style-gender");
 			}

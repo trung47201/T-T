@@ -68,6 +68,11 @@ public class VoucherController {
 		String rate = String.valueOf(request.getParameter("rate"));
 		String color = String.valueOf(request.getParameter("color"));
 		String gender = String.valueOf(request.getParameter("gender"));
+		String savelogin = request.getParameter("savelogin");
+		if (savelogin != null) {
+			System.out.println("savelogin: true");
+			session.setAttribute("savelogin", savelogin);
+		}
 
 		Cookie arr[] = request.getCookies();
 		if (arr != null) {
@@ -165,11 +170,11 @@ public class VoucherController {
 		}
 
 		HashMap<Voucher, Integer> rs = voucherService.get_expiry_date();
-		
+
 		ProductService productService = new ProductService();
-		if(session.getAttribute("favorite") != null) {
+		if (session.getAttribute("favorite") != null) {
 			String txt1 = String.valueOf(session.getAttribute("favorite"));
-			System.out.println("a"+txt1);
+			System.out.println("a" + txt1);
 			mv.addObject("listProduct", productService.get_product_by_str(txt1));
 		}
 		mv.addObject("listVoucher", rs);

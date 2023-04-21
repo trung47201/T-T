@@ -28,8 +28,7 @@
 	href="<c:url value='/assets/css/re-dashboard4.css'/>">
 <link rel="stylesheet"
 	href="<c:url value='/assets/css/admin-nav2.css'/>">
-<link rel="stylesheet"
-	href="<c:url value='/assets/css/colorjoe.css'/>">
+<link rel="stylesheet" href="<c:url value='/assets/css/colorjoe.css'/>">
 <style>
 .message input {
 	width: 100px;
@@ -74,32 +73,36 @@
 }
 
 .list-size-add-new-product input {
-    width: 80px;
-    margin-left: 10px;
+	width: 80px;
+	margin-left: 10px;
 }
+
 .container {
-    margin-left: 52px;
-    margin-top: 40px;
-    width: 527px;
+	margin-left: 52px;
+	margin-top: 40px;
+	width: 527px;
 }
+
 .new-color-size-clothing td {
-    width: 50%;
+	width: 50%;
 }
+
 .form-add-color input {
-    margin-top: 10px;
-    padding: 5px 10px;
+	margin-top: 10px;
+	padding: 5px 10px;
 }
+
 .form-add-color button {
 	cursor: pointer;
-    margin-top: 27px;
-    padding: 5px 30px;
-    background: #cb82a9;
-    color: white;
+	margin-top: 27px;
+	padding: 5px 30px;
+	background: #cb82a9;
+	color: white;
 }
 </style>
 <c:if test="${ shoes == 'false' && clothing=='false' }">
-<style>
-	.btn-add-new-product {
+	<style>
+.btn-add-new-product {
 	margin-top: 0 !important;
 	width: 50%;
 }
@@ -149,209 +152,224 @@
 							alt=""> <a href="">Add new Color Size</a>
 					</div>
 				</c:if>
-				
+
 			</div>
 
 			<div class="table-add-new-product">
-				<form id="myform"
-					action="http://localhost:8888/ShopTandT/admin/product/add-product-color-size"
-					method="post" enctype="multipart/form-data">
-					<table class="table-new-product new-color-size-clothing">
-						<tr>
-							<td>
-								<div class="id-new-product">
-									<p>Product</p>
-									<select class="selected-add-new-product" id="select-product"
-										name="product">
-										<option value="" disabled="disabled" selected>Choose
-											product</option>
+				<c:if test="${ shoes == 'true' }">
+					<form id="myform"
+						action="http://localhost:8888/ShopTandT/admin/product/add-shoes-color-size"
+						method="post" enctype="multipart/form-data">
+				</c:if>
+				<c:if test="${ clothing == 'true' }">
+					<form id="myform"
+						action="http://localhost:8888/ShopTandT/admin/product/add-clothing-color-size"
+						method="post" enctype="multipart/form-data">
+				</c:if>
+				<c:if test="${ clothing == 'false' && shoes == 'false' }">
+					<form id="myform"
+						action="http://localhost:8888/ShopTandT/admin/product/add-product-color-size"
+						method="post" enctype="multipart/form-data">
+				</c:if>
 
-										<c:forEach var="liProduct" items="${ listProduct }">
-											<option value="${ liProduct.id }">${ liProduct.id }
-												- ${ liProduct.title }</option>
-										</c:forEach>
-									</select>
-								</div>
-							</td>
-							<td rowspan="3">
-								<div class="container">
-							        <div class="colorjoe"></div>
-							        <div class="config">
-							            <div class="config-title">Selected Color</div>
-							            <div class="selected-color-text"></div>
-							            <div class="selected-color"></div>
-							            <div class="config-title">Save Colors</div>
-							            <div class="form-add-color">
-							                <input type="hidden" id="color_rgb" name="colorrgb" value="">
-							                <input type="text" id="color_name" name="colorname" placeholder="Enter color name">
-							                <button type="button" id="addcolor">ADD</button>
-							            </div>
-							        </div>
-							    </div>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<div class="id-new-product">
-									<p>Color</p>
-									<select class="selected-add-new-product" id="select-color"
-										name="color">
-										<option value="" disabled="disabled" selected>Choose
-											color</option>
+				<table class="table-new-product new-color-size-clothing">
+					<tr>
+						<td>
+							<div class="id-new-product">
+								<p>Product</p>
+								<select class="selected-add-new-product" id="select-product"
+									name="product">
+									<option value="" disabled="disabled" selected>Choose
+										product</option>
 
-										<c:forEach var="liColor" items="${ listColor }">
-											<option value="${ liColor.id }"
-												style="background-color: ${ liColor.rgb };">${ liColor.id } - ${ liColor.color_name }</option>
-										</c:forEach>
-									</select>
+									<c:forEach var="liProduct" items="${ listProduct }">
+										<option value="${ liProduct.id }">${ liProduct.id }-
+											${ liProduct.title }</option>
+									</c:forEach>
+								</select>
+							</div>
+						</td>
+						<td rowspan="3">
+							<div class="container">
+								<div class="colorjoe"></div>
+								<div class="config">
+									<div class="config-title">Selected Color</div>
+									<div class="selected-color-text"></div>
+									<div class="selected-color"></div>
+									<div class="config-title">Save Colors</div>
+									<div class="form-add-color">
+										<input type="hidden" id="color_rgb" name="colorrgb" value="">
+										<input type="text" id="color_name" name="colorname"
+											placeholder="Enter color name">
+										<button type="button" id="addcolor">ADD</button>
+									</div>
 								</div>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<div class="id-new-product-size">
-									<p>Size & Quantity</p>
-									<c:if test="${ shoes == 'true' }">
-										<div class="list-size-add-new-product">
-											<span id="1" onclick="size(this)">32<input class="none"
-												id="1" name="size32" type="number" placeholder="Qty"></span>
-											<span id="2" onclick="size(this)">33<input class="none"
-												id="2" name="size33" type="number" placeholder="Qty"></span>
-											<span id="3" onclick="size(this)">34<input class="none"
-												id="3" name="size34" type="number" placeholder="Qty"></span>
-											<span id="4" onclick="size(this)">35<input class="none"
-												id="4" name="size35" type="number" placeholder="Qty"></span>
-											<span id="5" onclick="size(this)">36<input class="none"
-												id="5" name="size36" type="number" placeholder="Qty"></span>
-											<span id="6" onclick="size(this)">37<input class="none"
-												id="6" name="size37" type="number" placeholder="Qty"></span>
-											<span id="7" onclick="size(this)">38<input class="none"
-												id="7" name="size38" type="number" placeholder="Qty"></span>
-											<span id="8" onclick="size(this)">39<input class="none"
-												id="8" name="size39" type="number" placeholder="Qty"></span>
-										</div>
-										<div class="list-size-add-new-product">
-											<span id="9" onclick="size(this)">40<input class="none"
-												id="9" name="size40" type="number" placeholder="Qty"></span>
-											<span id="10" onclick="size(this)">41<input
-												class="none" id="10" name="size41" type="number"
-												placeholder="Qty"></span> <span id="11" onclick="size(this)">42<input
-												class="none" id="11" name="size42" type="number"
-												placeholder="Qty"></span> <span id="12" onclick="size(this)">43<input
-												class="none" id="12" name="size43" type="number"
-												placeholder="Qty"></span> <span id="13" onclick="size(this)">44<input
-												class="none" id="13" name="size44" type="number"
-												placeholder="Qty"></span> <span id="14" onclick="size(this)">45<input
-												class="none" id="14" name="size45" type="number"
-												placeholder="Qty"></span> <span id="15" onclick="size(this)">46<input
-												class="none" id="15" name="size46" type="number"
-												placeholder="Qty"></span> <span id="16" onclick="size(this)">47<input
-												class="none" id="16" name="size47" type="number"
-												placeholder="Qty"></span>
-										</div>
-									</c:if>
-									<c:if test="${ clothing == 'true' }">
-										<div class="list-size-add-new-product">
-											<span id="18" onclick="size(this)">XS<input
-												class="none" id="18" name="sizeXS" type="number"
-												placeholder="Qty"></span> <span id="19" onclick="size(this)">S<input
-												class="none" id="19" name="sizeS" type="number"
-												placeholder="Qty"></span> <span id="20" onclick="size(this)">M<input
-												class="none" id="20" name="sizeM" type="number"
-												placeholder="Qty"></span> <span id="21" onclick="size(this)">L<input
-												class="none" id="21" name="sizeL" type="number"
-												placeholder="Qty"></span>
-										</div>
-										<div class="list-size-add-new-product">
-											<span id="22" onclick="size(this)">XL<input
-												class="none" id="22" name="sizeXL" type="number"
-												placeholder="Qty"></span> <span id="23" onclick="size(this)">2XL<input
-												class="none" id="23" name="size2XL" type="number"
-												placeholder="Qty"></span> <span id="24" onclick="size(this)">3XL<input
-												class="none" id="24" name="size3XL" type="number"
-												placeholder="Qty"></span> <span id="" style="visibility: hidden;"><input
-												class="none" type="number"
-												placeholder="Qty"></span>
-										</div>
-									</c:if>
-									<c:if test="${ shoes == 'false' && clothing == 'false' }">
-										<div class="list-size-add-new-product">
-											<span id="1" onclick="size(this)">32<input class="none"
-												id="1" name="size32" type="number" placeholder="Qty"></span>
-											<span id="2" onclick="size(this)">33<input class="none"
-												id="2" name="size33" type="number" placeholder="Qty"></span>
-											<span id="3" onclick="size(this)">34<input class="none"
-												id="3" name="size34" type="number" placeholder="Qty"></span>
-											<span id="4" onclick="size(this)">35<input class="none"
-												id="4" name="size35" type="number" placeholder="Qty"></span>
-												</div><div class="list-size-add-new-product">
-											<span id="5" onclick="size(this)">36<input class="none"
-												id="5" name="size36" type="number" placeholder="Qty"></span>
-											<span id="6" onclick="size(this)">37<input class="none"
-												id="6" name="size37" type="number" placeholder="Qty"></span>
-											<span id="7" onclick="size(this)">38<input class="none"
-												id="7" name="size38" type="number" placeholder="Qty"></span>
-											<span id="8" onclick="size(this)">39<input class="none"
-												id="8" name="size39" type="number" placeholder="Qty"></span>
-										</div>
-										<div class="list-size-add-new-product">
-											<span id="9" onclick="size(this)">40<input class="none"
-												id="9" name="size40" type="number" placeholder="Qty"></span>
-											<span id="10" onclick="size(this)">41<input
-												class="none" id="10" name="size41" type="number"
-												placeholder="Qty"></span> <span id="11" onclick="size(this)">42<input
-												class="none" id="11" name="size42" type="number"
-												placeholder="Qty"></span> <span id="12" onclick="size(this)">43<input
-												class="none" id="12" name="size43" type="number"
-												placeholder="Qty"></span> 
-												</div><div class="list-size-add-new-product">
-												<span id="13" onclick="size(this)">44<input
-												class="none" id="13" name="size44" type="number"
-												placeholder="Qty"></span>
-												
-												<span id="14" onclick="size(this)">45<input
-												class="none" id="14" name="size45" type="number"
-												placeholder="Qty"></span> <span id="15" onclick="size(this)">46<input
-												class="none" id="15" name="size46" type="number"
-												placeholder="Qty"></span> <span id="16" onclick="size(this)">47<input
-												class="none" id="16" name="size47" type="number"
-												placeholder="Qty"></span>
-										</div>
-										<div class="list-size-add-new-product">
-											<span id="18" onclick="size(this)">XS<input
-												class="none" id="18" name="sizeXS" type="number"
-												placeholder="Qty"></span> <span id="19" onclick="size(this)">S<input
-												class="none" id="19" name="sizeS" type="number"
-												placeholder="Qty"></span> <span id="20" onclick="size(this)">M<input
-												class="none" id="20" name="sizeM" type="number"
-												placeholder="Qty"></span> <span id="21" onclick="size(this)">L<input
-												class="none" id="21" name="sizeL" type="number"
-												placeholder="Qty"></span>
-										</div>
-										<div class="list-size-add-new-product">
-											<span id="22" onclick="size(this)">XL<input
-												class="none" id="22" name="sizeXL" type="number"
-												placeholder="Qty"></span> <span id="23" onclick="size(this)">2XL<input
-												class="none" id="23" name="size2XL" type="number"
-												placeholder="Qty"></span> <span id="24" onclick="size(this)">3XL<input
-												class="none" id="24" name="size3XL" type="number"
-												placeholder="Qty"></span> <span id="" style="visibility: hidden;"><input
-												class="none" type="number"
-												placeholder="Qty"></span>
-										</div>
-									</c:if>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<div class="btn-add-new-product">
-									<input type="button" value="Add" id="btn-addnewproduct"
-										name="btn-addnewproduct">
-								</div>
-							</td>
-						</tr>
-					</table>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class="id-new-product">
+								<p>Color</p>
+								<select class="selected-add-new-product" id="select-color"
+									name="color">
+									<option value="" disabled="disabled" selected>Choose
+										color</option>
+
+									<c:forEach var="liColor" items="${ listColor }">
+										<option value="${ liColor.id }"
+											style="background-color: ${ liColor.rgb };">${ liColor.id }
+											- ${ liColor.color_name }</option>
+									</c:forEach>
+								</select>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<div class="id-new-product-size">
+								<p>Size & Quantity</p>
+								<c:if test="${ shoes == 'true' }">
+									<div class="list-size-add-new-product">
+										<span id="1" onclick="size(this)">32<input class="none"
+											id="1" name="size32" type="number" placeholder="Qty"></span>
+										<span id="2" onclick="size(this)">33<input class="none"
+											id="2" name="size33" type="number" placeholder="Qty"></span>
+										<span id="3" onclick="size(this)">34<input class="none"
+											id="3" name="size34" type="number" placeholder="Qty"></span>
+										<span id="4" onclick="size(this)">35<input class="none"
+											id="4" name="size35" type="number" placeholder="Qty"></span>
+										<span id="5" onclick="size(this)">36<input class="none"
+											id="5" name="size36" type="number" placeholder="Qty"></span>
+										<span id="6" onclick="size(this)">37<input class="none"
+											id="6" name="size37" type="number" placeholder="Qty"></span>
+										<span id="7" onclick="size(this)">38<input class="none"
+											id="7" name="size38" type="number" placeholder="Qty"></span>
+										<span id="8" onclick="size(this)">39<input class="none"
+											id="8" name="size39" type="number" placeholder="Qty"></span>
+									</div>
+									<div class="list-size-add-new-product">
+										<span id="9" onclick="size(this)">40<input class="none"
+											id="9" name="size40" type="number" placeholder="Qty"></span>
+										<span id="10" onclick="size(this)">41<input
+											class="none" id="10" name="size41" type="number"
+											placeholder="Qty"></span> <span id="11" onclick="size(this)">42<input
+											class="none" id="11" name="size42" type="number"
+											placeholder="Qty"></span> <span id="12" onclick="size(this)">43<input
+											class="none" id="12" name="size43" type="number"
+											placeholder="Qty"></span> <span id="13" onclick="size(this)">44<input
+											class="none" id="13" name="size44" type="number"
+											placeholder="Qty"></span> <span id="14" onclick="size(this)">45<input
+											class="none" id="14" name="size45" type="number"
+											placeholder="Qty"></span> <span id="15" onclick="size(this)">46<input
+											class="none" id="15" name="size46" type="number"
+											placeholder="Qty"></span> <span id="16" onclick="size(this)">47<input
+											class="none" id="16" name="size47" type="number"
+											placeholder="Qty"></span>
+									</div>
+								</c:if>
+								<c:if test="${ clothing == 'true' }">
+									<div class="list-size-add-new-product">
+										<span id="18" onclick="size(this)">XS<input
+											class="none" id="18" name="sizeXS" type="number"
+											placeholder="Qty"></span> <span id="19" onclick="size(this)">S<input
+											class="none" id="19" name="sizeS" type="number"
+											placeholder="Qty"></span> <span id="20" onclick="size(this)">M<input
+											class="none" id="20" name="sizeM" type="number"
+											placeholder="Qty"></span> <span id="21" onclick="size(this)">L<input
+											class="none" id="21" name="sizeL" type="number"
+											placeholder="Qty"></span>
+									</div>
+									<div class="list-size-add-new-product">
+										<span id="22" onclick="size(this)">XL<input
+											class="none" id="22" name="sizeXL" type="number"
+											placeholder="Qty"></span> <span id="23" onclick="size(this)">2XL<input
+											class="none" id="23" name="size2XL" type="number"
+											placeholder="Qty"></span> <span id="24" onclick="size(this)">3XL<input
+											class="none" id="24" name="size3XL" type="number"
+											placeholder="Qty"></span> <span id=""
+											style="visibility: hidden;"><input class="none"
+											type="number" placeholder="Qty"></span>
+									</div>
+								</c:if>
+								<c:if test="${ shoes == 'false' && clothing == 'false' }">
+									<div class="list-size-add-new-product">
+										<span id="1" onclick="size(this)">32<input class="none"
+											id="1" name="size32" type="number" placeholder="Qty"></span>
+										<span id="2" onclick="size(this)">33<input class="none"
+											id="2" name="size33" type="number" placeholder="Qty"></span>
+										<span id="3" onclick="size(this)">34<input class="none"
+											id="3" name="size34" type="number" placeholder="Qty"></span>
+										<span id="4" onclick="size(this)">35<input class="none"
+											id="4" name="size35" type="number" placeholder="Qty"></span>
+									</div>
+									<div class="list-size-add-new-product">
+										<span id="5" onclick="size(this)">36<input class="none"
+											id="5" name="size36" type="number" placeholder="Qty"></span>
+										<span id="6" onclick="size(this)">37<input class="none"
+											id="6" name="size37" type="number" placeholder="Qty"></span>
+										<span id="7" onclick="size(this)">38<input class="none"
+											id="7" name="size38" type="number" placeholder="Qty"></span>
+										<span id="8" onclick="size(this)">39<input class="none"
+											id="8" name="size39" type="number" placeholder="Qty"></span>
+									</div>
+									<div class="list-size-add-new-product">
+										<span id="9" onclick="size(this)">40<input class="none"
+											id="9" name="size40" type="number" placeholder="Qty"></span>
+										<span id="10" onclick="size(this)">41<input
+											class="none" id="10" name="size41" type="number"
+											placeholder="Qty"></span> <span id="11" onclick="size(this)">42<input
+											class="none" id="11" name="size42" type="number"
+											placeholder="Qty"></span> <span id="12" onclick="size(this)">43<input
+											class="none" id="12" name="size43" type="number"
+											placeholder="Qty"></span>
+									</div>
+									<div class="list-size-add-new-product">
+										<span id="13" onclick="size(this)">44<input
+											class="none" id="13" name="size44" type="number"
+											placeholder="Qty"></span> <span id="14" onclick="size(this)">45<input
+											class="none" id="14" name="size45" type="number"
+											placeholder="Qty"></span> <span id="15" onclick="size(this)">46<input
+											class="none" id="15" name="size46" type="number"
+											placeholder="Qty"></span> <span id="16" onclick="size(this)">47<input
+											class="none" id="16" name="size47" type="number"
+											placeholder="Qty"></span>
+									</div>
+									<div class="list-size-add-new-product">
+										<span id="18" onclick="size(this)">XS<input
+											class="none" id="18" name="sizeXS" type="number"
+											placeholder="Qty"></span> <span id="19" onclick="size(this)">S<input
+											class="none" id="19" name="sizeS" type="number"
+											placeholder="Qty"></span> <span id="20" onclick="size(this)">M<input
+											class="none" id="20" name="sizeM" type="number"
+											placeholder="Qty"></span> <span id="21" onclick="size(this)">L<input
+											class="none" id="21" name="sizeL" type="number"
+											placeholder="Qty"></span>
+									</div>
+									<div class="list-size-add-new-product">
+										<span id="22" onclick="size(this)">XL<input
+											class="none" id="22" name="sizeXL" type="number"
+											placeholder="Qty"></span> <span id="23" onclick="size(this)">2XL<input
+											class="none" id="23" name="size2XL" type="number"
+											placeholder="Qty"></span> <span id="24" onclick="size(this)">3XL<input
+											class="none" id="24" name="size3XL" type="number"
+											placeholder="Qty"></span> <span id=""
+											style="visibility: hidden;"><input class="none"
+											type="number" placeholder="Qty"></span>
+									</div>
+								</c:if>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<div class="btn-add-new-product">
+								<input type="button" value="Add" id="btn-addnewproduct"
+									name="btn-addnewproduct">
+							</div>
+						</td>
+					</tr>
+				</table>
 				</form>
 			</div>
 			<jsp:include page="../layouts/admin/a-footer.jsp"></jsp:include>
@@ -384,9 +402,9 @@
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-   <script src="<c:url value='/assets/js/colorjoe.min.js'/>"></script>
-   
-   <script type="text/javascript">
+	<script src="<c:url value='/assets/js/colorjoe.min.js'/>"></script>
+
+	<script type="text/javascript">
    	$("#addcolor").click(function() {
    		var name = $("#color_name").val();
    		if(name == "") {
@@ -400,9 +418,8 @@
    			$("#addcolor").attr('type', 'submit');
    		}
    	});
-   	
    </script>
-   
+
 	<script>
 		$("#btn-addnewproduct").click(
 				function() {
@@ -462,17 +479,13 @@
 	<script>
 		$(".list-size-add-new-product span").click(function() {
 			let checkspan = this.classList;
-
 			if (checkspan == "setcolor") {
 				let txt = ".list-size-add-new-product #" + this.id + " input";
-
 				if ($(txt).is(':focus')) {
-
 				} else {
 					$(txt).addClass("none");
 					$(this).removeClass("setcolor");
 				}
-
 			} else {
 				let txt = ".list-size-add-new-product #" + this.id + " input";
 				$(txt).removeClass("none");
@@ -480,8 +493,8 @@
 			}
 		});
 	</script>
-	
-    <script>
+
+	<script>
         class ColorPicker {
             constructor(root) {
                 this.root = root;
@@ -520,7 +533,7 @@
         }
         const cp = new ColorPicker(document.querySelector(".container"));
     </script>
-    
+
 	<script type="text/javascript">
 		if (window.history.replaceState) {
 			window.history.replaceState(null, null, window.location.href);

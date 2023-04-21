@@ -45,16 +45,16 @@ public class Product_color_sizeService implements Product_color_sizeRepository {
 			Connection con = connectService.getConnect();
 			Statement stmt;
 			stmt = (Statement) con.createStatement();
-			ResultSet rs = stmt
-					.executeQuery("select * from product_color_size " + "Inner join product on product_color_size.prod_id = product.id "
-							+ "Inner join brand on product.brand_id = brand.id "
-							+ "Inner join sub_category on product.sub_category_id = sub_category.id "
-							+ "Inner join user on product.user_id = user.id "
-							+ "Inner join gender on product.gender_id = gender.id "
-							+ "Inner join role on role.id = user.role_id "
-							+ "Inner join sizes on sizes.id = product_color_size.size_id "
-							+ "Inner join color on color.id = product_color_size.color_id " + "Where prod_id=" + prod_id
-							+ " and color_id=" + color_id + " and quantity > 0 " + " group by product_color_size.id");
+			ResultSet rs = stmt.executeQuery("select * from product_color_size "
+					+ "Inner join product on product_color_size.prod_id = product.id "
+					+ "Inner join brand on product.brand_id = brand.id "
+					+ "Inner join sub_category on product.sub_category_id = sub_category.id "
+					+ "Inner join user on product.user_id = user.id "
+					+ "Inner join gender on product.gender_id = gender.id "
+					+ "Inner join role on role.id = user.role_id "
+					+ "Inner join sizes on sizes.id = product_color_size.size_id "
+					+ "Inner join color on color.id = product_color_size.color_id " + "Where prod_id=" + prod_id
+					+ " and color_id=" + color_id + " and quantity > 0 " + " group by product_color_size.id");
 			while (rs.next()) {
 				product = new Product();
 				brand = new Brand();
@@ -89,7 +89,8 @@ public class Product_color_sizeService implements Product_color_sizeRepository {
 				brand.setBrand_name(rs.getString("brand_name"));
 
 				user.setId(rs.getInt("user_id"));
-				user.setFirstname(rs.getString("firstname"));user.setLastname(rs.getString("lastname"));
+				user.setFirstname(rs.getString("firstname"));
+				user.setLastname(rs.getString("lastname"));
 				user.setEmail(rs.getString("email"));
 				user.setPhone_number(rs.getString("phone_number"));
 				user.setAddress(rs.getString("address"));
@@ -141,16 +142,16 @@ public class Product_color_sizeService implements Product_color_sizeRepository {
 			Connection con = connectService.getConnect();
 			Statement stmt;
 			stmt = (Statement) con.createStatement();
-			ResultSet rs = stmt
-					.executeQuery("select * from product_color_size " + "Inner join product on product_color_size.prod_id = product.id "
-							+ "Inner join brand on product.brand_id = brand.id "
-							+ "Inner join sub_category on product.sub_category_id = sub_category.id "
-							+ "Inner join user on product.user_id = user.id "
-							+ "Inner join gender on product.gender_id = gender.id "
-							+ "Inner join role on role.id = user.role_id "
-							+ "Inner join sizes on sizes.id = product_color_size.size_id "
-							+ "Inner join color on color.id = product_color_size.color_id " + "Where prod_id=" + prod_id
-							+ " and quantity > 0 " + " group by color_id");
+			ResultSet rs = stmt.executeQuery("select * from product_color_size "
+					+ "Inner join product on product_color_size.prod_id = product.id "
+					+ "Inner join brand on product.brand_id = brand.id "
+					+ "Inner join sub_category on product.sub_category_id = sub_category.id "
+					+ "Inner join user on product.user_id = user.id "
+					+ "Inner join gender on product.gender_id = gender.id "
+					+ "Inner join role on role.id = user.role_id "
+					+ "Inner join sizes on sizes.id = product_color_size.size_id "
+					+ "Inner join color on color.id = product_color_size.color_id " + "Where prod_id=" + prod_id
+					+ " and quantity > 0 " + " group by color_id");
 			while (rs.next()) {
 				product = new Product();
 				brand = new Brand();
@@ -185,7 +186,8 @@ public class Product_color_sizeService implements Product_color_sizeRepository {
 				brand.setBrand_name(rs.getString("brand_name"));
 
 				user.setId(rs.getInt("user_id"));
-				user.setFirstname(rs.getString("firstname"));user.setLastname(rs.getString("lastname"));
+				user.setFirstname(rs.getString("firstname"));
+				user.setLastname(rs.getString("lastname"));
 				user.setEmail(rs.getString("email"));
 				user.setPhone_number(rs.getString("phone_number"));
 				user.setAddress(rs.getString("address"));
@@ -232,13 +234,13 @@ public class Product_color_sizeService implements Product_color_sizeRepository {
 	public List<Product_color_size> getAllColor_Size() {
 		List<Product_color_size> li = new LinkedList<>();
 		for (Product_color_size c : getAllProduct_Color_Size()) {
-			if(c.getQuantity() > 0) {
+			if (c.getQuantity() > 0) {
 				li.add(c);
 			}
 		}
 		return li;
 	}
-	
+
 	public List<Product_color_size> getAllProduct_Color_Size() {
 		List<Product_color_size> li = null;
 		try {
@@ -247,15 +249,15 @@ public class Product_color_sizeService implements Product_color_sizeRepository {
 			Connection con = connectService.getConnect();
 			Statement stmt;
 			stmt = (Statement) con.createStatement();
-			ResultSet rs = stmt
-					.executeQuery("select * from product_color_size " + "Inner join product on product_color_size.prod_id = product.id "
-							+ "Inner join brand on product.brand_id = brand.id "
-							+ "Inner join sub_category on product.sub_category_id = sub_category.id "
-							+ "Inner join user on product.user_id = user.id "
-							+ "Inner join gender on product.gender_id = gender.id "
-							+ "Inner join role on role.id = user.role_id "
-							+ "Inner join sizes on sizes.id = product_color_size.size_id "
-							+ "Inner join color on color.id = product_color_size.color_id ");
+			ResultSet rs = stmt.executeQuery("select * from product_color_size "
+					+ "Inner join product on product_color_size.prod_id = product.id "
+					+ "Inner join brand on product.brand_id = brand.id "
+					+ "Inner join sub_category on product.sub_category_id = sub_category.id "
+					+ "Inner join user on product.user_id = user.id "
+					+ "Inner join gender on product.gender_id = gender.id "
+					+ "Inner join role on role.id = user.role_id "
+					+ "Inner join sizes on sizes.id = product_color_size.size_id "
+					+ "Inner join color on color.id = product_color_size.color_id ");
 			while (rs.next()) {
 				product = new Product();
 				brand = new Brand();
@@ -285,12 +287,13 @@ public class Product_color_sizeService implements Product_color_sizeRepository {
 				role.setDescription(rs.getString("description"));
 				role.setCreated_at(rs.getDate("created_at"));
 				role.setUpdated_at(rs.getDate("updated_at"));
-				
+
 				brand.setId(rs.getInt("brand_id"));
 				brand.setBrand_name(rs.getString("brand_name"));
 
 				user.setId(rs.getInt("user_id"));
-				user.setFirstname(rs.getString("firstname"));user.setLastname(rs.getString("lastname"));
+				user.setFirstname(rs.getString("firstname"));
+				user.setLastname(rs.getString("lastname"));
 				user.setEmail(rs.getString("email"));
 				user.setPhone_number(rs.getString("phone_number"));
 				user.setAddress(rs.getString("address"));
@@ -336,23 +339,23 @@ public class Product_color_sizeService implements Product_color_sizeRepository {
 	public Product_color_size getByIdCS(int id_cs) {
 		Product_color_size cs = null;
 		for (Product_color_size i : getAllColor_Size()) {
-			if(i.getId() == id_cs) {
+			if (i.getId() == id_cs) {
 				cs = i;
 			}
 		}
 		return cs;
 	}
-	
+
 	public User getUserByIdUser(int id_u) {
 		User cs = null;
 		for (Product_color_size i : getAllColor_Size()) {
-			if (i.getProd().getUser().getId()==id_u) {
+			if (i.getProd().getUser().getId() == id_u) {
 				cs = i.getProd().getUser();
 			}
 		}
 		return cs;
 	}
-	
+
 	public int firstColor_SizeById_Prod(int id_prod) {
 		int id = 1;
 		for (Product_color_size c : getAllColor_Size()) {
@@ -363,7 +366,7 @@ public class Product_color_sizeService implements Product_color_sizeRepository {
 		}
 		return id;
 	}
-	
+
 	public int firstColorId(int prod) {
 		int color_id = 0;
 		Product_color_sizeService colorService = new Product_color_sizeService();
@@ -422,16 +425,16 @@ public class Product_color_sizeService implements Product_color_sizeRepository {
 			Connection con = connectService.getConnect();
 			Statement stmt;
 			stmt = (Statement) con.createStatement();
-			ResultSet rs = stmt
-					.executeQuery("select * from product_color_size " + "Inner join product on product_color_size.prod_id = product.id "
-							+ "Inner join brand on product.brand_id = brand.id "
-							+ "Inner join sub_category on product.sub_category_id = sub_category.id "
-							+ "Inner join user on product.user_id = user.id "
-							+ "Inner join gender on product.gender_id = gender.id "
-							+ "Inner join role on role.id = user.role_id "
-							+ "Inner join sizes on sizes.id = product_color_size.size_id "
-							+ "Inner join color on color.id = product_color_size.color_id " + "Where quantity > 0 "
-							+ " group by prod_id");
+			ResultSet rs = stmt.executeQuery("select * from product_color_size "
+					+ "Inner join product on product_color_size.prod_id = product.id "
+					+ "Inner join brand on product.brand_id = brand.id "
+					+ "Inner join sub_category on product.sub_category_id = sub_category.id "
+					+ "Inner join user on product.user_id = user.id "
+					+ "Inner join gender on product.gender_id = gender.id "
+					+ "Inner join role on role.id = user.role_id "
+					+ "Inner join sizes on sizes.id = product_color_size.size_id "
+					+ "Inner join color on color.id = product_color_size.color_id " + "Where quantity > 0 "
+					+ " group by prod_id");
 			while (rs.next()) {
 				product = new Product();
 				brand = new Brand();
@@ -461,12 +464,13 @@ public class Product_color_sizeService implements Product_color_sizeRepository {
 				role.setDescription(rs.getString("description"));
 				role.setCreated_at(rs.getDate("created_at"));
 				role.setUpdated_at(rs.getDate("updated_at"));
-				
+
 				brand.setId(rs.getInt("brand_id"));
 				brand.setBrand_name(rs.getString("brand_name"));
 
 				user.setId(rs.getInt("user_id"));
-				user.setFirstname(rs.getString("firstname"));user.setLastname(rs.getString("lastname"));
+				user.setFirstname(rs.getString("firstname"));
+				user.setLastname(rs.getString("lastname"));
 				user.setEmail(rs.getString("email"));
 				user.setPhone_number(rs.getString("phone_number"));
 				user.setAddress(rs.getString("address"));
@@ -536,16 +540,18 @@ public class Product_color_sizeService implements Product_color_sizeRepository {
 		try {
 			connectService = new ConnectService();
 			Connection conn = connectService.getConnect();
-			//check id_prod
+			// check id_prod
 			boolean check = false;
 			List<Product_color_size> list = getAllColor_Size();
 			for (Product_color_size cs : list) {
-				if(cs.getProd().getId()==prod_id && cs.getColor().getId()==color_id && cs.getSize().getId()==size_id) {
-					check=true;
+				if (cs.getProd().getId() == prod_id && cs.getColor().getId() == color_id
+						&& cs.getSize().getId() == size_id) {
+					check = true;
 				}
-				//System.out.println(cs.getProd().getId()+ "=="+cs.getColor().getId() +"="+ cs.getSize().getId());
+				// System.out.println(cs.getProd().getId()+ "=="+cs.getColor().getId() +"="+
+				// cs.getSize().getId());
 			}
-			if(check) {
+			if (check) {
 				String query = "update `product_color_size` set `quantity` = `quantity` - ? where `size_id` = ? and `color_id` = ? and `prod_id` = ?";
 				PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(query);
 				preparedStmt.setInt(1, amount);
@@ -558,23 +564,23 @@ public class Product_color_sizeService implements Product_color_sizeRepository {
 			} else {
 				return false;
 			}
-			//System.out.println(list.size());
+			// System.out.println(list.size());
 			// create the java mysql update preparedstatement
-			
+
 		} catch (Exception e) {
 			System.err.println("Got an exception! ");
 			System.err.println(e.getMessage());
 		}
 		return false;
 	}
-	
+
 	public boolean insertIntoColor_Size(String size_quantity, int color_id, int prod_id) {
 		try {
 			connectService = new ConnectService();
 			Connection conn = connectService.getConnect();
 			HashMap<Integer, Integer> hm = getSize_Quantity(size_quantity);
 			for (Integer i : hm.keySet()) {
-				if(hm.get(i) > 0) {
+				if (hm.get(i) > 0) {
 					if (checkColor_size(i, color_id, prod_id)) {
 					} else {
 						String sql = "INSERT INTO `product_color_size`(`size_id`, `color_id`, `prod_id`, `quantity`) "
@@ -601,6 +607,44 @@ public class Product_color_sizeService implements Product_color_sizeRepository {
 		return false;
 	}
 
+	public boolean insertIntoColor_Size_not_size(String color_quantity, int prod_id) {
+		try {
+			connectService = new ConnectService();
+			Connection conn = connectService.getConnect();
+			String arr[] = color_quantity.split("/");
+			for (String s : arr) {
+				String color[] = s.split("_");
+				if (checkColor_size_not_size(Integer.parseInt(color[0]), prod_id)) {
+					String query = "update `product_color_size` set `quantity` = `quantity` + ? where `color_id` = ? and `prod_id` = ? and `size_id` = 25";
+					PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(query);
+					preparedStmt.setInt(1, Integer.parseInt(color[1]));
+					preparedStmt.setInt(2, Integer.parseInt(color[0]));
+					preparedStmt.setInt(3, prod_id);
+					preparedStmt.executeUpdate();
+				} else {
+					String sql = "INSERT INTO `product_color_size` (`color_id`, `quantity`, `prod_id`, `size_id`) "
+							+ "VALUES (?, ?, ?, ?)";
+					PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
+					preparedStmt.setInt(1, Integer.parseInt(color[0]));
+					preparedStmt.setInt(2, Integer.parseInt(color[1]));
+					preparedStmt.setInt(3, prod_id);
+					preparedStmt.setInt(4, 25);
+					preparedStmt.execute();
+				}
+			}
+			conn.close();
+			return true;
+		} catch (Exception e) {
+			System.err.println("Got an exception!");
+			// printStackTrace method
+			// prints line numbers + call stack
+			e.printStackTrace();
+			// Prints what exception has been thrown
+			System.out.println(e);
+		}
+		return false;
+	}
+
 	public HashMap<Integer, Integer> getSize_Quantity(String txt) {
 		sizeService = new SizeService();
 		HashMap<Integer, Integer> hm = new LinkedHashMap<Integer, Integer>();
@@ -611,7 +655,7 @@ public class Product_color_sizeService implements Product_color_sizeRepository {
 			for (String s : arr) {
 				if (!s.equals("")) {
 					arr1 = s.split("_");
-					if(arr1.length==1) {
+					if (arr1.length == 1) {
 						hm.put(sizeService.get_size_id_by_size_number(arr1[0]), 0);
 					} else {
 						hm.put(sizeService.get_size_id_by_size_number(arr1[0]), Integer.parseInt(arr1[1]));
@@ -630,7 +674,16 @@ public class Product_color_sizeService implements Product_color_sizeRepository {
 		}
 		return false;
 	}
-	
+
+	public boolean checkColor_size_not_size(int color_id, int prod_id) {
+		for (Product_color_size i : getAllProduct_Color_Size()) {
+			if (i.getColor().getId() == color_id && i.getProd().getId() == prod_id) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public int get_Color_size_id(int size_id, int color_id, int prod_id) {
 		int rs = 0;
 		for (Product_color_size i : getAllProduct_Color_Size()) {
@@ -640,14 +693,15 @@ public class Product_color_sizeService implements Product_color_sizeRepository {
 		}
 		return rs;
 	}
-	
-	public HashMap<Product_color_size, Integer> get_list_color_size_by_string(String t) { // format = {csid}/{csid}/{csid}...
+
+	public HashMap<Product_color_size, Integer> get_list_color_size_by_string(String t) { // format =
+																							// {csid}/{csid}/{csid}...
 		HashMap<Integer, Integer> hm = new HashMap<>();
 		String arr[] = t.split("/");
-		if(arr.length > 0) {
+		if (arr.length > 0) {
 			for (String s : arr) {
-				if(!s.equals("")) {
-					if(hm.containsKey(Integer.parseInt(s))) {
+				if (!s.equals("")) {
+					if (hm.containsKey(Integer.parseInt(s))) {
 						hm.put(Integer.parseInt(s), hm.get(Integer.parseInt(s)) + 1);
 					} else {
 						hm.put(Integer.parseInt(s), 1);
@@ -661,8 +715,8 @@ public class Product_color_sizeService implements Product_color_sizeRepository {
 		}
 		return hmcs;
 	}
-	
-	public int get_Color_size_id_by_prodid_color_id (int prod_id, int color_id) {
+
+	public int get_Color_size_id_by_prodid_color_id(int prod_id, int color_id) {
 		int size_id = firstSizeId(prod_id, color_id);
 		int id = get_Color_size_id(size_id, color_id, prod_id);
 		return id;

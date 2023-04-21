@@ -44,14 +44,10 @@
 	font-size: 16px;
 }
 </style>
-<link rel="stylesheet" href="<c:url value="/assets/css/f-favorite.css"/>">
+<link rel="stylesheet"
+	href="<c:url value="/assets/css/f-favorite.css"/>">
 <jsp:include page="../layouts/user/re-favorite.jsp"></jsp:include>
 <body style="color: #212122;">
-	<%
-	if (session.getAttribute("userid") == null) {
-		response.sendRedirect("/ShopTandT/");
-	}
-	%>
 	<jsp:include page="../layouts/user/re-menu.jsp"></jsp:include>
 	<div class="back-header">
 		<jsp:include page="../layouts/user/re-header.jsp"></jsp:include>
@@ -219,13 +215,12 @@
 	<jsp:include page="../layouts/user/re-footer.jsp"></jsp:include>
 
 
-
 	<script type="text/javascript">
 		$(".vch-condition").click(function() {
 			var id = this.id;
 			var cls = this.className;
 			const arr = cls.split("_");
-			if(arr.length > 4) {
+			if (arr.length > 4) {
 				var dis = arr[0].split(" ")[1];
 				var code = arr[1];
 				var apply = arr[2];
@@ -235,9 +230,9 @@
 				var end = arr[4];
 				var end_time = end.split(" ")[1];
 				var end_date = end.split(" ")[0];
-				$("#span-discount").text(dis+"%");
+				$("#span-discount").text(dis + "%");
 				$("#span-code").text(code);
-				$("#span-apply").text("$"+apply);
+				$("#span-apply").text("$" + apply);
 				$("#span-time-start").text(start_time.substring(0, 5));
 				$("#span-date-start").text(start_date.replaceAll("-", "/"));
 				$("#span-time-end").text(end_time.substring(0, 5));
@@ -247,10 +242,6 @@
 			$("#vc-details").removeClass("none");
 			$("#vch-id-ip").val(id);
 		});
-		$("#save").click(function() {
-			var id = $("#vch-id-ip").val();
-			$(this).text("Saved");
-		});
 		$("#close").click(function() {
 			$("#wrap-vc-details").addClass("none");
 			$("#vc-details").addClass("none");
@@ -258,19 +249,63 @@
 		});
 	</script>
 
-	<script type="text/javascript">
-		var id_user = "${ userID }";
-		$(".vch-btn").click(function() {
-			var id = this.id;
-			var btn = $('button', this)[0];
-			$(btn).text("Saved");
-			var xhr = new XMLHttpRequest();
-			xhr.open("GET", "/ShopTandT/voucher/save/" + id_user + "_" + id);
-			xhr.onload = function() {
-			};
-			xhr.send();
-		});
-	</script>
+	<c:if test="${ sessionScope.userid != null }">
+		<script type="text/javascript">
+			var id_user = "${ userID }";
+			$("#save").click(
+					function() {
+						var id = $("#vch-id-ip").val();
+						$(this).text("Saved");
+						var xhr = new XMLHttpRequest();
+						xhr.open("GET", "/ShopTandT/voucher/save/" + id_user
+								+ "_" + id);
+						xhr.onload = function() {
+						};
+						xhr.send();
+					});
+			s
+		</script>
+
+		<script type="text/javascript">
+			var id_user = "${ userID }";
+			$(".vch-btn").click(
+					function() {
+						var id = this.id;
+						var btn = $('button', this)[0];
+						$(btn).text("Saved");
+						var xhr = new XMLHttpRequest();
+						xhr.open("GET", "/ShopTandT/voucher/save/" + id_user
+								+ "_" + id);
+						xhr.onload = function() {
+						};
+						xhr.send();
+					});
+		</script>
+	</c:if>
+
+	<c:if test="${ sessionScope.userid == null }">
+		<script type="text/javascript">
+			$("#save").click(function() {
+				var id = $("#vch-id-ip").val();
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", "/ShopTandT/voucher?savelogin=" + id);
+				xhr.onload = function() {
+					window.location.href = "/ShopTandT/account/login";
+				};
+				xhr.send();
+			});
+			$(".vch-btn").click(function() {
+				var id = this.id;
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", "/ShopTandT/voucher?savelogin=" + id);
+				xhr.onload = function() {
+					window.location.href = "/ShopTandT/account/login";
+				};
+				xhr.send();
+			});
+		</script>
+	</c:if>
+
 
 	<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 

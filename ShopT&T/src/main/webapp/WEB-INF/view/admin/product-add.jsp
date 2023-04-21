@@ -7,10 +7,13 @@
 	pageEncoding="UTF-8"%>
 
 <c:if test="${ clothing == 'true' }">
-	<title>Add new clothing :)</title>
+	<title>Add clothing</title>
 </c:if>
 <c:if test="${ shoes == 'true' }">
-	<title>Add new shoes :)</title>
+	<title>Add shoes</title>
+</c:if>
+<c:if test="${ handbags == 'true' }">
+	<title>Add handbags</title>
 </c:if>
 <link rel="stylesheet"
 	href="<c:url value='/assets/css/re-admin-product2.css'/>">
@@ -115,7 +118,20 @@ table.table-new-product td {
 							alt=""> <a href="">Add new shoes</a>
 					</div>
 				</c:if>
-
+				<c:if test="${ handbags == 'true' }">
+					<div>
+						<p>/</p>
+						<img
+							src="<c:url value="/assets/images/icons/icons8-trainers-100-title.png"/>"
+							alt=""> <a href="/ShopTandT/admin/product/handbags">Handbags</a>
+					</div>
+					<div>
+						<p>/</p>
+						<img
+							src="<c:url value="/assets/images/icons/icons8-add-64-title.png"/>"
+							alt=""> <a href="">Add handbags</a>
+					</div>
+				</c:if>
 			</div>
 
 			<c:if test="${ newProduct == 'true' }">
@@ -133,6 +149,11 @@ table.table-new-product td {
 			<c:if test="${ shoes == 'true' }">
 				<form
 					action="http://localhost:8888/ShopTandT/admin/product/add-new-shoes/savefile"
+					method="post" enctype="multipart/form-data">
+			</c:if>
+			<c:if test="${ handbags == 'true' }">
+				<form
+					action="http://localhost:8888/ShopTandT/admin/product/add-new-handbags/savefile"
 					method="post" enctype="multipart/form-data">
 			</c:if>
 
@@ -204,7 +225,7 @@ table.table-new-product td {
 				<tr>
 					<td>
 						<div class="id-new-product">
-							<p>Style</p>
+							<p>Category</p>
 							<select class="selected-add-new-product" id="select-style"
 								name="style">
 								<option value="" disabled="disabled" selected>Choose
