@@ -23,27 +23,30 @@
 	href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />">
 <link rel="stylesheet"
 	href="<c:url value="/assets/css/f-btn-effect.css"/>">
-	<link rel="stylesheet"
+<link rel="stylesheet"
 	href="<c:url value="/assets/css/checkbox-radio-input.css"/>">
 <link rel="stylesheet"
 	href="<c:url value="/assets/css/f-voucher-buy-now.css"/>">
 <style>
 .icon-cod {
-    display: flex;
-    align-items: center;
+	display: flex;
+	align-items: center;
 }
+
 .price-product-checkout {
-    padding-right: 10px;
+	padding-right: 10px;
 }
+
 .back {
-    height: 100%;
-    padding-left: 40px;
-    display: flex;
-    align-items: center;
-    font-size: 20px;
-    font-weight: bold;
-    letter-spacing: 1px;
+	height: 100%;
+	padding-left: 40px;
+	display: flex;
+	align-items: center;
+	font-size: 20px;
+	font-weight: bold;
+	letter-spacing: 1px;
 }
+
 .header {
 	display: flex;
 }
@@ -60,7 +63,9 @@
 	<form action="/ShopTandT/cart/checkout/ok/${ id }" method="post"
 		id="myform">
 		<div class="header">
-			<div class="back">&lt;&nbsp;<a href="/ShopTandT/" onclick="back()">BACK</a></div>
+			<div class="back">
+				&lt;&nbsp;<a href="/ShopTandT/" onclick="back()">BACK</a>
+			</div>
 			<c:if test="${ sessionScope.userid != null }">
 				<c:if test="${ sessionScope.avatar != null }">
 					<div class="avt">
@@ -105,7 +110,8 @@
 						<b>${ prod_checkout.title }</b>
 					</div>
 					<div class="price-product-checkout">
-						$<fmt:formatNumber type="number" maxFractionDigits="2"
+						$
+						<fmt:formatNumber type="number" maxFractionDigits="2"
 							value="${ prod_checkout.price - prod_checkout.price*prod_checkout.discount/100 }" />
 					</div>
 				</div>
@@ -147,64 +153,125 @@
 							</c:forEach>
 						</div>
 					</div>
-					<c:if test="${ size != null && size != '' }">
-						<div class="size-product-details">
-							<div class="fit-guide-size">
-								<p>Size</p>
-								<a href="#"> Size & Fit guide</a>
+					<c:set var="checkSize" value="${ 0 }"></c:set>
+					<c:forEach var="liSize" items="${ listSize }">
+						<c:forEach var="liSizeByColor" items="${ liSize.value }"
+							varStatus="index">
+							<c:set var="checkSize" value="${ index.getCount() }"></c:set>
+						</c:forEach>
+					</c:forEach>
+					<c:if test="${ checkSize <= 1}">
+						<input type="hidden" name="size" id="size"
+							value="${ liSizeByColor.size.id }">
+					</c:if>
+					<c:if test="${ checkSize > 1}">
+						<c:if test="${ size != null && size != '' }">
+							<div class="size-product-details">
+								<div class="fit-guide-size">
+									<p>Size</p>
+									<a href="#"> Size & Fit guide</a>
+								</div>
+								<c:forEach var="liSize" items="${ listSize }" varStatus="index">
+									<c:set var="idProd_Size"
+										value="${ product.id }_${ liSize.key }"></c:set>
+									<c:if test="${ color != null }">
+										<c:if test="${ color == liSize.key }">
+											<div class="list-size-product-details" id="${ idProd_Size }">
+												<c:forEach var="liSizeByColor" items="${ liSize.value }"
+													varStatus="indexS">
+													<c:if test="${ size == liSizeByColor.size.id }">
+														<span class="select-size selected-color"
+															id="${idProd_Size }_${ liSizeByColor.size.id }"
+															name="${ liSizeByColor.color.id }">${ liSizeByColor.size.size_number }</span>
+														<input type="hidden" name="size" id="size"
+															value="${ liSizeByColor.size.id }">
+													</c:if>
+													<c:if test="${  size != liSizeByColor.size.id  }">
+														<span class="select-size"
+															id="${idProd_Size }_${ liSizeByColor.size.id }"
+															name="${ liSizeByColor.color.id }">${ liSizeByColor.size.size_number }</span>
+													</c:if>
+												</c:forEach>
+											</div>
+										</c:if>
+										<c:if test="${ color != liSize.key }">
+											<div class="list-size-product-details none"
+												id="${ idProd_Size }">
+												<c:forEach var="liSizeByColor" items="${ liSize.value }"
+													varStatus="indexS">
+													<c:if test="${ indexS.getIndex() == 0 }">
+														<span class="select-size"
+															id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
+													</c:if>
+													<c:if test="${ indexS.getIndex() != 0 }">
+														<span class="select-size"
+															id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
+													</c:if>
+												</c:forEach>
+											</div>
+										</c:if>
+									</c:if>
+									<c:if test="${ color == null }">
+										<c:if test="${ index.getIndex() == 0 }">
+											<div class="list-size-product-details" id="${ idProd_Size }">
+												<c:forEach var="liSizeByColor" items="${ liSize.value }"
+													varStatus="indexS">
+													<c:if test="${ size == liSizeByColor.size.id }">
+														<span class="select-size selected-color"
+															id="${idProd_Size }_${ liSizeByColor.size.id }"
+															name="${ liSizeByColor.color.id }">${ liSizeByColor.size.size_number }</span>
+														<input type="hidden" name="size" id="size"
+															value="${ liSizeByColor.size.id }">
+													</c:if>
+													<c:if test="${  size != liSizeByColor.size.id  }">
+														<span class="select-size"
+															id="${idProd_Size }_${ liSizeByColor.size.id }"
+															name="${ liSizeByColor.color.id }">${ liSizeByColor.size.size_number }</span>
+													</c:if>
+												</c:forEach>
+											</div>
+										</c:if>
+										<c:if test="${ index.getIndex() != 0 }">
+											<div class="list-size-product-details none"
+												id="${ idProd_Size }">
+												<c:forEach var="liSizeByColor" items="${ liSize.value }"
+													varStatus="indexS">
+													<c:if test="${ indexS.getIndex() == 0 }">
+														<span class="select-size"
+															id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
+													</c:if>
+													<c:if test="${ indexS.getIndex() != 0 }">
+														<span class="select-size"
+															id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
+													</c:if>
+												</c:forEach>
+											</div>
+										</c:if>
+									</c:if>
+								</c:forEach>
 							</div>
-							<c:forEach var="liSize" items="${ listSize }" varStatus="index">
-								<c:set var="idProd_Size" value="${ product.id }_${ liSize.key }"></c:set>
-								<c:if test="${ color != null }">
-									<c:if test="${ color == liSize.key }">
-										<div class="list-size-product-details" id="${ idProd_Size }">
-											<c:forEach var="liSizeByColor" items="${ liSize.value }"
-												varStatus="indexS">
-												<c:if test="${ size == liSizeByColor.size.id }">
-													<span class="select-size selected-color"
-														id="${idProd_Size }_${ liSizeByColor.size.id }"
-														name="${ liSizeByColor.color.id }">${ liSizeByColor.size.size_number }</span>
-													<input type="hidden" name="size" id="size"
-														value="${ liSizeByColor.size.id }">
-												</c:if>
-												<c:if test="${  size != liSizeByColor.size.id  }">
-													<span class="select-size"
-														id="${idProd_Size }_${ liSizeByColor.size.id }"
-														name="${ liSizeByColor.color.id }">${ liSizeByColor.size.size_number }</span>
-												</c:if>
-											</c:forEach>
-										</div>
-									</c:if>
-									<c:if test="${ color != liSize.key }">
-										<div class="list-size-product-details none"
-											id="${ idProd_Size }">
-											<c:forEach var="liSizeByColor" items="${ liSize.value }"
-												varStatus="indexS">
-												<c:if test="${ indexS.getIndex() == 0 }">
-													<span class="select-size"
-														id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
-												</c:if>
-												<c:if test="${ indexS.getIndex() != 0 }">
-													<span class="select-size"
-														id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
-												</c:if>
-											</c:forEach>
-										</div>
-									</c:if>
-								</c:if>
-								<c:if test="${ color == null }">
+						</c:if>
+						<c:if test="${ size == null || size == '' }">
+							<div class="size-product-details">
+								<div class="fit-guide-size">
+									<p>Size</p>
+									<a href="#"> Size & Fit guide</a>
+								</div>
+								<c:forEach var="liSize" items="${ listSize }" varStatus="index">
+									<c:set var="idProd_Size"
+										value="${ product.id }_${ liSize.key }"></c:set>
 									<c:if test="${ index.getIndex() == 0 }">
 										<div class="list-size-product-details" id="${ idProd_Size }">
 											<c:forEach var="liSizeByColor" items="${ liSize.value }"
 												varStatus="indexS">
-												<c:if test="${ size == liSizeByColor.size.id }">
+												<c:if test="${ indexS.getIndex() == 0 }">
 													<span class="select-size selected-color"
 														id="${idProd_Size }_${ liSizeByColor.size.id }"
 														name="${ liSizeByColor.color.id }">${ liSizeByColor.size.size_number }</span>
 													<input type="hidden" name="size" id="size"
 														value="${ liSizeByColor.size.id }">
 												</c:if>
-												<c:if test="${  size != liSizeByColor.size.id  }">
+												<c:if test="${ indexS.getIndex() != 0 }">
 													<span class="select-size"
 														id="${idProd_Size }_${ liSizeByColor.size.id }"
 														name="${ liSizeByColor.color.id }">${ liSizeByColor.size.size_number }</span>
@@ -228,55 +295,9 @@
 											</c:forEach>
 										</div>
 									</c:if>
-								</c:if>
-							</c:forEach>
-						</div>
-					</c:if>
-					<c:if test="${ size == null || size == '' }">
-						<div class="size-product-details">
-							<div class="fit-guide-size">
-								<p>Size</p>
-								<a href="#"> Size & Fit guide</a>
+								</c:forEach>
 							</div>
-							<c:forEach var="liSize" items="${ listSize }" varStatus="index">
-								<c:set var="idProd_Size" value="${ product.id }_${ liSize.key }"></c:set>
-								<c:if test="${ index.getIndex() == 0 }">
-									<div class="list-size-product-details" id="${ idProd_Size }">
-										<c:forEach var="liSizeByColor" items="${ liSize.value }"
-											varStatus="indexS">
-											<c:if test="${ indexS.getIndex() == 0 }">
-												<span class="select-size selected-color"
-													id="${idProd_Size }_${ liSizeByColor.size.id }"
-													name="${ liSizeByColor.color.id }">${ liSizeByColor.size.size_number }</span>
-												<input type="hidden" name="size" id="size"
-													value="${ liSizeByColor.size.id }">
-											</c:if>
-											<c:if test="${ indexS.getIndex() != 0 }">
-												<span class="select-size"
-													id="${idProd_Size }_${ liSizeByColor.size.id }"
-													name="${ liSizeByColor.color.id }">${ liSizeByColor.size.size_number }</span>
-											</c:if>
-										</c:forEach>
-									</div>
-								</c:if>
-								<c:if test="${ index.getIndex() != 0 }">
-									<div class="list-size-product-details none"
-										id="${ idProd_Size }">
-										<c:forEach var="liSizeByColor" items="${ liSize.value }"
-											varStatus="indexS">
-											<c:if test="${ indexS.getIndex() == 0 }">
-												<span class="select-size"
-													id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
-											</c:if>
-											<c:if test="${ indexS.getIndex() != 0 }">
-												<span class="select-size"
-													id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
-											</c:if>
-										</c:forEach>
-									</div>
-								</c:if>
-							</c:forEach>
-						</div>
+						</c:if>
 					</c:if>
 					<div class="amount-checkout">
 						<input class="minus-plus" type="button" name="" id="minus1"
@@ -705,7 +726,7 @@
 					<div class="btn-order-effect">
 						<button type="button" name="order" id="order" value="">Order</button>
 					</div>
-					
+
 				</div>
 				<div class="backtocart">
 					<c:if test="${ sessionScope.userid != null }">
@@ -744,7 +765,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="wrap-vc none" id="wrap-vc"></div>
 	<div class="list-vch none" id="list-vch">
 		<div class="close-vch">
@@ -756,7 +777,7 @@
 		<div class="vc-list">
 			<c:forEach var="it" items="${ listVoucher }" varStatus="index">
 				<c:if test="${ it.value == 1  }">
-					<div class="vc-ele disable" id="0"> 
+					<div class="vc-ele disable" id="0">
 				</c:if>
 				<c:if test="${ it.value == 0  }">
 					<c:if test="${ it.key.voucher.applyfor <= limit }">
@@ -855,7 +876,7 @@
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	
+
 	<script type="text/javascript">
 		$("#applyvch").click(function() {
 			$("#wrap-vc").toggleClass("none");

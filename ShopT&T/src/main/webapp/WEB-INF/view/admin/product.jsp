@@ -40,9 +40,12 @@
 <style>
 th.td-addnewshoes a {
 	display: flex;
-	width: 140px !important;
+	width: unset;
+	border: 1px solid white;
 }
-
+.btn-add {
+    display: flex;
+}
 td.td-date {
 	min-width: 95px;
 }
@@ -143,6 +146,69 @@ table.table-new-product td {
 	display: flex;
 	min-width: 49%;
 }
+
+div#wrapper-img {
+	position: fixed;
+	top: 0;
+	left: 0;
+	background: black;
+	width: 100%;
+	height: 100%;
+	z-index: 100;
+	opacity: .5;
+}
+
+div#img-product-details-click {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	z-index: 100;
+	display: flex;
+	justify-content: center;
+	padding: 15px 0;
+}
+
+.view-img-click {
+	position: relative;
+	height: 100%;
+}
+
+img#image-hover-click {
+	height: 100%;
+}
+
+.close-img-click {
+	cursor: pointer;
+	position: absolute;
+	right: -20px;
+	top: -15px;
+	background: white;
+	border-radius: 100px;
+	width: 50px;
+	height: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+	border-left: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+.img-gallery {
+	cursor: pointer;
+}
+
+.close-img-click img {
+	width: 24px;
+}
+
+.none {
+	display: none;
+}
+.addneworder, .addnewshoes {
+    width: unset;
+}
 </style>
 <body>
 	<%
@@ -208,28 +274,60 @@ table.table-new-product td {
 				<tr>
 					<th colspan="1000" class="td-addnewshoes"><c:if
 							test="${ clothing == 'true' }">
-							<a href="/ShopTandT/admin/product/add-new-clothing">
-								<button class="addnewshoes addnewproduct"
-									id="addnewshoes-product">
-									<img
-										src="<c:url value="/assets/images/icons/icons8-add-64.png"/>"
-										alt="icon-plus">Add New
-								</button>
-							</a>
+							<div class="btn-add">
+								<a href="/ShopTandT/admin/product/add-new-clothing">
+									<button class="addnewshoes addnewproduct"
+										id="addnewshoes-product">
+										<img
+											src="<c:url value="/assets/images/icons/icons8-add-64.png"/>"
+											alt="icon-plus">Clothing
+									</button>
+								</a> <a href="/ShopTandT/admin/product/add-clothing-color-size">
+									<button class="addnewshoes addnewproduct"
+										id="addnewshoes-product">
+										<img
+											src="<c:url value="/assets/images/icons/icons8-add-64.png"/>"
+											alt="icon-plus">Clothing Color Size
+									</button>
+								</a> <a href="/ShopTandT/admin/gallery/add">
+									<button class="addnewshoes addnewproduct"
+										id="addnewshoes-product">
+										<img
+											src="<c:url value="/assets/images/icons/icons8-add-64.png"/>"
+											alt="icon-plus">Clothing Gallery
+									</button>
+								</a>
+							</div>
 						</c:if> <c:if test="${ shoes == 'true' }">
-							<a href="/ShopTandT/admin/product/add-new-shoes">
-								<button class="addnewshoes addnewproduct"
-									id="addnewshoes-product">
-									<img
-										src="<c:url value="/assets/images/icons/icons8-add-64.png"/>"
-										alt="icon-plus">Add New
-								</button>
-							</a>
+							<div class="btn-add">
+								<a href="/ShopTandT/admin/product/add-new-shoes">
+									<button class="addnewshoes addnewproduct"
+										id="addnewshoes-product">
+										<img
+											src="<c:url value="/assets/images/icons/icons8-add-64.png"/>"
+											alt="icon-plus">Shoes
+									</button>
+								</a> <a href="/ShopTandT/admin/product/add-shoes-color-size">
+									<button class="addnewshoes addnewproduct"
+										id="addnewshoes-product">
+										<img
+											src="<c:url value="/assets/images/icons/icons8-add-64.png"/>"
+											alt="icon-plus">Shoes Color Size
+									</button>
+								</a> <a href="/ShopTandT/admin/gallery/add">
+									<button class="addnewshoes addnewproduct"
+										id="addnewshoes-product">
+										<img
+											src="<c:url value="/assets/images/icons/icons8-add-64.png"/>"
+											alt="icon-plus">Shoes Gallery
+									</button>
+								</a>
+							</div>
 						</c:if></th>
 				</tr>
 				<tr>
-					<th></th>
 					<th>ID</th>
+					<th>Image</th>
 					<th>Name</th>
 					<th>Price</th>
 					<th>Discount</th>
@@ -246,8 +344,10 @@ table.table-new-product td {
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="liProduct" items="${ listProduct }">
+				<c:forEach var="liProduct" items="${ listProduct }"
+					varStatus="index">
 					<tr>
+						<td>${ index.getCount() }</td>
 						<td class="td-img-product">
 							<div class="td-img-avt">
 								<img
@@ -255,7 +355,6 @@ table.table-new-product td {
 									alt="">
 							</div>
 						</td>
-						<td>${ liProduct.id }</td>
 						<td>${ liProduct.title }</td>
 						<td>${ liProduct.price }</td>
 						<td>${ liProduct.discount }</td>
@@ -517,12 +616,14 @@ table.table-new-product td {
 				<c:forEach var="liGallery" items="${ listGallery }">
 					<tr>
 						<td>${ liGallery.id }</td>
-						<td class="td-img-product"><img
+						<td class="td-img-product"><img class="img-gallery"
+							id="img-gallery"
 							src="<c:url value="/assets/images/products/${ liGallery.thumbnail }"/>"
 							alt=""></td>
 						<td>${ liGallery.product.title }</td>
 						<td class="td-action">
-							<button class="btn-edit-product edit-gallery" id="${ liGallery.id }">
+							<button class="btn-edit-product edit-gallery"
+								id="${ liGallery.id }">
 								<img
 									src="<c:url value="/assets/images/icons/icons8-edit-100.png"/>"
 									alt="">
@@ -814,18 +915,41 @@ table.table-new-product td {
 			</form>
 		</div>
 	</div>
+	<!--  -->
+	<div class="wrapper-img importantNone" id="wrapper-img"></div>
+	<div class="img-product-details-click importantNone"
+		id="img-product-details-click">
+		<div class="view-img-click">
+			<div class="close-img-click" id="close-img-click">
+				<img src="<c:url value="/assets/images/icons/icons8-close-68.png"/>"
+					alt="image">
+			</div>
+			<img id="image-hover-click" src="" alt="image">
+		</div>
+	</div>
 	<!-- =========================== END - ADD SIZE ============================ -->
 	<div class="msg-done importantNone">Done!</div>
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-		
 	<script type="text/javascript">
-		$(".edit-gallery").click(function(){
-			var id = this.id;
-			window.location.href = "/ShopTandT/admin/gallery/update/"+id;
+		$(".img-gallery").click(function() {
+			var url = $(this).attr('src');
+			$("#wrapper-img").removeClass("importantNone");
+			$("#img-product-details-click").removeClass("importantNone");
+			$("#image-hover-click").attr("src", url);
 		});
-	</script>	
+		$("#close-img-click").click(function() {
+			$("#wrapper-img").addClass("importantNone");
+			$("#img-product-details-click").addClass("importantNone");
+		});
+	</script>
+	<script type="text/javascript">
+		$(".edit-gallery").click(function() {
+			var id = this.id;
+			window.location.href = "/ShopTandT/admin/gallery/update/" + id;
+		});
+	</script>
 	<script type="text/javascript">
 		// show form add size
 		$("#addcolorsize-s").click(function() {

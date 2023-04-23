@@ -132,6 +132,13 @@
 					<div>
 						<p>/</p>
 						<img
+							src="<c:url value="/assets/images/icons/icons8-calendar-96.png"/>"
+							alt=""> <a href="/ShopTandT/admin/color-size">Color
+							Size</a>
+					</div>
+					<div>
+						<p>/</p>
+						<img
 							src="<c:url value="/assets/images/icons/icons8-add-64-title.png"/>"
 							alt=""> <a href="">Add new Color Size</a>
 					</div>
@@ -140,11 +147,23 @@
 					<div>
 						<p>/</p>
 						<img
+							src="<c:url value="/assets/images/icons/icons8-calendar-96.png"/>"
+							alt=""> <a href="/ShopTandT/admin/product/clothing">Clothing</a>
+					</div>
+					<div>
+						<p>/</p>
+						<img
 							src="<c:url value="/assets/images/icons/icons8-add-64-title.png"/>"
 							alt=""> <a href="">Add new Color Size</a>
 					</div>
 				</c:if>
 				<c:if test="${ clothing == 'false' && shoes == 'true' }">
+					<div>
+						<p>/</p>
+						<img
+							src="<c:url value="/assets/images/icons/icons8-trainers-100-title.png"/>"
+							alt=""> <a href="/ShopTandT/admin/product/shoes">Shoes</a>
+					</div>
 					<div>
 						<p>/</p>
 						<img
@@ -403,22 +422,58 @@
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 	<script src="<c:url value='/assets/js/colorjoe.min.js'/>"></script>
-
-	<script type="text/javascript">
-   	$("#addcolor").click(function() {
-   		var name = $("#color_name").val();
-   		if(name == "") {
-   			$(".message-done").removeClass("none");
-			$(".content-msg-done").text("Color name is empty!");
-			$('.ok-done').click(function() {
-				$(".message-done").addClass("none");
-			});
-   		} else {
-   			$('#myform').attr('action', '/ShopTandT/admin/color-size/add-color?clothing');
-   			$("#addcolor").attr('type', 'submit');
-   		}
-   	});
-   </script>
+	<c:if test="${ shoes == null }">
+		<script type="text/javascript">
+		   	$("#addcolor").click(function() {
+		   		var name = $("#color_name").val();
+		   		if(name == "") {
+		   			$(".message-done").removeClass("none");
+					$(".content-msg-done").text("Color name is empty!");
+					$('.ok-done').click(function() {
+						$(".message-done").addClass("none");
+					});
+		   		} else {
+		   			$('#myform').attr('action', '/ShopTandT/admin/color-size/add-color?shoes');
+		   			$("#addcolor").attr('type', 'submit');
+		   		}
+		   	});
+	   </script>
+	</c:if>
+	<c:if test="${ clothing != null }">
+		<script type="text/javascript">
+		   	$("#addcolor").click(function() {
+		   		var name = $("#color_name").val();
+		   		if(name == "") {
+		   			$(".message-done").removeClass("none");
+					$(".content-msg-done").text("Color name is empty!");
+					$('.ok-done').click(function() {
+						$(".message-done").addClass("none");
+					});
+		   		} else {
+		   			$('#myform').attr('action', '/ShopTandT/admin/color-size/add-color?clothing');
+		   			$("#addcolor").attr('type', 'submit');
+		   		}
+		   	});
+	   </script>
+	</c:if>
+	
+	<c:if test="${ shoes == null && shoes == null }">
+		<script type="text/javascript">
+		   	$("#addcolor").click(function() {
+		   		var name = $("#color_name").val();
+		   		if(name == "") {
+		   			$(".message-done").removeClass("none");
+					$(".content-msg-done").text("Color name is empty!");
+					$('.ok-done').click(function() {
+						$(".message-done").addClass("none");
+					});
+		   		} else {
+		   			$('#myform').attr('action', '/ShopTandT/admin/color-size/add-color');
+		   			$("#addcolor").attr('type', 'submit');
+		   		}
+		   	});
+	   </script>
+	</c:if>
 
 	<script>
 		$("#btn-addnewproduct").click(

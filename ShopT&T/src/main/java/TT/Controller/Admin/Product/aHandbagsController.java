@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import TT.Model.Brand;
 import TT.Model.Product;
 import TT.Service.Admin.aBSGService;
 import TT.Service.Admin.aGalleryService;
@@ -51,6 +52,12 @@ public class aHandbagsController {
 	public ModelAndView loadProduct(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("admin/product/handbags");
 		handbagsService = new HandbagsService();
+
+		String handbagsgallery = request.getParameter("handbagsgallery");
+		HttpSession session = request.getSession();
+		if (handbagsgallery != null && session.getAttribute("addhandbags") != null) {
+			session.setAttribute("addhandbags", "cancel");
+		}
 		List<Product> product = handbagsService.getAllProductsHandbags();
 		Collections.sort(product, new Comparator<Product>() {
 			@Override
@@ -71,9 +78,17 @@ public class aHandbagsController {
 		aBSGService = new aBSGService();
 		userService = new UserService();
 		subCategoryService = new SubCategoryService();
-
+		List<Brand> brand = aBSGService.getAllBrand();
+		Collections.sort(brand, new Comparator<Brand>() {
+			@Override
+			public int compare(Brand o1, Brand o2) {
+				return o2.getId() - o1.getId();
+			}
+		
+		});
 		mv.addObject("listUser", userService.getAllUser());
-		mv.addObject("listBrand", aBSGService.getAllBrand());
+		mv.addObject("listBrand", brand);
+		
 		mv.addObject("listStyle", subCategoryService.getAllSubCategory_sort_by_category_name());
 		mv.addObject("listGender", aBSGService.getAllGender());
 		mv.addObject("listProduct", shoesService.getAllProducts());
@@ -150,7 +165,7 @@ public class aHandbagsController {
 		}
 		return mv;
 	}
-	
+
 	@RequestMapping(value = { "/admin/product/add-handbags-color" })
 	public ModelAndView load_color_size_shoes(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("admin/product/handbags-add-color");
@@ -162,6 +177,7 @@ public class aHandbagsController {
 
 		int l = colorService.get_last_id_color();
 		String product = request.getParameter("product");
+		String redirect = String.valueOf(request.getParameter("redirect"));
 		String li_color = "";
 		for (int i = 1; i <= l; i++) {
 			String color = request.getParameter("color" + String.valueOf(i));
@@ -171,16 +187,19 @@ public class aHandbagsController {
 				}
 			}
 		}
-		
-		if(product != null && !li_color.equals("")) {
-			if(product_color_sizeService.insertIntoColor_Size_not_size(li_color, Integer.parseInt(product))) {
-				System.out.println(li_color +"================================="+product);
-				return new ModelAndView("redirect: /ShopTandT/admin/product/handbags/add-gallery");
+
+		if (product != null && !li_color.equals("")) {
+			if (product_color_sizeService.insertIntoColor_Size_not_size(li_color, Integer.parseInt(product))) {
+				System.out.println(li_color + "=================================" + product);
+				if(!redirect.equals("false")) {
+					return new ModelAndView("redirect: /ShopTandT/admin/product/handbags/add-gallery");
+				} else {
+					return new ModelAndView("redirect: /ShopTandT/admin/product/add-handbags-color");
+				}
 			} else {
 				return new ModelAndView("redirect: /ShopTandT/admin/product/add-handbags-color");
 			}
 		}
-		
 
 		List<Product> liproduct = shoesService.getAllProducts();
 		Collections.sort(liproduct, new Comparator<Product>() {
@@ -194,41 +213,16 @@ public class aHandbagsController {
 		return mv;
 	}
 
-
-	private String saveFile(MultipartFile file) {
-		if (file != null && !file.isEmpty()) {
-			try {
-				byte[] bytes = file.getBytes();
-				// String rootpath = System.getProperty("catalina.home");
-				File dir = new File("D:\\DATN\\ShopTandT\\src\\main\\webapp\\assets\\images\\products");
-				if (!dir.exists()) {
-					dir.mkdir();
-				}
-				String name = String.valueOf("TandT_" + new Date().getTime() + ".jpg");
-				File serverFile = new File(dir.getAbsolutePath() + "\\" + name);
-				System.out.println("path: " + serverFile.getPath());
-				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-				stream.write(bytes);
-				stream.close();
-
-				return name;
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return null;
-	}
-
 	@RequestMapping(value = { "/admin/product/handbags/add-gallery" })
 	public ModelAndView load_new_handbags_gallery(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		ModelAndView mv = new ModelAndView("admin/product/handbags-add-gallery");
 		shoesService = new ShoesService();
 		aProd_Color_SizeService = new aProd_Color_SizeService();
-		
+
 		HttpSession session = request.getSession();
 		String con = request.getParameter("continue");
-		if(con != null && session.getAttribute("addhandbags") != null) {
+		if (con != null && session.getAttribute("addhandbags") != null) {
 			session.setAttribute("addhandbags", "continue");
 		}
 		List<Product> liproduct = shoesService.getAllProducts();
@@ -279,6 +273,30 @@ public class aHandbagsController {
 		} else {
 			return new ModelAndView("redirect: /ShopTandT/admin/product/handbags/add-gallery");
 		}
+	}
+
+	private String saveFile(MultipartFile file) {
+		if (file != null && !file.isEmpty()) {
+			try {
+				byte[] bytes = file.getBytes();
+				// String rootpath = System.getProperty("catalina.home");
+				File dir = new File("D:\\DATN\\ShopTandT\\src\\main\\webapp\\assets\\images\\products");
+				if (!dir.exists()) {
+					dir.mkdir();
+				}
+				String name = String.valueOf("TandT_" + new Date().getTime() + ".jpg");
+				File serverFile = new File(dir.getAbsolutePath() + "\\" + name);
+				System.out.println("path: " + serverFile.getPath());
+				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+				stream.write(bytes);
+				stream.close();
+
+				return name;
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
 	}
 
 }

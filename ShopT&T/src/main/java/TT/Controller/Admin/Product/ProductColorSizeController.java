@@ -161,7 +161,7 @@ public class ProductColorSizeController {
 					Integer.parseInt(product))) {
 				System.out.println("add shoes color size success");
 				mv.addObject("addsuccess", "true");
-				return new ModelAndView("redirect: /ShopTandT/admin/gallery/add");
+				return new ModelAndView("redirect: /ShopTandT/admin/gallery/add?shoes");
 			} else {
 				mv.addObject("unsuccess", "false");
 			}
@@ -259,7 +259,7 @@ public class ProductColorSizeController {
 					Integer.parseInt(product))) {
 				System.out.println("add cloothing color size success");
 				mv.addObject("addsuccess", "true");
-				return new ModelAndView("redirect: /ShopTandT/admin/gallery/add");
+				return new ModelAndView("redirect: /ShopTandT/admin/gallery/add?clothing");
 			} else {
 				mv.addObject("unsuccess", "false");
 			}
@@ -286,14 +286,20 @@ public class ProductColorSizeController {
 
 		String name = request.getParameter("colorname");
 		String rgb = request.getParameter("colorrgb");
+
 		String handbags = request.getParameter("handbags");
-			
+		String clothing = request.getParameter("clothing");
+		String shoes = request.getParameter("shoes");
 		System.out.println(name + "==" + rgb);
 		if (name != null && rgb != null) {
 			if (colorService.insert(name, rgb)) {
 				System.out.println("add color success!");
-				if(handbags != null) {
-					return new ModelAndView("redirect: /ShopTandT/admin/product/handbags/add-gallery");
+				if (handbags != null) {
+					return new ModelAndView("redirect: /ShopTandT/admin/product/add-handbags-color");
+				} else if (clothing != null) {
+					return new ModelAndView("redirect: /ShopTandT/admin/product/add-clothing-color-size");
+				} else if (shoes != null) {
+					return new ModelAndView("redirect: /ShopTandT/admin/product/add-shoes-color-size");
 				} else {
 					return new ModelAndView("redirect: /ShopTandT/admin/color-size");
 				}

@@ -167,14 +167,19 @@ input.cancel {
 					<p>/</p>
 					<img
 						src="<c:url value="/assets/images/icons/icons8-dirty-clothes-100.png"/>"
-						alt=""> <a href="">Products</a>
+						alt="" style="opacity: 0.6;"> <a href="">Products</a>
 				</div>
-
+				<div>
+					<p>/</p>
+					<img
+						src="<c:url value="/assets/images/icons/icons8-bag-100.png"/>"
+						alt=""> <a href="/ShopTandT/admin/product/handbags">Handbags</a>
+				</div>
 				<div>
 					<p>/</p>
 					<img
 						src="<c:url value="/assets/images/icons/icons8-add-64-title.png"/>"
-						alt=""> <a href="">Add new Color Size</a>
+						alt=""> <a href="">Add Handbags Gallery</a>
 				</div>
 			</div>
 
@@ -199,7 +204,7 @@ input.cancel {
 								</div>
 							</td>
 							<td rowspan="6" class="td-img-display">
-								<div class="gallery"></div>
+								<div class="gallery" id="gallery"></div>
 							</td>
 						</tr>
 						<tr>
@@ -284,42 +289,61 @@ input.cancel {
 	<c:if test="${ sessionScope.addhandbags != null }">
 		<script type="text/javascript">
 			var check = "${ sessionScope.addhandbags }";
-			if(check =="true") {
+			if (check == "true") {
 				$("#gallery-add").removeClass("none");
-				$("#gallery-add .content-msg-notify").text("Continue add gallery?");
-				$("#gallery-add .ok-notify").click(function(){
-					var xhr = new XMLHttpRequest();
-					xhr.open("GET", "/ShopTandT/admin/product/handbags/add-gallery?continue");
-					xhr.onload = function() {
-						window.location.assign("/ShopTandT/admin/product/handbags/add-gallery");
-					};
-					xhr.send();
-				});
-				$("#gallery-add .cancel").click(function(){
-					window.location.href = "/ShopTandT/admin/product/handbags";
-				});
+				$("#gallery-add .content-msg-notify").text(
+						"Continue add gallery?");
+				$("#gallery-add .ok-notify")
+						.click(
+								function() {
+									var xhr = new XMLHttpRequest();
+									xhr
+											.open("GET",
+													"/ShopTandT/admin/product/handbags/add-gallery?continue");
+									xhr.onload = function() {
+										window.location
+												.assign("/ShopTandT/admin/product/handbags/add-gallery");
+									};
+									xhr.send();
+								});
+				$("#gallery-add .cancel")
+						.click(
+								function() {
+									var xhr = new XMLHttpRequest();
+									xhr
+											.open("GET",
+													"/ShopTandT/admin/product/handbags?handbagsgallery");
+									xhr.onload = function() {
+										window.location
+												.assign("/ShopTandT/admin/product/handbags");
+									};
+									xhr.send();
+								});
 			}
 		</script>
 	</c:if>
 
 	<script type="text/javascript">
 		$(function() {
-		    // Multiple images preview in browser
-		    var imagesPreview = function(input, placeToInsertImagePreview) {
-		        if (input.files) {
-		            var filesAmount = input.files.length;
-		            for (i = 0; i < filesAmount; i++) {
-		                var reader = new FileReader();
-		                reader.onload = function(event) {
-		                    $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
-		                }
-		                reader.readAsDataURL(input.files[i]);
-		            }
-		        }
-		    };
-		    $('#filetag').on('change', function() {
-		        imagesPreview(this, 'div.gallery');
-		    });
+			// Multiple images preview in browser
+			var imagesPreview = function(input, placeToInsertImagePreview) {
+				if (input.files) {
+					var filesAmount = input.files.length;
+					for (i = 0; i < filesAmount; i++) {
+						var reader = new FileReader();
+						reader.onload = function(event) {
+							$($.parseHTML('<img>')).attr('src',
+									event.target.result).appendTo(
+									placeToInsertImagePreview);
+						}
+						reader.readAsDataURL(input.files[i]);
+					}
+				}
+			};
+			$('#filetag').on('change', function() {
+				$("#gallery img").remove();
+				imagesPreview(this, 'div.gallery');
+			});
 		});
 	</script>
 

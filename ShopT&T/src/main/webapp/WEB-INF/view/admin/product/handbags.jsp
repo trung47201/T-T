@@ -25,11 +25,17 @@
 <style>
 th.td-addnewshoes a {
 	display: flex;
-	width: 140px !important;
 }
+
+.addneworder, .addnewshoes {
+	width: unset;
+	border: 1px solid white;
+}
+
 td.td-date {
 	min-width: 95px;
 }
+
 .behind-zoom-img {
 	background: black;
 	position: fixed;
@@ -37,11 +43,17 @@ td.td-date {
 	z-index: 100;
 	opacity: .5;
 }
+
 .zoom-img {
 	z-index: 100;
 }
+
 th.td-date {
 	min-width: 100px;
+}
+
+.btn-add {
+	display: flex;
 }
 </style>
 <body>
@@ -78,19 +90,36 @@ th.td-date {
 				<table class="order">
 					<thead>
 						<tr>
-							<th colspan="1000" class="td-addnewshoes"><a
-								href="/ShopTandT/admin/product/handbags/add">
-									<button class="addnewshoes addnewproduct"
-										id="addnewshoes-product">
-										<img
-											src="<c:url value="/assets/images/icons/icons8-add-64.png"/>"
-											alt="icon-plus">Add New
-									</button>
-							</a></th>
+							<th colspan="1000" class="td-addnewshoes">
+								<div class="btn-add">
+									<a href="/ShopTandT/admin/product/handbags/add">
+										<button class="addnewshoes addnewproduct"
+											id="addnewshoes-product">
+											<img
+												src="<c:url value="/assets/images/icons/icons8-add-64.png"/>"
+												alt="icon-plus">Handbags
+										</button>
+									</a> <a href="/ShopTandT/admin/product/add-handbags-color">
+										<button class="addnewshoes addnewproduct"
+											id="addnewshoes-product">
+											<img
+												src="<c:url value="/assets/images/icons/icons8-add-64.png"/>"
+												alt="icon-plus">Handbags Color
+										</button>
+									</a> <a href="/ShopTandT/admin/product/handbags/add-gallery">
+										<button class="addnewshoes addnewproduct"
+											id="addnewshoes-product">
+											<img
+												src="<c:url value="/assets/images/icons/icons8-add-64.png"/>"
+												alt="icon-plus">Handbags Gallery
+										</button>
+									</a>
+								</div>
+							</th>
 						</tr>
 						<tr>
-							<th></th>
 							<th>ID</th>
+							<th>Image</th>
 							<th>Name</th>
 							<th>Price</th>
 							<th>Discount</th>
@@ -105,8 +134,9 @@ th.td-date {
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="liProduct" items="${ listProduct }">
+						<c:forEach var="liProduct" items="${ listProduct }" varStatus="index">
 							<tr>
+								<td>${ index.getCount() }</td>
 								<td class="td-img-product">
 									<div class="td-img-avt">
 										<img
@@ -114,7 +144,6 @@ th.td-date {
 											alt="">
 									</div>
 								</td>
-								<td>${ liProduct.id }</td>
 								<td>${ liProduct.title }</td>
 								<td>${ liProduct.price }</td>
 								<td>${ liProduct.discount }</td>

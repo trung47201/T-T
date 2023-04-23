@@ -1,4 +1,5 @@
-	<!DOCTYPE html>
+
+<!DOCTYPE html>
 <html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
@@ -71,32 +72,37 @@
 	width: 80px;
 	margin-left: 10px;
 }
+
 table.table-new-product {
-    margin-top: 30px;
-    width: 100%;
+	margin-top: 30px;
+	width: 100%;
 }
+
 .img-display {
-    max-width: 540px;
-    height: 540px;
-    overflow: hidden;
-    justify-content: center;
-    display: flex;
+	max-width: 540px;
+	height: 540px;
+	overflow: hidden;
+	justify-content: center;
+	display: flex;
 }
+
 .selected-add-new-product {
-    width: 90%;
+	width: 90%;
 }
+
 input.cancel {
-    width: 124px;
+	width: 124px;
 }
 
 .gallery {
-    width: 515px;
-    height: 537px;
-    overflow-y: scroll;
-    overflow-x: hidden;
+	width: 515px;
+	height: 537px;
+	overflow-y: scroll;
+	overflow-x: hidden;
 }
+
 .gallery img {
-    width: 100%;
+	width: 100%;
 }
 </style>
 
@@ -134,9 +140,8 @@ input.cancel {
 			</div>
 
 			<div class="table-add-new-product">
-				<form
-					action="/ShopTandT/admin/gallery/add/savefile"
-					method="post" enctype="multipart/form-data">
+				<form action="/ShopTandT/admin/gallery/add/savefile" method="post"
+					enctype="multipart/form-data">
 					<table class="table-new-product">
 						<tr>
 							<td>
@@ -155,7 +160,7 @@ input.cancel {
 								</div>
 							</td>
 							<td rowspan="4" class="td-img-display">
-								<div class="gallery"></div>
+								<div class="gallery" id="gallery"></div>
 							</td>
 						</tr>
 						<tr>
@@ -175,6 +180,12 @@ input.cancel {
 							</td>
 						</tr>
 					</table>
+					<c:if test="${ shoes != null }">
+						<input type="hidden" id="shoes" name="shoes" value="true">
+					</c:if>
+					<c:if test="${ clothing != null }">
+						<input type="hidden" id="clothing" name="clothing" value="true">
+					</c:if>
 				</form>
 			</div>
 			<jsp:include page="../layouts/admin/a-footer.jsp"></jsp:include>
@@ -235,15 +246,24 @@ input.cancel {
 					}
 				});
 	</script>
-	
-	
+
+
 	<c:if test="${ sessionScope.addgallery != null }">
 		<script type="text/javascript">
+			var shoes = "";
+			var clothing = "";
+			if(${ shoes != null }) {
+				shoes = "${ shoes }";
+			}
+			if(${ clothing != null }) {
+				clothing = "${ clothing }";
+			}
 			var check = "${sessionScope.addgallery}";
-			if(check =="true") {
+			if (check == "true") {
 				$("#gallery-add").removeClass("none");
-				$("#gallery-add .content-msg-notify").text("Continue add gallery?");
-				$("#gallery-add .ok-notify").click(function(){
+				$("#gallery-add .content-msg-notify").text(
+						"Continue add gallery?");
+				$("#gallery-add .ok-notify").click(function() {
 					var xhr = new XMLHttpRequest();
 					xhr.open("GET", "/ShopTandT/admin/gallery/add?continue");
 					xhr.onload = function() {
@@ -251,13 +271,23 @@ input.cancel {
 					};
 					xhr.send();
 				});
-				$("#gallery-add .cancel").click(function(){
-					window.location.href = "/ShopTandT/admin/gallery";
+				$("#gallery-add .cancel").click(function() {
+					var xhr = new XMLHttpRequest();
+					xhr.open("GET", "/ShopTandT/admin/gallery/add?cancel");
+					xhr.onload = function() {
+						if(shoes != "") {
+							window.location.href="/ShopTandT/admin/product/shoes";
+						}
+						if(clothing != "") {
+							window.location.href ="/ShopTandT/admin/product/clothing";
+						}
+					};
+					xhr.send();
 				});
 			}
 		</script>
 	</c:if>
-	
+
 	<!-- choose image and display -->
 	<!-- <script>
 		var fileTag = document.getElementById("filetag"), preview = document
@@ -278,22 +308,25 @@ input.cancel {
 	</script> -->
 	<script type="text/javascript">
 		$(function() {
-		    // Multiple images preview in browser
-		    var imagesPreview = function(input, placeToInsertImagePreview) {
-		        if (input.files) {
-		            var filesAmount = input.files.length;
-		            for (i = 0; i < filesAmount; i++) {
-		                var reader = new FileReader();
-		                reader.onload = function(event) {
-		                    $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
-		                }
-		                reader.readAsDataURL(input.files[i]);
-		            }
-		        }
-		    };
-		    $('#filetag').on('change', function() {
-		        imagesPreview(this, 'div.gallery');
-		    });
+			// Multiple images preview in browser
+			var imagesPreview = function(input, placeToInsertImagePreview) {
+				if (input.files) {
+					var filesAmount = input.files.length;
+					for (i = 0; i < filesAmount; i++) {
+						var reader = new FileReader();
+						reader.onload = function(event) {
+							$($.parseHTML('<img>')).attr('src',
+									event.target.result).appendTo(
+									placeToInsertImagePreview);
+						}
+						reader.readAsDataURL(input.files[i]);
+					}
+				}
+			};
+			$('#filetag').on('change', function() {
+				$("#gallery img").remove();
+				imagesPreview(this, 'div.gallery');
+			});
 		});
 	</script>
 	<script type="text/javascript">

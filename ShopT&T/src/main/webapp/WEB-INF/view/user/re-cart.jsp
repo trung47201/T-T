@@ -134,20 +134,40 @@
 											<c:forEach var="it_color" items="${ it.value }">
 												<c:set var="sKey"
 													value="${ it_color.key }_${ item.key.prod.id }"></c:set>
-												<select
-													id="${ it_color.key }_${ item.key.prod.id }_${ item.key.id }"
-													class="size" name="size" onchange="size_select(this)">
-													<option value="" style="display: none;" disabled selected>Choose
-														size</option>
-													<c:forEach var="it_size" items="${ it_color.value }">
-														<option value="${ it_size.id }"
-															<c:if test="${ item.key.size.id==it_size.id }">
-																	<c:out value="selected"></c:out>
-																</c:if>>
-															${ it_size.size_number }</option>
-													</c:forEach>
-
-												</select>
+												<c:set var="checksize" value="${ 0 }"></c:set>
+												<c:forEach var="it_size" items="${ it_color.value }" varStatus="idxsize">
+													<c:set var="checksize" value="${ idxsize.getCount() }"></c:set>
+												</c:forEach>
+												<c:if test="${ checksize <= 1 }">
+													<select hidden="hidden" 
+														id="${ it_color.key }_${ item.key.prod.id }_${ item.key.id }"
+														class="size" name="size" onchange="size_select(this)">
+														<option value="" style="display: none;" disabled selected>Choose
+															size</option>
+														<c:forEach var="it_size" items="${ it_color.value }">
+															<option value="${ it_size.id }"
+																<c:if test="${ item.key.size.id==it_size.id }">
+																		<c:out value="selected"></c:out>
+																	</c:if>>
+																${ it_size.size_number }</option>
+														</c:forEach>
+													</select>
+												</c:if>
+												<c:if test="${ checksize > 1 }">
+													<select
+														id="${ it_color.key }_${ item.key.prod.id }_${ item.key.id }"
+														class="size" name="size" onchange="size_select(this)">
+														<option value="" style="display: none;" disabled selected>Choose
+															size</option>
+														<c:forEach var="it_size" items="${ it_color.value }">
+															<option value="${ it_size.id }"
+																<c:if test="${ item.key.size.id==it_size.id }">
+																		<c:out value="selected"></c:out>
+																	</c:if>>
+																${ it_size.size_number }</option>
+														</c:forEach>
+													</select>
+												</c:if>
 											</c:forEach>
 										</c:if>
 									</c:forEach>

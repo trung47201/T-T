@@ -1,4 +1,4 @@
-	package TT.Controller.Admin.Product;
+package TT.Controller.Admin.Product;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import TT.Model.Sub_category;
+import TT.Service.Admin.aGalleryService;
 import TT.Service.Admin.aProductService;
 import TT.Service.User.BrandService;
 import TT.Service.User.GenderService;
@@ -36,6 +37,7 @@ public class aProductController {
 	private BrandService brandService;
 	private GenderService genderService;
 	private aProductService aProductService;
+	private aGalleryService aGalleryService;
 
 	@RequestMapping(value = { "/admin/product/update/{id}" })
 	public ModelAndView edit_product(@PathVariable String id, HttpServletRequest request,
@@ -46,7 +48,7 @@ public class aProductController {
 		subCategoryService = new SubCategoryService();
 		brandService = new BrandService();
 		genderService = new GenderService();
-
+		aGalleryService = new aGalleryService();
 		List<Sub_category> subcategory = subCategoryService.getAllSubCategory();
 		Collections.sort(subcategory, new Comparator<Sub_category>() {
 			@Override
@@ -59,7 +61,7 @@ public class aProductController {
 		mv.addObject("gender", genderService.getAllGender());
 		mv.addObject("product", shoesService.getProduct(Integer.parseInt(id)));
 		mv.addObject("des", shoesService.getProduct(Integer.parseInt(id)).getDescription().trim());
-
+		mv.addObject("listGallery", aGalleryService.get_all_gallery_by_prod_id(Integer.parseInt(id)));
 		mv.addObject("productedit", "true");
 		mv.addObject("id", id);
 		return mv;
@@ -107,24 +109,24 @@ public class aProductController {
 				if (aProductService.update(Integer.parseInt(id), title, Double.parseDouble(price),
 						Integer.parseInt(discount), description, Integer.parseInt(style), image,
 						Integer.parseInt(brand), Integer.parseInt(gender))) {
-					System.out.println("save product success aProductController (100)");
+					System.out.println("save product success aProductController (110)");
 				} else {
-					System.out.println("save product unsuccess aProductController (100)");
+					System.out.println("save product unsuccess aProductController (112)");
 				}
 			}
-			return new ModelAndView("redirect: /ShopTandT/admin/product");
+			return new ModelAndView("redirect: /ShopTandT/admin/product/update/" + id);
 		} else {
 			if (title != null && price != null && discount != null && style != null && gender != null && brand != null
 					&& description != null) {
 				if (aProductService.update(Integer.parseInt(id), title, Double.parseDouble(price),
-						Integer.parseInt(discount), description, Integer.parseInt(style), "",
-						Integer.parseInt(brand), Integer.parseInt(gender))) {
-					System.out.println("save product success aProductController (100)");
+						Integer.parseInt(discount), description, Integer.parseInt(style), "", Integer.parseInt(brand),
+						Integer.parseInt(gender))) {
+					System.out.println("save product success aProductController (122)");
 				} else {
-					System.out.println("save product unsuccess aProductController (100)");
+					System.out.println("save product unsuccess aProductController (124)");
 				}
 			}
-			return new ModelAndView("redirect: /ShopTandT/admin/product");
+			return new ModelAndView("redirect: /ShopTandT/admin/product/update/" + id);
 		}
 	}
 

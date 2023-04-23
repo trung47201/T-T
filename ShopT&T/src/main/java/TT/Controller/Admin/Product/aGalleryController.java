@@ -61,10 +61,17 @@ public class aGalleryController {
 
 		shoesService = new ShoesService();
 		String con = request.getParameter("continue");
+		String cancel = request.getParameter("cancel");
+		String shoes = request.getParameter("shoes");
+		String clothing = request.getParameter("clothing");
 		HttpSession session = request.getSession();
 		if (con != null) {
 			session.setAttribute("addgallery", "false");
 			System.out.println("continue");
+		}
+		if (cancel != null) {
+			session.setAttribute("addgallery", "cancel");
+			System.out.println("cancel");
 		}
 		List<Product> product = shoesService.getAllProducts();
 		Collections.sort(product, new Comparator<Product>() {
@@ -73,6 +80,13 @@ public class aGalleryController {
 				return o2.getId() - o1.getId();
 			}
 		});
+
+		if(shoes != null) {
+			mv.addObject("shoes", "true");
+		}
+		if(clothing != null) {
+			mv.addObject("clothing", "true");
+		}
 		mv.addObject("listProduct", product);
 		return mv;
 	}
@@ -107,13 +121,13 @@ public class aGalleryController {
 		String galleryid = request.getParameter("galleryid");
 		String image = saveFile(file);
 		if (image != null && prodid != null && galleryid != null) {
-			if(aGalleryService.update(Integer.parseInt(prodid), image, Integer.parseInt(galleryid))) {
+			if (aGalleryService.update(Integer.parseInt(prodid), image, Integer.parseInt(galleryid))) {
 				return new ModelAndView("redirect: /ShopTandT/admin/gallery");
 			}
 		} else {
 			System.out.println("unsuccess image null");
 		}
-		return new ModelAndView("redirect: /ShopTandT/admin/gallery/update/"+id);
+		return new ModelAndView("redirect: /ShopTandT/admin/gallery/update/" + id);
 	}
 
 	@RequestMapping(value = "/admin/gallery/add/savefile", method = RequestMethod.POST)
@@ -123,6 +137,8 @@ public class aGalleryController {
 		aGalleryService = new aGalleryService();
 		HttpSession session = request.getSession();
 		String prodid = request.getParameter("product");
+		String clothing = request.getParameter("clothing");
+		String shoes = request.getParameter("shoes");
 		boolean check = false;
 		try {
 			List<MultipartFile> files = Arrays.asList(file);
@@ -149,9 +165,21 @@ public class aGalleryController {
 		}
 		if (check) {
 			session.setAttribute("addgallery", "true");
-			return new ModelAndView("redirect: /ShopTandT/admin/gallery/add");
+			if(clothing != null) {
+				return new ModelAndView("redirect: /ShopTandT/admin/gallery/add?clothing");
+			} else if(shoes != null) {
+				return new ModelAndView("redirect: /ShopTandT/admin/gallery/add?shoes");
+			} else {
+				return new ModelAndView("redirect: /ShopTandT/admin/gallery/add");
+			}
 		} else {
-			return new ModelAndView("redirect: /ShopTandT/admin/gallery/add");
+			if(clothing != null) {
+				return new ModelAndView("redirect: /ShopTandT/admin/gallery/add?clothing");
+			} else if(shoes != null) {
+				return new ModelAndView("redirect: /ShopTandT/admin/gallery/add?shoes");
+			} else {
+				return new ModelAndView("redirect: /ShopTandT/admin/gallery/add");
+			}
 		}
 	}
 

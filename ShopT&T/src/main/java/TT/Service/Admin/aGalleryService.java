@@ -1,6 +1,7 @@
 package TT.Service.Admin;
 
 import java.sql.Connection;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.mysql.jdbc.PreparedStatement;
@@ -70,6 +71,17 @@ public class aGalleryService implements aGalleryRepository {
 			}
 		}
 		return g;
+	}
+	
+	public List<Gallery> get_all_gallery_by_prod_id(int id) {
+		List<Gallery> rs = new LinkedList<>();
+		List<Gallery> li = getAllGallery();
+		for (Gallery g : li) {
+			if (g.getProduct().getId() == id) {
+				rs.add(g);
+			}
+		}
+		return rs;
 	}
 
 }

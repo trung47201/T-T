@@ -1,6 +1,8 @@
 package TT.Controller.User.Product;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import TT.Model.Product;
 import TT.Service.User.ColorService;
 import TT.Service.User.PostsService;
 import TT.Service.User.SizeService;
@@ -130,7 +133,14 @@ public class ClothingController {
 					mv.addObject("listProducts", "");
 				} else {
 					if (clothingService.getAllProductsClothing().size() > 0) {
-						mv.addObject("listProducts", clothingService.getAllProductsClothing());
+						List<Product> liProd = clothingService.getAllProductsClothing();
+						Collections.sort(liProd, new Comparator<Product>() {
+							@Override
+							public int compare(Product o1, Product o2) {
+								return o2.getId() - o1.getId();
+							}
+						});
+						mv.addObject("listProducts", liProd);
 					}
 				}
 			} else {

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -20,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import TT.Model.Brand;
 import TT.Model.Product;
+import TT.Model.Sub_category;
 import TT.Service.Admin.aBSGService;
 import TT.Service.Admin.aProductService;
 import TT.Service.User.SubCategoryService;
@@ -36,6 +39,7 @@ public class aClothingController {
 	private UserService userService;
 	private SubCategoryService subCategoryService;
 	private aProductService aProductService;
+
 	@RequestMapping(value = { "/admin/product/clothing" })
 	public ModelAndView loadProduct(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("admin/product");
@@ -60,7 +64,7 @@ public class aClothingController {
 		mv.addObject("shoes", "false");
 		return mv;
 	}
-	
+
 	@RequestMapping(value = { "/admin/product/add-new-clothing" })
 	public ModelAndView load_new_clothing(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
@@ -70,10 +74,25 @@ public class aClothingController {
 		aBSGService = new aBSGService();
 		userService = new UserService();
 		subCategoryService = new SubCategoryService();
-		
+
 		mv.addObject("listUser", userService.getAllUser());
-		mv.addObject("listBrand", aBSGService.getAllBrand());
-		mv.addObject("listStyle", subCategoryService.getAllSubCategory_sort_by_category_name());
+		List<Brand> liBrand = aBSGService.getAllBrand();
+		Collections.sort(liBrand, new Comparator<Brand>() {
+			@Override
+			public int compare(Brand o1, Brand o2) {
+				return o2.getId() - o1.getId();
+			}
+		});
+		mv.addObject("listBrand", liBrand);
+
+		List<Sub_category> rs = new LinkedList<>();
+		List<Sub_category> liSub = subCategoryService.getAllSubCategory_sort_by_category_name();
+		for (Sub_category sub : liSub) {
+			if (sub.getCategory().getId() == 1) {
+				rs.add(sub);
+			}
+		}
+		mv.addObject("listStyle", rs);
 		mv.addObject("listGender", aBSGService.getAllGender());
 
 		mv.addObject("listProduct", shoesService.getAllProducts());
@@ -83,12 +102,12 @@ public class aClothingController {
 		mv.addObject("colorSize", "false");
 		mv.addObject("gallery", "false");
 		mv.addObject("bsg", "false");
-		
+
 		mv.addObject("shoes", "false");
 		mv.addObject("clothing", "true");
 		return mv;
 	}
-	
+
 	@RequestMapping(value = "/admin/product/add-new-clothing/savefile", method = RequestMethod.POST)
 	public ModelAndView shoes(@RequestParam(value = "filetag", required = false) MultipartFile file,
 			HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -151,7 +170,7 @@ public class aClothingController {
 		}
 		return mv;
 	}
-	
+
 	private String saveFile(MultipartFile file) {
 		if (file != null && !file.isEmpty()) {
 			try {

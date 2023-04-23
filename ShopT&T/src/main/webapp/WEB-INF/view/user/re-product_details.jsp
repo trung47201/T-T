@@ -36,8 +36,64 @@
 <link rel="stylesheet"
 	href="<c:url value="/assets/css/f-btn-effect.css"/>">
 <style>
+.img-product-details {
+	cursor: pointer;
+}
+
+span.select-color {
+	border: 1px solid #cb82a9;
+}
+
+div#wrapper-img {
+	position: fixed;
+	top: 0;
+	left: 0;
+	background: black;
+	width: 100%;
+	height: 100%;
+	z-index: 100;
+	opacity: .5;
+}
+
+div#img-product-details-click {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	z-index: 100;
+	display: flex;
+	justify-content: center;
+	padding: 15px 0;
+}
+.view-img-click {
+    position: relative;
+    height: 100%;
+}
+img#image-hover-click {
+    height: 100%;
+}
+.close-img-click {
+cursor: pointer;
+    position: absolute;
+    right: -20px;
+    top: -15px;
+    background: white;
+    border-radius: 100px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 2px solid rgba(0,0,0,0.3);
+    border-left: 2px solid rgba(0,0,0,0.3);
+}
+.close-img-click img {
+    width: 24px;
+}
 </style>
-<link rel="stylesheet" href="<c:url value="/assets/css/f-favorite.css"/>">
+<link rel="stylesheet"
+	href="<c:url value="/assets/css/f-favorite.css"/>">
 <jsp:include page="../layouts/user/re-favorite.jsp"></jsp:include>
 <body style="color: #222121;">
 	<jsp:include page="../layouts/user/re-menu.jsp"></jsp:include>
@@ -80,7 +136,7 @@
 							</c:if>
 						</c:forEach>
 					</div>
-					<div class="img-product-details">
+					<div class="img-product-details" id="img-product-details">
 						<img id="image-hover"
 							src="<c:url value="/assets/images/products/${ product.thumbnail }"/>"
 							alt="image">
@@ -147,47 +203,59 @@
 						</div>
 					</div>
 					<div class="size-product-details">
-						<div class="fit-guide-size">
-							<p>Size</p>
-							<a href="#"> Size & Fit guide</a>
-						</div>
-						<c:forEach var="liSize" items="${ listSize }" varStatus="index">
-							<c:set var="idProd_Size" value="${ product.id }_${ liSize.key }"></c:set>
-							<c:if test="${ index.getIndex() == 0 }">
-								<div class="list-size-product-details" id="${ idProd_Size }">
-									<c:forEach var="liSizeByColor" items="${ liSize.value }"
-										varStatus="indexS">
-										<c:if test="${ indexS.getIndex() == 0 }">
-											<span class="select-size selected-color"
-												id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
-											<input type="hidden" name="size" id="size"
-												value="${ liSizeByColor.size.id }">
-										</c:if>
-										<c:if test="${ indexS.getIndex() != 0 }">
-											<span class="select-size"
-												id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
-										</c:if>
-									</c:forEach>
-								</div>
-							</c:if>
-							<c:if test="${ index.getIndex() != 0 }">
-								<div class="list-size-product-details none"
-									id="${ idProd_Size }">
-									<c:forEach var="liSizeByColor" items="${ liSize.value }"
-										varStatus="indexS">
-										<c:if test="${ indexS.getIndex() == 0 }">
-											<span class="select-size"
-												id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
-										</c:if>
-										<c:if test="${ indexS.getIndex() != 0 }">
-											<span class="select-size"
-												id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
-										</c:if>
-									</c:forEach>
-								</div>
-							</c:if>
+						<c:set var="checkSize" value="${ 0 }"></c:set>
+						<c:forEach var="liSize" items="${ listSize }">
+							<c:forEach var="liSizeByColor" items="${ liSize.value }"
+								varStatus="index">
+								<c:set var="checkSize" value="${ index.getCount() }"></c:set>
+							</c:forEach>
 						</c:forEach>
-
+						<c:if test="${ checkSize <= 1}">
+							<input type="hidden" name="size" id="size"
+								value="${ liSizeByColor.size.id }">
+						</c:if>
+						<c:if test="${ checkSize > 1}">
+							<div class="fit-guide-size">
+								<p>Size</p>
+								<a href="#"> Size & Fit guide</a>
+							</div>
+							<c:forEach var="liSize" items="${ listSize }" varStatus="index">
+								<c:set var="idProd_Size" value="${ product.id }_${ liSize.key }"></c:set>
+								<c:if test="${ index.getIndex() == 0 }">
+									<div class="list-size-product-details" id="${ idProd_Size }">
+										<c:forEach var="liSizeByColor" items="${ liSize.value }"
+											varStatus="indexS">
+											<c:if test="${ indexS.getIndex() == 0 }">
+												<span class="select-size selected-color"
+													id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
+												<input type="hidden" name="size" id="size"
+													value="${ liSizeByColor.size.id }">
+											</c:if>
+											<c:if test="${ indexS.getIndex() != 0 }">
+												<span class="select-size"
+													id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
+											</c:if>
+										</c:forEach>
+									</div>
+								</c:if>
+								<c:if test="${ index.getIndex() != 0 }">
+									<div class="list-size-product-details none"
+										id="${ idProd_Size }">
+										<c:forEach var="liSizeByColor" items="${ liSize.value }"
+											varStatus="indexS">
+											<c:if test="${ indexS.getIndex() == 0 }">
+												<span class="select-size"
+													id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
+											</c:if>
+											<c:if test="${ indexS.getIndex() != 0 }">
+												<span class="select-size"
+													id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
+											</c:if>
+										</c:forEach>
+									</div>
+								</c:if>
+							</c:forEach>
+						</c:if>
 					</div>
 					<div class="amount-product-details">
 						<input class="minus-plus" type="button" name="" id="minus"
@@ -197,8 +265,9 @@
 					</div>
 					<div class="btn-add-buy">
 						<div class="btn-effect">
-							<button type="button" class="addtocart gray" name="${ product.id }"
-								id="add-to-cart-input">Add to cart</button>
+							<button type="button" class="addtocart gray"
+								name="${ product.id }" id="add-to-cart-input">Add to
+								cart</button>
 						</div>
 						<div class="btn-effect">
 							<button class="buynow" type="button" name="" id="buy-now-input"
@@ -461,11 +530,37 @@
 		</form>
 	</header>
 
+	<div class="wrapper-img none" id="wrapper-img"></div>
+	<div class="img-product-details-click none"
+		id="img-product-details-click">
+		<div class="view-img-click">
+			<div class="close-img-click" id="close-img-click">
+				<img src="<c:url value="/assets/images/icons/icons8-close-68.png"/>"
+					alt="image">
+			</div>
+			<img id="image-hover-click" src="" alt="image">
+		</div>
+	</div>
+
 	<jsp:include page="../layouts/user/re-footer.jsp"></jsp:include>
 
 	<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+	<script type="text/javascript">
+		$("#img-product-details").click(function () {
+			var url = $('#img-product-details img').attr('src');
+			$("#wrapper-img").removeClass("none");
+			$("#img-product-details-click").removeClass("none");
+			$("#image-hover-click").attr("src", url);
+		});
+		$("#close-img-click").click(function () {
+			$("#wrapper-img").addClass("none");
+			$("#img-product-details-click").addClass("none");
+		});
+	</script>
 
 	<script type="text/javascript">
 		var name = $("#name-color-input").val();

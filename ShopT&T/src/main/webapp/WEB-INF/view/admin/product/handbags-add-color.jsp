@@ -67,6 +67,7 @@
 	justify-content: unset;
 	padding: 0 10px;
 	margin-right: 18%;
+	border: 1px solid #cb82a9;
 }
 
 .list-size-add-new-product input {
@@ -131,22 +132,24 @@ input.cancel {
 	background: #cb82a9;
 	color: white;
 }
+
 .list-size-add-new-product div {
-    margin-bottom: 10px;
-    display: flex;
-    width: 100%;
+	margin-bottom: 10px;
+	display: flex;
+	width: 100%;
 }
+
 .list-size-add-new-product {
-    width: 90%;
-    display: block;
-    height: 390px;
-    overflow-y: scroll;
-    border: 1px solid #cb82a9;
-    border-right: 0;
-    border-left: 0;
-    padding-top: 4px;
-    padding-left: 20px;
-} 
+	width: 90%;
+	display: block;
+	height: 390px;
+	overflow-y: scroll;
+	border: 1px solid #cb82a9;
+	border-right: 0;
+	border-left: 0;
+	padding-top: 4px;
+	padding-left: 20px;
+}
 </style>
 
 <body>
@@ -166,13 +169,12 @@ input.cancel {
 					<p>/</p>
 					<img
 						src="<c:url value="/assets/images/icons/icons8-dirty-clothes-100.png"/>"
-						alt=""> <a href="">Products</a>
+						alt="" style="opacity: 0.6;"> <a href="">Products</a>
 				</div>
 				<div>
 					<p>/</p>
-					<img
-						src="<c:url value="/assets/images/icons/icons8-bag-100.png"/>"
-						alt=""> <a href="">Handbags</a>
+					<img src="<c:url value="/assets/images/icons/icons8-bag-100.png"/>"
+						alt=""> <a href="/ShopTandT/admin/product/handbags">Handbags</a>
 				</div>
 				<div>
 					<p>/</p>
@@ -183,8 +185,7 @@ input.cancel {
 			</div>
 
 			<div class="table-add-new-product">
-				<form id="myform"
-					method="post" enctype="multipart/form-data">
+				<form id="myform" method="post" enctype="multipart/form-data">
 					<table class="table-new-product">
 						<tr>
 							<td>
@@ -249,12 +250,11 @@ input.cancel {
 													style="background: ${ liColor.rgb };"><input
 													class="none" id="${ liColor.id }"
 													name="color${ liColor.id }" type="number" placeholder="Qty"></span>
-											</div>
-											</c:if>
-										</c:forEach>
-										<c:if test="${ (count+1) % 4 != 0 }">
-											</div>
-										</c:if>
+									</div>
+									</c:if>
+									</c:forEach>
+									<c:if test="${ (count+1) % 4 != 0 }">
+								</div> </c:if>
 								</div>
 								</div>
 							</td>
@@ -383,6 +383,7 @@ input.cancel {
 		        }
 		    };
 		    $('#filetag').on('change', function() {
+		    	$("#gallery img").remove();
 		        imagesPreview(this, 'div.gallery');
 		    });
 		});

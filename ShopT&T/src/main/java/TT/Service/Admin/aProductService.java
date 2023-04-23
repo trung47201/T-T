@@ -75,9 +75,10 @@ public class aProductService implements aProductRepository {
 		try {
 			java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
 			connectService = new ConnectService();
+			subCategoryService = new SubCategoryService();
 			Connection conn = connectService.getConnect();
 			if (thumbnail.equals("")) {
-				String sql = "UPDATE `product` SET `title`= ?, `price`= ?, `discount`= ?, `style_id`= ?, `description`= ?,`brand_id`= ?, `updated_at`= ?, `gender_id`= ? WHERE id = ?";
+				String sql = "UPDATE `product` SET `title`= ?, `price`= ?, `discount`= ?, `sub_category_id`= ?, `description`= ?,`brand_id`= ?, `updated_at`= ?, `gender_id`= ?, `category_id`= ? WHERE id = ?";
 				PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
 				preparedStmt.setString(1, title);
 				preparedStmt.setDouble(2, price);
@@ -87,12 +88,13 @@ public class aProductService implements aProductRepository {
 				preparedStmt.setInt(6, brand);
 				preparedStmt.setTimestamp(7, date);
 				preparedStmt.setInt(8, gender);
-				preparedStmt.setInt(9, id);
+				preparedStmt.setInt(9, subCategoryService.get_category_id_by_sub_category_id(style));
+				preparedStmt.setInt(10, id);
 				preparedStmt.execute();
 				conn.close();
 				return true;
 			} else {
-				String sql = "UPDATE `product` SET `title`= ?, `price`= ?, `discount`= ?, `style_id`= ?, `thumbnail`= ?, `description`= ?,`brand_id`= ?, `updated_at`= ?, `gender_id`= ? WHERE id = ?";
+				String sql = "UPDATE `product` SET `title`= ?, `price`= ?, `discount`= ?, `sub_category_id`= ?, `thumbnail`= ?, `description`= ?,`brand_id`= ?, `updated_at`= ?, `gender_id`= ?, `category_id`= ? WHERE id = ?";
 				PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
 				preparedStmt.setString(1, title);
 				preparedStmt.setDouble(2, price);
@@ -103,7 +105,8 @@ public class aProductService implements aProductRepository {
 				preparedStmt.setInt(7, brand);
 				preparedStmt.setTimestamp(8, date);
 				preparedStmt.setInt(9, gender);
-				preparedStmt.setInt(10, id);
+				preparedStmt.setInt(10, subCategoryService.get_category_id_by_sub_category_id(style));
+				preparedStmt.setInt(11, id);
 				preparedStmt.execute();
 				conn.close();
 				return true;

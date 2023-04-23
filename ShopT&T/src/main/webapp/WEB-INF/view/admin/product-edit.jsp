@@ -43,6 +43,16 @@ td#colspan2 .id-new-product {
 	max-width: 465px;
 	height: 400px;
 	margin-top: 15px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	padding: 0 10px;
+	background: white;
+	display: block;
+}
+
+.img-display img {
+	width: 100%;
+	height: unset;
 }
 
 .table-add-new-product {
@@ -118,8 +128,7 @@ td#colspan2 .id-new-product {
 		<c:if test="${ productedit == 'false' }">
 			<div class="table-add-new-product importantNone">
 		</c:if>
-		<form
-			action="http://localhost:8888/ShopTandT/admin/product/edit/saveproduct/${ id }"
+		<form action="/ShopTandT/admin/product/edit/saveproduct/${ id }"
 			method="post" enctype="multipart/form-data">
 			<table class="table-new-product">
 				<tr>
@@ -212,9 +221,11 @@ td#colspan2 .id-new-product {
 					</td>
 					<td rowspan="3" class="td-img-display">
 						<div class="img-display">
-							<img
-								src="<c:url value='/assets/images/products/${ product.thumbnail }' />"
-								id="preview">
+							<c:forEach var="it" items="${ listGallery }">
+								<img
+									src="<c:url value='/assets/images/products/${ it.thumbnail }' />"
+									id="preview">
+							</c:forEach>
 						</div>
 					</td>
 				</tr>
