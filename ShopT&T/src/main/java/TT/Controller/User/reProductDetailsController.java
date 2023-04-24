@@ -57,6 +57,7 @@ public class reProductDetailsController {
 		mv.addObject("averageRating", shoesService.averageRating(Integer.parseInt(id_prod)));
 		mv.addObject("product", shoesService.getProduct(Integer.parseInt(id_prod)));
 		mv.addObject("hmPosts", postsService.listPost());
+		mv.addObject("productid", id_prod);
 		return mv;
 	}
 	

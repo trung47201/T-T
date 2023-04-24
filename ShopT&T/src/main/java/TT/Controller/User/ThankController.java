@@ -85,8 +85,6 @@ public class ThankController {
 		mv.addObject("method", method);
 		mv.addObject("price_at", price_at);
 		mv.addObject("id_prod", id_prod);
-		mv.addObject("id_color", id_color);
-		mv.addObject("id_size", id_size);
 		mv.addObject("quantity", quantity);
 		mv.addObject("fullname", fullname);
 		mv.addObject("phone_number", phone_number);
@@ -94,8 +92,12 @@ public class ThankController {
 		mv.addObject("address", address);
 		mv.addObject("note", note);
 		mv.addObject("product", shoesService.getProduct(Integer.parseInt(id_prod)));
-		mv.addObject("color", colorService.getColorById(Integer.parseInt(id_color)).getRgb());
-		mv.addObject("size", sizeService.getSizeById(Integer.parseInt(id_size)).getSize_number());
+		if(id_color != null && id_size != null) {
+			mv.addObject("color", colorService.getColorById(Integer.parseInt(id_color)).getRgb());
+			mv.addObject("size", sizeService.getSizeById(Integer.parseInt(id_size)).getSize_number());
+			mv.addObject("id_color", id_color);
+			mv.addObject("id_size", id_size);
+		}
 		mv.addObject("back_home", "home");
 		return mv;
 	}

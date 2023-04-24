@@ -385,6 +385,17 @@ public class aReceiptService implements aOrderRepository {
 		return false;
 	}
 
+	public double get_discount_by_order_id (int order_id) {
+		double rs = 0;
+		List<Receipt> li = getAllOrder();
+		for (Receipt receipt : li) {
+			if(order_id == receipt.getId()) {
+				rs = receipt.getDiscount_at();
+			}
+		}
+		return rs;
+	}
+	
 	public static void main(String[] args) {
 	}
 }

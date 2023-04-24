@@ -6,7 +6,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-		<link rel="stylesheet" href="<c:url value="/assets/css/bootstrap.css"/>">
+<link rel="stylesheet" href="<c:url value="/assets/css/bootstrap.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/js/bootstrap.js"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/f-index.css"/>">
 <link rel="stylesheet"
@@ -37,7 +37,13 @@
 <link rel="stylesheet"
 	href="<c:url value="/assets/css/checkbox-radio-input.css"/>">
 <title>${ title }:)</title>
-<link rel="stylesheet" href="<c:url value="/assets/css/f-favorite.css"/>">
+<style>
+.favorite-product-products {
+	margin-top: 4px !important;
+}
+</style>
+<link rel="stylesheet"
+	href="<c:url value="/assets/css/f-favorite.css"/>">
 <jsp:include page="../layouts/user/re-favorite.jsp"></jsp:include>
 <body style="color: #222121;">
 	<c:if test="${ sessionScope.userid != null}">
@@ -391,7 +397,8 @@
 									</div>
 								</c:if>
 								<div class="content-product-products">
-									<div class="brand-product-products" id="${ listProd.sub_category.id }">${ listProd.sub_category.sub_category_name }</div>
+									<div class="brand-product-products"
+										id="${ listProd.sub_category.id }">${ listProd.sub_category.sub_category_name }</div>
 									<div class="name-product-products" id="${ listProd.id }">${ listProd.title }</div>
 									<div class="show-products">
 										<div class="price-product-products">
@@ -400,7 +407,8 @@
 											</c:if>
 											<c:if test="${ listProd.discount > 0 }">
 												<div class="price-sale-products">
-													$<fmt:formatNumber type="number" maxFractionDigits="2"
+													$
+													<fmt:formatNumber type="number" maxFractionDigits="2"
 														value="${ listProd.price - listProd.price*listProd.discount/100 }" />
 												</div>
 												<div class="price-old-products">
@@ -454,7 +462,8 @@
 								</div>
 							</c:if>
 							<div class="content-product-products">
-								<div class="brand-product-products" id="${ listProd.sub_category.id }">${ listProd.sub_category.sub_category_name }</div>
+								<div class="brand-product-products"
+									id="${ listProd.sub_category.id }">${ listProd.sub_category.sub_category_name }</div>
 								<div class="name-product-products" id="${ listProd.id }">${ listProd.title }</div>
 								<div class="show-products">
 									<div class="price-product-products">
@@ -463,7 +472,8 @@
 										</c:if>
 										<c:if test="${ listProd.discount > 0 }">
 											<div class="price-sale-products">
-												$<fmt:formatNumber type="number" maxFractionDigits="2"
+												$
+												<fmt:formatNumber type="number" maxFractionDigits="2"
 													value="${ listProd.price - listProd.price*listProd.discount/100 }" />
 											</div>
 											<div class="price-old-products">
@@ -517,7 +527,8 @@
 					</div>
 				</c:if>
 				<div class="content-product-products">
-					<div class="brand-product-products" id="${ listProd.sub_category.id }">${ listProd.sub_category.sub_category_name }</div>
+					<div class="brand-product-products"
+						id="${ listProd.sub_category.id }">${ listProd.sub_category.sub_category_name }</div>
 					<div class="name-product-products" id="${ listProd.id }">${ listProd.title }</div>
 					<div class="show-products">
 						<div class="price-product-products">
@@ -526,7 +537,8 @@
 							</c:if>
 							<c:if test="${ listProd.discount > 0 }">
 								<div class="price-sale-products">
-									$<fmt:formatNumber type="number" maxFractionDigits="2"
+									$
+									<fmt:formatNumber type="number" maxFractionDigits="2"
 										value="${ listProd.price - listProd.price*listProd.discount/100 }" />
 								</div>
 								<div class="price-old-products">
@@ -664,7 +676,7 @@
 				var id_prod = e.target.id;
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"/ShopTandT/cart/checkout/"+id_user+"_"+id_prod);
+						"/ShopTandT/?blockid="+id_user+"_"+id_prod);
 				xhr.onload = function() {
 					window.location.assign("/ShopTandT/cart/checkout/"+id_user+"_"+id_prod);
 				};
@@ -675,7 +687,7 @@
 				var id_prod = e.target.id;
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"/ShopTandT/cart/checkout/"+id_user+"_"+id_prod);
+						"/ShopTandT/?blockid="+id_user+"_"+id_prod);
 				xhr.onload = function() {
 					window.location.assign("/ShopTandT/cart/checkout/"+id_user+"_"+id_prod);
 				};
@@ -686,7 +698,7 @@
 				var id_prod = e.target.id;
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"/ShopTandT/cart/checkout/"+id_prod);
+						"/ShopTandT/?blockid="+id_prod);
 				xhr.onload = function() {
 					window.location.assign("/ShopTandT/cart/checkout/"+id_prod);
 				};
@@ -697,7 +709,7 @@
 				var id_prod = e.target.id;
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"/ShopTandT/cart/checkout/"+id_prod);
+						"/ShopTandT/?blockid="+id_prod);
 				xhr.onload = function() {
 					window.location.assign("/ShopTandT/cart/checkout/"+id_prod);
 				};

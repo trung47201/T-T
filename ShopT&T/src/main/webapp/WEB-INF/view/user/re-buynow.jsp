@@ -153,6 +153,7 @@
 							</c:forEach>
 						</div>
 					</div>
+
 					<c:set var="checkSize" value="${ 0 }"></c:set>
 					<c:forEach var="liSize" items="${ listSize }">
 						<c:forEach var="liSizeByColor" items="${ liSize.value }"
@@ -1102,9 +1103,16 @@
 						$(sizes[i]).removeClass("selected-color");
 					}
 				}
-s			});
+			});
 		});
 	</script>
+	<c:set var="checkSize" value="${ 0 }"></c:set>
+	<c:forEach var="liSize" items="${ listSize }">
+		<c:forEach var="liSizeByColor" items="${ liSize.value }"
+			varStatus="index">
+			<c:set var="checkSize" value="${ index.getCount() }"></c:set>
+		</c:forEach>
+	</c:forEach>
 	<script type="text/javascript"> // chosen color
 		var size = document.getElementsByClassName("list-size-product-details");
 		var color = document.getElementsByClassName("select-color");
@@ -1118,7 +1126,6 @@ s			});
 						const arr = txt.split("_");
 						var color_id = arr[1];
 						document.getElementById("color").value = color_id;
-						var test = document.getElementById("color").value;
 					} else {
 						$(color[i]).removeClass("selected-color");
 						for (let j=0; j<sizes.length; j++) {
@@ -1133,8 +1140,11 @@ s			});
 						$(size[i]).addClass("none");
 					}
 				}
-				document.getElementById("size").value = "";
-				var test1 = document.getElementById("size").value;
+				if(${ checkSize <= 1}) {
+					document.getElementById("size").value = "25";
+				} else {
+					document.getElementById("size").value = "";
+				}
 			});
 		});
 	</script>

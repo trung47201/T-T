@@ -31,9 +31,28 @@
 <link rel="stylesheet" href="<c:url value='/assets/css/colorjoe.css'/>">
 <style>
 .message input {
-	width: 100px;
+    width: 110px;
 }
-
+input.cancel {
+    font-size: 18px;
+    height: 36px;
+}
+input.ok {
+    font-size: 16px;
+    height: 36px;
+}
+.message.msg-order.message-notify a, .gotogallery a {
+    color: blue;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    font-size: 14px;
+    padding: 0px 15px 10px 15px;
+}
+.gotogallery {
+    width: 50%;
+    text-align: center;
+    margin-top: 10px;
+}
 .table-add-new-product {
 	margin-top: 0;
 }
@@ -106,7 +125,7 @@
 	margin-top: 0 !important;
 	width: 50%;
 }
-</style>
+s</style>
 </c:if>
 <body>
 	<div class="admin-body">
@@ -177,17 +196,17 @@
 			<div class="table-add-new-product">
 				<c:if test="${ shoes == 'true' }">
 					<form id="myform"
-						action="http://localhost:8888/ShopTandT/admin/product/add-shoes-color-size"
+						action="/ShopTandT/admin/product/add-shoes-color-size"
 						method="post" enctype="multipart/form-data">
 				</c:if>
 				<c:if test="${ clothing == 'true' }">
 					<form id="myform"
-						action="http://localhost:8888/ShopTandT/admin/product/add-clothing-color-size"
+						action="/ShopTandT/admin/product/add-clothing-color-size"
 						method="post" enctype="multipart/form-data">
 				</c:if>
 				<c:if test="${ clothing == 'false' && shoes == 'false' }">
 					<form id="myform"
-						action="http://localhost:8888/ShopTandT/admin/product/add-product-color-size"
+						action="/ShopTandT/admin/product/add-product-color-size"
 						method="post" enctype="multipart/form-data">
 				</c:if>
 
@@ -386,6 +405,9 @@
 								<input type="button" value="Add" id="btn-addnewproduct"
 									name="btn-addnewproduct">
 							</div>
+							<c:if test="${ clothing == 'true' }">
+								<div class="gotogallery"><a href='/ShopTandT/admin/gallery/add?clothing'>Go to Gallery add</a></div>
+							</c:if>
 						</td>
 					</tr>
 				</table>
@@ -401,6 +423,7 @@
 				src="<c:url value="/assets/images/icons/icons8-notification-100-msg.png"/>">
 		</h2>
 		<p class="content-msg content-msg-notify"></p>
+		<a href="/ShopTandT/admin/gallery/add?clothing">Go to gallery add</a>
 		<div class="btn-ok-cancel">
 			<input class="cancel" type="button" value="Cancel"> <input
 				class="ok ok-notify hover-btn" type="button" value="OK">
@@ -422,6 +445,31 @@
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 	<script src="<c:url value='/assets/js/colorjoe.min.js'/>"></script>
+
+	<c:if test="${ addsuccess != null }">
+		<script type="text/javascript">
+			var check = "${ addsuccess }";
+			if(check =="true") {
+				$(".message-notify").removeClass("none");
+				$(".content-msg-notify").text("Add success!");
+				$('.ok-notify').click(function() {
+					$(".message-notify").addClass("none");
+				});
+			} else {
+				$(".message-done").removeClass("none");
+				$(".content-msg-done").text("Add unsuccess! Continue add?");
+				$('.ok-done').click(function() {
+					$(".message-done").addClass("none");
+					location.reload();
+				});
+				$('.cancel').click(function() {
+					$(".message").addClass("none");
+					window.location.href = "/ShopTandT/admin/product/clothing";
+				});
+			}
+		</script>
+	</c:if>
+
 	<c:if test="${ shoes == null }">
 		<script type="text/javascript">
 		   	$("#addcolor").click(function() {
@@ -456,7 +504,7 @@
 		   	});
 	   </script>
 	</c:if>
-	
+
 	<c:if test="${ shoes == null && shoes == null }">
 		<script type="text/javascript">
 		   	$("#addcolor").click(function() {

@@ -43,9 +43,11 @@ th.td-addnewshoes a {
 	width: unset;
 	border: 1px solid white;
 }
+
 .btn-add {
-    display: flex;
+	display: flex;
 }
+
 td.td-date {
 	min-width: 95px;
 }
@@ -206,8 +208,15 @@ img#image-hover-click {
 .none {
 	display: none;
 }
+
 .addneworder, .addnewshoes {
-    width: unset;
+	width: unset;
+}
+
+.soldout {
+	background: #cb82a9;
+	color: white;
+	font-weight: bold;
 }
 </style>
 <body>
@@ -459,7 +468,12 @@ img#image-hover-click {
 							<td><span class="td-color-product"
 								style="background: ${ liPCS.color.rgb };"></span></td>
 							<td class="td-center">${ liPCS.size.size_number }</td>
-							<td class="td-center">${ liPCS.quantity }</td>
+							<c:if test="${ liPCS.quantity == 0 }">
+								<td class="td-center soldout">${ liPCS.quantity }</td>
+							</c:if>
+							<c:if test="${ liPCS.quantity != 0 }">
+								<td class="td-center">${ liPCS.quantity }</td>
+							</c:if>
 							<td class="td-action">
 								<button class="btn-edit-order" id="btn-edit-order"
 									name="${ liPCS.id }" value="">

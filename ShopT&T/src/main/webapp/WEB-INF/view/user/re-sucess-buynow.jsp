@@ -21,7 +21,7 @@
 
 <style>
 .none {
-display: none;
+	display: none;
 }
 </style>
 <body>
@@ -30,15 +30,19 @@ display: none;
 			<c:set var="item" value="${ back_home }"></c:set>
 			<c:if test="${ sessionScope.userid != null }">
 				<div class="avt">
-					<img src="<c:url value="/assets/images/users/${ sessionScope.avatar }"/>" alt="">
+					<img
+						src="<c:url value="/assets/images/users/${ sessionScope.avatar }"/>"
+						alt="">
 				</div>
 			</c:if>
 			<c:if test="${ sessionScope.userid == null }">
 				<div class="avt">
-					<img src="<c:url value="/assets/images/users/avt-default.jpg"/>" alt="">
+					<img src="<c:url value="/assets/images/users/avt-default.jpg"/>"
+						alt="">
 				</div>
 				<div class="login">
-					<a href="/ShopTanT/account/login">Login</a>&ensp;/&ensp;<a href="/ShopTanT/account/register">Sign up</a>
+					<a href="/ShopTanT/account/login">Login</a>&ensp;/&ensp;<a
+						href="/ShopTanT/account/register">Sign up</a>
 				</div>
 			</c:if>
 		</div>
@@ -89,13 +93,13 @@ display: none;
 						</tr>
 					</table>
 				</div>
-				
-					<div class="continue-shopping">
-						<a href="/ShopTandT/products/new-arrivals"><input type="button"
-							name="continueShopping" id="continueShopping"
-							value="Continue Shopping"></a>
-					</div>
-				
+
+				<div class="continue-shopping">
+					<a href="/ShopTandT/products/new-arrivals"><input type="button"
+						name="continueShopping" id="continueShopping"
+						value="Continue Shopping"></a>
+				</div>
+
 			</div>
 
 			<!-- Order -->
@@ -108,7 +112,8 @@ display: none;
 							alt="">
 						<div class="name-product-checkout">${ product.title }</div>
 						<div class="price-product-checkout">
-							$<fmt:formatNumber type="number" maxFractionDigits="2"
+							$
+							<fmt:formatNumber type="number" maxFractionDigits="2"
 								value="${ product.price-
 							product.price*product.discount/100 }" />
 						</div>
@@ -116,19 +121,23 @@ display: none;
 				</div>
 				<div class="request-checkout">
 					<table>
-						<tr>
-							<td class="txt">
-								<div class="total-products-cost">Color</div>
-							</td>
-							<td class="price"><span class="color-span"
-								style="background: ${ color };"></span></td>
-						</tr>
-						<tr>
-							<td class="txt">
-								<div class="shipping-chargers">Size</div>
-							</td>
-							<td class="price"><b>${ size }</b></td>
-						</tr>
+						<c:if test="${ color != null && size != null }">
+							<tr>
+								<td class="txt">
+									<div class="total-products-cost">Color</div>
+								</td>
+								<td class="price"><span class="color-span"
+									style="background: ${ color };"></span></td>
+							</tr>
+							<c:if test="${ size != 'no' }">
+								<tr>
+									<td class="txt">
+										<div class="shipping-chargers">Size</div>
+									</td>
+									<td class="price"><b>${ size }</b></td>
+								</tr>
+							</c:if>
+						</c:if>
 						<tr>
 							<td class="txt">
 								<div class="shipping-chargers">Quantity</div>
@@ -193,8 +202,8 @@ display: none;
 								<td class="txt">
 									<div class="shipping-chargers">Voucher</div>
 								</td>
-								<td class="price" style="color: #ff6200;"><b>-$<fmt:formatNumber type="number" maxFractionDigits="2"
-								value="${ discount }" /></b></td>
+								<td class="price" style="color: #ff6200;"><b>-$<fmt:formatNumber
+											type="number" maxFractionDigits="2" value="${ discount }" /></b></td>
 							</tr>
 						</c:if>
 						<tr>
@@ -250,10 +259,10 @@ display: none;
 		</div>
 
 	</form>
-	
+
 	<script type="text/javascript">
-		if ( window.history.replaceState ) {
-		  window.history.replaceState( null, null, window.location.href );
+		if (window.history.replaceState) {
+			window.history.replaceState(null, null, window.location.href);
 		}
 	</script>
 

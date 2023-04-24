@@ -357,7 +357,7 @@ public class Product_color_sizeService implements Product_color_sizeRepository {
 	}
 
 	public int firstColor_SizeById_Prod(int id_prod) {
-		int id = 1;
+		int id = 0;
 		for (Product_color_size c : getAllColor_Size()) {
 			if (c.getProd().getId() == id_prod) {
 				id = c.getId();

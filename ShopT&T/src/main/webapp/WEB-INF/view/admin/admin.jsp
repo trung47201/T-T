@@ -18,6 +18,7 @@
 * {
 	font-family: "Poppins", sans-serif;
 }
+
 .green {
 	color: green !important;
 }
@@ -28,6 +29,27 @@ select option:hover {
 
 selecet#sl-month option:hover {
 	box-shadow: 0 0 10px 100px #1882A8 inset;
+}
+
+.compare {
+	font-size: 13px;
+}
+
+.dashboard-row-parameter p {
+	color: black;
+	font-size: 24px;
+	font-weight: bold;
+	float: right;
+	margin-top: 12px;
+}
+
+.dashboard-row-title p {
+	font-size: 16px;
+	color: #666;
+	margin-bottom: 0;
+	margin-top: 20px;
+	font-weight: 600;
+	color: #cb82a9;
 }
 </style>
 
@@ -81,7 +103,8 @@ selecet#sl-month option:hover {
 									<div class="dashboard-col-text">
 										<div class="dashboard-row-parameter">
 											<p>
-												$<fmt:formatNumber type="number" maxFractionDigits="2"
+												$
+												<fmt:formatNumber type="number" maxFractionDigits="2"
 													value="${ revenueofday }" />
 											</p>
 										</div>

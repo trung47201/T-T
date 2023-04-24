@@ -62,6 +62,7 @@ public class ProductService implements ProductRepository {
 							+ "Inner join color on color.id = product_color_size.color_id "
 							+ "Inner join brand on product.brand_id = brand.id "
 							+ "Inner join sub_category on product.sub_category_id = sub_category.id "
+							+ "Inner join category on sub_category.category_id = category.id "
 							+ "Inner join user on product.user_id = user.id "
 							+ "Inner join gender on product.gender_id = gender.id "
 							+ "Inner join role on role.id = user.role_id " + "Where product_color_size.quantity > 0 " + "");
@@ -153,6 +154,7 @@ public class ProductService implements ProductRepository {
 			ResultSet rs = stmt
 					.executeQuery("select * from product " + "Inner join brand on product.brand_id = brand.id "
 							+ "Inner join sub_category on product.sub_category_id = sub_category.id "
+							+ "Inner join category on sub_category.category_id = category.id "
 							+ "Inner join user on product.user_id = user.id "
 							+ "Inner join gender on product.gender_id = gender.id "
 							+ "Inner join role on role.id = user.role_id group by product.id");

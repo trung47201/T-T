@@ -66,30 +66,34 @@ div#img-product-details-click {
 	justify-content: center;
 	padding: 15px 0;
 }
+
 .view-img-click {
-    position: relative;
-    height: 100%;
+	position: relative;
+	height: 100%;
 }
+
 img#image-hover-click {
-    height: 100%;
+	height: 100%;
 }
+
 .close-img-click {
-cursor: pointer;
-    position: absolute;
-    right: -20px;
-    top: -15px;
-    background: white;
-    border-radius: 100px;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-bottom: 2px solid rgba(0,0,0,0.3);
-    border-left: 2px solid rgba(0,0,0,0.3);
+	cursor: pointer;
+	position: absolute;
+	right: -20px;
+	top: -15px;
+	background: white;
+	border-radius: 100px;
+	width: 50px;
+	height: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+	border-left: 2px solid rgba(0, 0, 0, 0.3);
 }
+
 .close-img-click img {
-    width: 24px;
+	width: 24px;
 }
 </style>
 <link rel="stylesheet"
@@ -174,7 +178,6 @@ cursor: pointer;
 
 
 					</div>
-
 					<div class="color-product-details">
 						<p class="name-color">
 							Color: <span></span>
@@ -202,19 +205,16 @@ cursor: pointer;
 							</c:forEach>
 						</div>
 					</div>
-					<div class="size-product-details">
-						<c:set var="checkSize" value="${ 0 }"></c:set>
-						<c:forEach var="liSize" items="${ listSize }">
-							<c:forEach var="liSizeByColor" items="${ liSize.value }"
-								varStatus="index">
-								<c:set var="checkSize" value="${ index.getCount() }"></c:set>
-							</c:forEach>
+
+					<c:set var="checkSize" value="${ 0 }"></c:set>
+					<c:forEach var="liSize" items="${ listSize }">
+						<c:forEach var="liSizeByColor" items="${ liSize.value }"
+							varStatus="index">
+							<c:set var="checkSize" value="${ index.getCount() }"></c:set>
 						</c:forEach>
-						<c:if test="${ checkSize <= 1}">
-							<input type="hidden" name="size" id="size"
-								value="${ liSizeByColor.size.id }">
-						</c:if>
-						<c:if test="${ checkSize > 1}">
+					</c:forEach>
+					<c:if test="${ checkSize <= 1}">
+						<div class="size-product-details none">
 							<div class="fit-guide-size">
 								<p>Size</p>
 								<a href="#"> Size & Fit guide</a>
@@ -255,8 +255,54 @@ cursor: pointer;
 									</div>
 								</c:if>
 							</c:forEach>
-						</c:if>
-					</div>
+						</div>
+					</c:if>
+					<c:if test="${ checkSize > 1}">
+						<div class="size-product-details">
+							<div class="fit-guide-size">
+								<p>Size</p>
+								<a href="#"> Size & Fit guide</a>
+							</div>
+							<c:forEach var="liSize" items="${ listSize }" varStatus="index">
+								<c:set var="idProd_Size" value="${ product.id }_${ liSize.key }"></c:set>
+								<c:if test="${ index.getIndex() == 0 }">
+									<div class="list-size-product-details" id="${ idProd_Size }">
+										<c:forEach var="liSizeByColor" items="${ liSize.value }"
+											varStatus="indexS">
+											<c:if test="${ indexS.getIndex() == 0 }">
+												<span class="select-size selected-color"
+													id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
+												<input type="hidden" name="size" id="size"
+													value="${ liSizeByColor.size.id }">
+											</c:if>
+											<c:if test="${ indexS.getIndex() != 0 }">
+												<span class="select-size"
+													id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
+											</c:if>
+										</c:forEach>
+									</div>
+								</c:if>
+								<c:if test="${ index.getIndex() != 0 }">
+									<div class="list-size-product-details none"
+										id="${ idProd_Size }">
+										<c:forEach var="liSizeByColor" items="${ liSize.value }"
+											varStatus="indexS">
+											<c:if test="${ indexS.getIndex() == 0 }">
+												<span class="select-size"
+													id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
+											</c:if>
+											<c:if test="${ indexS.getIndex() != 0 }">
+												<span class="select-size"
+													id="${idProd_Size }_${ liSizeByColor.size.id }">${ liSizeByColor.size.size_number }</span>
+											</c:if>
+										</c:forEach>
+									</div>
+								</c:if>
+							</c:forEach>
+						</div>
+					</c:if>
+
+
 					<div class="amount-product-details">
 						<input class="minus-plus" type="button" name="" id="minus"
 							value="-"> <input class="input_amount" type="text"
@@ -566,7 +612,6 @@ cursor: pointer;
 		var name = $("#name-color-input").val();
 		$(".name-color span").text(name);
 	</script>
-
 	<script>
 	$("#plus").click(function() {
 		var qty = $("#input_amount").val();
@@ -581,6 +626,14 @@ cursor: pointer;
 		}
 	});
 	</script>
+
+	<c:set var="checkSize" value="${ 0 }"></c:set>
+	<c:forEach var="liSize" items="${ listSize }">
+		<c:forEach var="liSizeByColor" items="${ liSize.value }"
+			varStatus="index">
+			<c:set var="checkSize" value="${ index.getCount() }"></c:set>
+		</c:forEach>
+	</c:forEach>
 	<script type="text/javascript">
 	var user_prod = "";
 	if(${ user_prod != null }) {
@@ -590,13 +643,16 @@ cursor: pointer;
 		var size = document.getElementsByClassName("select-size");
 		var amount = document.getElementById("input_amount").value;
 		var txt_size = "";
-		for (let i=0; i<size.length; i++) {
-			if (size[i].className == "select-size selected-color") {
-				txt_size = size[i].id;
+			for (let i=0; i<size.length; i++) {
+				if (size[i].className == "select-size selected-color") {
+					txt_size = size[i].id;
+				}
 			}
-		}
+			if(${ checkSize <= 1}) {
+				txt_size = "1_1_1";
+			}
 		if (txt_size == "") {
-			alert("You haven't chosen a size yet");
+				alert("You haven't chosen a size yet");
 		} else {
 			var url = window.location.href;
 			if(user_prod != "") {
@@ -614,11 +670,13 @@ cursor: pointer;
 		      	};
 		      	xhr.send();
 			} else {
-				const myarr = txt_size.split("_");
+				var sizeid = document.getElementById("size").value;
+				var colorid = document.getElementById("color").value;
+				var productid = "${ productid }";
 				var xhr = new XMLHttpRequest();
-		      	xhr.open("GET", url+"?buynow");
-		      	xhr.onload = function () { 
-		      		window.location.assign("/ShopTandT/cart/checkout/"+myarr[0]+"?color="+myarr[1]+"&size="+myarr[2]);
+		      	xhr.open("GET", "/ShopTandT/?blockid="+productid+"");
+		      	xhr.onload = function () {
+		      		window.location.assign("/ShopTandT/cart/checkout/"+productid+"?color="+colorid+"&size="+sizeid);
 		      	};
 		      	xhr.send();
 			}
@@ -641,11 +699,11 @@ cursor: pointer;
 			$("#add-to-cart-input").click(function() {
 				var size = document.getElementsByClassName("select-size");
 				var txt_size = "";
-				for (let i=0; i<size.length; i++) {
-					if (size[i].className == "select-size selected-color") {
-						txt_size = size[i].id;
+					for (let i=0; i<size.length; i++) {
+						if (size[i].className == "select-size selected-color") {
+							txt_size = size[i].id;
+						}
 					}
-				}
 				var qty = document.getElementById("input_amount").value;
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
@@ -660,22 +718,29 @@ cursor: pointer;
 					var size = document.getElementsByClassName("select-size");
 					var amount = document.getElementById("input_amount").value;
 					var txt_size = "";
-					for (let i=0; i<size.length; i++) {
-						if (size[i].className == "select-size selected-color") {
-							txt_size = size[i].id;
+						for (let i=0; i<size.length; i++) {
+							if (size[i].className == "select-size selected-color") {
+								txt_size = size[i].id;
+							}
 						}
-					}
-					if (txt_size == "") {
-						alert("You haven't chosen a size yet");
-					} else {
-						var xhr = new XMLHttpRequest();
-						xhr.open("GET",
-								"/ShopTandT/cart?id="+id_prod+"&process="+txt_size+"&amount="+amount);
-						xhr.onload = function() {
-							window.location.assign("/ShopTandT/cart");
-						};
-						xhr.send();
-					}
+						if(${ checkSize <= 1}) {
+							txt_size = "1_1_1";
+						}
+						if (txt_size == "") {
+							alert("You haven't chosen a size yet");
+						} else {
+							var sizeid = document.getElementById("size").value;
+							var colorid = document.getElementById("color").value;
+							var productid = "${ productid }";
+							txt_size = productid + "_" + colorid + "_"+sizeid;
+							var xhr = new XMLHttpRequest();
+							xhr.open("GET",
+									"/ShopTandT/cart?id="+id_prod+"&process="+txt_size+"&amount="+amount);
+							xhr.onload = function() {
+								window.location.assign("/ShopTandT/cart");
+							};
+							xhr.send();
+						}
 			});
 		}
 	</script>
@@ -707,6 +772,9 @@ cursor: pointer;
 			$(".select-color").click(function() {
 				for (let i=0; i<color.length; i++) {
 					if (color[i].id == this.id) {
+						var cArr = this.id;
+						var colorid = cArr.split("_")[1];
+						document.getElementById("color").value = colorid;
 						$(this).addClass("selected-color");
 						var value = $(".select-color.selected-color input").val();
 						$(".name-color span").text(value);

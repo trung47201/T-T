@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import TT.Model.Sub_category;
 import TT.Service.Admin.aBSGService;
 import TT.Service.Admin.aProductService;
 import TT.Service.User.SubCategoryService;
@@ -45,7 +48,14 @@ public class AddProductController {
 		
 		mv.addObject("listUser", userService.getAllUser());
 		mv.addObject("listBrand", aBSGService.getAllBrand());
-		mv.addObject("listStyle", subCategoryService.getAllSubCategory_sort_by_category_name());
+		List<Sub_category> rs = new LinkedList<>();
+		List<Sub_category> liSub = subCategoryService.getAllSubCategory_sort_by_category_name();
+		for (Sub_category sub : liSub) {
+			if (sub.getCategory().getId() == 1) {
+				rs.add(sub);
+			}
+		}
+		mv.addObject("listStyle", rs);
 		mv.addObject("listGender", aBSGService.getAllGender());
 		mv.addObject("listProduct", shoesService.getAllProducts());
 		mv.addObject("newProduct", "true");

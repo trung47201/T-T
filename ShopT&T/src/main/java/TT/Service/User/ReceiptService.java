@@ -44,7 +44,7 @@ public class ReceiptService implements OrderRepository {
 				voucher = new Voucher();
 				status = new Status();
 				shipper = new User();
-				
+
 				status.setId(rs.getInt("status_id"));
 				status.setStatus_name(rs.getString("status_name"));
 
@@ -60,7 +60,7 @@ public class ReceiptService implements OrderRepository {
 				voucher.setDescription(rs.getString("description"));
 
 				shipper.setId(rs.getInt("shipper_id"));
-				
+
 				receipt.setId(rs.getInt("id"));
 				receipt.setFullname(rs.getString("fullname"));
 				receipt.setEmail(rs.getString("email"));
@@ -86,7 +86,7 @@ public class ReceiptService implements OrderRepository {
 		}
 		return li;
 	}
-	
+
 	public List<Receipt> getAllOrder_of_shipper() {
 		List<Receipt> li = null;
 		try {
@@ -104,7 +104,7 @@ public class ReceiptService implements OrderRepository {
 				voucher = new Voucher();
 				status = new Status();
 				shipper = new User();
-				
+
 				status.setId(rs.getInt("status_id"));
 				status.setStatus_name(rs.getString("status_name"));
 
@@ -120,7 +120,7 @@ public class ReceiptService implements OrderRepository {
 				voucher.setDescription(rs.getString("description"));
 
 				shipper.setId(rs.getInt("shipper_id"));
-				
+
 				receipt.setId(rs.getInt("id"));
 				receipt.setFullname(rs.getString("fullname"));
 				receipt.setEmail(rs.getString("email"));
@@ -371,11 +371,18 @@ public class ReceiptService implements OrderRepository {
 
 	public int get_last_order_id_by(String phone_number, String email) {
 		List<Receipt> o = getAllOrder();
+		Collections.sort(o, new Comparator<Receipt>() {
+			@Override
+			public int compare(Receipt o1, Receipt o2) {
+				return o2.getId() - o1.getId();
+			}
+		});
 		int id = 0;
 		for (Receipt ord : o) {
 			if (ord.getEmail().trim().equals(email.trim())
 					&& ord.getPhone_number().trim().equals(phone_number.trim())) {
 				id = ord.getId();
+				break;
 			}
 		}
 		return id;
@@ -400,7 +407,7 @@ public class ReceiptService implements OrderRepository {
 
 	public static void main(String[] args) {
 		ReceiptService c = new ReceiptService();
-		System.out.println(c.get_last_order_id_by("0903903233", "sitechvn-nqvinh@hcm.vnn.vn"));
+		System.out.println(c.get_last_order_id_by("0903907001", "thanhcongbattery@hcm.fpt.vn"));
 
 	}
 

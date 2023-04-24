@@ -34,8 +34,8 @@
 					<li class="link"><a href="/ShopTandT/products/new-arrivals">NEW
 							ARRIVALS</a></li>
 					<li class="link"><a href="/ShopTandT/products/clothing">CLOTHING</a></li>
-					<li class="link"><a href="/ShopTandT/products/gifts">GIFTS</a></li>
 					<li class="link"><a href="/ShopTandT/products/shoes">SHOES</a></li>
+					<li class="link"><a href="/ShopTandT/products/handbags">HANDBAGS</a></li>
 				</ul>
 			</div>
 			<div class="nav-middle">
@@ -46,9 +46,9 @@
 			</div>
 			<div class="nav-left">
 				<ul>
-					<li class="link"><a href="/ShopTandT/products/handbags">HANDBAGS</a></li>
-					<li class="link"><a href="/ShopTandT/products/accessories">ACCESSORIES</a></li>
 					<li class="link"><a href="/ShopTandT/voucher">VOUCHER</a></li>
+					<li class="link"><a href="/ShopTandT/products/gifts">GIFTS</a></li>
+					<li class="link"><a href="/ShopTandT/products/accessories">ACCESSORIES</a></li>
 					<li>
 						<div class="nav-btn">
 							<div>

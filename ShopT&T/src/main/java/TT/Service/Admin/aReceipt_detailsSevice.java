@@ -29,7 +29,7 @@ import TT.Service.User.Product_color_sizeService;
 import TT.Service.User.ConnectService;
 import TT.Service.User.ReceiptService;
 
-public class aReceipt_detailsSevice implements aOrder_detailsRepository{
+public class aReceipt_detailsSevice implements aOrder_detailsRepository {
 	private ConnectService connectService;
 	private Receipt_details receipt_details;
 	private ReceiptService receiptService;
@@ -44,7 +44,7 @@ public class aReceipt_detailsSevice implements aOrder_detailsRepository{
 	private Sizes size;
 	private Gender gender;
 	private Status status;
-	
+
 	@Override
 	public List<Receipt_details> getAllOrder_details() {
 		List<Receipt_details> li = null;
@@ -79,7 +79,7 @@ public class aReceipt_detailsSevice implements aOrder_detailsRepository{
 				gender = new Gender();
 				receipt_details = new Receipt_details();
 				status = new Status();
-				
+
 				status.setId(rs.getInt("status_id"));
 				status.setStatus_name(rs.getString("status_name"));
 
@@ -116,7 +116,8 @@ public class aReceipt_detailsSevice implements aOrder_detailsRepository{
 				role.setRole_name(rs.getString("role_name"));
 
 				user.setId(rs.getInt("user_id"));
-				user.setFirstname(rs.getString("firstname"));user.setLastname(rs.getString("lastname"));
+				user.setFirstname(rs.getString("firstname"));
+				user.setLastname(rs.getString("lastname"));
 				user.setEmail(rs.getString("email"));
 				user.setPhone_number(rs.getString("phone_number"));
 				user.setAddress(rs.getString("address"));
@@ -173,9 +174,8 @@ public class aReceipt_detailsSevice implements aOrder_detailsRepository{
 		return li;
 	}
 
-	//@Override
-	public boolean insertIntoOrder_details(double price_at, int quantity, int prod_id, int size_id,
-			int color_id) {
+	// @Override
+	public boolean insertIntoOrder_details(double price_at, int quantity, int prod_id, int size_id, int color_id) {
 		try {
 			receiptService = new ReceiptService();
 			connectService = new ConnectService();
@@ -202,38 +202,51 @@ public class aReceipt_detailsSevice implements aOrder_detailsRepository{
 		}
 		return false;
 	}
-	
-	
+
 	public List<Receipt_details> getOrder_detailsByIdOrder(int id_order) {
 		List<Receipt_details> li = new ArrayList<>();
 		for (Receipt_details o : getAllOrder_details()) {
-			if(o.getReceipt().getId() == id_order) {
+			if (o.getReceipt().getId() == id_order) {
 				li.add(o);
-				//.out.println(o.getProd().getThumbnail());
+				// .out.println(o.getProd().getThumbnail());
 			}
-			
 		}
-		
 		return li;
 	}
-	
+
 	public HashMap<Integer, List<Product_color_size>> getListColorByOrder_detail(int id_order) {
 		HashMap<Integer, List<Product_color_size>> hm = new HashMap<>();
 		Product_color_sizeService c = new Product_color_sizeService();
 		for (Receipt_details o : getAllOrder_details()) {
-			if(o.getReceipt().getId() == id_order) {
+			if (o.getReceipt().getId() == id_order) {
 				hm.put(o.getProd().getId(), c.getAllColorById_prod(o.getProd().getId()));
 			}
 		}
-		
+
 		return hm;
 	}
+
+	public int get_qty_product_by_order_id(int id_order) {
+		int qty = 0;
+		List<Receipt_details> li = getOrder_detailsByIdOrder(id_order);
+		for (Receipt_details r : li) {
+			qty += r.getQuantity();
+		}
+		return qty;
+	}
 	
+	public double get_revenue_order_by_order_id(int id_order) {
+		aReceiptService aReceiptService = new aReceiptService();
+		double qty = 0;
+		List<Receipt_details> li = getOrder_detailsByIdOrder(id_order);
+		for (Receipt_details r : li) {
+			qty += r.getPrice_at();
+		}
+		return qty-aReceiptService.get_discount_by_order_id(id_order);
+	}
+
 	public static void main(String[] args) {
 		aReceipt_detailsSevice a = new aReceipt_detailsSevice();
-		List<Receipt_details> li = a.getOrder_detailsByIdOrder(186);
-		for (Receipt_details i : li) {
-			System.out.println(i.getProd().getTitle());
-		}
+		System.out.println(a.get_qty_product_by_order_id(187));
 	}
 }

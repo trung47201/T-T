@@ -172,23 +172,32 @@ public class Receipt_detailsService implements Order_detailsRepository {
 		return li;
 	}
 
-	@Override
-	public boolean insertIntoOrder_details(double price_at, int quantity, int prod_id, int size_id, int color_id, String phone_number, String email) {
+	public boolean insertIntoOrder_details(double price_at, int quantity, int prod_id, int size_id, int color_id, int order_id) {
 		try {
 			receiptService = new ReceiptService();
 			connectService = new ConnectService();
 			Connection conn = connectService.getConnect();
-			String sql = "INSERT INTO `receipt_details`(`receipt_id`, `price_at`, `quantity`, `prod_id`, `size_id`, `color_id`) "
-					+ "VALUES (?, ?, ?, ?, ?, ?)";
-			PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
-			System.out.println(receiptService.get_last_order_id_by(phone_number, email));
-			preparedStmt.setInt(1, receiptService.get_last_order_id_by(phone_number, email));
-			preparedStmt.setDouble(2, (double) Math.round(price_at*100)/100);
-			preparedStmt.setInt(3, quantity);
-			preparedStmt.setInt(4, prod_id);
-			preparedStmt.setInt(5, size_id);
-			preparedStmt.setInt(6, color_id);
-			preparedStmt.execute();
+			if(size_id == 0 && color_id == 0) {
+				String sql = "INSERT INTO `receipt_details`(`receipt_id`, `price_at`, `quantity`, `prod_id`) "
+						+ "VALUES (?, ?, ?, ?)";
+				PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
+				preparedStmt.setInt(1, order_id);
+				preparedStmt.setDouble(2, (double) Math.round(price_at*100)/100);
+				preparedStmt.setInt(3, quantity);
+				preparedStmt.setInt(4, prod_id);
+				preparedStmt.execute();
+			} else {
+				String sql = "INSERT INTO `receipt_details`(`receipt_id`, `price_at`, `quantity`, `prod_id`, `size_id`, `color_id`) "
+						+ "VALUES (?, ?, ?, ?, ?, ?)";
+				PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
+				preparedStmt.setInt(1, order_id);
+				preparedStmt.setDouble(2, (double) Math.round(price_at*100)/100);
+				preparedStmt.setInt(3, quantity);
+				preparedStmt.setInt(4, prod_id);
+				preparedStmt.setInt(5, size_id);
+				preparedStmt.setInt(6, color_id);
+				preparedStmt.execute();
+			}
 			conn.close();
 			return true;
 		} catch (Exception e) {

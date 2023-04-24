@@ -134,6 +134,7 @@ public class CheckoutCartController {
 				if (vch_discount == 0) {
 					vch_discount = 1;
 				}
+				int order_id = receiptService.get_last_order_id_by(phone_number, email);
 				for (Cart cart : liCart) {
 					double price_at = 0;
 					if (cart.getColor_size().getProd().getDiscount() > 0) {
@@ -144,21 +145,20 @@ public class CheckoutCartController {
 					}
 					if (receipt_detailsService.insertIntoOrder_details(price_at, cart.getQuantity(),
 							cart.getColor_size().getProd().getId(), cart.getColor_size().getSize().getId(),
-							cart.getColor_size().getColor().getId(), phone_number, email)
+							cart.getColor_size().getColor().getId(), order_id)
 							&& product_color_sizeService.updateColor_size_Quantity(
 									cart.getColor_size().getSize().getId(), cart.getColor_size().getColor().getId(),
 									cart.getColor_size().getProd().getId(), cart.getQuantity())
 							&& shoesService.updateProduct_Sold(cart.getColor_size().getProd().getId(),
 									cart.getQuantity())
-							&& statisticsService.update_order_revenue_product_num_in_statistics_DB(cart.getQuantity(),
-									(double) Math.round(vch_discount * price_at) / 100)
+							&& statisticsService.update_order_num_in_statistics_DB()
 							&& cartService.delete_cart_by_cart_id(cart.getId())) {
 						System.out.println("success 147 checkoutcontroller");
 					} else {
 						System.out.println("unsucess 149 checkoutcontroller");
 					}
 				}
-				int order_id = receiptService.get_last_order_id_by(phone_number, email);
+				
 				System.out.println("buy cart success this checkout cart controller");
 				System.out.println(vc_id + "_" + method);
 				session.setAttribute("checkoutcart", "end");
@@ -234,6 +234,7 @@ public class CheckoutCartController {
 		if (city != null && district != null && address != null && firstname != null && lastname != null && phone_number != null
 				&& email != null) {
 			if (receiptService.insertIntoOrder(fullname, email, phone_number, adr, 1, note, method, 0)) {
+				int order_id = receiptService.get_last_order_id_by(phone_number, email);
 				for (Product_color_size c : hm.keySet()) {
 					double price_at = 0;
 					if (c.getProd().getDiscount() > 0) {
@@ -242,13 +243,12 @@ public class CheckoutCartController {
 						price_at = c.getProd().getPrice();
 					}
 					if (receipt_detailsService.insertIntoOrder_details(price_at, hm.get(c), c.getProd().getId(),
-							c.getSize().getId(), c.getColor().getId(), phone_number, email)
+							c.getSize().getId(), c.getColor().getId(), order_id)
 							&& product_color_sizeService.updateColor_size_Quantity(c.getSize().getId(),
 									c.getColor().getId(), c.getProd().getId(), hm.get(c))) {
 
 					}
 				}
-				int order_id = receiptService.get_last_order_id_by(phone_number, email);
 				System.out.println("buy cart success this checkout cart controller (192)");
 				return new ModelAndView("redirect: /ShopTandT/cart?process-delete=" + process + "&order-id=" + order_id);
 			} else {

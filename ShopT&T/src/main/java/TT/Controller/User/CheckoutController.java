@@ -93,10 +93,10 @@ public class CheckoutController {
 		}
 		int vc_id = 1;
 		if (vchid != null) {
-			if(!vchid.equals("")) {
+			if (!vchid.equals("")) {
 				vc_id = Integer.parseInt(vchid);
 			} else {
-				System.out.println("vch: '");
+				System.out.println("vch: empty!");
 			}
 		} else {
 			System.out.println("vch: null");
@@ -117,9 +117,10 @@ public class CheckoutController {
 		System.out.println("here2");
 		if (id_prod != null && vchid != null && size != null && color != null && city != null && district != null
 				&& address != null && firstname != null && lastname != null && phone_number != null && email != null) {
-			double dis = checkoutService.get_discount_at(Integer.parseInt(quantity), voucherService.get_voucher_code_by_id(vc_id), Integer.parseInt(id_prod));
-			double pricetotal = checkoutService.get_price_at(Integer.parseInt(quantity), voucherService.get_voucher_code_by_id(vc_id),
-					Integer.parseInt(id_prod));
+			double dis = checkoutService.get_discount_at(Integer.parseInt(quantity),
+					voucherService.get_voucher_code_by_id(vc_id), Integer.parseInt(id_prod));
+			double pricetotal = checkoutService.get_price_at(Integer.parseInt(quantity),
+					voucherService.get_voucher_code_by_id(vc_id), Integer.parseInt(id_prod));
 			if (vc_id == 0) {
 				vc_id = 1;
 			}
@@ -130,72 +131,75 @@ public class CheckoutController {
 			if (vc_id != 1) {
 				System.out.println("here");
 				if (receiptService.insertIntoOrder(fullname, email, phone_number, adr, vc_id, note, method, dis)
-						&& voucherService.update_limit_voucher(vc_id)
-						&& receipt_detailsService.insertIntoOrder_details((double) Math.round(price_at * 100) / 100,
-								Integer.parseInt(quantity), Integer.parseInt(id_prod), Integer.parseInt(size),
-								Integer.parseInt(color), phone_number, email)
-						&& product_color_sizeService.updateColor_size_Quantity(Integer.parseInt(size),
-								Integer.parseInt(color), Integer.parseInt(id_prod), Integer.parseInt(quantity))
-						&& shoesService.updateProduct_Sold(Integer.parseInt(id_prod), Integer.parseInt(quantity))
-						&& statisticsService.update_order_revenue_product_num_in_statistics_DB(
-								Integer.parseInt(quantity), pricetotal)) {
-					session.setAttribute("order", "end");
-					System.out.println("buy now success (118 checkoutController)");
-					voucher_saveService.update(Integer.parseInt(user), vc_id);
-					return new ModelAndView("redirect: /ShopTandT/sucess-buynow?id_prod=" + id_prod + "&id_color=" + color
-							+ "&id_size=" + size + "&quantity=" + quantity + "&fullname=" + fullname + "&phone_number="
-							+ phone_number + "&email=" + email + "&address=" + adr + "&note=" + note + "&voucher="
-							+ vc_id + "&priceat=" + pricetotal + "&user=" + user + "&method=" + method);
+						&& voucherService.update_limit_voucher(vc_id)) {
+					int order_id = receiptService.get_last_order_id_by(phone_number, email);
+					if (receipt_detailsService.insertIntoOrder_details((double) Math.round(price_at * 100) / 100,
+							Integer.parseInt(quantity), Integer.parseInt(id_prod), Integer.parseInt(size),
+							Integer.parseInt(color), order_id)
+							&& product_color_sizeService.updateColor_size_Quantity(Integer.parseInt(size),
+									Integer.parseInt(color), Integer.parseInt(id_prod), Integer.parseInt(quantity))
+							&& shoesService.updateProduct_Sold(Integer.parseInt(id_prod), Integer.parseInt(quantity))
+							&& statisticsService.update_order_num_in_statistics_DB()) {
+						session.setAttribute("order", "end");
+						System.out.println("buy now success (118 checkoutController)");
+						voucher_saveService.update(Integer.parseInt(user), vc_id);
+						return new ModelAndView("redirect: /ShopTandT/sucess-buynow?id_prod=" + id_prod + "&id_color="
+								+ color + "&id_size=" + size + "&quantity=" + quantity + "&fullname=" + fullname
+								+ "&phone_number=" + phone_number + "&email=" + email + "&address=" + adr + "&note="
+								+ note + "&voucher=" + vc_id + "&priceat=" + pricetotal + "&user=" + user + "&method="
+								+ method);
+					}
 				} else {
 					System.out.println("buy now unsuccess");
 					return new ModelAndView("redirect: /ShopTandT/cart/checkout/" + id);
 				}
 			} else {
-				if (receiptService.insertIntoOrder(fullname, email, phone_number, adr, vc_id, note, method, dis)
-						&& receipt_detailsService.insertIntoOrder_details((double) Math.round(price_at * 100) / 100,
-								Integer.parseInt(quantity), Integer.parseInt(id_prod), Integer.parseInt(size),
-								Integer.parseInt(color), phone_number, email)
-						&& product_color_sizeService.updateColor_size_Quantity(Integer.parseInt(size),
-								Integer.parseInt(color), Integer.parseInt(id_prod), Integer.parseInt(quantity))
-						&& shoesService.updateProduct_Sold(Integer.parseInt(id_prod), Integer.parseInt(quantity))
-						&& statisticsService.update_order_revenue_product_num_in_statistics_DB(
-								Integer.parseInt(quantity), pricetotal)) {
+				if (receiptService.insertIntoOrder(fullname, email, phone_number, adr, vc_id, note, method, dis)) {
+					int order_id = receiptService.get_last_order_id_by(phone_number, email);
+					if (receipt_detailsService.insertIntoOrder_details((double) Math.round(price_at * 100) / 100,
+							Integer.parseInt(quantity), Integer.parseInt(id_prod), Integer.parseInt(size),
+							Integer.parseInt(color), order_id)
+							&& product_color_sizeService.updateColor_size_Quantity(Integer.parseInt(size),
+									Integer.parseInt(color), Integer.parseInt(id_prod), Integer.parseInt(quantity))
+							&& shoesService.updateProduct_Sold(Integer.parseInt(id_prod), Integer.parseInt(quantity))
+							&& statisticsService.update_order_num_in_statistics_DB()) {
+					}
 					session.setAttribute("order", "end");
 					System.out.println("buy now success (96 checkoutController)");
-					return new ModelAndView("redirect: /ShopTandT/sucess-buynow?id_prod=" + id_prod + "&id_color=" + color
-							+ "&id_size=" + size + "&quantity=" + quantity + "&fullname=" + fullname + "&phone_number="
-							+ phone_number + "&email=" + email + "&address=" + adr + "&note=" + note + "&voucher="
-							+ vc_id + "&priceat=" + pricetotal + "&user=" + user + "&method=" + method);
+					return new ModelAndView("redirect: /ShopTandT/sucess-buynow?id_prod=" + id_prod + "&id_color="
+							+ color + "&id_size=" + size + "&quantity=" + quantity + "&fullname=" + fullname
+							+ "&phone_number=" + phone_number + "&email=" + email + "&address=" + adr + "&note=" + note
+							+ "&voucher=" + vc_id + "&priceat=" + pricetotal + "&user=" + user + "&method=" + method);
 				} else {
 					System.out.println("buy now unsuccess");
 					return new ModelAndView("redirect: /ShopTandT/cart/checkout/" + id);
 				}
 			}
 		}
-		return new ModelAndView("redirect: /ShopTandT/");
+		return new ModelAndView("redirect: /ShopTandT/cart/checkout/" + id);
 	}
 
 	@RequestMapping(value = { "cart/checkout/{id}" }) // buy now login and not login
 	public ModelAndView checkout_buy_now(@PathVariable String id, HttpServletRequest request,
 			HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		if(session.getAttribute("blockid") != null) {
+		if (session.getAttribute("blockid") != null) {
 			String blockid = String.valueOf(session.getAttribute("blockid"));
-			if(!blockid.equals(id)) {
-				return new ModelAndView("redirect: /ShopTandT/cart/checkout/"+blockid);
+			if (!blockid.equals(id)) {
+				return new ModelAndView("redirect: /ShopTandT/cart/checkout/" + blockid);
 			}
 		}
-		
+
 		ModelAndView mv = new ModelAndView("user/re-buynow");
 		product_color_sizeService = new Product_color_sizeService();
 		shoesService = new ShoesService();
 		checkoutService = new CheckoutService();
 		voucherService = new VoucherService();
 		userService = new UserService();
-		receiptService = new ReceiptService(	);
+		receiptService = new ReceiptService();
 		postsService = new PostsService();
 		voucher_saveService = new Voucher_SaveService();
-		
+
 		String vch_id = request.getParameter("vchid");
 		String voucher = null;
 		if (vch_id != null) {
@@ -203,20 +207,20 @@ public class CheckoutController {
 			System.out.println(vch_id);
 			voucher = voucherService.get_voucher_code_by_id(Integer.parseInt(vch_id));
 		}
-		
+
 		String quantity = request.getParameter("quantity");
 		String size = request.getParameter("size");
 		String color = request.getParameter("color");
 		String method = request.getParameter("paymentmethods");
 		String login = request.getParameter("login");
-		
-		System.out.println("test"+quantity);
-		
-		if(login != null) {
+
+		System.out.println("test" + quantity);
+
+		if (login != null) {
 			session.setAttribute("buynowlogin", id);
 			System.out.println(login);
 		}
-		
+
 		String id_prod = "";
 		String id_user = "";
 		String a[] = id.split("_");
@@ -395,13 +399,13 @@ public class CheckoutController {
 		voucherService = new VoucherService();
 		receiptService = new ReceiptService();
 		voucher_saveService = new Voucher_SaveService();
-		
+
 		int user_id = 0;
 		double total = 0;
 		String address = "", city = "", district = "", village = "";
 		String voucher = request.getParameter("voucher");
 		String vchid = request.getParameter("vchid");
-		
+
 		if (voucher != null) {
 			mv.addObject("voucher", voucher);
 		} else if (vchid != null) {
@@ -425,7 +429,7 @@ public class CheckoutController {
 			mv.addObject("limit", total);
 			mv.addObject("total", total);
 			mv.addObject("listCart", li);
-			
+
 		}
 
 		if (user_id != 0) {
@@ -444,8 +448,7 @@ public class CheckoutController {
 			mv.addObject("user", userService.get_user_by_id(user_id));
 			// back home
 			mv.addObject("back_home", "cart");
-			mv.addObject("listVoucher",
-					voucher_saveService.get_all_voucher_save_by_user_id((user_id)));
+			mv.addObject("listVoucher", voucher_saveService.get_all_voucher_save_by_user_id((user_id)));
 		}
 		if (voucher != null) {
 			if (voucherService.voucher_exists_by_code(voucher)) {
@@ -467,7 +470,7 @@ public class CheckoutController {
 								if (user_id != 0) {
 									if (receiptService.check_voucher_used_by_user_id(user_id, voucher)) {
 										int vch_discount = voucherService.get_discount_by_voucher_code(voucher);
-										System.out.println("dis: "+vch_discount +"; total: " +total);
+										System.out.println("dis: " + vch_discount + "; total: " + total);
 										mv.addObject("vcdiscount", (double) Math.round(vch_discount * total) / 100);
 										mv.addObject("vcstatus", "start");
 										System.out.println("vcstart");

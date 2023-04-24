@@ -6,9 +6,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<c:if test="${giftscolorsize == 'true' }">
+	<title>Add Gifts Color</title>
+</c:if>
 
-<title>Add Handbags Color</title>
-
+<c:if test="${ giftscolorsize == null }">
+	<title>Add Handbags Color</title>
+</c:if>
 <link rel="stylesheet"
 	href="<c:url value='/assets/css/re-admin-product2.css'/>">
 <link rel="stylesheet"
@@ -150,6 +154,33 @@ input.cancel {
 	padding-top: 4px;
 	padding-left: 20px;
 }
+
+p.nocolor {
+	display: flex;
+	justify-content: space-between;
+	width: 90%;
+}
+
+span#not-color {
+	cursor: pointer;
+	color: #0086ff;
+	text-decoration: underline;
+	font-size: 14px;
+	color: #0086ff;
+}
+
+span#not-color:hover {
+	color: darkblue;
+}
+
+input#quantity {
+	width: 90%;
+	height: 40px;
+	padding: 0px 5px 0 5px;
+	border: 0;
+	font-size: 18px;
+	border-left: 2px solid #cb82a9;
+}
 </style>
 
 <body>
@@ -174,13 +205,27 @@ input.cancel {
 				<div>
 					<p>/</p>
 					<img src="<c:url value="/assets/images/icons/icons8-bag-100.png"/>"
-						alt=""> <a href="/ShopTandT/admin/product/handbags">Handbags</a>
+						alt="">
+					<c:if test="${giftscolorsize == 'true' }">
+						<a href="/ShopTandT/admin/product/handbags">Gifts</a>
+					</c:if>
+					<c:if test="${giftscolorsize == null }">
+						<a href="/ShopTandT/admin/product/handbags">Handbags</a>
+					</c:if>
+
 				</div>
 				<div>
 					<p>/</p>
 					<img
 						src="<c:url value="/assets/images/icons/icons8-add-64-title.png"/>"
-						alt=""> <a href="">Add Handbags Color</a>
+						alt="">
+					<c:if test="${giftscolorsize == 'true' }">
+						<a href="">Add Gifts Color</a>
+					</c:if>
+					<c:if test="${giftscolorsize == null }">
+						<a href="">Add Handbags Color</a>
+					</c:if>
+
 				</div>
 			</div>
 
@@ -224,7 +269,13 @@ input.cancel {
 						<tr>
 							<td>
 								<div class="id-new-product-size">
-									<p>Color</p>
+									<p class="nocolor">
+										<span id="name-sp">Color</span><span id="not-color">Without
+											Color</span>
+									</p>
+									<div class="qty none">
+										<input id="quantity" name="quantity" value="">
+									</div>
 									<div class="list-size-add-new-product">
 										<c:set var="count" value="${ 0 }" />
 										<c:forEach var="liColor" items="${ listColor }"
@@ -300,6 +351,23 @@ input.cancel {
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+	<script type="text/javascript">
+		$("#not-color").click(function(){
+			var txt = $("#not-color").text();
+			if(txt.includes("With Color")) {
+				$(".list-size-add-new-product").removeClass("importantNone");
+				$("#name-sp").text("Color");
+				$("#not-color").text("Without Color");
+				$(".qty").addClass("none");
+			} else {
+				$(".list-size-add-new-product").addClass("importantNone");
+				$("#name-sp").text("Quantity");
+				$("#not-color").text("With Color");
+				$(".qty").removeClass("none");
+			}
+		});
+	</script>
+
 	<script>
 		$(".list-size-add-new-product span").click(function() {
 			let checkspan = this.classList;
@@ -321,23 +389,34 @@ input.cancel {
 	<script>
 		$("#btn-addnewproduct").click(
 				function() {
+					var get = this;
+					var cClass = $(".list-size-add-new-product").attr("class");
 					var product = $('#select-product').find(":selected").val();
-					var file = $('input[type=file]').val();
-					var arrSize = $('.list-size-add-new-product span input')
-					.not('.none');
 					var error = "";
-
-					if (product == "") {
-						error += "You haven't chosen a product yet!! \n";
-					} else if (file == "") {
-						error += "You haven't chosen a image yet!! \n";
-					} else if (arrSize.length <= 0) {
-						error += "You haven't chosen a size yet!! \n";
+					var qty="";
+					if(cClass.includes("importantNone")) {
+						qty = $("#quantity").val();
+						if (product == "") {
+							error += "You haven't chosen a product yet!! \n";
+						} else if (qty == "") {
+							error += "Quantity is empty!!?";
+						}
+					} else {
+						var arrSize = $('.list-size-add-new-product span input')
+						.not('.none');
+						if (product == "") {
+							error += "You haven't chosen a product yet!! \n";
+						} else if (arrSize.length <= 0) {
+							error += "You haven't chosen a color yet!!? \n";
+						}
 					}
 
-
 					if (error == "") {
-						$(this).attr('type', 'submit');
+						if(cClass.includes("importantNone")) {
+								window.location.href = "/ShopTandT/admin/product/add-gifts-color?productid="+product+"&qty="+qty;
+						} else {
+							$(get).attr('type', 'submit');
+						}
 					} else {
 						$(".message-done").removeClass("none");
 						$(".content-msg-done").text(error);

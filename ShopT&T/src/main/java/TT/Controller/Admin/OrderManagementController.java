@@ -40,24 +40,24 @@ public class OrderManagementController {
 		String endbill = request.getParameter("endbill");
 		String print = request.getParameter("print");
 		HttpSession session = request.getSession();
-		if(bill != null) {
+		if (bill != null) {
 			session.setAttribute("bill", bill);
 		}
-		if(endbill != null) {
+		if (endbill != null) {
 			session.setAttribute("bill", "false");
 		}
-		
+
 		if (!id_order.equals("null") && !status.equals("null")) {
 			if (_aReceiptService.editStatusOrderById(Integer.parseInt(id_order), Integer.parseInt(status))) {
 				System.out.println("Update status order success!");
 			}
 		}
-		if(print != null && bill != null) {
+		if (print != null && bill != null) {
 			String qrcode = qrCodeService.create_qr_code(bill);
 			String barcode = qrCodeService.create_bar_code(bill);
-			if(_aReceiptService.packing_generator_qrcode(Integer.parseInt(bill), qrcode, barcode)) {
+			if (_aReceiptService.packing_generator_qrcode(Integer.parseInt(bill), qrcode, barcode)) {
 				System.out.println("packing success!");
-				return new ModelAndView("redirect: /ShopTandT/admin/order-management/bill/"+bill);
+				return new ModelAndView("redirect: /ShopTandT/admin/order-management/bill/" + bill);
 			} else {
 				System.out.println("packing unsuccess!");
 			}
@@ -71,11 +71,11 @@ public class OrderManagementController {
 		Collections.sort(li, new Comparator<Receipt>() {
 			@Override
 			public int compare(Receipt o1, Receipt o2) {
-				return o2.getId()-o1.getId();
+				return o2.getId() - o1.getId();
 			}
-		
+
 		});
-		
+
 		mv.addObject("listOrder", li);
 
 		return mv;
@@ -103,9 +103,9 @@ public class OrderManagementController {
 			double total = receipt_detailsService.total_order_by_id_order(Integer.parseInt(id_order));
 			if (total < 50) {
 				total = total + 11.0 - o.getDiscount_at();
-				mv.addObject("total", (double) Math.round(total*100)/100);
+				mv.addObject("total", (double) Math.round(total * 100) / 100);
 			} else {
-				mv.addObject("total", (double) Math.round((total - o.getDiscount_at())*100)/100);
+				mv.addObject("total", (double) Math.round((total - o.getDiscount_at()) * 100) / 100);
 			}
 		}
 
@@ -116,9 +116,9 @@ public class OrderManagementController {
 		Collections.sort(li, new Comparator<Receipt>() {
 			@Override
 			public int compare(Receipt o1, Receipt o2) {
-				return o2.getId()-o1.getId();
+				return o2.getId() - o1.getId();
 			}
-		
+
 		});
 		mv.addObject("listOrder", li);
 		if (!_aStatusService.getAllStatus().isEmpty()) {
@@ -149,9 +149,9 @@ public class OrderManagementController {
 			double total = receipt_detailsService.total_order_by_id_order(Integer.parseInt(id_order));
 			if (total < 50) {
 				total = total + 11.0 - o.getDiscount_at();
-				mv.addObject("total", (double) Math.round(total*100)/100);
+				mv.addObject("total", (double) Math.round(total * 100) / 100);
 			} else {
-				mv.addObject("total", (double) Math.round((total - o.getDiscount_at())*100)/100);
+				mv.addObject("total", (double) Math.round((total - o.getDiscount_at()) * 100) / 100);
 			}
 		}
 
@@ -163,9 +163,9 @@ public class OrderManagementController {
 			Collections.sort(li, new Comparator<Receipt>() {
 				@Override
 				public int compare(Receipt o1, Receipt o2) {
-					return o2.getId()-o1.getId();
+					return o2.getId() - o1.getId();
 				}
-			
+
 			});
 			mv.addObject("listOrder", li);
 		}
@@ -184,22 +184,22 @@ public class OrderManagementController {
 			System.out.println("Countermand unsuccess! (order management controller)");
 		}
 	}
-	
+
 	@RequestMapping(value = { "/admin/order-management/bill/{id}" })
 	public ModelAndView bill(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
-		
+
 		HttpSession session = request.getSession();
-		if(session.getAttribute("bill") != null) {
+		if (session.getAttribute("bill") != null) {
 			String bill = String.valueOf(session.getAttribute("bill"));
-			if(bill.equals("") ||bill.equals("false")) {
+			if (bill.equals("") || bill.equals("false")) {
 				return new ModelAndView("redirect: /ShopTandT/admin/order-management");
 			}
 		} else {
 			return new ModelAndView("redirect: /ShopTandT/admin/order-management");
 		}
-		
+
 		ModelAndView mv = new ModelAndView("admin/bill");
-		
+
 		_aReceiptService = new aReceiptService();
 		_aReceipt_detailsSevice = new aReceipt_detailsSevice();
 		_aStatusService = new aStatusService();
@@ -218,23 +218,23 @@ public class OrderManagementController {
 			double total = receipt_detailsService.total_order_by_id_order(Integer.parseInt(id_order));
 			if (total < 50) {
 				total = total + 11.0 - o.getDiscount_at();
-				mv.addObject("total", (double) Math.round(total*100)/100);
+				mv.addObject("total", (double) Math.round(total * 100) / 100);
 			} else {
-				mv.addObject("total", (double) Math.round((total - o.getDiscount_at())*100)/100);
+				mv.addObject("total", (double) Math.round((total - o.getDiscount_at()) * 100) / 100);
 			}
 		}
-		
+
 		mv.addObject("orderid", id);
 		return mv;
 	}
-	
+
 	@RequestMapping(value = { "admin/packing" })
 	public ModelAndView packing(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("admin/barcode");
 		mv.addObject("packing", "true");
 		return mv;
 	}
-	
+
 	@RequestMapping(value = { "admin/shipping" })
 	public ModelAndView shipping(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("admin/barcode");

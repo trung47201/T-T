@@ -259,9 +259,9 @@ public class ProductColorSizeController {
 					Integer.parseInt(product))) {
 				System.out.println("add cloothing color size success");
 				mv.addObject("addsuccess", "true");
-				return new ModelAndView("redirect: /ShopTandT/admin/gallery/add?clothing");
+				//return new ModelAndView("redirect: /ShopTandT/admin/gallery/add?clothing");
 			} else {
-				mv.addObject("unsuccess", "false");
+				mv.addObject("addsuccess", "false");
 			}
 		}
 
