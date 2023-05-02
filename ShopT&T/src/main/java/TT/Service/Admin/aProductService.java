@@ -37,8 +37,8 @@ public class aProductService implements aProductRepository {
 			connectService = new ConnectService();
 			Connection conn = connectService.getConnect();
 			subCategoryService = new SubCategoryService();
-			String sql = "INSERT INTO `product`(`title`, `price`, `discount`, `description`, `sub_category_id`, `thumbnail`, `brand_id`, `user_id`, `gender_id`, `created_at`,  `updated_at`, `published_at`, `sold`, `most_loved`, `category_id`) "
-					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO `product`(`title`, `price`, `discount`, `description`, `sub_category_id`, `thumbnail`, `brand_id`, `user_id`, `gender_id`, `created_at`,  `updated_at`, `published_at`, `sold`, `most_loved`) "
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
 			preparedStmt.setString(1, title);
 			preparedStmt.setDouble(2, price);
@@ -54,12 +54,11 @@ public class aProductService implements aProductRepository {
 			preparedStmt.setTimestamp(12, date);
 			preparedStmt.setInt(13, 0);
 			preparedStmt.setInt(14, 0);
-			preparedStmt.setInt(15, subCategoryService.get_category_id_by_sub_category_id(style));
 			preparedStmt.execute();
 			conn.close();
 			return true;
 		} catch (Exception e) {
-			System.err.println("Got an exception (45) aProductService!!");
+			System.err.println("Got an exception (62) aProductService!!");
 			// printStackTrace method
 			// prints line numbers + call stack
 			e.printStackTrace();
@@ -78,7 +77,7 @@ public class aProductService implements aProductRepository {
 			subCategoryService = new SubCategoryService();
 			Connection conn = connectService.getConnect();
 			if (thumbnail.equals("")) {
-				String sql = "UPDATE `product` SET `title`= ?, `price`= ?, `discount`= ?, `sub_category_id`= ?, `description`= ?,`brand_id`= ?, `updated_at`= ?, `gender_id`= ?, `category_id`= ? WHERE id = ?";
+				String sql = "UPDATE `product` SET `title`= ?, `price`= ?, `discount`= ?, `sub_category_id`= ?, `description`= ?,`brand_id`= ?, `updated_at`= ?, `gender_id`= ? WHERE id = ?";
 				PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
 				preparedStmt.setString(1, title);
 				preparedStmt.setDouble(2, price);
@@ -88,13 +87,12 @@ public class aProductService implements aProductRepository {
 				preparedStmt.setInt(6, brand);
 				preparedStmt.setTimestamp(7, date);
 				preparedStmt.setInt(8, gender);
-				preparedStmt.setInt(9, subCategoryService.get_category_id_by_sub_category_id(style));
-				preparedStmt.setInt(10, id);
+				preparedStmt.setInt(9, id);
 				preparedStmt.execute();
 				conn.close();
 				return true;
 			} else {
-				String sql = "UPDATE `product` SET `title`= ?, `price`= ?, `discount`= ?, `sub_category_id`= ?, `thumbnail`= ?, `description`= ?,`brand_id`= ?, `updated_at`= ?, `gender_id`= ?, `category_id`= ? WHERE id = ?";
+				String sql = "UPDATE `product` SET `title`= ?, `price`= ?, `discount`= ?, `sub_category_id`= ?, `thumbnail`= ?, `description`= ?,`brand_id`= ?, `updated_at`= ?, `gender_id`= ? WHERE id = ?";
 				PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(sql);
 				preparedStmt.setString(1, title);
 				preparedStmt.setDouble(2, price);
@@ -105,8 +103,7 @@ public class aProductService implements aProductRepository {
 				preparedStmt.setInt(7, brand);
 				preparedStmt.setTimestamp(8, date);
 				preparedStmt.setInt(9, gender);
-				preparedStmt.setInt(10, subCategoryService.get_category_id_by_sub_category_id(style));
-				preparedStmt.setInt(11, id);
+				preparedStmt.setInt(10, id);
 				preparedStmt.execute();
 				conn.close();
 				return true;
@@ -136,7 +133,7 @@ public class aProductService implements aProductRepository {
 			ResultSet rs = stmt
 					.executeQuery("select * from product " + "Inner join brand on product.brand_id = brand.id "
 							+ "Inner join sub_category on product.sub_category_id = sub_category.id "
-							+ "Inner join category on product.category_id = category.id "
+							+ "Inner join category on sub_category.category_id = category.id "
 							+ "Inner join user on product.user_id = user.id "
 							+ "Inner join gender on product.gender_id = gender.id "
 							+ "Inner join role on role.id = user.role_id Where category.id = 4");

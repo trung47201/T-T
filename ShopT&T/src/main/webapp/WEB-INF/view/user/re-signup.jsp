@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<title>Sign Up :)</title>
+<title>Sign Up </title>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -20,7 +20,8 @@
 <link rel="stylesheet" href="<c:url value="/assets/css/r-posts.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/r-footer.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/re-text.css"/>">
-<link rel="stylesheet" href="<c:url value="/assets/css/f-favorite.css"/>">
+<link rel="stylesheet"
+	href="<c:url value="/assets/css/f-favorite.css"/>">
 <jsp:include page="../layouts/user/re-favorite.jsp"></jsp:include>
 <body>
 	<jsp:include page="../layouts/user/re-menu.jsp"></jsp:include>
@@ -146,15 +147,35 @@
 	<script> //SIGN UP
 		$(".signup").click(function() {
 			var toSubmit = this;
-			var fullname = $("#fullname").val();
+			var firstname = $("#firstname").val();
+			var lastname = $("#lastname").val();
 			var password = $("#password").val();
 			var cfpassword = $("#confirmpassword").val();
 			var email = $("#email").val();
 			var phone_number = $("#phonenumber").val();
 
-			if(fullname == "") {
+			if(firstname == "") {
 				$(".error-login").removeClass("none");
-				document.getElementById("msg-error").innerHTML = "Full name is empty!";
+				document.getElementById("msg-error").innerHTML = "First name is empty!";
+				document.getElementById("login_button").style.marginTop = "30px";
+			} else if(lastname == "") {
+				$(".error-login").removeClass("none");
+				document.getElementById("msg-error").innerHTML = "Last name is empty!";
+				document.getElementById("login_button").style.marginTop = "30px";
+			} else if(email == "") {
+				$(".error-login").removeClass("none");
+				document.getElementById("msg-error").innerHTML = "Email is empty!";
+				document.getElementById("login_button").style.marginTop = "30px"; 
+			} else if(!validateEmail(email)) {
+				$(".error-login").removeClass("none");
+				document.getElementById("msg-error").innerHTML = "Email not invaild!";
+			} else if(phone_number == "") {
+				$(".error-login").removeClass("none");
+				document.getElementById("msg-error").innerHTML = "Phone number is empty!";
+				document.getElementById("login_button").style.marginTop = "30px";
+			} else if(phone_number.length < 10) {
+				$(".error-login").removeClass("none");
+				document.getElementById("msg-error").innerHTML = "Phone number is too short!";
 				document.getElementById("login_button").style.marginTop = "30px";
 			} else if(password == "") {
 				$(".error-login").removeClass("none");
@@ -164,24 +185,13 @@
 				$(".error-login").removeClass("none");
 				document.getElementById("msg-error").innerHTML = "Confirm password is empty!";
 				document.getElementById("login_button").style.marginTop = "30px";
+			} else if(!validatePassword(password)) {
+				$(".error-login").removeClass("none");
+				document.getElementById("msg-error").innerHTML = "Password not invaild!";
 			} else if(cfpassword != password) {
 				$(".error-login").removeClass("none");
 				document.getElementById("msg-error").innerHTML = "Confirm password must be same as password!";
 				document.getElementById("login_button").style.marginTop = "30px";
-			} else if(email == "") {
-				$(".error-login").removeClass("none");
-				document.getElementById("msg-error").innerHTML = "Email is empty!";
-				document.getElementById("login_button").style.marginTop = "30px"; 
-			} else if(phone_number == "") {
-				$(".error-login").removeClass("none");
-				document.getElementById("msg-error").innerHTML = "Phone number is empty!";
-				document.getElementById("login_button").style.marginTop = "30px";
-			} else if(!validateEmail(email)) {
-				$(".error-login").removeClass("none");
-				document.getElementById("msg-error").innerHTML = "Email not invaild!";
-			} else if(!validatePassword(password)) {
-				$(".error-login").removeClass("none");
-				document.getElementById("msg-error").innerHTML = "Password not invaild!";
 			} else {
 				$(toSubmit).attr('type', 'submit');
 			}

@@ -21,6 +21,7 @@ import TT.Service.User.PostsService;
 import TT.Service.User.SizeService;
 import TT.Service.User.SubCategoryService;
 import TT.Service.User.Product.ClothingService;
+import TT.Service.User.Product.FilterService;
 import TT.Service.User.Product.ProductService;
 import TT.Service.User.Product.ShoesService;
 
@@ -32,6 +33,8 @@ public class ClothingController {
 	private ColorService colorService;
 	private ClothingService clothingService;
 	private PostsService postsService;
+	private ProductService productService;
+	private FilterService filterService;
 
 	@RequestMapping(value = { "products/clothing" })
 	public ModelAndView clothing(HttpServletRequest request, HttpServletResponse response) {
@@ -43,7 +46,9 @@ public class ClothingController {
 		colorService = new ColorService();
 		clothingService = new ClothingService();
 		postsService = new PostsService();
-		
+		productService = new ProductService();
+		filterService = new FilterService();
+
 		HashMap<String, String> hm = new HashMap<>();
 		List<String> li = null;
 		String txt = "";
@@ -120,17 +125,17 @@ public class ClothingController {
 
 		if (search != null) {
 			if (shoesService.get_all_product_by_search_keywords(search).size() > 0) {
-				mv.addObject("listProducts", shoesService.get_all_product_by_search_keywords(search));
+				HashMap<Integer, List<Product>> hmP = productService
+						.get_product_page(shoesService.get_all_product_by_search_keywords(search));
+				mv.addObject("listhmp", hmP);
 			} else {
-				mv.addObject("listProductsEmpty", "");
 				mv.addObject("keyword", search);
 			}
 
 		} else {
 			if (color.equals("null") && size.equals("null") && gender.equals("null") && sortby.equals("null")
 					&& price.equals("null") && stylename.equals("null") && rate.equals("null")) {
-				if (shoesService.getAllProducts().size() == 0) {
-					mv.addObject("listProducts", "");
+				if (clothingService.getAllProductsClothing().size() == 0) {
 				} else {
 					if (clothingService.getAllProductsClothing().size() > 0) {
 						List<Product> liProd = clothingService.getAllProductsClothing();
@@ -140,28 +145,27 @@ public class ClothingController {
 								return o2.getId() - o1.getId();
 							}
 						});
-						mv.addObject("listProducts", liProd);
+						System.out.println(liProd.size());
+						HashMap<Integer, List<Product>> hmP = productService.get_product_page(liProd);
+						mv.addObject("listhmp", hmP);
 					}
 				}
 			} else {
-				if (!shoesService.getAllProductsColorSize(hm).isEmpty()) {
-					if (shoesService.getAllProductsColorSize(hm).size() == 0) {
-						mv.addObject("listProducts", "");
-					} else {
-						mv.addObject("listProducts", shoesService.getAllProductsColorSize(hm));
-					}
-				}
+				List<Product> liProd = filterService.getAllProductsColorSize(hm,
+						clothingService.getAllProductsClothing(), 1);
+				HashMap<Integer, List<Product>> hmP = productService.get_product_page(liProd);
+				mv.addObject("listhmp", hmP);
 			}
 		}
-		
+
 		HttpSession session = request.getSession();
 		ProductService productService = new ProductService();
-		if(session.getAttribute("favorite") != null) {
+		if (session.getAttribute("favorite") != null) {
 			String txt1 = String.valueOf(session.getAttribute("favorite"));
-			System.out.println("a"+txt1);
+			System.out.println("a" + txt1);
 			mv.addObject("listProduct", productService.get_product_by_str(txt1));
 		}
-		
+
 		mv.addObject("color", colorService.getAllColor());
 		mv.addObject("listSize", sizeService.getAllSize());
 		mv.addObject("subcategory", subCategoryService.getAllSubCategory());

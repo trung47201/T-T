@@ -1,6 +1,8 @@
 package TT.Controller.User.Product;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import TT.Model.Product;
 import TT.Service.User.ColorService;
 import TT.Service.User.PostsService;
 import TT.Service.User.SizeService;
@@ -29,6 +32,7 @@ public class NewArrivalsController {
 	private ColorService colorService;
 	private NewArrivalsService arrivalsService;
 	private PostsService postsService;
+	private ProductService productService;
 
 	@RequestMapping(value = { "products/new-arrivals" })
 	public ModelAndView clothing(HttpServletRequest request, HttpServletResponse response) {
@@ -40,7 +44,8 @@ public class NewArrivalsController {
 		colorService = new ColorService();
 		arrivalsService = new NewArrivalsService();
 		postsService = new PostsService();
-		
+		productService = new ProductService();
+
 		HashMap<String, String> hm = new HashMap<>();
 		List<String> li = null;
 		String txt = "";
@@ -72,7 +77,6 @@ public class NewArrivalsController {
 						response.addCookie(o);
 						return new ModelAndView("redirect:/cart");
 					}
-
 				} else if (!li.contains("addtocart")) {
 					if (addtocart != null) {
 						Cookie cart = new Cookie("addtocart", addtocart);
@@ -83,7 +87,6 @@ public class NewArrivalsController {
 				}
 			}
 		}
-
 		// keep value when selectif(!size.equals("null")) {
 		if (!sortby.equals("null")) {
 			mv.addObject("selectedSortBy", sortby);
@@ -114,41 +117,42 @@ public class NewArrivalsController {
 			mv.addObject("checkedColor", shoesService.getColorCheckedByString(color));
 			hm.put("color", color);
 		}
-
 		if (search != null) {
 			if (shoesService.get_all_product_by_search_keywords(search).size() > 0) {
-				mv.addObject("listProducts", shoesService.get_all_product_by_search_keywords(search));
+				HashMap<Integer, List<Product>> hmP = productService
+						.get_product_page(shoesService.get_all_product_by_search_keywords(search));
+				mv.addObject("listhmp", hmP);
 			} else {
-				mv.addObject("listProductsEmpty", "");
 				mv.addObject("keyword", search);
 			}
-
 		} else {
 			if (color.equals("null") && size.equals("null") && gender.equals("null") && sortby.equals("null")
 					&& price.equals("null") && stylename.equals("null") && rate.equals("null")) {
-				if (shoesService.getAllProducts().size() == 0) {
-					mv.addObject("listProducts", "");
+				if (arrivalsService.getNewArrivals().size() == 0) {
 				} else {
 					if (arrivalsService.getNewArrivals().size() > 0) {
-						mv.addObject("listProducts", arrivalsService.getNewArrivals());
+						HashMap<Integer, List<Product>> hmP = productService
+								.get_product_page(arrivalsService.getNewArrivals());
+						mv.addObject("listhmp", hmP);
 					}
 				}
 			} else {
 				if (!shoesService.getAllProductsColorSize(hm).isEmpty()) {
 					if (shoesService.getAllProductsColorSize(hm).size() == 0) {
-						mv.addObject("listProducts", "");
 					} else {
-						mv.addObject("listProducts", shoesService.getAllProductsColorSize(hm));
+						List<Product> liproducts = shoesService.getAllProductsColorSize(hm);
+						HashMap<Integer, List<Product>> hmP = productService
+								.get_product_page(liproducts);
+						mv.addObject("listhmp", hmP);
 					}
 				}
 			}
-
 		}
 		HttpSession session = request.getSession();
 		ProductService productService = new ProductService();
-		if(session.getAttribute("favorite") != null) {
+		if (session.getAttribute("favorite") != null) {
 			String txt1 = String.valueOf(session.getAttribute("favorite"));
-			System.out.println("a"+txt1);
+			System.out.println("a" + txt1);
 			mv.addObject("listProduct", productService.get_product_by_str(txt1));
 		}
 		mv.addObject("color", colorService.getAllColor());

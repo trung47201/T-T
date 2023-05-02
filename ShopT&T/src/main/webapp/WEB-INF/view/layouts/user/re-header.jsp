@@ -51,7 +51,7 @@
 					<li class="link"><a href="/ShopTandT/products/accessories">ACCESSORIES</a></li>
 					<li>
 						<div class="nav-btn">
-							<div>
+							<div class="btn-search" id="btn-search">
 								<i class="fa fa-search" aria-hidden="true"></i>
 							</div>
 							<div id="cart">
@@ -119,7 +119,11 @@ $(".receipt").click(function() {
 	xhr.send();
 });
 </script>
-
+<script type="text/javascript">
+$("#btn-search").click(function() {
+	window.location.href = "/ShopTandT/search";
+}); 
+</script>
 <script type="text/javascript">
 $("#home").click(function() {
 	window.location.href = "/ShopTandT/";

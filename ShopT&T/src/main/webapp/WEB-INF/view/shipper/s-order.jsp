@@ -19,11 +19,11 @@
 <link rel="stylesheet"
 	href="<c:url value='/assets/css/admin-nav2.css'/>">
 <c:if test="${ management == 'true' }">
-	<title>Order management :)</title>
+	<title>Order management </title>
 </c:if>
 
 <c:if test="${ orderdetails == 'true' }">
-	<title>Order details :)</title>
+	<title>Order details </title>
 	<style>
 th#date {
 	min-width: 105px;

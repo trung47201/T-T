@@ -15,7 +15,7 @@
 		<div class="" id="shadow-nav"></div>
 	</div>
 	<div class="wrapper-nav">
-		<a href="/ShopTandT/admin"> <!-- DASHBOARD -->
+		<a href="/ShopTandT/shipper"> <!-- DASHBOARD -->
 			<ul class="dashboard selected">
 				<li>
 					<div class="menu" id="sub-menu-dashboard">
@@ -60,11 +60,6 @@
 					<li>Delivery</li>
 				</ul>
 			</a>
-			<a href="/ShopTandT/shipper/confirm-delivery">
-				<ul class="sub-menu-ul" id="">
-					<li>QR CODE</li>
-				</ul>
-			</a>
 		</div>
 
 		<ul>
@@ -87,21 +82,45 @@
 
 		<div class="sub-menu-shoes none">
 			<!-- SUB MENU SHOES -->
-			<a href="/ShopTandT/admin/product">
+			<a href="/ShopTandT/shipper/profile/order">
 				<ul class="sub-menu-ul" id="">
-					<li>Product</li>
+					<li>Orders delivered</li>
 				</ul>
-			</a> <a href="/ShopTandT/admin/color-size">
+			</a>
+			<a href="/ShopTandT/shipper/profile/password">
 				<ul class="sub-menu-ul" id="">
-					<li>Color-Size</li>
+					<li>Change password</li>
 				</ul>
-			</a> <a href="/ShopTandT/admin/gallery">
+			</a>
+		</div>
+		<div class="tilte-cate">
+			<h4>DELIVERY</h4>
+		</div>
+		<ul>
+			<li>
+				<div class="menu" id="sub-menu-delivery">
+					<img
+						src="<c:url value="/assets/images/icons/icons8-qr-code-96.png"/>"
+						alt="">
+					<h3>QR Code</h3>
+					<p class="dropdown-sub-menu-delivery dropdown-menu" id="drop-menu">
+						<img
+							src="<c:url value="/assets/images/icons/icons8-more-than-100.png"/>"
+							alt="">
+					</p>
+				</div>
+			</li>
+		</ul>
+		<!-- SUB MENU POSTER -->
+		<div class="sub-menu-delivery none">
+			<a href="/ShopTandT/shipper/confirm-delivery">
 				<ul class="sub-menu-ul" id="">
-					<li>Gallery</li>
+					<li>Confirm delivery</li>
 				</ul>
-			</a> <a href="/ShopTandT/admin/brand-style-gender">
+			</a>
+			<a href="/ShopTandT/shipper/cancel-delivery">
 				<ul class="sub-menu-ul" id="">
-					<li>B-S-G</li>
+					<li>Cancel delivery</li>
 				</ul>
 			</a>
 		</div>
@@ -127,11 +146,7 @@
 		<div class="sub-menu-poster none">
 			<a href="/ShopTandT/admin/poster/most-loved">
 				<ul class="sub-menu-ul" id="">
-					<li>Most loved</li>
-				</ul>
-			</a> <a href="/ShopTandT/admin/poster/new-arrivals">
-				<ul class="sub-menu-ul" id="">
-					<li>New arrivals</li>
+					<li>Logout</li>
 				</ul>
 			</a>
 		</div>

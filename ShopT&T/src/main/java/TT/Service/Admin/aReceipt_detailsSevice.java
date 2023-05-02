@@ -240,7 +240,10 @@ public class aReceipt_detailsSevice implements aOrder_detailsRepository {
 		double qty = 0;
 		List<Receipt_details> li = getOrder_detailsByIdOrder(id_order);
 		for (Receipt_details r : li) {
-			qty += r.getPrice_at();
+			qty += r.getPrice_at()*r.getQuantity();
+		}
+		if(qty < 50) {
+			qty += 11.0;
 		}
 		return qty-aReceiptService.get_discount_by_order_id(id_order);
 	}

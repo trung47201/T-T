@@ -23,6 +23,9 @@ public class AdminController {
 		ModelAndView mv = new ModelAndView("admin/admin");
 
 		statisticsService = new aStatisticsService();
+		if (!statisticsService.check_date_of_today_exist()) { // not exists
+			statisticsService.insert_new_statistics();
+		}
 
 		// ORDER
 		// ================================================================================

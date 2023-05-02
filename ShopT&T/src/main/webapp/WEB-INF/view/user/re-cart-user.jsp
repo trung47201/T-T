@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<title>Cart :)</title>
+<title>Cart </title>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -294,7 +294,7 @@
 
 	<!--  FOOTER -->
 	<jsp:include page="../layouts/user/re-footer.jsp"></jsp:include>
-	<jsp:include page="../layouts/user/search.jsp"></jsp:include>
+	
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

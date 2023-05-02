@@ -1,20 +1,16 @@
 <!DOCTYPE html>
 <html>
-<title>QR CODE :)</title>
+<title>QR CODE</title>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="<c:url value='/assets/css/re-delivery.css'/>">
+<link rel="stylesheet"
+	href="<c:url value='/assets/css/re-delivery.css'/>">
 <style>
 </style>
 
-<%
-	if (session.getAttribute("shipperID") == null) {
-		response.sendRedirect("/ShopTandT/shipper/login");
-	}
-	%>
 <c:if test="${ delivered == null }">
 	<div class="wrapper-background">
 		<div class="wrapper-video">
@@ -66,17 +62,17 @@
 				<div class="flash">
 					<img alt=""
 						src="<c:url value="/assets/images/icons/icons8-lightning-bolt-100.png"/>">
-						<p>Flash</p>
+					<p>Flash</p>
 				</div>
 				<div class="scan selected">
 					<img alt=""
 						src="<c:url value="/assets/images/icons/icons8-scan-64.png"/>">
-						<p>QR scan</p>
+					<p>QR scan</p>
 				</div>
 				<div class="file">
 					<img alt=""
 						src="<c:url value="/assets/images/icons/icons8-image-60.png"/>">
-						<p>File</p>
+					<p>File</p>
 				</div>
 			</div>
 		</div>

@@ -6,7 +6,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <c:if test="${ productedit == 'true' }">
-	<title>Update :)</title>
+	<title>Update </title>
 </c:if>
 <link rel="stylesheet"
 	href="<c:url value='/assets/css/re-admin-edit-product.css'/>">

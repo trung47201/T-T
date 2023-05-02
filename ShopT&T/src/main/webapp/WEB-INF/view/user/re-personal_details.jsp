@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<title>Personal Details? :)</title>
+<title>Personal Details</title>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -21,9 +21,11 @@
 <link rel="stylesheet" href="<c:url value="/assets/css/home.css"/>">
 <link rel="stylesheet"
 	href='<c:url value="/assets/css/login-icon.css"/>'>
-<link rel="stylesheet" href='<c:url value="/assets/css/re-profile.css"/>'>
-<link rel="stylesheet" href='<c:url value="/assets/css/re-message.css"/>'>
-	<link rel="stylesheet"
+<link rel="stylesheet"
+	href='<c:url value="/assets/css/re-profile.css"/>'>
+<link rel="stylesheet"
+	href='<c:url value="/assets/css/re-message.css"/>'>
+<link rel="stylesheet"
 	href="<c:url value="/assets/css/f-zoom-img.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/r-header.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/re-menu.css"/>">
@@ -32,7 +34,8 @@
 <link rel="stylesheet" href="<c:url value="/assets/css/text.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/r-posts.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/re-text.css"/>">
-<link rel="stylesheet" href="<c:url value="/assets/css/f-favorite.css"/>">
+<link rel="stylesheet"
+	href="<c:url value="/assets/css/f-favorite.css"/>">
 <jsp:include page="../layouts/user/re-favorite.jsp"></jsp:include>
 <style>
 .ok-btn button {
@@ -43,8 +46,56 @@
 	box-shadow: 0 0 5px #666;
 }
 
+.wrapper-all {
+	z-index: 100;
+}
+
+.box-add-intro {
+	z-index: 101;
+	top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
 .welcome {
 	box-shadow: 0px 5px 15px;
+}
+
+.form-ip input {
+	width: 270px;
+	height: 36px;
+	font-size: 16px;
+	border: 1px solid #cb82a9;
+	padding: 0 10px;
+}
+
+.box-content {
+	margin-top: 15px;
+}
+.form-ip {
+    margin-top: 10px;
+}
+.form-ip p {
+	margin: 0;
+	margin-bottom: 3px;
+}
+
+div#box-change-pw {
+	height: 360px !important;
+}
+
+div#box-change-contact {
+    height: 432px !important;
+}
+
+div#box-change-address {
+    height: 432px !important;
+}
+
+button#save-pw, button#save-contact, button#save-address {
+	margin-top: 24px;
+	width: 100px;
 }
 </style>
 <body style="color: black;">
@@ -53,7 +104,7 @@
 	<div class="back-header">
 		<jsp:include page="../layouts/user/re-header.jsp"></jsp:include>
 	</div>
-	
+
 	<div class="img-header">
 		<img alt=""
 			src="<c:url value="/assets/images/poster/storepic2_1200x.webp"/>">
@@ -65,7 +116,7 @@
 		</p>
 	</div>
 	<header class="container-xl header-content">
-		<form method="post">
+		<form method="post" id="myform">
 			<!--########################################3   START page CONTACT ###########################################-->
 			<div class="content-account">
 				<div class="content-left">
@@ -74,19 +125,18 @@
 						<div class="settings">
 							<button type="button" class="" id="settings">Settings</button>
 							<div class="menu-user none" id="profile-menu">
-                                <ul>
-                                    <li><a class="p-menu" id="add-intro">Add intro</a></li>
-                                    <li><a class="p-menu" id="change-pw">Change password</a></li>
-                                    <li><a class="p-menu" id="update-profile-picture">Update profile picture</a></li>
-                                    <li>
-                                        <a class="p-menu" id="infor">Information</a>
-                                        <ul class="sub-menu none">
-                                            <li><a>Contact</a></li>
-                                            <li><a>Address</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
+								<ul>
+									<li><a class="p-menu" id="add-intro">Add intro</a></li>
+									<li><a class="p-menu" id="change-pw">Change password</a></li>
+									<li><a class="p-menu" id="update-profile-picture">Update
+											profile picture</a></li>
+									<li><a class="p-menu" id="infor">Information</a>
+										<ul class="sub-menu none">
+											<li><a id="change-contact">Contact</a></li>
+											<li><a id="change-address">Address</a></li>
+										</ul></li>
+								</ul>
+							</div>
 						</div>
 					</div>
 					<div class="content-left-body">
@@ -96,21 +146,25 @@
 								<div class="user-row">
 									<div class="user-col">
 										<p>First name</p>
-										<input type="text" id="" name="" readonly value="${ user.firstname }">
+										<input type="text" id="" name="" readonly
+											value="${ user.firstname }">
 									</div>
 									<div class="user-col">
 										<p>Last name</p>
-										<input type="text" id="" name="" readonly value="${ user.lastname }">
+										<input type="text" id="" name="" readonly
+											value="${ user.lastname }">
 									</div>
 								</div>
 								<div class="user-row">
 									<div class="user-col">
 										<p>Phone number</p>
-										<input type="number" id="" name="" readonly value="${ user.phone_number }">
+										<input type="number" id="" name="" readonly
+											value="${ user.phone_number }">
 									</div>
 									<div class="user-col">
 										<p>Email</p>
-										<input type="text" id="" name="" readonly value="${ user.email }">
+										<input type="text" id="" name="" readonly
+											value="${ user.email }">
 									</div>
 								</div>
 							</div>
@@ -122,17 +176,20 @@
 								<div class="user-row">
 									<div class="user-col user-col2">
 										<p>Address</p>
-										<input type="text" id="" name="" readonly value="${ user.address }">
+										<input type="text" id="" name="" readonly
+											value="${ user.address }">
 									</div>
 								</div>
 								<div class="user-row">
 									<div class="user-col user-col1">
 										<p>City</p>
-										<input type="text" id="" name="" readonly value="${ user.city }">
+										<input type="text" id="" name="" readonly
+											value="${ user.city }">
 									</div>
 									<div class="user-col user-col1">
 										<p>District</p>
-										<input type="text" id="" name="" readonly value="${ user.district }">
+										<input type="text" id="" name="" readonly
+											value="${ user.district }">
 									</div>
 									<div class="user-col user-col1">
 										<p>Postal code</p>
@@ -159,10 +216,13 @@
 					<div class="line">
 						<div class="avatar">
 							<c:if test="${ userID != null }">
-								<img src="<c:url value="/assets/images/users/${ user.avatar }"/>" alt="">
+								<img
+									src="<c:url value="/assets/images/users/${ user.avatar }"/>"
+									alt="">
 							</c:if>
 							<c:if test="${ userID == null }">
-								<img src="<c:url value="/assets/images/users/avt-default.jpg"/>" alt="">
+								<img src="<c:url value="/assets/images/users/avt-default.jpg"/>"
+									alt="">
 							</c:if>
 						</div>
 					</div>
@@ -182,7 +242,9 @@
 					</div>
 					<div class="line">
 						<div class="myname">
-							${ user.firstname } <img src="<c:url value="/assets/images/icons/icons8-edit-64.png"/>" alt="">
+							${ user.firstname } <img
+								src="<c:url value="/assets/images/icons/icons8-edit-64.png"/>"
+								alt="">
 						</div>
 						<div class="story">Hin</div>
 						<div class="educate">Hanoi University of Industry</div>
@@ -196,12 +258,11 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="box-add-intro none" id="box-add-intro">
-				<img class="close-box" alt="" src="<c:url value="/assets/images/icons/icons8-close-67.png"/>">
-				<div class="box-title">
-					Introduce
-				</div>
+				<img class="close-box" alt=""
+					src="<c:url value="/assets/images/icons/icons8-close-67.png"/>">
+				<div class="box-title">Introduce</div>
 				<div class="box-content">
 					<textarea rows="" cols=""></textarea>
 				</div>
@@ -209,45 +270,179 @@
 					<button type="button" id="save-add-intro">Save</button>
 				</div>
 			</div>
-			<div class="wrapper-all none" id="wrapper-all">
+			<div class="box-add-intro none" id="box-change-pw">
+				<img class="close-box" alt=""
+					src="<c:url value="/assets/images/icons/icons8-close-67.png"/>">
+				<div class="box-title">Change password</div>
+				<div class="box-content">
+					<div class="form-ip">
+						<p>Old password</p>
+						<input id="oldpw" name="oldpw">
+					</div>
+					<div class="form-ip">
+						<p>New password</p>
+						<input id="newpw" name="newpw">
+					</div>
+					<div class="form-ip">
+						<p>Confirm password</p>
+						<input id="cfpw" name="cfpw">
+					</div>
+				</div>
+				<div class="box-btn">
+					<button type="button" id="save-pw">Save</button>
+				</div>
 			</div>
-
+			
+			<div class="box-add-intro none" id="box-change-contact">
+				<img class="close-box" alt=""
+					src="<c:url value="/assets/images/icons/icons8-close-67.png"/>">
+				<div class="box-title">Change contact</div>
+				<div class="box-content">
+					<div class="form-ip">
+						<p>First name</p>
+						<input id="firstname" name="firstname" value="${ user.firstname }">
+					</div>
+					<div class="form-ip">
+						<p>Last name</p>
+						<input id="lastname" name="lastname" value="${ user.lastname }">
+					</div>
+					<div class="form-ip">
+						<p>Phone number</p>
+						<input id="phonenumber" name="phonenumber" value="${ user.phone_number }"> 
+					</div>
+					<div class="form-ip">
+						<p>Email</p>
+						<input id="email" name="email" value="${ user.email }">
+					</div>
+				</div>
+				<div class="box-btn">
+					<button type="button" id="save-contact">Save</button>
+				</div>
+			</div>
+			
+			<div class="box-add-intro none" id="box-change-address">
+				<img class="close-box" alt=""
+					src="<c:url value="/assets/images/icons/icons8-close-67.png"/>">
+				<div class="box-title">Change address</div>
+				<div class="box-content">
+					<div class="form-ip">
+						<p>Address</p>
+						<input id="address" name="address" value="${ user.address }">
+					</div>
+					<div class="form-ip">
+						<p>District</p>
+						<input id="district" name="district" value="${ user.district }">
+					</div>
+					<div class="form-ip">
+						<p>City</p>
+						<input id="city" name="city" value="${ user.city }">
+					</div>
+					<div class="form-ip">
+						<p>Postal code</p>
+						<input id="postal" name="postal">
+					</div>
+				</div>
+				<div class="box-btn">
+					<button type="button" id="save-address">Save</button>
+				</div>
+			</div>
+			<div class="wrapper-all none" id="wrapper-all"></div>
 		</form>
 	</header>
 
 
 	<jsp:include page="../layouts/user/re-footer.jsp"></jsp:include>
 
-	<jsp:include page="../layouts/user/search.jsp"></jsp:include>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    
-    <script>
-        $("#add-intro").click(function () {
-            $("#box-add-intro").removeClass("none");
-            $("#wrapper-all").removeClass("none");
-            $("#save-add-intro").click(function () {
-            	$("#box-add-intro").addClass("none");
-                $("#wrapper-all").addClass("none");
-            });
-            
-            $(".close-box").click(function () {
-            	$("#box-add-intro").addClass("none");
-                $("#wrapper-all").addClass("none");
-            });
-        });
-    </script>
-    
-    <script>
-        $("#settings").click(function () {
-            $("#profile-menu").toggle("none");
-        });
-    </script>
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+	<script> // contact
+		$("#change-contact").click(function() {
+			var id = "${ user.id}";
+			$("#box-change-contact").removeClass("none");
+			$("#wrapper-all").removeClass("none");
+			$("#profile-menu").toggle("none");
+			$("#save-contact").click(function() {
+				$("#box-change-contact").addClass("none");
+				$("#wrapper-all").addClass("none");
+				$('#myform').attr('action', '/ShopTandT/profile/save-contact/'+id);
+			});
+
+			$(".close-box").click(function() {
+				$("#box-change-contact").addClass("none");
+				$("#wrapper-all").addClass("none");
+			});
+		});
+	</script>
+	
+	<script> // address
+		$("#change-address").click(function() {
+			var id = "${ user.id}";
+			$("#box-change-address").removeClass("none");
+			$("#wrapper-all").removeClass("none");
+			$("#profile-menu").toggle("none");
+			$("#save-address").click(function() {
+				$("#box-change-address").addClass("none");
+				$("#wrapper-all").addClass("none");
+				$('#myform').attr('action', '/ShopTandT/profile/save-address/'+id);
+			});
+
+			$(".close-box").click(function() {
+				$("#box-change-address").addClass("none");
+				$("#wrapper-all").addClass("none");
+			});
+		});
+	</script>
+
+	<script> // password
+		$("#change-pw").click(function() {
+			var id = "${ user.id}";
+			$("#box-change-pw").removeClass("none");
+			$("#wrapper-all").removeClass("none");
+			$("#profile-menu").toggle("none");
+			$("#save-pw").click(function() {
+				$("#box-change-pw").addClass("none");
+				$("#wrapper-all").addClass("none");
+				$('#myform').attr('action', '/ShopTandT/profile/save-pw/'+id);
+			});
+
+			$(".close-box").click(function() {
+				$("#box-change-pw").addClass("none");
+				$("#wrapper-all").addClass("none");
+			});
+		});
+	</script>
+
+	<script> // intro
+		$("#add-intro").click(function() {
+			var id = "${ user.id}";
+			$("#box-add-intro").removeClass("none");
+			$("#wrapper-all").removeClass("none");
+			$("#profile-menu").toggle("none");
+			$("#save-add-intro").click(function() {
+				$("#box-add-intro").addClass("none");
+				$("#wrapper-all").addClass("none");
+				$('#myform').attr('action', '/ShopTandT/profile/save-intro/'+id);
+			});
+
+			$(".close-box").click(function() {
+				$("#box-add-intro").addClass("none");
+				$("#wrapper-all").addClass("none");
+			});
+		});
+	</script>
+
+	<script>
+		$("#settings").click(function() {
+			$("#profile-menu").toggle("none");
+		});
+	</script>
 
 	<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 	<script type="text/javascript">
-		if ( window.history.replaceState ) {
-		  window.history.replaceState( null, null, window.location.href );
+		if (window.history.replaceState) {
+			window.history.replaceState(null, null, window.location.href);
 		}
 	</script>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -261,7 +456,7 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
 		integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
 		crossorigin="anonymous"></script>
-	
+
 	<script src="js/login.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>

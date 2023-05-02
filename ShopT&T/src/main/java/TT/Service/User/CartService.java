@@ -359,7 +359,6 @@ public class CartService implements CartRepository {
 					check = true;
 				}
 			}
-
 			if (check) {
 				String query = "update `cart` set `quantity` = `quantity` + ?, `color_size_id` = ?  where color_size_id = ? and user_id = ?";
 				PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(query);
@@ -383,9 +382,6 @@ public class CartService implements CartRepository {
 				conn.close();
 				return true;
 			}
-			
-			
-
 		} catch (Exception e) {
 			System.err.println("Got an exception!");
 			e.printStackTrace();

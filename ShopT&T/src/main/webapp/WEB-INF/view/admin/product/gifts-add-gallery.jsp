@@ -312,7 +312,7 @@ input.cancel {
 									var xhr = new XMLHttpRequest();
 									xhr
 											.open("GET",
-													"/ShopTandT/admin/product/gifts?giftsgallery");
+													"/ShopTandT/admin/product/gifts?giftsgallery&cancel");
 									xhr.onload = function() {
 										window.location
 												.assign("/ShopTandT/admin/product/gifts");

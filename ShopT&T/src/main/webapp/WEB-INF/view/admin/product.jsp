@@ -8,19 +8,19 @@
 
 
 <c:if test="${ clothing == 'true' }">
-	<title>Clothing :)</title>
+	<title>Clothing </title>
 </c:if>
 <c:if test="${ shoes == 'true' }">
-	<title>Shoes :)</title>
+	<title>Shoes </title>
 </c:if>
 <c:if test="${ colorSize == 'true' }">
-	<title>Color - Size :)</title>
+	<title>Color - Size </title>
 </c:if>
 <c:if test="${ gallery == 'true' }">
-	<title>Gallery :)</title>
+	<title>Gallery </title>
 </c:if>
 <c:if test="${ bsg == 'true' }">
-	<title>Brand - Gender :)</title>
+	<title>Brand - Gender </title>
 </c:if>
 
 <link rel="stylesheet"

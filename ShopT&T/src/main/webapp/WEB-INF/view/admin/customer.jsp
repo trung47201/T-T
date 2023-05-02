@@ -7,13 +7,13 @@
 	pageEncoding="UTF-8"%>
 
 <c:if test="${ user == 'true' }">
-	<title>User :)</title>
+	<title>User </title>
 </c:if>
 <c:if test="${ role == 'true' }">
-	<title>Role :)</title>
+	<title>Role </title>
 </c:if>
 <c:if test="${ addnewuser == 'true' }">
-	<title>New user :)</title>
+	<title>New user </title>
 </c:if>
 
 

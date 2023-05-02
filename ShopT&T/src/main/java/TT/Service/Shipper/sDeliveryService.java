@@ -289,6 +289,23 @@ public class sDeliveryService {
 		return false;
 	}
 	
+	public boolean canceled (int order_id) {
+		try {
+			connectService = new ConnectService();
+			Connection conn = connectService.getConnect();
+			String query = "update `receipt` set `request` = 0, `status_id` = 6 where id = ?";
+			PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(query);
+			preparedStmt.setInt(1, order_id);
+			preparedStmt.executeUpdate();
+			conn.close();
+			return true;
+		} catch (Exception e) {
+			System.err.println("canceled this order shipper success! ");
+			System.err.println(e.getMessage());
+		}
+		return false;
+	}
+	
 	public boolean check_receipt (int order_id) {
 		receiptService = new ReceiptService();
 		Receipt r = receiptService.get_all_order_by_order_id(order_id);
@@ -297,6 +314,25 @@ public class sDeliveryService {
 				System.out.println(r.getId());
 				return true;
 			}
+		}
+		return false;
+	}
+	
+	public boolean update_delivery_date(int order_id) {
+		try {
+			java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
+			connectService = new ConnectService();
+			Connection conn = connectService.getConnect();
+			String query = "update `receipt` set `delivery_date` = ? where id = ?";
+			PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(query);
+			preparedStmt.setTimestamp(1, date);
+			preparedStmt.setInt(2, order_id);
+			preparedStmt.executeUpdate();
+			conn.close();
+			return true;
+		} catch (Exception e) {
+			System.err.println("canceled this order shipper success! ");
+			System.err.println(e.getMessage());
 		}
 		return false;
 	}

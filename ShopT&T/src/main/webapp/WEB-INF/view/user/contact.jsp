@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<title>What do you want? :)</title>
+<title>What do you want? </title>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="<c:url value="/assets/css/bootstrap.css"/>">
@@ -102,7 +102,7 @@
 
    <jsp:include page="../layouts/user/re-footer.jsp"></jsp:include>
    
-   <jsp:include page="../layouts/user/search.jsp"></jsp:include>
+   
 
     <script>
         function test($a) {

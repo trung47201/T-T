@@ -286,7 +286,7 @@ public class ProductColorSizeController {
 
 		String name = request.getParameter("colorname");
 		String rgb = request.getParameter("colorrgb");
-
+		String accessories = request.getParameter("accessories");
 		String handbags = request.getParameter("handbags");
 		String clothing = request.getParameter("clothing");
 		String shoes = request.getParameter("shoes");
@@ -300,6 +300,8 @@ public class ProductColorSizeController {
 					return new ModelAndView("redirect: /ShopTandT/admin/product/add-clothing-color-size");
 				} else if (shoes != null) {
 					return new ModelAndView("redirect: /ShopTandT/admin/product/add-shoes-color-size");
+				} else if (accessories != null) {
+					return new ModelAndView("redirect: /ShopTandT/admin/product/add-accessories-color");
 				} else {
 					return new ModelAndView("redirect: /ShopTandT/admin/color-size");
 				}

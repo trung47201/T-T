@@ -15,10 +15,10 @@
 <link rel="stylesheet" href="<c:url value='/assets/css/admin-nav2.css'/>">
 
 <c:if test="${ voucher == 'true' }">
-	<title>Voucher :)</title>
+	<title>Voucher </title>
 </c:if>
 <c:if test="${ editvoucher == 'true' }">
-	<title>Edit voucher :)</title>
+	<title>Edit voucher </title>
 </c:if>
 <style>
 .widthDes {

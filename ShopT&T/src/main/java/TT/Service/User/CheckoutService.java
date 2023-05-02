@@ -34,8 +34,8 @@ public class CheckoutService implements CheckoutRepository {
 			Statement stmt;
 			stmt = (Statement) con.createStatement();
 			ResultSet rs = stmt.executeQuery("select rgb, color_name, color.id, product_color_size.prod_id from color "
-					+ "Inner join product_color_size on color.id = product_color_size.color_id " + "Where prod_id=" + id_prod
-					+ " Group by rgb");
+					+ "Inner join product_color_size on color.id = product_color_size.color_id " + "Where prod_id="
+					+ id_prod + " Group by rgb");
 			while (rs.next()) {
 				color = new Color();
 				color.setId(rs.getInt("id"));
@@ -63,8 +63,8 @@ public class CheckoutService implements CheckoutRepository {
 			stmt = (Statement) con.createStatement();
 			ResultSet rs = stmt.executeQuery(
 					"select product_color_size.id, product_color_size.size_id, product_color_size.prod_id, product_color_size.color_id, product_color_size.quantity, size_number, created_at, updated_at from sizes "
-							+ "Inner join product_color_size on sizes.id = product_color_size.size_id " + "Where prod_id=" + prod_id
-							+ " and color_id=" + color_id);
+							+ "Inner join product_color_size on sizes.id = product_color_size.size_id "
+							+ "Where prod_id=" + prod_id + " and color_id=" + color_id);
 			while (rs.next()) {
 				size = new Sizes();
 				product_color_size = new Product_color_size();
@@ -95,7 +95,8 @@ public class CheckoutService implements CheckoutRepository {
 			stmt = (Statement) con.createStatement();
 			ResultSet rs = stmt.executeQuery(
 					"select product_color_size.id, product_color_size.size_id, product_color_size.prod_id, product_color_size.color_id, product_color_size.quantity, size_number, created_at, updated_at from sizes "
-							+ "Inner join product_color_size on sizes.id = product_color_size.size_id " + "Where prod_id=" + prod_id);
+							+ "Inner join product_color_size on sizes.id = product_color_size.size_id "
+							+ "Where prod_id=" + prod_id);
 			while (rs.next()) {
 				color_id = rs.getInt("color_id");
 				break;
@@ -177,7 +178,7 @@ public class CheckoutService implements CheckoutRepository {
 		}
 		return t;
 	}
-	
+
 	public String removeProductFromCartAfterCheckout(int id_prod, String txt) {
 		String s = "";
 		String a[] = txt.split("/");
@@ -238,33 +239,34 @@ public class CheckoutService implements CheckoutRepository {
 		}
 		return discount_at;
 	}
-	
+
 	public HashMap<Product_color_size, Integer> get_list_color_size_qty_by_string_process(String process) {
 		product_color_sizeService = new Product_color_sizeService();
 		HashMap<Product_color_size, Integer> hm = new LinkedHashMap<Product_color_size, Integer>();
 		String arr[] = process.split("/");
 		for (String s : arr) {
-			if(!s.equals("")) {
+			if (!s.equals("")) {
 				String a[] = s.split("_");
 				hm.put(product_color_sizeService.getByIdCS(Integer.parseInt(a[0])), Integer.parseInt(a[1]));
 			}
 		}
 		return hm;
 	}
-	
+
 	public double get_total_by_string_process(String process) {
-		double total=0;
+		double total = 0;
 		HashMap<Product_color_size, Integer> hm = get_list_color_size_qty_by_string_process(process);
 		for (Product_color_size c : hm.keySet()) {
-			if(c.getProd().getDiscount() > 0) {
-				total += c.getProd().getPrice() - c.getProd().getPrice()*c.getProd().getDiscount() /100;
+			if (c.getProd().getDiscount() > 0) {
+				total += c.getProd().getPrice() * hm.get(c)
+						- c.getProd().getPrice() * hm.get(c) * c.getProd().getDiscount() / 100;
 			} else {
-				total += c.getProd().getPrice();
+				total += c.getProd().getPrice() * hm.get(c);
 			}
 		}
 		return total;
 	}
-	
+
 	public static void main(String[] args) {
 		CheckoutService c = new CheckoutService();
 		System.out.println(c.get_total_by_string_process("455_1/441_1"));

@@ -284,20 +284,20 @@ input#quantity {
 											<c:set var="count" value="${ index.getIndex() }" />
 											<c:if test="${ idx % 4 == 0 }">
 												<div>
-													<span id="${ liColor.id }"
+													<span id="${ liColor.id }" title="${ liColor.color_name }"
 														style="background: ${ liColor.rgb };"><input
 														class="none" id="${ liColor.id }"
 														name="color${ liColor.id }" type="number"
 														placeholder="Qty"></span>
 											</c:if>
 											<c:if test="${ (idx+2) % 4 == 0 || (idx+3) % 4 == 0 }">
-												<span id="${ liColor.id }"
+												<span id="${ liColor.id }" title="${ liColor.color_name }"
 													style="background: ${ liColor.rgb };"><input
 													class="none" id="${ liColor.id }"
 													name="color${ liColor.id }" type="number" placeholder="Qty"></span>
 											</c:if>
 											<c:if test="${ (idx+1) % 4 == 0 }">
-												<span id="${ liColor.id }"
+												<span id="${ liColor.id }" title="${ liColor.color_name }"
 													style="background: ${ liColor.rgb };"><input
 													class="none" id="${ liColor.id }"
 													name="color${ liColor.id }" type="number" placeholder="Qty"></span>

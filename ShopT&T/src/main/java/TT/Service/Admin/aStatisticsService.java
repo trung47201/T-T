@@ -581,6 +581,26 @@ public class aStatisticsService {
 		}
 		return null;
 	}
+	
+	public String get_day_name_by_num(int m) {
+		switch (m) {
+		case 1:
+			return "\"Sunday\"";
+		case 2:
+			return "\"Monday\"";
+		case 3:
+			return "\"Tuesday\"";
+		case 4:
+			return "\"Wednesday\"";
+		case 5:
+			return "\"Thursday\"";
+		case 6:
+			return "\"Friday\"";
+		case 7:
+			return "\"Saturday\"";
+		}
+		return null;
+	}
 
 	// year by date ("yyyy-mm-dd")
 	public int get_year(Date date) {

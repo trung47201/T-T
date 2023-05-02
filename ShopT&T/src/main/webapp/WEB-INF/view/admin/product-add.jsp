@@ -18,6 +18,9 @@
 <c:if test="${ gifts == 'true' }">
 	<title>Add gifts</title>
 </c:if>
+<c:if test="${ accessories == 'true' }">
+	<title>Add accessories</title>
+</c:if>
 <link rel="stylesheet"
 	href="<c:url value='/assets/css/re-admin-product2.css'/>">
 <link rel="stylesheet"
@@ -121,6 +124,20 @@ table.table-new-product td {
 							alt=""> <a href="">Add new gifts</a>
 					</div>
 				</c:if>
+				<c:if test="${ accessories == 'true' }">
+					<div>
+						<p>/</p>
+						<img style="width: 24px; height: 24px; margin-top: 0px;"
+							src="<c:url value="/assets/images/icons/icons8-t-shirt-64-title.png"/>"
+							alt=""> <a href="/ShopTandT/admin/product/accessories">Accessories</a>
+					</div>
+					<div>
+						<p>/</p>
+						<img
+							src="<c:url value="/assets/images/icons/icons8-add-64-title.png"/>"
+							alt=""> <a href="">Add new accessories</a>
+					</div>
+				</c:if>
 				<c:if test="${ shoes == 'true' }">
 					<div>
 						<p>/</p>
@@ -176,6 +193,11 @@ table.table-new-product td {
 			<c:if test="${ gifts == 'true' }">
 				<form
 					action="/ShopTandT/admin/product/add-new-gifts/savefile"
+					method="post" enctype="multipart/form-data">
+			</c:if>
+			<c:if test="${ accessories == 'true' }">
+				<form
+					action="/ShopTandT/admin/product/add-new-accessories/savefile"
 					method="post" enctype="multipart/form-data">
 			</c:if>
 			<table class="table-new-product">

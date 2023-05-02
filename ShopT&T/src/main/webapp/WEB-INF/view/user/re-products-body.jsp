@@ -605,7 +605,7 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
-<jsp:include page="../layouts/user/search.jsp"></jsp:include>
+
 
 <script> // add to cart
 		var id_user = "";

@@ -36,10 +36,34 @@
 <link rel="stylesheet" href="<c:url value="/assets/css/re-text.css"/>">
 <link rel="stylesheet"
 	href="<c:url value="/assets/css/checkbox-radio-input.css"/>">
-<title>${ title }:)</title>
+<title>${ title }</title>
 <style>
 .favorite-product-products {
 	margin-top: 4px !important;
+}
+
+.not-page {
+	cursor: default !important;
+	border: 0 !important;
+	pointer-events: none !important;
+}
+
+.not-page:hover {
+	border: 0;
+	background: none !important;
+}
+
+.disabledbutton {
+	pointer-events: none;
+	opacity: 0.4;
+}
+
+.page-number:hover {
+	background: gray !important;
+}
+
+.number-page-selected:hover {
+	background: #cb82a9 !important;
 }
 </style>
 <link rel="stylesheet"
@@ -67,7 +91,7 @@
 			</p>
 		</div>
 
-		<c:if test="${ listProducts != null}">
+		<c:if test="${ listhmp != null}">
 			<div class="content-products">
 				<!-- CATEGORY PRODUCTS -->
 				<div class="wrapper-category">
@@ -369,10 +393,17 @@
 		</div>
 		</c:if>
 
-
-		<!-- LIST PRODUCTS -->
-		<div class="list-products">
+		<c:forEach var="lihmp" items="${ listhmp }">
+			<!-- LIST PRODUCTS -->
+			<c:if test="${ lihmp.key == 1 }">
+				<div class="list-products" id="${ lihmp.key }">
+			</c:if>
+			<c:if test="${ lihmp.key != 1 }">
+				<div class="list-products none" id="${ lihmp.key }">
+			</c:if>
 			<!--Line 1-->
+			<c:set var="listProducts" value="${ lihmp.value }">
+			</c:set>
 			<c:set var="prodCount" value="${ 0 }"></c:set>
 			<c:forEach var="listProd" items="${ listProducts }" varStatus="i">
 				<c:set var="prodCount" value="${ i.getCount() }"></c:set>
@@ -506,102 +537,110 @@
 								</div>
 							</div>
 						</div>
-		</div>
-		</c:if>
+						</div>
+					</c:if>
 
-		<c:if test="${ (idx-1 )%4==0 || (idx-2)%4==0 }">
-			<div class="products-el">
-				<c:if test="${listProd.discount > 0 }">
-					<div class="img-product-products zoom zoo" id="${ listProd.id }"
-						name="${listProd.discount }%">
-						<img
-							src="<c:url value="/assets/images/products/${ listProd.thumbnail }"/>"
-							alt="img-product">
-					</div>
-				</c:if>
-				<c:if test="${listProd.discount <= 0 }">
-					<div class="img-product-products zoom" id="${ listProd.id }">
-						<img
-							src="<c:url value="/assets/images/products/${ listProd.thumbnail }"/>"
-							alt="img-product">
-					</div>
-				</c:if>
-				<div class="content-product-products">
-					<div class="brand-product-products"
-						id="${ listProd.sub_category.id }">${ listProd.sub_category.sub_category_name }</div>
-					<div class="name-product-products" id="${ listProd.id }">${ listProd.title }</div>
-					<div class="show-products">
-						<div class="price-product-products">
-							<c:if test="${ listProd.discount <= 0 }">
-								<div class="price-sale-products">$${ listProd.price }</div>
-							</c:if>
-							<c:if test="${ listProd.discount > 0 }">
-								<div class="price-sale-products">
-									$
-									<fmt:formatNumber type="number" maxFractionDigits="2"
-										value="${ listProd.price - listProd.price*listProd.discount/100 }" />
-								</div>
-								<div class="price-old-products">
-									<b>$${ listProd.price }</b>
+					<c:if test="${ (idx-1 )%4==0 || (idx-2)%4==0 }">
+						<div class="products-el">
+							<c:if test="${listProd.discount > 0 }">
+								<div class="img-product-products zoom zoo" id="${ listProd.id }"
+									name="${listProd.discount }%">
+									<img
+										src="<c:url value="/assets/images/products/${ listProd.thumbnail }"/>"
+										alt="img-product">
 								</div>
 							</c:if>
+							<c:if test="${listProd.discount <= 0 }">
+								<div class="img-product-products zoom" id="${ listProd.id }">
+									<img
+										src="<c:url value="/assets/images/products/${ listProd.thumbnail }"/>"
+										alt="img-product">
+								</div>
+							</c:if>
+							<div class="content-product-products">
+								<div class="brand-product-products"
+									id="${ listProd.sub_category.id }">${ listProd.sub_category.sub_category_name }</div>
+								<div class="name-product-products" id="${ listProd.id }">${ listProd.title }</div>
+								<div class="show-products">
+									<div class="price-product-products">
+										<c:if test="${ listProd.discount <= 0 }">
+											<div class="price-sale-products">$${ listProd.price }</div>
+										</c:if>
+										<c:if test="${ listProd.discount > 0 }">
+											<div class="price-sale-products">
+												$
+												<fmt:formatNumber type="number" maxFractionDigits="2"
+													value="${ listProd.price - listProd.price*listProd.discount/100 }" />
+											</div>
+											<div class="price-old-products">
+												<b>$${ listProd.price }</b>
+											</div>
+										</c:if>
 
-						</div>
-						<div class="rate-product-products">
-							5.0
-							<div class="img-rate-product-products">
-								<img src="<c:url value="/assets/images/icons/star24.png"/>"
-									alt="">
-							</div>
-							| Sold (${ listProd.sold })
-						</div>
-						<div class="favorite-product-products">
-							<div class="show-function">
-								<button class="favorite-product">
-									<i class="fa fa-heart" aria-hidden="true"></i>
-								</button>
-								<button type="submit" class="add-to-cart" name="add-to-cart"
-									value="${ listProd.id }">
-									<i class="fa fa-cart-plus" aria-hidden="true"></i>
-								</button>
+									</div>
+									<div class="rate-product-products">
+										5.0
+										<div class="img-rate-product-products">
+											<img src="<c:url value="/assets/images/icons/star24.png"/>"
+												alt="">
+										</div>
+										| Sold (${ listProd.sold })
+									</div>
+									<div class="favorite-product-products">
+										<div class="show-function">
+											<button class="favorite-product">
+												<i class="fa fa-heart" aria-hidden="true"></i>
+											</button>
+											<button type="submit" class="add-to-cart" name="add-to-cart"
+												value="${ listProd.id }">
+												<i class="fa fa-cart-plus" aria-hidden="true"></i>
+											</button>
 
-								<button class="buy-now" class="shadow-1" id="${ listProd.id }">Buy
-									now</button>
+											<button class="buy-now" class="shadow-1"
+												id="${ listProd.id }">Buy now</button>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
-					</div>
+					</c:if>
+
+				</c:if>
+			</c:forEach>
+			<c:if test="${ prodCount%4 != 0 && prodCount<=20 }">
 				</div>
+			</c:if>
 			</div>
-		</c:if>
-
-		</c:if>
+			<!-- END LIST PRODUCTS -->
 		</c:forEach>
 
+		</div>
 
-		<c:if test="${ prodCount%4 != 0 && prodCount<=20 }">
-			</div>
-		</c:if>
-
-
-
-		<c:if test="${ listProducts != null}">
+		<c:if test="${ listhmp != null}">
 			<div class="next-page-products">
 				<div class="backward-page">
 					<i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
 				</div>
 				<div class="slide-number-page">
-					<span class="number-page-selected">1</span> <span>2</span> <span>3</span>
+					<span class="not-page page-number" id="0"></span>
+					<c:forEach var="lihmp" items="${ listhmp }">
+						<c:if test="${ lihmp.key == 1}">
+							<span class="page-number number-page-selected" id="${ lihmp.key }">${ lihmp.key }</span>
+						</c:if>
+						<c:if test="${ lihmp.key == 2}">
+							<span class="page-number" id="${ lihmp.key }">${ lihmp.key }</span>
+						</c:if>
+						<c:if test="${ lihmp.key != 2 && lihmp.key != 1 }">
+							<span class="page-number none" id="${ lihmp.key }">${ lihmp.key }</span>
+						</c:if>
+					</c:forEach>
 				</div>
 				<div class="forward-page">
 					<i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
 				</div>
+				<input type="hidden" id="pageid" value="1">
 			</div>
 		</c:if>
-		</div>
-
-		</div>
-
-
 
 	</header>
 	<div class="error none-error">
@@ -634,8 +673,185 @@
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
-	<jsp:include page="../layouts/user/search.jsp"></jsp:include>
+	
 
+	<script type="text/javascript">
+	$(".page-number").click(function () {
+		var pageid = this.id;
+		var checkid = $("#pageid").val();
+		const arr = document.getElementsByClassName("page-number");
+		if (pageid > checkid) {
+			var next = parseInt(pageid) + 1;
+			var next1 = parseInt(pageid) + 2;
+			var back = parseInt(pageid) - 2;
+			for (let i=0; i<arr.length; i++) {
+				if(back == arr[i].id) {
+					if(next < arr.length) {
+						$(arr[i]).addClass("none");
+					}
+				} else if(next == arr[i].id) {
+					$(arr[i]).removeClass("none");
+				} else if(pageid == arr[i].id) {
+					$(arr[i]).addClass("number-page-selected");
+					$("#pageid").val(pageid);
+				} else {
+					$(arr[i]).removeClass("number-page-selected");
+				}
+			}
+			var check = $("#pageid").val();
+			if(check == "1") {
+				$(".backward-page").addClass("disabledbutton");
+			} else {
+				$(".backward-page").removeClass("disabledbutton");
+			}
+		} else {
+			var next = parseInt(pageid) - 1;
+			var back = parseInt(pageid) + 2;
+			
+			for (let i=0; i<arr.length; i++) {
+				if(back == arr[i].id) {
+					if(next < arr.length) {
+						$(arr[i]).addClass("none");
+					}
+				} else if(next == arr[i].id) {
+					$(arr[i]).removeClass("none");
+				} else if(pageid == arr[i].id) {
+					$(arr[i]).addClass("number-page-selected");
+					$("#pageid").val(pageid);
+				} else {
+					$(arr[i]).removeClass("number-page-selected");
+				}
+			}
+			var check = $("#pageid").val();
+			if(check == "1") {
+				$(".backward-page").addClass("disabledbutton");
+			} else {
+				$(".backward-page").removeClass("disabledbutton");
+			}
+		}
+		if(parseInt(pageid) == parseInt(arr.length-1)) {
+			$(".forward-page").addClass("disabledbutton");
+		} else {
+			$(".forward-page").removeClass("disabledbutton");
+		}
+		var current = $("#pageid").val();
+		const arr1 = document.getElementsByClassName("list-products");
+		for (let i=0; i<arr1.length; i++) {
+			if(arr1[i].id == parseInt(current)) {
+				$(arr1[i]).removeClass("none");
+			} else {
+				$(arr1[i]).addClass("none");
+			}
+		}
+		 $("html, body").animate({
+			    scrollTop: 270
+		}, 400);
+	});
+	var id = $("#pageid").val();
+	if(id == "1") {
+		$(".backward-page").addClass("disabledbutton");
+	} else {
+		$(".backward-page").removeClass("disabledbutton");
+	}
+	$(".forward-page").click(function () {
+		const arr = document.getElementsByClassName("page-number");
+		var pageid = $("#pageid").val();
+		if((arr.length-1) > pageid) {
+			var next = parseInt(pageid) + 1;
+			var next1 = 0;
+			if(pageid != "") {
+				next1 = parseInt(pageid) + 2;
+			}
+			var back = parseInt(pageid) - 1;
+			for (let i=0; i<arr.length; i++) {
+				if (next1 == arr[i].id){
+					$(arr[i]).removeClass("none");
+				} else if (back == arr[i].id){
+					if(next1 < arr.length) {
+						$(arr[i]).addClass("none");
+					}
+				} else if(next == arr[i].id) {
+						$(arr[i]).addClass("number-page-selected");
+						$("#pageid").val(arr[i].id);
+				} else {
+					$(arr[i]).removeClass("number-page-selected");
+				}
+			}	
+		} else {
+			
+		}
+		var check = parseInt(pageid)+2;
+		if( check == arr.length) {
+			$(".forward-page").addClass("disabledbutton");
+		}
+		if(pageid == "0") {
+			$(".backward-page").addClass("disabledbutton");
+		} else {
+			$(".backward-page").removeClass("disabledbutton");
+		}
+		var current = $("#pageid").val();
+		const arr1 = document.getElementsByClassName("list-products");
+		for (let i=0; i<arr1.length; i++) {
+			if(arr1[i].id == parseInt(current)) {
+				$(arr1[i]).removeClass("none");
+			} else {
+				$(arr1[i]).addClass("none");
+			}
+		}
+		 $("html, body").animate({
+			scrollTop: 270
+		}, 400);
+	});
+	$(".backward-page").click(function () {
+		const arr = document.getElementsByClassName("page-number");
+		var pageid = $("#pageid").val();
+		if(pageid != "0") {
+			var next = parseInt(pageid) - 1;
+			var next1 = 0;
+			if(pageid != "") {
+				next1 = parseInt(pageid) - 2;
+			}
+			var back = parseInt(pageid) + 1;
+			for (let i=0; i<arr.length; i++) {
+				if (next1 == arr[i].id){
+					$(arr[i]).removeClass("none");
+				} else if (back == arr[i].id){
+					if(next1 < arr.length) {
+						$(arr[i]).addClass("none");
+					}
+				} else if(next == arr[i].id) {
+						$(arr[i]).addClass("number-page-selected");
+						$("#pageid").val(arr[i].id);
+				} else {
+					$(arr[i]).removeClass("number-page-selected");
+				}
+			}	
+		} else {
+			
+		}
+		var check = $("#pageid").val();
+		if( check != "0") {
+			$(".forward-page").removeClass("disabledbutton");
+		}
+		if(check == "1") {
+			$(".backward-page").addClass("disabledbutton");
+		} else {
+			$(".backward-page").removeClass("disabledbutton");
+		}
+		var current = $("#pageid").val();
+		const arr1 = document.getElementsByClassName("list-products");
+		for (let i=0; i<arr1.length; i++) {
+			if(arr1[i].id == parseInt(current)) {
+				$(arr1[i]).removeClass("none");
+			} else {
+				$(arr1[i]).addClass("none");
+			}
+		}
+		 $("html, body").animate({
+			    scrollTop: 270
+			}, 400);
+	});
+</script>
 	<script> // add to cart
 		var id_user = "";
 		if(${ sessionScope.userid != null }) {

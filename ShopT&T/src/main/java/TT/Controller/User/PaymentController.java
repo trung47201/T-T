@@ -22,9 +22,10 @@ import com.paypal.base.rest.PayPalRESTException;
 
 import TT.Model.Cart;
 import TT.Model.Product_color_size;
+import TT.Model.User;
 import TT.Service.User.CartService;
-import TT.Service.User.Product_color_sizeService;
 import TT.Service.User.PaymentService;
+import TT.Service.User.Product_color_sizeService;
 import TT.Service.User.UserService;
 
 @Controller
@@ -100,6 +101,8 @@ public class PaymentController {
 		mv.addObject("avatar", avt);
 		mv.addObject("userID", Integer.parseInt(id));
 		mv.addObject("back_home", "home");
+		User u = (User) userService.get_user_by_id(Integer.parseInt(id));
+		mv.addObject("phone", u.getPhone_number());
 		return mv;
 	}
 
@@ -113,7 +116,6 @@ public class PaymentController {
 		String user_id = request.getParameter("userid");
 		String vccode = request.getParameter("vccode");
 		String cartid = request.getParameter("cartid");
-		
 		String color = request.getParameter("color");
 		String size = request.getParameter("size");
 		

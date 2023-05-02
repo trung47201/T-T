@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Bill :)</title>
+<title>Bill </title>
 </head>
 
 <link rel="stylesheet" href="<c:url value='/assets/css/re-bill.css'/>">

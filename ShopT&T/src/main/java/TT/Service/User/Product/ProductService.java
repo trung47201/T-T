@@ -7,10 +7,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
@@ -26,8 +28,8 @@ import TT.Model.Sizes;
 import TT.Model.Sub_category;
 import TT.Model.User;
 import TT.Repository.User.ProductRepository;
-import TT.Service.User.Product_color_sizeService;
 import TT.Service.User.ConnectService;
+import TT.Service.User.Product_color_sizeService;
 import TT.Service.User.RatingService;
 import TT.Service.User.VoucherService;
 
@@ -55,17 +57,16 @@ public class ProductService implements ProductRepository {
 			Connection con = connectService.getConnect();
 			Statement stmt;
 			stmt = (Statement) con.createStatement();
-			ResultSet rs = stmt
-					.executeQuery("select * from product_color_size " 
-							+ "Inner join product on product.id = product_color_size.prod_id "
-							+ "Inner join sizes on sizes.id = product_color_size.size_id "
-							+ "Inner join color on color.id = product_color_size.color_id "
-							+ "Inner join brand on product.brand_id = brand.id "
-							+ "Inner join sub_category on product.sub_category_id = sub_category.id "
-							+ "Inner join category on sub_category.category_id = category.id "
-							+ "Inner join user on product.user_id = user.id "
-							+ "Inner join gender on product.gender_id = gender.id "
-							+ "Inner join role on role.id = user.role_id " + "Where product_color_size.quantity > 0 " + "");
+			ResultSet rs = stmt.executeQuery("select * from product_color_size "
+					+ "Inner join product on product.id = product_color_size.prod_id "
+					+ "Inner join sizes on sizes.id = product_color_size.size_id "
+					+ "Inner join color on color.id = product_color_size.color_id "
+					+ "Inner join brand on product.brand_id = brand.id "
+					+ "Inner join sub_category on product.sub_category_id = sub_category.id "
+					+ "Inner join category on sub_category.category_id = category.id "
+					+ "Inner join user on product.user_id = user.id "
+					+ "Inner join gender on product.gender_id = gender.id "
+					+ "Inner join role on role.id = user.role_id " + "Where product_color_size.quantity > 0 " + "");
 			while (rs.next()) {
 				product_color_size = new Product_color_size();
 				color = new Color();
@@ -86,9 +87,10 @@ public class ProductService implements ProductRepository {
 				role.setDescription(rs.getString("description"));
 				role.setCreated_at(rs.getDate("created_at"));
 				role.setUpdated_at(rs.getDate("updated_at"));
-				
+
 				user.setId(rs.getInt("user_id"));
-				user.setFirstname(rs.getString("firstname"));user.setLastname(rs.getString("lastname"));
+				user.setFirstname(rs.getString("firstname"));
+				user.setLastname(rs.getString("lastname"));
 				user.setEmail(rs.getString("email"));
 				user.setPhone_number(rs.getString("phone_number"));
 				user.setAddress(rs.getString("address"));
@@ -175,9 +177,10 @@ public class ProductService implements ProductRepository {
 				role.setDescription(rs.getString("description"));
 				role.setCreated_at(rs.getDate("created_at"));
 				role.setUpdated_at(rs.getDate("updated_at"));
-				
+
 				user.setId(rs.getInt("user_id"));
-				user.setFirstname(rs.getString("firstname"));user.setLastname(rs.getString("lastname"));
+				user.setFirstname(rs.getString("firstname"));
+				user.setLastname(rs.getString("lastname"));
 				user.setEmail(rs.getString("email"));
 				user.setPhone_number(rs.getString("phone_number"));
 				user.setAddress(rs.getString("address"));
@@ -357,7 +360,8 @@ public class ProductService implements ProductRepository {
 				Collections.sort(li, new Comparator<Product>() {
 					@Override
 					public int compare(Product o1, Product o2) {
-						return o1.getSub_category().getSub_category_name().compareTo(o2.getSub_category().getSub_category_name());
+						return o1.getSub_category().getSub_category_name()
+								.compareTo(o2.getSub_category().getSub_category_name());
 					}
 				});
 				for (Product product : li) {
@@ -465,7 +469,8 @@ public class ProductService implements ProductRepository {
 				Collections.sort(li, new Comparator<Product>() {
 					@Override
 					public int compare(Product o1, Product o2) {
-						return o1.getSub_category().getSub_category_name().compareTo(o2.getSub_category().getSub_category_name());
+						return o1.getSub_category().getSub_category_name()
+								.compareTo(o2.getSub_category().getSub_category_name());
 					}
 				});
 				for (Product product : li) {
@@ -922,21 +927,21 @@ public class ProductService implements ProductRepository {
 		});
 		return sortedEntries;
 	}
-	
+
 	@Override
 	public boolean updateProduct_Sold(int id_prod, int amount) {
 		try {
 			connectService = new ConnectService();
 			Connection conn = connectService.getConnect();
-			//check id_prod
+			// check id_prod
 			boolean check = false;
 			List<Product> list = getAllProducts();
 			for (Product product : list) {
-				if(product.getId()==id_prod) {
-					check=true;
+				if (product.getId() == id_prod) {
+					check = true;
 				}
 			}
-			if(check) {
+			if (check) {
 				String query = "update `product` set `sold` = `sold` + ? where `id` = ?";
 				PreparedStatement preparedStmt = (PreparedStatement) conn.prepareStatement(query);
 				preparedStmt.setInt(1, amount);
@@ -948,48 +953,52 @@ public class ProductService implements ProductRepository {
 				return false;
 			}
 			// create the java mysql update preparedstatement
-			
+
 		} catch (Exception e) {
 			System.err.println("Got an exception! ");
 			System.err.println(e.getMessage());
 		}
 		return false;
 	}
-	
+
 	public double getPriceByIdProd(int prod_id, int voucher_id) {
 		voucherService = new VoucherService();
 		int discountVoucher = voucherService.getDiscountById_Voucher(voucher_id);
 		double price = 0.0;
 		Product p = getProduct(prod_id);
-		if(p.getDiscount() > 0) {
-			if ((p.getDiscount()+discountVoucher) < 100) {
-				price = p.getPrice() - p.getPrice()*(p.getDiscount()+discountVoucher)/100;
+		if (p.getDiscount() > 0) {
+			if ((p.getDiscount() + discountVoucher) < 100) {
+				price = p.getPrice() - p.getPrice() * (p.getDiscount() + discountVoucher) / 100;
 			} else {
 				price = 0.0;
 			}
 		} else {
-			if(discountVoucher > 0){
-				price = p.getPrice() - p.getPrice()*(discountVoucher)/100;
+			if (discountVoucher > 0) {
+				price = p.getPrice() - p.getPrice() * (discountVoucher) / 100;
 			} else {
 				price = p.getPrice();
 			}
 		}
-		return Math.round(price*100)/100;
+		return Math.round(price * 100) / 100;
 	}
 
 	public List<Product> get_all_product_by_search_keywords(String kw) {
 		List<Product> li = new LinkedList<>();
 		List<Product> liProd = getAllProducts();
 		for (Product p : liProd) {
-			if(p.getTitle().toLowerCase().contains(kw.toLowerCase()) || p.getSub_category().getSub_category_name().toLowerCase().contains(kw.toLowerCase()) || p.getBrand().getBrand_name().toLowerCase().contains(kw.toLowerCase())) {
+			if (p.getTitle().toLowerCase().contains(kw.toLowerCase())
+					|| p.getSub_category().getSub_category_name().toLowerCase().contains(kw.toLowerCase())
+					|| p.getBrand().getBrand_name().toLowerCase().contains(kw.toLowerCase())) {
 				li.add(p);
 			}
 		}
 		String arr[] = kw.split("\\s+");
 		for (Product p : liProd) {
 			for (String s : arr) {
-				if(p.getTitle().toLowerCase().contains(s.toLowerCase()) || p.getSub_category().getSub_category_name().toLowerCase().contains(s.toLowerCase()) || p.getBrand().getBrand_name().toLowerCase().contains(s.toLowerCase())) {
-					if(!li.contains(p)) {
+				if (p.getTitle().toLowerCase().contains(s.toLowerCase())
+						|| p.getSub_category().getSub_category_name().toLowerCase().contains(s.toLowerCase())
+						|| p.getBrand().getBrand_name().toLowerCase().contains(s.toLowerCase())) {
+					if (!li.contains(p)) {
 						li.add(p);
 					}
 				}
@@ -997,26 +1006,89 @@ public class ProductService implements ProductRepository {
 		}
 		return li;
 	}
-	
 
 	public List<Product> get_product_by_str(String txt) {
 		List<Product> li = new ArrayList<>();
 		String a[] = txt.split("/");
 		for (String s : a) {
-			if(!s.equals("")) {
+			if (!s.equals("")) {
 				li.add(getProduct(Integer.parseInt(s)));
 			}
 		}
 		return li;
 	}
-	
-	
+
+	public HashMap<Integer, List<Product>> get_product_page(List<Product> li) {
+		HashMap<Integer, List<Product>> hm = new LinkedHashMap<>();
+		int count = 0;
+		int c = 1;
+		List<Product> rs = null;
+		for (Product p : li) {
+			if (count % 20 == 0) {
+				if (rs != null) {
+					hm.put(c, rs);
+					c++;
+				}
+				rs = new LinkedList<>();
+				rs.add(p);
+			} else if (li.size() == (count + 1)) {
+				rs.add(p);
+				hm.put(c, rs);
+			} else {
+				rs.add(p);
+			}
+			count++;
+		}
+		return hm;
+	}
+
+	public List<Product> get_product_search(String txt) {
+		String arr[] = txt.toLowerCase().split("\\s+");
+		List<Product> rs = new LinkedList<>();
+		HashMap<Integer, Integer> hm = new LinkedHashMap<>();
+		List<Product> li = getAllProducts();
+		for (Product p : li) {
+			String arrP[] = p.getTitle().toLowerCase().split("\\s+");
+			for (String sp : arrP) {
+				for (String s : arr) {
+					if (sp.equals(s)) {
+						if (hm.containsKey(p.getId())) {
+							hm.put(p.getId(), (hm.get(p.getId()) + 1));
+						} else {
+							hm.put(p.getId(), 1);
+						}
+					}
+				}
+			}
+		}
+		List<Entry<Integer, Integer>> sortedEntries = entriesSortedByValues(hm);
+		for (Entry<Integer, Integer> entry : sortedEntries) {
+			rs.add(getProduct(entry.getKey()));
+		}
+		return rs;
+	}
+
+	static <K, V extends Comparable<? super V>> List<Entry<K, V>> entriesSortedByValues1(Map<K, V> map) {
+
+		List<Entry<K, V>> sortedEntries = new ArrayList<Entry<K, V>>(map.entrySet());
+
+		Collections.sort(sortedEntries, new Comparator<Entry<K, V>>() {
+			@Override
+			public int compare(Entry<K, V> e1, Entry<K, V> e2) {
+				return e2.getValue().compareTo(e1.getValue());
+			}
+		});
+
+		return sortedEntries;
+	}
+
 	public static void main(String[] args) {
 		ProductService p = new ProductService();
-		List<Product> li = p.getAllProducts();
-		for (Product pr : li) {
-			System.out.println(pr.getTitle()+"-" + pr.getDiscount() + "+==" + pr.getId());
+		System.out.println(p.get_product_search("Nike duck low"));
+
+		List<Product> li = p.get_product_search("Nike duck low");
+		for (Product product : li) {
+			System.out.println(product.getId() + "-=="+ product.getTitle());
 		}
-		
 	}
 }

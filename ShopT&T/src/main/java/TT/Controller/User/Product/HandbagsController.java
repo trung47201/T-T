@@ -1,6 +1,8 @@
 package TT.Controller.User.Product;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,10 +15,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import TT.Model.Product;
 import TT.Service.User.ColorService;
 import TT.Service.User.PostsService;
 import TT.Service.User.SizeService;
 import TT.Service.User.SubCategoryService;
+import TT.Service.User.Product.FilterService;
 import TT.Service.User.Product.HandbagsService;
 import TT.Service.User.Product.ProductService;
 import TT.Service.User.Product.ShoesService;
@@ -29,6 +33,8 @@ public class HandbagsController {
 	private ColorService colorService;
 	private HandbagsService handbagsService;
 	private PostsService postsService;
+	private ProductService productService;
+	private FilterService filterService;
 
 	@RequestMapping(value = { "products/handbags" })
 	public ModelAndView clothing(HttpServletRequest request, HttpServletResponse response) {
@@ -40,7 +46,8 @@ public class HandbagsController {
 		colorService = new ColorService();
 		handbagsService = new HandbagsService();
 		postsService = new PostsService();
-		
+		productService = new ProductService();
+		filterService = new FilterService();
 		HashMap<String, String> hm = new HashMap<>();
 		List<String> li = null;
 		String txt = "";
@@ -117,38 +124,43 @@ public class HandbagsController {
 
 		if (search != null) {
 			if (shoesService.get_all_product_by_search_keywords(search).size() > 0) {
-				mv.addObject("listProducts", shoesService.get_all_product_by_search_keywords(search));
+				HashMap<Integer, List<Product>> hmP = productService
+						.get_product_page(shoesService.get_all_product_by_search_keywords(search));
+				mv.addObject("listhmp", hmP);
 			} else {
-				mv.addObject("listProductsEmpty", "");
 				mv.addObject("keyword", search);
 			}
 
 		} else {
 			if (color.equals("null") && size.equals("null") && gender.equals("null") && sortby.equals("null")
 					&& price.equals("null") && stylename.equals("null") && rate.equals("null")) {
-				if (shoesService.getAllProducts().size() == 0) {
-					mv.addObject("listProducts", "");
+				if (handbagsService.getAllProductsHandbags().size() == 0) {
 				} else {
 					if (handbagsService.getAllProductsHandbags().size() > 0) {
-						mv.addObject("listProducts", handbagsService.getAllProductsHandbags());
+						List<Product> liProd = handbagsService.getAllProductsHandbags();
+						Collections.sort(liProd, new Comparator<Product>() {
+							@Override
+							public int compare(Product o1, Product o2) {
+								return o2.getId() - o1.getId();
+							}
+						});
+						HashMap<Integer, List<Product>> hmP = productService.get_product_page(liProd);
+						mv.addObject("listhmp", hmP);
 					}
 				}
 			} else {
-				if (!shoesService.getAllProductsColorSize(hm).isEmpty()) {
-					if (shoesService.getAllProductsColorSize(hm).size() == 0) {
-						mv.addObject("listProducts", "");
-					} else {
-						mv.addObject("listProducts", shoesService.getAllProductsColorSize(hm));
-					}
-				}
+				List<Product> liProd = filterService.getAllProductsColorSize(hm,
+						handbagsService.getAllProductsHandbags(), 3);
+				HashMap<Integer, List<Product>> hmP = productService.get_product_page(liProd);
+				mv.addObject("listhmp", hmP);
 			}
 
 		}
 		HttpSession session = request.getSession();
 		ProductService productService = new ProductService();
-		if(session.getAttribute("favorite") != null) {
+		if (session.getAttribute("favorite") != null) {
 			String txt1 = String.valueOf(session.getAttribute("favorite"));
-			System.out.println("a"+txt1);
+			System.out.println("a" + txt1);
 			mv.addObject("listProduct", productService.get_product_by_str(txt1));
 		}
 		mv.addObject("color", colorService.getAllColor());

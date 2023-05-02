@@ -108,7 +108,7 @@ public class ShoesService implements ProductRepository {
 				sub_category.setId(rs.getInt("sub_category_id"));
 				sub_category.setSub_category_name(rs.getString("sub_category_name"));
 				sub_category.setCategory(category);
-				
+
 				color.setId(rs.getInt("color_id"));
 				color.setColor_name(rs.getString("color_name"));
 				color.setRgb(rs.getString("rgb"));
@@ -173,7 +173,7 @@ public class ShoesService implements ProductRepository {
 				sub_category = new Sub_category();
 				gender = new Gender();
 				category = new Category();
-				
+
 				gender.setId(rs.getInt("gender_id"));
 				gender.setGender_name(rs.getString("gender_name"));
 				gender.setDescription(rs.getString("description"));
@@ -203,7 +203,86 @@ public class ShoesService implements ProductRepository {
 				sub_category.setId(rs.getInt("sub_category_id"));
 				sub_category.setSub_category_name(rs.getString("sub_category_name"));
 				sub_category.setCategory(category);
-				
+
+				product.setId(rs.getInt("id"));
+				product.setTitle(rs.getString("title"));
+				product.setPrice(rs.getDouble("price"));
+				product.setDiscount(rs.getInt("discount"));
+				product.setSub_category(sub_category);
+				product.setThumbnail(rs.getString("thumbnail"));
+				product.setDescription(rs.getString("description"));
+				product.setBrand(brand);
+				product.setUser(user);
+				product.setCreated_at(rs.getDate("created_at"));
+				product.setUpdated_at(rs.getDate("updated_at"));
+				product.setPublished_at(rs.getDate("published_at"));
+				product.setSold(rs.getInt("sold"));
+				product.setMost_loved(rs.getInt("most_loved"));
+				product.setGender(gender);
+
+				li.add(product);
+			}
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return li;
+	}
+	
+	public List<Product> getAllProductsShoes() {
+		List<Product> li = null;
+		try {
+			li = new ArrayList<>();
+			connectService = new ConnectService();
+			Connection con = connectService.getConnect();
+			Statement stmt;
+			stmt = (Statement) con.createStatement();
+			ResultSet rs = stmt
+					.executeQuery("select * from product " + "Inner join brand on product.brand_id = brand.id "
+							+ "Inner join sub_category on product.sub_category_id = sub_category.id "
+							+ "Inner join category on sub_category.category_id = category.id "
+							+ "Inner join user on product.user_id = user.id "
+							+ "Inner join gender on product.gender_id = gender.id "
+							+ "Inner join role on role.id = user.role_id where category.id = 4");
+			while (rs.next()) {
+				product = new Product();
+				brand = new Brand();
+				user = new User();
+				role = new Role();
+				sub_category = new Sub_category();
+				gender = new Gender();
+				category = new Category();
+
+				gender.setId(rs.getInt("gender_id"));
+				gender.setGender_name(rs.getString("gender_name"));
+				gender.setDescription(rs.getString("description"));
+
+				role.setId(rs.getInt("role_id"));
+				role.setRole_name(rs.getString("role_name"));
+				role.setDescription(rs.getString("description"));
+				role.setCreated_at(rs.getDate("created_at"));
+				role.setUpdated_at(rs.getDate("updated_at"));
+
+				user.setId(rs.getInt("user_id"));
+				user.setFirstname(rs.getString("firstname"));
+				user.setLastname(rs.getString("lastname"));
+				user.setEmail(rs.getString("email"));
+				user.setPhone_number(rs.getString("phone_number"));
+				user.setAddress(rs.getString("address"));
+				user.setPassword(rs.getString("password"));
+				user.setAvatar(rs.getString("avatar"));
+				user.setRole(role);
+
+				brand.setId(rs.getInt("brand_id"));
+				brand.setBrand_name(rs.getString("brand_name"));
+
+				category.setId(rs.getInt("category_id"));
+				category.setCategory_name(rs.getString("category_name"));
+
+				sub_category.setId(rs.getInt("sub_category_id"));
+				sub_category.setSub_category_name(rs.getString("sub_category_name"));
+				sub_category.setCategory(category);
+
 				product.setId(rs.getInt("id"));
 				product.setTitle(rs.getString("title"));
 				product.setPrice(rs.getDouble("price"));
@@ -229,6 +308,7 @@ public class ShoesService implements ProductRepository {
 		return li;
 	}
 
+
 	@Override
 	public List<Product> getNewArrivals() {
 		ShoesService p = new ShoesService();
@@ -237,7 +317,7 @@ public class ShoesService implements ProductRepository {
 		Collections.sort(li, new Comparator<Product>() {
 			@Override
 			public int compare(Product o1, Product o2) {
-				return o2.getPublished_at().compareTo(o1.getPublished_at());
+				return o2.getId() - o1.getId();
 			}
 		});
 		int count = 0;
@@ -682,7 +762,7 @@ public class ShoesService implements ProductRepository {
 		}
 		return list;
 	}
-
+	
 	// #######################################################################################3####################
 	@Override
 	public Double averageRating(int id_prod) {
@@ -1018,10 +1098,7 @@ public class ShoesService implements ProductRepository {
 
 	public static void main(String[] args) {
 		ShoesService p = new ShoesService();
-		List<Product> li = p.getAllProducts();
-		for (Product pr : li) {
-			System.out.println(pr.getTitle() + "-" + pr.getDiscount() + "+==" + pr.getId());
-		}
+		List<Product> li = p.getNewArrivals();
 
 	}
 }

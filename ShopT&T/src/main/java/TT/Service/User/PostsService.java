@@ -48,6 +48,12 @@ public class PostsService {
 		HashMap<Integer, List<Posts>> hm = new LinkedHashMap<Integer, List<Posts>>();
 		int count = 1;
 		List<Posts> li = getAllPosts();
+		Collections.sort(li, new Comparator<Posts>() {
+			@Override
+			public int compare(Posts o1, Posts o2) {
+				return o2.getId() - o1.getId();
+			}
+		});
 		List<Posts> getAll = new ArrayList<>();
 		int idx = 1;
 		for (Posts posts : li) {
@@ -64,12 +70,6 @@ public class PostsService {
 			count++;
 		}
 		if (count % 20 != 0) {
-			Collections.sort(getAll, new Comparator<Posts>() {
-				@Override
-				public int compare(Posts o1, Posts o2) {
-					return o2.getId() - o1.getId();
-				}
-			});
 			hm.put(idx, getAll);
 		}
 		return hm;

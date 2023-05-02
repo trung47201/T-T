@@ -57,9 +57,15 @@ public class aGiftsController {
 		giftsService = new GiftsService();
 
 		String handbagsgallery = request.getParameter("giftsgallery");
+		String cancel = request.getParameter("cancel");
+
 		HttpSession session = request.getSession();
 		if (handbagsgallery != null && session.getAttribute("gifts") != null) {
 			session.setAttribute("gifts", "cancel");
+			
+		}
+		if (cancel != null) {
+			session.setAttribute("addgifts", "cancel");
 		}
 		List<Product> product = giftsService.getAllProductsGifts();
 		Collections.sort(product, new Comparator<Product>() {

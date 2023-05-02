@@ -115,7 +115,7 @@ public class CheckoutController {
 			price_at += p.getPrice();
 		}
 		System.out.println("here2");
-		if (id_prod != null && vchid != null && size != null && color != null && city != null && district != null
+		if (id_prod != null && size != null && color != null && city != null && district != null
 				&& address != null && firstname != null && lastname != null && phone_number != null && email != null) {
 			double dis = checkoutService.get_discount_at(Integer.parseInt(quantity),
 					voucherService.get_voucher_code_by_id(vc_id), Integer.parseInt(id_prod));
@@ -175,6 +175,10 @@ public class CheckoutController {
 					return new ModelAndView("redirect: /ShopTandT/cart/checkout/" + id);
 				}
 			}
+		} else {
+			System.out.println("here chackoutController 179");
+			System.out.println("city:" + city + " address:" + address + " district:" + district + " fullname:"
+					+ fullname + " phone_number:" + phone_number + " email:" + email);
 		}
 		return new ModelAndView("redirect: /ShopTandT/cart/checkout/" + id);
 	}

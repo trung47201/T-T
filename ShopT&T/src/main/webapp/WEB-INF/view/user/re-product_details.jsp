@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<title>Let's buy :)</title>
+<title>Let's buy </title>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -306,7 +306,7 @@ img#image-hover-click {
 					<div class="amount-product-details">
 						<input class="minus-plus" type="button" name="" id="minus"
 							value="-"> <input class="input_amount" type="text"
-							name="input_amount" id="input_amount" value="1"> <input
+							name="input_amount" id="input_amount" value="1" readonly="readonly"> <input
 							class="minus-plus" type="button" name="" id="plus" value="+">
 					</div>
 					<div class="btn-add-buy">
@@ -660,10 +660,11 @@ img#image-hover-click {
 				var xhr = new XMLHttpRequest();
 		      	xhr.open("GET", url+"?buynow");
 		      	xhr.onload = function () {
+		      		var colorid = document.getElementById("color").value;
 		      		var val = document.getElementById("size").value;
 		      		var quantity = document.getElementById("input_amount").value;
 		      		if(val != null || quantity != null) {
-		      			window.location.assign("/ShopTandT/cart/checkout/"+user_prod + "?size="+val + "&quantity="+quantity);
+		      			window.location.assign("/ShopTandT/cart/checkout/"+user_prod +"?color="+colorid+ "&size="+val + "&quantity="+quantity);
 		      		} else {
 		      			window.location.assign("/ShopTandT/cart/checkout/"+user_prod);
 		      		}
@@ -676,7 +677,7 @@ img#image-hover-click {
 				var xhr = new XMLHttpRequest();
 		      	xhr.open("GET", "/ShopTandT/?blockid="+productid+"");
 		      	xhr.onload = function () {
-		      		window.location.assign("/ShopTandT/cart/checkout/"+productid+"?color="+colorid+"&size="+sizeid);
+		      		window.location.assign("/ShopTandT/cart/checkout/"+productid+"?color="+colorid+"&size="+sizeid+"&quantity="+amount);
 		      	};
 		      	xhr.send();
 			}

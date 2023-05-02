@@ -19,7 +19,7 @@
 <link rel="stylesheet"
 	href="<c:url value='/assets/css/admin-nav2.css'/>">
 
-<title>Delivery :)</title>
+<title>Delivery </title>
 
 <style>
 

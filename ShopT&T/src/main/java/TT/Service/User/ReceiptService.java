@@ -77,7 +77,7 @@ public class ReceiptService implements OrderRepository {
 				receipt.setRequest(rs.getInt("request"));
 				receipt.setShipper(shipper);
 				receipt.setQrcode(rs.getString("qrcode"));
-
+				receipt.setDelivery_date(rs.getDate("delivery_date"));
 				li.add(receipt);
 			}
 			con.close();
@@ -137,7 +137,7 @@ public class ReceiptService implements OrderRepository {
 				receipt.setRequest(rs.getInt("request"));
 				receipt.setShipper(shipper);
 				receipt.setQrcode(rs.getString("qrcode"));
-
+				receipt.setDelivery_date(rs.getDate("delivery_date"));
 				li.add(receipt);
 			}
 			con.close();

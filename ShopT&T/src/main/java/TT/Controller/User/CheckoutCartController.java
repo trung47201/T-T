@@ -48,7 +48,7 @@ public class CheckoutCartController {
 		statisticsService = new StatisticsService();
 
 		HttpSession session = request.getSession();
-
+		System.out.println("heaaaa");
 		String firstname = request.getParameter("firstname");
 		String lastname = request.getParameter("lastname");
 		String phone_number = request.getParameter("phone");
@@ -60,7 +60,7 @@ public class CheckoutCartController {
 		String method = request.getParameter("paymentmethods");
 		String vccode = request.getParameter("vccode");
 		String vchid = request.getParameter("vchid");
-		String fullname = "";
+		String fullname = null;
 		if (firstname != null && lastname != null) {
 			fullname = firstname + " " + lastname;
 		}
@@ -77,6 +77,8 @@ public class CheckoutCartController {
 					total += cart.getColor_size().getProd().getPrice() * cart.getQuantity();
 				}
 			}
+		} else {
+			System.out.println("here");
 		}
 		String userid = String.valueOf(session.getAttribute("userid"));
 		boolean check_vc = false;
@@ -99,8 +101,8 @@ public class CheckoutCartController {
 		if (check_vc) {
 			vc_id = voucherService.getVoucherIdByCode(vccode);
 		}
-		if(vchid != null) {
-			if(!vchid.equals("")) {
+		if (vchid != null) {
+			if (!vchid.equals("")) {
 				vc_id = Integer.parseInt(vchid);
 			} else {
 				System.out.println("vch: '");
@@ -115,7 +117,7 @@ public class CheckoutCartController {
 		}
 
 		int vch_discount = voucherService.getDiscountById_Voucher(vc_id);
-		System.out.println("---------------------------------------------------------------"+vch_discount);
+		System.out.println("---------------------------------------------------------------" + vch_discount);
 		double dis = 0;
 		if (vch_discount > 0) {
 			dis = (double) Math.round(vch_discount * total) / 100;
@@ -158,7 +160,7 @@ public class CheckoutCartController {
 						System.out.println("unsucess 149 checkoutcontroller");
 					}
 				}
-				
+
 				System.out.println("buy cart success this checkout cart controller");
 				System.out.println(vc_id + "_" + method);
 				session.setAttribute("checkoutcart", "end");
@@ -169,6 +171,10 @@ public class CheckoutCartController {
 				System.out.println("buy cart unsuccess this");
 				return new ModelAndView("redirect: /ShopTandT/cart/checkout-cart/" + id);
 			}
+		} else {
+			System.out.println("here 175");
+			System.out.println("city:" + city + " address:" + address + " district:" + district + " fullname:"
+					+ fullname + " phone_number:" + phone_number + " email:" + email);
 		}
 		return null;
 	}
@@ -176,19 +182,19 @@ public class CheckoutCartController {
 	@RequestMapping(value = { "checkout-cart" })
 	public ModelAndView checkout_cart_not_login(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("user/re-checkout-cart");
-		
+
 		HttpSession session = request.getSession();
 		String process = String.valueOf(request.getParameter("process"));
-		if(session.getAttribute("blockcheckoutcartnotlogin") != null && !process.equals("null")) {
+		if (session.getAttribute("blockcheckoutcartnotlogin") != null && !process.equals("null")) {
 			String block = String.valueOf(session.getAttribute("blockcheckoutcartnotlogin"));
-			if(!block.equals(process)) {
-				return new ModelAndView("redirect: /ShopTandT/checkout-cart?process="+block);
+			if (!block.equals(process)) {
+				return new ModelAndView("redirect: /ShopTandT/checkout-cart?process=" + block);
 			}
 		}
 
 		postsService = new PostsService();
 		checkoutService = new CheckoutService();
-		
+
 		HashMap<Product_color_size, Integer> hm = checkoutService.get_list_color_size_qty_by_string_process(process);
 
 		mv.addObject("listCart", hm);
@@ -209,7 +215,8 @@ public class CheckoutCartController {
 		receiptService = new ReceiptService();
 		receipt_detailsService = new Receipt_detailsService();
 		product_color_sizeService = new Product_color_sizeService();
-		
+		shoesService = new ShoesService();
+		statisticsService = new StatisticsService();
 		String process = String.valueOf(request.getParameter("process"));
 		String firstname = request.getParameter("firstname");
 		String lastname = request.getParameter("lastname");
@@ -225,14 +232,14 @@ public class CheckoutCartController {
 			fullname = firstname + " " + lastname;
 		}
 		String adr = address + " - " + district + " - " + city;
-		
+
 		HashMap<Product_color_size, Integer> hm = checkoutService.get_list_color_size_qty_by_string_process(process);
 		if (method == null) {
 			method = "cod";
 		}
 
-		if (city != null && district != null && address != null && firstname != null && lastname != null && phone_number != null
-				&& email != null) {
+		if (city != null && district != null && address != null && firstname != null && lastname != null
+				&& phone_number != null && email != null) {
 			if (receiptService.insertIntoOrder(fullname, email, phone_number, adr, 1, note, method, 0)) {
 				int order_id = receiptService.get_last_order_id_by(phone_number, email);
 				for (Product_color_size c : hm.keySet()) {
@@ -246,11 +253,17 @@ public class CheckoutCartController {
 							c.getSize().getId(), c.getColor().getId(), order_id)
 							&& product_color_sizeService.updateColor_size_Quantity(c.getSize().getId(),
 									c.getColor().getId(), c.getProd().getId(), hm.get(c))) {
-
+						product_color_sizeService.updateColor_size_Quantity(c.getSize().getId(), c.getColor().getId(),
+								c.getProd().getId(), hm.get(c));
+						shoesService.updateProduct_Sold(c.getProd().getId(), hm.get(c));
+						if(!statisticsService.update_order_num_in_statistics_DB()) {
+							System.out.println("update db statistic unsuccess");
+						}
 					}
 				}
-				System.out.println("buy cart success this checkout cart controller (192)");
-				return new ModelAndView("redirect: /ShopTandT/cart?process-delete=" + process + "&order-id=" + order_id);
+				System.out.println("buy cart success this checkout cart controller (264)");
+				return new ModelAndView(
+						"redirect: /ShopTandT/cart?process-delete=" + process + "&order-id=" + order_id);
 			} else {
 				System.out.println("buy cart unsuccess this");
 				return new ModelAndView("redirect: /ShopTandT/checkout-cart?process=" + process);

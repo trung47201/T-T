@@ -75,7 +75,6 @@ public class OrderManagementController {
 			}
 
 		});
-
 		mv.addObject("listOrder", li);
 
 		return mv;

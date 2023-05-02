@@ -42,18 +42,14 @@ public class sLoginController {
 						}
 					}
 				}
-
 				if (check) {
 					for (Cookie o : arr) {
 						if (o.getName().equals("shipperID")) {
 							shipperID = Integer.parseInt(o.getValue());
-
 							session.setAttribute("msgLoginShipper", "true");
 							session.setAttribute("shipperID", shipperID);
-
 							String avt = userService.getAvatarByUserID(shipperID);
 							session.setAttribute("avatarshipper", avt);
-
 							System.out.println("login_shipper: true; not create cookie");
 							return new ModelAndView("redirect: /ShopTandT/shipper");
 						}
@@ -62,17 +58,13 @@ public class sLoginController {
 					Cookie shipper = new Cookie("shipperID", String.valueOf(shipperID));
 					shipper.setMaxAge(60 * 60 * 24);
 					response.addCookie(shipper);
-
 					session.setAttribute("shipperID", shipperID);
 					session.setAttribute("msgLoginShipper", "true");
-
 					String avt = userService.getAvatarByUserID(shipperID);
 					session.setAttribute("avatarshipper", avt);
-
 					System.out.println("login_shipper: true; create cookie");
 					return new ModelAndView("redirect: /ShopTandT/shipper");
 				}
-
 			} else {
 				if (username.contains("@")) {
 					session.setAttribute("msgLoginShipper", "email");
@@ -82,6 +74,28 @@ public class sLoginController {
 					session.setMaxInactiveInterval(60);
 				}
 				System.out.println("login_t: false");
+			}
+		} else {
+			boolean check = false;
+			if (arr != null) {
+				for (Cookie o : arr) {
+					if (o.getName().equals("shipperID")) {
+						check = true;
+					}
+				}
+			}
+			if (check) {
+				for (Cookie o : arr) {
+					if (o.getName().equals("shipperID")) {
+						shipperID = Integer.parseInt(o.getValue());
+						session.setAttribute("msgLoginShipper", "true");
+						session.setAttribute("shipperID", shipperID);
+						String avt = userService.getAvatarByUserID(shipperID);
+						session.setAttribute("avatarshipper", avt);
+						System.out.println("login_shipper: true; not create cookie");
+						return new ModelAndView("redirect: /ShopTandT/shipper");
+					}
+				}
 			}
 		}
 

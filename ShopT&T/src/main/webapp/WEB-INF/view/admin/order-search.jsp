@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="<c:url value='/assets/css/re-dashboard4.css'/>">
 <link rel="stylesheet" href="<c:url value='/assets/css/admin-nav2.css'/>">
 
-<title>Search order :)</title>
+<title>Search order </title>
 
 <style>
 

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<title>Thank you! :)</title>
+<title>Thank you! </title>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -339,7 +339,7 @@
 
 	<jsp:include page="../layouts/user/re-footer.jsp"></jsp:include>
 
-	<jsp:include page="../layouts/user/search.jsp"></jsp:include>
+	
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>

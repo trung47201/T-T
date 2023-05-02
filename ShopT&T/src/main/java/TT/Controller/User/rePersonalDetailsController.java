@@ -63,4 +63,31 @@ public class rePersonalDetailsController {
 		
 		return mv;
 	}
+	
+	@RequestMapping(value = { "/profile/save-pw/{id}" })
+	public ModelAndView save_pw(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView("user/re-personal_details");
+		String oldpw = request.getParameter("oldpw");
+		String newpw = request.getParameter("newpw");
+		return mv;
+	}
+	
+	@RequestMapping(value = { "/profile/save-intro/{id}" })
+	public ModelAndView save_intro(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView("user/re-personal_details");
+		
+		return mv;
+	}
+	@RequestMapping(value = { "/profile/save-contact/{id}" })
+	public ModelAndView save_contact(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView("user/re-personal_details");
+		
+		return mv;
+	}
+	@RequestMapping(value = { "/profile/save-address/{id}" })
+	public ModelAndView save_address(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView("user/re-personal_details");
+		
+		return mv;
+	}
 }

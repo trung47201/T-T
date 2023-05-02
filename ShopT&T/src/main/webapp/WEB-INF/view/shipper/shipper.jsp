@@ -7,7 +7,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<title>Nice to meet you :)?</title>
+<title>Nice to meet you</title>
 <link rel="stylesheet" href="<c:url value='/assets/css/re-admin4.css'/>">
 <link rel="stylesheet"
 	href="<c:url value='/assets/css/re-dashboard-shipper.css'/>">
@@ -18,6 +18,7 @@
 * {
 	font-family: "Poppins", sans-serif;
 }
+
 .green {
 	color: green !important;
 }
@@ -28,6 +29,30 @@ select option:hover {
 
 selecet#sl-month option:hover {
 	box-shadow: 0 0 10px 100px #1882A8 inset;
+}
+
+.text-content span {
+	color: darkgreen;
+}
+
+.wrapper-icon {
+	display: flex;
+	width: 65%;
+}
+
+.text-btn button {
+	background: #cb82a9;
+	color: white;
+}
+
+p#profile-report-name {
+	margin-top: 10px; 
+} 
+.profile-report-chart {
+    margin-top: 20px;
+}
+p#percent-revenue {
+	margin-top: 24px;
 }
 </style>
 
@@ -54,11 +79,14 @@ selecet#sl-month option:hover {
 									</div>
 								</div>
 								<div class="text-content">
-									<p>You have accomplished 70% of your goal today. Check your new badge
-										in your profile.</p>
+									<p>
+										You have accomplished <span><b>${ percentofday }%</b></span>
+										of your goal today. Check your new badge in your profile.
+									</p>
 								</div>
 								<div class="text-btn">
-									<button>View Orders</button>
+									<a href="/ShopTandT/shipper/order-management"><button>View
+											Orders</button></a>
 								</div>
 							</div>
 							<div class="img">
@@ -71,24 +99,21 @@ selecet#sl-month option:hover {
 						<div class="dashboard-col">
 							<div class="dashboard-row-1">
 								<div class="dashboard-row-top">
-									<div class="dashboard-col-icon icon-revenue">
+									<div class="dashboard-col-icon icon-customer">
 										<div class="wrapper-icon">
 											<img
-												src="<c:url value="/assets/images/icons/icons8-revenue-64.png"/>"
+												src="<c:url value="/assets/images/icons/icons8-purchase-order-96-month.png"/>"
 												alt="images-order">
 										</div>
 									</div>
 									<div class="dashboard-col-text">
 										<div class="dashboard-row-parameter">
-											<p>
-												$<fmt:formatNumber type="number" maxFractionDigits="2"
-													value="${ revenueofday }" />
-											</p>
+											<p>+${ orderofmonth }</p>
 										</div>
 									</div>
 								</div>
 								<div class="dashboard-row-title">
-									<p>Today's Revenue</p>
+									<p>Month's Order</p>
 								</div>
 							</div>
 							<hr class="shadow-hr">
@@ -129,11 +154,11 @@ selecet#sl-month option:hover {
 							<div class="dashboard-row-2">
 								<div class="compare">
 									<p>
-										<c:if test="${ percentorder >= 0}">
-											<span class="green">+${ percentorder }%</span> than yesterday
+										<c:if test="${ percentorderofday >= 0}">
+											<span class="green">+${ percentorderofday }%</span> than yesterday
 										</c:if>
-										<c:if test="${ percentorder < 0}">
-											<span class="red">${ percentorder }%</span> than yesterday
+										<c:if test="${ percentorderofday < 0}">
+											<span class="red">${ percentorderofday }%</span> than yesterday
 										</c:if>
 									</p>
 								</div>
@@ -197,40 +222,6 @@ selecet#sl-month option:hover {
 								<div class="dashboard-col">
 									<div class="dashboard-row-1">
 										<div class="dashboard-row-top">
-											<div class="dashboard-col-icon icon-customer">
-												<div class="wrapper-icon">
-													<img
-														src="<c:url value="/assets/images/icons/icons8-add-administrator-100.png"/>"
-														alt="images-order">
-												</div>
-											</div>
-											<div class="dashboard-col-text">
-												<div class="dashboard-row-parameter">
-													<p>+${ userofday }</p>
-												</div>
-											</div>
-										</div>
-										<div class="dashboard-row-title">
-											<p>New Customer</p>
-										</div>
-									</div>
-									<hr class="shadow-hr">
-									<div class="dashboard-row-2">
-										<div class="compare">
-											<p>
-												<c:if test="${ percentuser >= 0}">
-													<span class="green">+${ percentuser }%</span> than yesterday
-												</c:if>
-												<c:if test="${ percentuser < 0}">
-													<span class="red">${ percentuser }%</span> than yesterday
-												</c:if>
-											</p>
-										</div>
-									</div>
-								</div>
-								<div class="dashboard-col">
-									<div class="dashboard-row-1">
-										<div class="dashboard-row-top">
 											<div class="dashboard-col-icon">
 												<div class="wrapper-icon">
 													<img
@@ -252,11 +243,45 @@ selecet#sl-month option:hover {
 									<div class="dashboard-row-2">
 										<div class="compare">
 											<p>
-												<c:if test="${ percentrevenuemonth >= 0 }">
-													<span class="green">+${ percentrevenuemonth }%</span> than last month
+												<c:if test="${ percentuser >= 0}">
+													<span class="green">+${ percentuser }%</span> than yesterday
 												</c:if>
-												<c:if test="${ percentrevenuemonth < 0 }">
-													<span class="red">${ percentrevenuemonth }%</span> than last month
+												<c:if test="${ percentuser < 0}">
+													<span class="red">${ percentuser }%</span> than yesterday
+												</c:if>
+											</p>
+										</div>
+									</div>
+								</div>
+								<div class="dashboard-col">
+									<div class="dashboard-row-1">
+										<div class="dashboard-row-top">
+											<div class="dashboard-col-icon icon-revenue">
+												<div class="wrapper-icon">
+													<img
+														src="<c:url value="/assets/images/icons/icons8-revenue-64.png"/>"
+														alt="images-order">
+												</div>
+											</div>
+											<div class="dashboard-col-text">
+												<div class="dashboard-row-parameter">
+													<p>$${ revenueofday }</p>
+												</div>
+											</div>
+										</div>
+										<div class="dashboard-row-title">
+											<p>Today's Revenue</p>
+										</div>
+									</div>
+									<hr class="shadow-hr">
+									<div class="dashboard-row-2">
+										<div class="compare">
+											<p>
+												<c:if test="${ percentrevenueofday >= 0 }">
+													<span class="green">+${ percentrevenueofday }%</span> than yesterday
+												</c:if>
+												<c:if test="${ percentrevenueofday < 0 }">
+													<span class="red">${ percentrevenueofday }%</span> than yesterday
 												</c:if>
 											</p>
 										</div>
@@ -272,7 +297,7 @@ selecet#sl-month option:hover {
 											src="<c:url value="/assets/images/icons/icons8-up-64.png"/>"
 											alt="up">68%
 									</p>
-									<p id="total-revenue">$84,602.5</p>
+									<p id="total-revenue">$302.5</p>
 								</div>
 								<div class="profile-report-right">
 									<div class="profile-report-chart">
@@ -305,74 +330,6 @@ selecet#sl-month option:hover {
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="<c:url value="assets/js/chartjs.min.js"/>"></script>
 
-	<script> // chart statistics by category
-		var yValues = [ 3371, 2757, 1503, 873, 359, 172 ];
-		new Chart("myChart", {
-			type : "doughnut",
-			data : {
-				labels: [
-					    'Clothing',
-					    'Shoes',
-					    'Handbags',
-					    'Jewelry',
-					    'Accessories',
-					    'Gifts',
-					  ],
-				datasets : [ {
-					backgroundColor: [
-				          'rgba(255, 26, 104, 0.2)',
-				          'rgba(255, 206, 86, 0.2)',
-				          'rgba(153, 102, 255, 0.2)',
-				          'rgba(75, 192, 192, 0.2)',
-				          'rgba(255, 159, 64, 0.2)',
-				          'rgba(54, 162, 235, 0.2)',
-				        ],
-				    borderColor: [
-				    	  'rgba(255, 26, 104, 1)',
-				          'rgba(255, 206, 86, 1)',
-				          'rgba(153, 102, 255, 1)',
-				          'rgba(75, 192, 192, 1)',
-				          'rgba(255, 159, 64, 1)',
-				          'rgba(54, 162, 235, 1)',
-				        ],
-				    hoverBackgroundColor: [
-				    	  'rgba(255, 26, 104, 0.9)',
-				          'rgba(255, 206, 86, 0.9)',
-				          'rgba(153, 102, 255, 0.9)',
-				          'rgba(75, 192, 192, 0.9)',
-				          'rgba(255, 159, 64, 0.9)',
-				          'rgba(54, 162, 235, 0.9)',
-				        ],
-				    hoverOffset: 4,
-					data : yValues
-				} ]
-			},
-			options : {
-				responsive : true,
-				maintainAspectRatio : false,
-				plugins : {
-					legend : {
-						display : false,
-					},
-					tooltip : {
-						callbacks : {
-							afterFooter: function(chart) {
-								var v = chart[0].parsed;
-								var n = chart[0].dataset.data.length;
-								const arr = chart[0].dataset.data;
-								var total=0;
-								for (let i=0; i < n; i++) {
-									total += arr[i];
-								}
-								var t = parseFloat(Math.round(v/total*100*10)/10);
-								$("#hoverval").text(t+"%");
-							}
-						}
-					}
-				},
-			}
-		});
-	</script>
 
 	<script> // chart revenue -> month
 		var ctx2 = document.getElementById("chart-line").getContext("2d");
@@ -381,7 +338,7 @@ selecet#sl-month option:hover {
 			data : {
 				labels : ${ listmonthname },
 				datasets : [ {
-					label : "Revenues",
+					label : "$",
 					tension : 0,
 					borderWidth : 5,
 					pointRadius : 5,
@@ -457,95 +414,13 @@ selecet#sl-month option:hover {
 		});
 	</script>
 
-	<script> // 
-		var ctx3 = document.getElementById("chart-line-tasks").getContext("2d");
-		new Chart(ctx3, {
-			type : "line",
-			data : {
-				labels : [ "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct",
-						"Nov", "Dec" ],
-				datasets : [ {
-					label : "Viewer",
-					tension : 0,
-					borderWidth : 0,
-					pointRadius : 5,
-					pointBackgroundColor : "rgba(255, 255, 255, .8)",
-					pointBorderColor : "transparent",
-					borderColor : "rgba(255, 255, 255, .8)",
-					borderWidth : 4,
-					backgroundColor : "transparent",
-					fill : true,
-					data : [ 50, 40, 300, 220, 500, 250, 400, 230, 500 ],
-					maxBarThickness : 6
-				} ],
-			},
-			options : {
-				responsive : true,
-				maintainAspectRatio : false,
-				plugins : {
-					legend : {
-						display : false,
-					}
-				},
-				interaction : {
-					intersect : false,
-					mode : 'index',
-				},
-				scales : {
-					y : {
-						grid : {
-							drawBorder : false,
-							display : true,
-							drawOnChartArea : true,
-							drawTicks : false,
-							borderDash : [ 5, 5 ],
-							color : 'rgba(255, 255, 255, .2)'
-						},
-						ticks : {
-							display : true,
-							padding : 10,
-							color : '#f8f9fa',
-							font : {
-								size : 14,
-								weight : 300,
-								family : "Roboto",
-								style : 'normal',
-								lineHeight : 2
-							},
-						}
-					},
-					x : {
-						grid : {
-							drawBorder : false,
-							display : false,
-							drawOnChartArea : false,
-							drawTicks : false,
-							borderDash : [ 5, 5 ]
-						},
-						ticks : {
-							display : true,
-							color : '#f8f9fa',
-							padding : 10,
-							font : {
-								size : 14,
-								weight : 300,
-								family : "Roboto",
-								style : 'normal',
-								lineHeight : 2
-							},
-						}
-					},
-				},
-			},
-		});
-	</script>
 
 	<script> //daily order
 		var ctx_re = document.getElementById("myChart-revenue").getContext('2d');
 		var myChart_re = new Chart(ctx_re, {
 			type : "line",
 			data : {
-				labels : [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+				labels : ${ listdayname },
 				datasets : [ {
 					label : "Order",
 					tension : 0,
@@ -557,7 +432,7 @@ selecet#sl-month option:hover {
 					borderWidth : 4,
 					backgroundColor : "transparent",
 					fill : true,
-					data : [ 50, 40, 300, 220, 500, 250, 400 ],
+					data : ${ listrevenueofweek },
 					maxBarThickness : 6
 				} ],
 			},

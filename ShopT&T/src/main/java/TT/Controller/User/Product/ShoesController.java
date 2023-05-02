@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import TT.Model.Product;
 import TT.Service.User.ColorService;
 import TT.Service.User.PostsService;
 import TT.Service.User.SizeService;
 import TT.Service.User.SubCategoryService;
 import TT.Service.User.UserService;
+import TT.Service.User.Product.FilterService;
 import TT.Service.User.Product.ProductService;
 import TT.Service.User.Product.ShoesService;
 
@@ -30,6 +32,8 @@ public class ShoesController {
 	private SizeService sizeService;
 	private ColorService colorService;
 	private PostsService postsService;
+	private ProductService productService;
+	private FilterService filterService;
 
 	@RequestMapping(value = { "products/shoes" })
 	public ModelAndView loadProducts(HttpServletRequest request, HttpServletResponse response) {
@@ -40,7 +44,9 @@ public class ShoesController {
 		sizeService = new SizeService();
 		colorService = new ColorService();
 		postsService = new PostsService();
-
+		productService = new ProductService();
+		filterService = new FilterService();
+		
 		HashMap<String, String> hm = new HashMap<>();
 		List<String> li = null;
 		String txt = "";
@@ -117,36 +123,33 @@ public class ShoesController {
 
 		if (search != null) {
 			if (shoesService.get_all_product_by_search_keywords(search).size() > 0) {
-				mv.addObject("listProducts", shoesService.get_all_product_by_search_keywords(search));
+				HashMap<Integer, List<Product>> hmP = productService
+						.get_product_page(shoesService.get_all_product_by_search_keywords(search));
+				mv.addObject("listhmp", hmP);
 			} else {
-				mv.addObject("listProductsEmpty", "");
 				mv.addObject("keyword", search);
 			}
-
 		} else {
 			if (color.equals("null") && size.equals("null") && gender.equals("null") && sortby.equals("null")
 					&& price.equals("null") && stylename.equals("null") && rate.equals("null")) {
-				if (shoesService.getAllProducts().size() == 0) {
-					mv.addObject("listProducts", "");
+				if (shoesService.getAllProductsShoes().size() == 0) {
 				} else {
-					mv.addObject("listProducts", shoesService.getAllProducts());
+					HashMap<Integer, List<Product>> hmP = productService
+							.get_product_page(shoesService.getAllProductsShoes());
+					mv.addObject("listhmp", hmP);
 				}
 			} else {
-				if (!shoesService.getAllProductsColorSize(hm).isEmpty()) {
-					if (shoesService.getAllProductsColorSize(hm).size() == 0) {
-						mv.addObject("listProducts", "");
-					} else {
-						mv.addObject("listProducts", shoesService.getAllProductsColorSize(hm));
-					}
-				}
+				HashMap<Integer, List<Product>> hmP = productService
+						.get_product_page(filterService.getAllProductsColorSize(hm, shoesService.getAllProductsShoes(), 4));
+				mv.addObject("listhmp", hmP);
 			}
-
 		}
+
 		HttpSession session = request.getSession();
 		ProductService productService = new ProductService();
-		if(session.getAttribute("favorite") != null) {
+		if (session.getAttribute("favorite") != null) {
 			String txt1 = String.valueOf(session.getAttribute("favorite"));
-			System.out.println("a"+txt1);
+			System.out.println("a" + txt1);
 			mv.addObject("listProduct", productService.get_product_by_str(txt1));
 		}
 		mv.addObject("color", colorService.getAllColor());
@@ -156,7 +159,6 @@ public class ShoesController {
 		mv.addObject("hmPosts", postsService.listPost());
 		return mv;
 	}
-	
 
 	@RequestMapping(value = { "products/shoes/{id}" })
 	public ModelAndView loadProductsByUser(@PathVariable String id, HttpServletRequest request,
@@ -265,9 +267,9 @@ public class ShoesController {
 		}
 		HttpSession session = request.getSession();
 		ProductService productService = new ProductService();
-		if(session.getAttribute("favorite") != null) {
+		if (session.getAttribute("favorite") != null) {
 			String txt1 = String.valueOf(session.getAttribute("favorite"));
-			System.out.println("a"+txt1);
+			System.out.println("a" + txt1);
 			mv.addObject("listProduct", productService.get_product_by_str(txt1));
 		}
 		mv.addObject("userID", id);
