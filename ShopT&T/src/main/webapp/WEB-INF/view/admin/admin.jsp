@@ -51,6 +51,9 @@ selecet#sl-month option:hover {
 	font-weight: 600;
 	color: #cb82a9;
 }
+.list-ele {
+    margin-top: 27px;
+}
 </style>
 
 <body>
@@ -80,7 +83,7 @@ selecet#sl-month option:hover {
 										in your profile.</p>
 								</div>
 								<div class="text-btn">
-									<button>View Orders</button>
+									<a href="/ShopTandT/admin/order-management"><button>View Orders</button></a>
 								</div>
 							</div>
 							<div class="img">
@@ -103,8 +106,7 @@ selecet#sl-month option:hover {
 									<div class="dashboard-col-text">
 										<div class="dashboard-row-parameter">
 											<p>
-												$
-												<fmt:formatNumber type="number" maxFractionDigits="2"
+												$<fmt:formatNumber type="number" maxFractionDigits="2"
 													value="${ revenueofday }" />
 											</p>
 										</div>
@@ -119,7 +121,12 @@ selecet#sl-month option:hover {
 								<div class="compare">
 									<p>
 										<c:if test="${ percentrevenue >= 0}">
-											<span class="green">+${ percentrevenue }%</span> than yesterday
+											<c:if test="${ percentrevenue > 100}">
+												<span class="green">+100%</span> than yesterday
+											</c:if>
+											<c:if test="${ percentrevenue <= 100}">
+												<span class="green">+${ percentrevenue }%</span> than yesterday
+											</c:if>
 										</c:if>
 										<c:if test="${ percentrevenue < 0}">
 											<span class="red">${ percentrevenue }%</span> than yesterday
@@ -153,7 +160,12 @@ selecet#sl-month option:hover {
 								<div class="compare">
 									<p>
 										<c:if test="${ percentorder >= 0}">
-											<span class="green">+${ percentorder }%</span> than yesterday
+											<c:if test="${ percentorder > 100}">
+												<span class="green">+100%</span> than yesterday
+											</c:if>
+											<c:if test="${ percentorder <= 100}">
+												<span class="green">+${ percentorder }%</span> than yesterday
+											</c:if>
 										</c:if>
 										<c:if test="${ percentorder < 0}">
 											<span class="red">${ percentorder }%</span> than yesterday
@@ -242,7 +254,12 @@ selecet#sl-month option:hover {
 										<div class="compare">
 											<p>
 												<c:if test="${ percentuser >= 0}">
-													<span class="green">+${ percentuser }%</span> than yesterday
+													<c:if test="${ percentuser > 100}">
+														<span class="green">+100%</span> than yesterday
+													</c:if>
+													<c:if test="${ percentuser <= 100}">
+														<span class="green">+${ percentuser }%</span> than yesterday
+													</c:if>
 												</c:if>
 												<c:if test="${ percentuser < 0}">
 													<span class="red">${ percentuser }%</span> than yesterday
@@ -276,7 +293,12 @@ selecet#sl-month option:hover {
 										<div class="compare">
 											<p>
 												<c:if test="${ percentrevenuemonth >= 0 }">
-													<span class="green">+${ percentrevenuemonth }%</span> than last month
+													<c:if test="${ percentrevenuemonth > 100 }">
+														<span class="green">+100%</span> than last month
+													</c:if>
+													<c:if test="${ percentrevenuemonth <= 100 }">
+														<span class="green">+${ percentrevenuemonth }%</span> than last month
+													</c:if>
 												</c:if>
 												<c:if test="${ percentrevenuemonth < 0 }">
 													<span class="red">${ percentrevenuemonth }%</span> than last month
@@ -346,7 +368,7 @@ selecet#sl-month option:hover {
 							</div>
 							<div class="table-col1 col1">
 								<div class="total-qty">
-									<p id="total-revenue">9,035</p>
+									<p id="total-revenue">${ totalorder }</p>
 									<h4 id="title-total-qty">Total Orders</h4>
 								</div>
 								<div class="wrapper-chart-tbl">
@@ -370,7 +392,7 @@ selecet#sl-month option:hover {
 												<p id="list-ele-sub">Dresses, Tops,...</p>
 											</div>
 										</div>
-										<div class="list-ele-right">+3,371</div>
+										<div class="list-ele-right">+${ clothing }</div>
 									</div>
 									<div class="list-ele">
 										<div class="list-ele-left">
@@ -384,7 +406,7 @@ selecet#sl-month option:hover {
 												<p id="list-ele-sub">Lifestyle, Sneaker,...</p>
 											</div>
 										</div>
-										<div class="list-ele-right">+2,757</div>
+										<div class="list-ele-right">+${ shoes }</div>
 									</div>
 									<div class="list-ele">
 										<div class="list-ele-left">
@@ -397,21 +419,7 @@ selecet#sl-month option:hover {
 												<p id="list-ele-sub">Clutches, Satchels,...</p>
 											</div>
 										</div>
-										<div class="list-ele-right">+1,503</div>
-									</div>
-									<div class="list-ele">
-										<div class="list-ele-left">
-											<div class="list-ele-img jewelry-color">
-												<img
-													src="<c:url value="/assets/images/icons/icons8-ring-and-earrings-64.png"/>"
-													alt="icon-history">
-											</div>
-											<div class="list-ele-content">
-												<p id="list-ele-title">Jewelry</p>
-												<p id="list-ele-sub">Necklaces, Rings,...</p>
-											</div>
-										</div>
-										<div class="list-ele-right">+873</div>
+										<div class="list-ele-right">+${ handbags }</div>
 									</div>
 									<div class="list-ele">
 										<div class="list-ele-left">
@@ -425,7 +433,7 @@ selecet#sl-month option:hover {
 												<p id="list-ele-sub">Hats, Sunglasses,...</p>
 											</div>
 										</div>
-										<div class="list-ele-right">+359</div>
+										<div class="list-ele-right">+${ accessories }</div>
 									</div>
 									<div class="list-ele">
 										<div class="list-ele-left">
@@ -439,7 +447,7 @@ selecet#sl-month option:hover {
 												<p id="list-ele-sub">Candles, Self Care,...</p>
 											</div>
 										</div>
-										<div class="list-ele-right">+172</div>
+										<div class="list-ele-right">+${ gifts }</div>
 									</div>
 								</div>
 							</div>
@@ -467,7 +475,7 @@ selecet#sl-month option:hover {
 	<script src="<c:url value="assets/js/chartjs.min.js"/>"></script>
 
 	<script> // chart statistics by category
-		var yValues = [ 3371, 2757, 1503, 873, 359, 172 ];
+		var yValues = [ ${ clothing }, ${ shoes }, ${ handbags }, ${ accessories }, ${ gifts } ];
 		new Chart("myChart", {
 			type : "doughnut",
 			data : {
@@ -475,7 +483,6 @@ selecet#sl-month option:hover {
 					    'Clothing',
 					    'Shoes',
 					    'Handbags',
-					    'Jewelry',
 					    'Accessories',
 					    'Gifts',
 					  ],

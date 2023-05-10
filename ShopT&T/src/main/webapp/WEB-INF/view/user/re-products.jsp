@@ -438,8 +438,7 @@
 											</c:if>
 											<c:if test="${ listProd.discount > 0 }">
 												<div class="price-sale-products">
-													$
-													<fmt:formatNumber type="number" maxFractionDigits="2"
+													$<fmt:formatNumber type="number" maxFractionDigits="2"
 														value="${ listProd.price - listProd.price*listProd.discount/100 }" />
 												</div>
 												<div class="price-old-products">
@@ -503,8 +502,7 @@
 										</c:if>
 										<c:if test="${ listProd.discount > 0 }">
 											<div class="price-sale-products">
-												$
-												<fmt:formatNumber type="number" maxFractionDigits="2"
+												$<fmt:formatNumber type="number" maxFractionDigits="2"
 													value="${ listProd.price - listProd.price*listProd.discount/100 }" />
 											</div>
 											<div class="price-old-products">
@@ -568,8 +566,7 @@
 										</c:if>
 										<c:if test="${ listProd.discount > 0 }">
 											<div class="price-sale-products">
-												$
-												<fmt:formatNumber type="number" maxFractionDigits="2"
+												$<fmt:formatNumber type="number" maxFractionDigits="2"
 													value="${ listProd.price - listProd.price*listProd.discount/100 }" />
 											</div>
 											<div class="price-old-products">
@@ -892,7 +889,7 @@
 				var id_prod = e.target.id;
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"/ShopTandT/?blockid="+id_user+"_"+id_prod);
+						"/ShopTandT/?buynow&blockid="+id_user+"_"+id_prod);
 				xhr.onload = function() {
 					window.location.assign("/ShopTandT/cart/checkout/"+id_user+"_"+id_prod);
 				};
@@ -903,7 +900,7 @@
 				var id_prod = e.target.id;
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET",
-						"/ShopTandT/?blockid="+id_user+"_"+id_prod);
+						"/ShopTandT/?buynow&blockid="+id_user+"_"+id_prod);
 				xhr.onload = function() {
 					window.location.assign("/ShopTandT/cart/checkout/"+id_user+"_"+id_prod);
 				};

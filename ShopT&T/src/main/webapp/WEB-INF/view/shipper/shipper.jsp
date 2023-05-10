@@ -46,11 +46,13 @@ selecet#sl-month option:hover {
 }
 
 p#profile-report-name {
-	margin-top: 10px; 
-} 
-.profile-report-chart {
-    margin-top: 20px;
+	margin-top: 10px;
 }
+
+.profile-report-chart {
+	margin-top: 20px;
+}
+
 p#percent-revenue {
 	margin-top: 24px;
 }
@@ -99,33 +101,33 @@ p#percent-revenue {
 						<div class="dashboard-col">
 							<div class="dashboard-row-1">
 								<div class="dashboard-row-top">
-									<div class="dashboard-col-icon icon-customer">
+									<div class="dashboard-col-icon icon-revenue">
 										<div class="wrapper-icon">
 											<img
-												src="<c:url value="/assets/images/icons/icons8-purchase-order-96-month.png"/>"
+												src="<c:url value="/assets/images/icons/icons8-revenue-64.png"/>"
 												alt="images-order">
 										</div>
 									</div>
 									<div class="dashboard-col-text">
 										<div class="dashboard-row-parameter">
-											<p>+${ orderofmonth }</p>
+											<p>$${ revenueofday }</p>
 										</div>
 									</div>
 								</div>
 								<div class="dashboard-row-title">
-									<p>Month's Order</p>
+									<p>Today's Revenue</p>
 								</div>
 							</div>
 							<hr class="shadow-hr">
 							<div class="dashboard-row-2">
 								<div class="compare">
 									<p>
-										<c:if test="${ percentrevenue >= 0}">
-											<span class="green">+${ percentrevenue }%</span> than yesterday
-										</c:if>
-										<c:if test="${ percentrevenue < 0}">
-											<span class="red">${ percentrevenue }%</span> than yesterday
-										</c:if>
+										<c:if test="${ percentrevenueofday >= 0 }">
+											<span class="green">+${ percentrevenueofday }%</span> than yesterday
+												</c:if>
+										<c:if test="${ percentrevenueofday < 0 }">
+											<span class="red">${ percentrevenueofday }%</span> than yesterday
+												</c:if>
 									</p>
 								</div>
 							</div>
@@ -248,40 +250,6 @@ p#percent-revenue {
 												</c:if>
 												<c:if test="${ percentuser < 0}">
 													<span class="red">${ percentuser }%</span> than yesterday
-												</c:if>
-											</p>
-										</div>
-									</div>
-								</div>
-								<div class="dashboard-col">
-									<div class="dashboard-row-1">
-										<div class="dashboard-row-top">
-											<div class="dashboard-col-icon icon-revenue">
-												<div class="wrapper-icon">
-													<img
-														src="<c:url value="/assets/images/icons/icons8-revenue-64.png"/>"
-														alt="images-order">
-												</div>
-											</div>
-											<div class="dashboard-col-text">
-												<div class="dashboard-row-parameter">
-													<p>$${ revenueofday }</p>
-												</div>
-											</div>
-										</div>
-										<div class="dashboard-row-title">
-											<p>Today's Revenue</p>
-										</div>
-									</div>
-									<hr class="shadow-hr">
-									<div class="dashboard-row-2">
-										<div class="compare">
-											<p>
-												<c:if test="${ percentrevenueofday >= 0 }">
-													<span class="green">+${ percentrevenueofday }%</span> than yesterday
-												</c:if>
-												<c:if test="${ percentrevenueofday < 0 }">
-													<span class="red">${ percentrevenueofday }%</span> than yesterday
 												</c:if>
 											</p>
 										</div>

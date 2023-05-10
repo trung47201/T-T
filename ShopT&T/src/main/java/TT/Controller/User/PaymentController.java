@@ -27,12 +27,14 @@ import TT.Service.User.CartService;
 import TT.Service.User.PaymentService;
 import TT.Service.User.Product_color_sizeService;
 import TT.Service.User.UserService;
+import TT.Service.User.VoucherService;
 
 @Controller
 public class PaymentController {
 	private UserService userService;
 	private CartService cartService;
 	private Product_color_sizeService product_color_sizeService;
+	private VoucherService voucherService;
 	
 	@RequestMapping(value = { "/payment" })
 	public ModelAndView loadpayment(HttpServletRequest request, HttpServletResponse response) {
@@ -50,6 +52,7 @@ public class PaymentController {
 		cartService = new CartService();
 		userService = new UserService();
 		product_color_sizeService = new Product_color_sizeService();
+		voucherService = new VoucherService();
 		
 		try {
 			PaymentService paymentServices = new PaymentService();
@@ -85,6 +88,8 @@ public class PaymentController {
 						System.out.println("voucher: " + it.getPrice());
 						mv.addObject("vccode", it.getName().replace("Voucher:", "").trim());
 						System.out.println("vc code:" + it.getName().replace("Voucher:", "").trim());
+						int vchid = voucherService.getVoucherIdByCode(it.getName().replace("Voucher:", "").trim());
+						mv.addObject("vchid", vchid);
 					}
 			}
 			if(liCS.size() > 0) {
@@ -110,15 +115,24 @@ public class PaymentController {
 	public void load_payment_paypal(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, PayPalRESTException {
 		product_color_sizeService = new Product_color_sizeService();
+		userService = new UserService();
+		voucherService = new VoucherService();
+		
 		String product = request.getParameter("product"); // product = {id_prod_quantity}/{id_prod_quantity}/{id_prod_quantity}...
 		String voucher = request.getParameter("vchprice");
 		String total = request.getParameter("total");
 		String user_id = request.getParameter("userid");
 		String vccode = request.getParameter("vccode");
+		String vchid = request.getParameter("vchid");
 		String cartid = request.getParameter("cartid");
 		String color = request.getParameter("color");
 		String size = request.getParameter("size");
-		
+		if(vchid != null) {
+			if(!vchid.equals("")) {
+				vccode = voucherService.get_voucher_code_by_id(Integer.parseInt(user_id));
+			}
+		}
+			
 		if(voucher == null) {
 			voucher="0";
 		}

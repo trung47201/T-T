@@ -12,6 +12,7 @@ import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
 import TT.Model.Brand;
+import TT.Model.Category;
 import TT.Model.Color;
 import TT.Model.Product_color_size;
 import TT.Model.Gender;
@@ -44,6 +45,7 @@ public class aReceipt_detailsSevice implements aOrder_detailsRepository {
 	private Sizes size;
 	private Gender gender;
 	private Status status;
+	private Category category;
 
 	@Override
 	public List<Receipt_details> getAllOrder_details() {
@@ -63,6 +65,7 @@ public class aReceipt_detailsSevice implements aOrder_detailsRepository {
 							+ "Inner join color on color.id = receipt_details.color_id "
 							+ "Inner join brand on product.brand_id = brand.id "
 							+ "Inner join sub_category on product.sub_category_id = sub_category.id "
+							+ "Inner join category on sub_category.category_id = category.id "
 							+ "Inner join user on product.user_id = user.id "
 							+ "Inner join gender on product.gender_id = gender.id "
 							+ "Inner join role on role.id = user.role_id " + "group by receipt_details.id");
@@ -79,7 +82,8 @@ public class aReceipt_detailsSevice implements aOrder_detailsRepository {
 				gender = new Gender();
 				receipt_details = new Receipt_details();
 				status = new Status();
-
+				category = new Category();
+				
 				status.setId(rs.getInt("status_id"));
 				status.setStatus_name(rs.getString("status_name"));
 
@@ -130,9 +134,13 @@ public class aReceipt_detailsSevice implements aOrder_detailsRepository {
 				brand.setId(rs.getInt("brand_id"));
 				brand.setBrand_name(rs.getString("brand_name"));
 
+				category.setId(rs.getInt("category_id"));
+				category.setCategory_name(rs.getString("category_name"));
+				
 				sub_category.setId(rs.getInt("sub_category_id"));
 				sub_category.setSub_category_name(rs.getString("sub_category_name"));
-
+				sub_category.setCategory(category);
+				
 				color.setId(rs.getInt("color_id"));
 				color.setColor_name(rs.getString("color_name"));
 				color.setRgb(rs.getString("rgb"));
@@ -247,9 +255,55 @@ public class aReceipt_detailsSevice implements aOrder_detailsRepository {
 		}
 		return qty-aReceiptService.get_discount_by_order_id(id_order);
 	}
-
-	public static void main(String[] args) {
-		aReceipt_detailsSevice a = new aReceipt_detailsSevice();
-		System.out.println(a.get_qty_product_by_order_id(187));
+	
+	public int get_all_order_clothing () {
+		List<Receipt_details> li = getAllOrder_details();
+		int rs=0;
+		for (Receipt_details r : li) {
+			if(r.getProd().getSub_category().getCategory().getId() == 1) {
+				rs++;
+			}
+		}
+		return rs;
+	}
+	public int get_all_order_handbags () {
+		List<Receipt_details> li = getAllOrder_details();
+		int rs=0;
+		for (Receipt_details r : li) {
+			if(r.getProd().getSub_category().getCategory().getId() == 3) {
+				rs++;
+			}
+		}
+		return rs;
+	}
+	public int get_all_order_shoes () {
+		List<Receipt_details> li = getAllOrder_details();
+		int rs=0;
+		for (Receipt_details r : li) {
+			if(r.getProd().getSub_category().getCategory().getId() == 4) {
+				rs++;
+			}
+		}
+		return rs;
+	}
+	public int get_all_order_gifts () {
+		List<Receipt_details> li = getAllOrder_details();
+		int rs=0;
+		for (Receipt_details r : li) {
+			if(r.getProd().getSub_category().getCategory().getId() == 5) {
+				rs++;
+			}
+		}
+		return rs;
+	}
+	public int get_all_order_accessrories () {
+		List<Receipt_details> li = getAllOrder_details();
+		int rs=0;
+		for (Receipt_details r : li) {
+			if(r.getProd().getSub_category().getCategory().getId() == 6) {
+				rs++;
+			}
+		}
+		return rs;
 	}
 }

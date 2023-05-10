@@ -275,10 +275,10 @@ div#status-select {
 				<tr>
 					<th>ID</th>
 					<th style="min-width: 88px;">Full name</th>
-					<th>Email</th>
 					<th>Phone number</th>
 					<th style="min-width: 150px;">Address</th>
 					<th id="date" style="min-width: 105px;">Order date</th>
+					<th>Method</th>
 					<th>Note</th>
 					<th>Status</th>
 					<th style="text-align: center;">Action</th>
@@ -289,10 +289,11 @@ div#status-select {
 					<tr>
 						<td>${ liOrder.id }</td>
 						<td>${ liOrder.fullname }</td>
-						<td>${ liOrder.email }</td>
+						
 						<td>${ liOrder.phone_number }</td>
 						<td>${ liOrder.address }</td>
 						<td>${ liOrder.order_date }</td>
+						<td>${ liOrder.method }</td>
 						<td>${ liOrder.note }</td>
 						<c:if test="${ liOrder.status.id == 1 }">
 							<td style="background: #cb82a9; color: white; border: 1px solid white;">${ liOrder.status.status_name }</td>

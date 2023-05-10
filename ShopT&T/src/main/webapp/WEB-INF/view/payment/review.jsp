@@ -114,8 +114,10 @@
 					</tr>
 				</table>
 			</div>
-			<input type="hidden" name="vccode" value="${ vccode }"> <input
-				type="hidden" name="method" value="Credit card">
+			<input type="hidden" name="vccode" value="${ vccode }">
+			<input type="hidden" name="vchid" value="${ vchid }">
+			 <input
+				type="hidden" name="paymentmethods" value="Credit card">
 			<div class="continue-shopping">
 				<input type="submit" name="paynow" id="paynow" value="Pay now">
 			</div>

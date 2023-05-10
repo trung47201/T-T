@@ -19,6 +19,9 @@
     height: 36px;
     display: flex;
 }
+p#date-fmt {
+    font-size: 12px;
+}
 </style>
 
 <body>
@@ -92,6 +95,8 @@
 					<div class="order-date">
 						<p>Order date:</p>
 						${ orderById.order_date }
+						<br>
+						<p id="date-fmt">(YYYY-MM-DD)</p>
 					</div>
 				</div>
 			</div>

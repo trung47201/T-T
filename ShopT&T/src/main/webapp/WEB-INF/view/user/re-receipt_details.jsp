@@ -38,6 +38,13 @@
 <link rel="stylesheet" href="<c:url value="/assets/css/r-posts.css"/>">
 <link rel="stylesheet" href="<c:url value="/assets/css/re-text.css"/>">
 <style>
+.canceled {
+	justify-content: center;
+    color: red;
+    font-weight: bold;
+    font-size: 20px;
+    letter-spacing: 1px;
+}
 </style>
 <link rel="stylesheet" href="<c:url value="/assets/css/f-favorite.css"/>">
 <jsp:include page="../layouts/user/re-favorite.jsp"></jsp:include>
@@ -222,12 +229,19 @@
 									</div>
 								</c:if>
 							</div>
-							<div class="order-form-status-text">
-								<div class="dot">PROCESSED</div>
-								<div class="dot">PACKED</div>
-								<div class="dot">SHIPPED</div>
-								<div class="dot">DELIVERED</div>
-							</div>
+							<c:if test="${ status != null && status != 6 }">
+								<div class="order-form-status-text">
+									<div class="dot">PROCESSED</div>
+									<div class="dot">PACKED</div>
+									<div class="dot">SHIPPED</div>
+									<div class="dot">DELIVERED</div>
+								</div>
+							</c:if>
+							<c:if test="${ status != null && status == 6 }">
+								<div class="order-form-status-text canceled">
+									<div class="dot">CANCELED</div>
+								</div>
+							</c:if>
 						</div>
 					</div>
 					<c:forEach var="liOrder_details" items="${ listOrder_details }">
@@ -278,7 +292,10 @@
 						<c:if test="${ order.discount_at > 0 }">
 							<div class="total-prod">
 								<p>Voucher:</p>
-								<p class="money">-$${ order.discount_at }</p>
+								<p class="money">-$<fmt:formatNumber type="number"
+									maxFractionDigits="2"
+									value="${ order.discount_at }" />
+								</p>
 							</div>
 						</c:if>
 
@@ -304,7 +321,7 @@
 				</div>
 			</div>
 			<div class="continue-cancel">
-				<a href="/ShopTandT/products/new-arrivals/${ userid }"><i
+				<a href="/ShopTandT/products/new-arrivals"><i
 					class="fa fa-angle-left"></i> Continue Shopping</a> <a
 					class="countermand" id="${ order.id }">Countermand <i
 					class="fa fa-angle-right"></i></a>

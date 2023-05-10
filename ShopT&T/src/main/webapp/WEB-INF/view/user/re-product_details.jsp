@@ -664,9 +664,19 @@ img#image-hover-click {
 		      		var val = document.getElementById("size").value;
 		      		var quantity = document.getElementById("input_amount").value;
 		      		if(val != null || quantity != null) {
-		      			window.location.assign("/ShopTandT/cart/checkout/"+user_prod +"?color="+colorid+ "&size="+val + "&quantity="+quantity);
+		      			var xhr = new XMLHttpRequest();
+				      	xhr.open("GET", "/ShopTandT/?buynow&blockid="+user_prod);
+				      	xhr.onload = function () {
+				      		window.location.assign("/ShopTandT/cart/checkout/"+user_prod +"?color="+colorid+ "&size="+val + "&quantity="+quantity);
+				      	};
+				      	xhr.send();
 		      		} else {
-		      			window.location.assign("/ShopTandT/cart/checkout/"+user_prod);
+		      			var xhr = new XMLHttpRequest();
+		      			xhr.open("GET", "/ShopTandT/?buynow&blockid="+user_prod);
+				      	xhr.onload = function () {
+				      		window.location.assign("/ShopTandT/cart/checkout/"+user_prod);
+				      	};
+				      	xhr.send();
 		      		}
 		      	};
 		      	xhr.send();

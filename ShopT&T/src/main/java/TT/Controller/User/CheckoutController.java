@@ -106,6 +106,16 @@ public class CheckoutController {
 		}
 		if (method == null) {
 			method = "COD";
+		} else {
+			method = String.valueOf(method);
+			if (method.equalsIgnoreCase("COD")) {
+				System.out.println("heare 111");
+			} else {
+				if (!user.equals("")) {
+					User u = userService.get_user_by_id(Integer.parseInt(user));
+					phone_number = u.getPhone_number();
+				}
+			}
 		}
 		double price_at = 0;
 		Product p = shoesService.getProduct(Integer.parseInt(id_prod));
@@ -114,9 +124,13 @@ public class CheckoutController {
 		} else {
 			price_at += p.getPrice();
 		}
-		System.out.println("here2");
-		if (id_prod != null && size != null && color != null && city != null && district != null
-				&& address != null && firstname != null && lastname != null && phone_number != null && email != null) {
+
+		System.out.println("here2 126:" + size + "---" + color + "====method" + method);
+		if (id_prod != null && size != null && color != null && city != null && district != null && address != null
+				&& firstname != null && lastname != null && phone_number != null && email != null) {
+			if (size.equals("")) {
+				size = "25";
+			}
 			double dis = checkoutService.get_discount_at(Integer.parseInt(quantity),
 					voucherService.get_voucher_code_by_id(vc_id), Integer.parseInt(id_prod));
 			double pricetotal = checkoutService.get_price_at(Integer.parseInt(quantity),
@@ -127,9 +141,9 @@ public class CheckoutController {
 			if (pricetotal < 50) {
 				pricetotal = pricetotal + 11.00;
 			}
-			System.out.println("here1");
+			System.out.println("here1 139");
 			if (vc_id != 1) {
-				System.out.println("here");
+				System.out.println("here 141");
 				if (receiptService.insertIntoOrder(fullname, email, phone_number, adr, vc_id, note, method, dis)
 						&& voucherService.update_limit_voucher(vc_id)) {
 					int order_id = receiptService.get_last_order_id_by(phone_number, email);
@@ -143,6 +157,15 @@ public class CheckoutController {
 						session.setAttribute("order", "end");
 						System.out.println("buy now success (118 checkoutController)");
 						voucher_saveService.update(Integer.parseInt(user), vc_id);
+						if (!method.equals("COD")) {
+							double statistics = (double) Math.round((price_at * Integer.parseInt(quantity) - dis) * 100)
+									/ 100;
+							if (price_at < 50) {
+								statistics = statistics + 11.0;
+							}
+							System.out.println("here 152 -------------------------------------------");
+							statisticsService.update_revenue_product_num_in_statistics_DB(1, statistics);
+						}
 						return new ModelAndView("redirect: /ShopTandT/sucess-buynow?id_prod=" + id_prod + "&id_color="
 								+ color + "&id_size=" + size + "&quantity=" + quantity + "&fullname=" + fullname
 								+ "&phone_number=" + phone_number + "&email=" + email + "&address=" + adr + "&note="
@@ -165,7 +188,18 @@ public class CheckoutController {
 							&& statisticsService.update_order_num_in_statistics_DB()) {
 					}
 					session.setAttribute("order", "end");
-					System.out.println("buy now success (96 checkoutController)");
+					System.out.println("buy now success (182 checkoutController)");
+					if (!method.equals("COD")) {
+						double statistics = (double) Math.round((price_at * Integer.parseInt(quantity) - dis) * 100)
+								/ 100;
+						if (price_at < 50) {
+							statistics = statistics + 11.0;
+						}
+						System.out.println("here 184");
+						statisticsService.update_revenue_product_num_in_statistics_DB(1, statistics);
+					} else {
+						System.out.println("here 188:" + method);
+					}
 					return new ModelAndView("redirect: /ShopTandT/sucess-buynow?id_prod=" + id_prod + "&id_color="
 							+ color + "&id_size=" + size + "&quantity=" + quantity + "&fullname=" + fullname
 							+ "&phone_number=" + phone_number + "&email=" + email + "&address=" + adr + "&note=" + note
@@ -176,7 +210,7 @@ public class CheckoutController {
 				}
 			}
 		} else {
-			System.out.println("here chackoutController 179");
+			System.out.println("here chackoutController 198");
 			System.out.println("city:" + city + " address:" + address + " district:" + district + " fullname:"
 					+ fullname + " phone_number:" + phone_number + " email:" + email);
 		}

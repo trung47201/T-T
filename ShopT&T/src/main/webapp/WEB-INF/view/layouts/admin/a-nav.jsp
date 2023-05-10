@@ -6,11 +6,14 @@
 <nav class="navigation" id="navigation">
 	<div class="logo">
 		<div class="img-logo">
-			<img src="<c:url value="/assets/images/logo/logo.png"/>" alt=""
-				id="img-logo">
+			<a href="/ShopTandT/admin"><img
+				src="<c:url value="/assets/images/logo/logo.png"/>" alt=""
+				id="img-logo"></a>
 		</div>
 		<div class="name-shop">
-			<h2 id="name-shop">Shop</h2>
+			<h2 id="name-shop">
+				<a href="/ShopTandT/admin">Shop</a>
+			</h2>
 		</div>
 		<div class="" id="shadow-nav"></div>
 	</div>
@@ -58,16 +61,14 @@
 			</a> <a href="/ShopTandT/admin/search-order">
 				<ul class="sub-menu-ul" id="">
 					<li>Search</li>
-				</ul>
-			<a href="/ShopTandT/admin/packing">
-				<ul class="sub-menu-ul">
-					<li>Packing</li>
-				</ul>
-			</a>
-			<a href="/ShopTandT/admin/shipping">
-				<ul class="sub-menu-ul">
-					<li>Shipping</li>
-				</ul>
+				</ul> <a href="/ShopTandT/admin/packing">
+					<ul class="sub-menu-ul">
+						<li>Packing</li>
+					</ul>
+			</a> <a id="shipping-a" href="/ShopTandT/admin/shipping">
+					<ul class="sub-menu-ul">
+						<li>Shipping</li>
+					</ul>
 			</a>
 		</div>
 
@@ -95,38 +96,31 @@
 				<ul class="sub-menu-ul" id="">
 					<li>Clothing</li>
 				</ul>
-			</a>
-			<a href="/ShopTandT/admin/product/shoes">
+			</a> <a href="/ShopTandT/admin/product/shoes">
 				<ul class="sub-menu-ul" id="">
 					<li>Shoes</li>
 				</ul>
-			</a> 
-			<a href="/ShopTandT/admin/product/gifts">
+			</a> <a href="/ShopTandT/admin/product/gifts">
 				<ul class="sub-menu-ul" id="">
 					<li>Gifts</li>
 				</ul>
-			</a> 
-			<a href="/ShopTandT/admin/product/jewelry">
+			</a> <a href="/ShopTandT/admin/product/jewelry">
 				<ul class="sub-menu-ul" id="">
 					<li>Jewelry</li>
 				</ul>
-			</a> 
-			<a href="/ShopTandT/admin/product/handbags">
+			</a> <a href="/ShopTandT/admin/product/handbags">
 				<ul class="sub-menu-ul" id="">
 					<li>Handbags</li>
 				</ul>
-			</a> 
-			<a href="/ShopTandT/admin/product/accessories">
+			</a> <a href="/ShopTandT/admin/product/accessories">
 				<ul class="sub-menu-ul" id="">
 					<li>Accessories</li>
 				</ul>
-			</a>
-			</a> <a href="/ShopTandT/admin/voucher">
+			</a> </a> <a href="/ShopTandT/admin/voucher">
 				<ul class="sub-menu-ul">
 					<li>Voucher</li>
 				</ul>
-			</a>
-			 <a href="/ShopTandT/admin/color-size">
+			</a> <a href="/ShopTandT/admin/color-size">
 				<ul class="sub-menu-ul" id="">
 					<li>Color-Size</li>
 				</ul>
@@ -222,9 +216,9 @@
 				<ul class="sub-menu-ul" id="">
 					<li>Slider</li>
 				</ul>
-			</a> <a href="/ShopTandT/admin/layout/poster">
+			</a> <a href="/ShopTandT/admin/layout/posts">
 				<ul class="sub-menu-ul" id="">
-					<li>Poster</li>
+					<li>Posts</li>
 				</ul>
 			</a>
 		</div>
@@ -255,8 +249,7 @@
 				<ul class="sub-menu-ul" id="">
 					<li>Footer</li>
 				</ul>
-			</a>
-			<a href="/ShopTandT/admin/content/category">
+			</a> <a href="/ShopTandT/admin/content/category">
 				<ul class="sub-menu-ul" id="">
 					<li>Category - Sub</li>
 				</ul>
@@ -292,7 +285,7 @@
 				</ul>
 			</a>
 		</div>
-		
+
 		<ul class="other-menu">
 			<li>
 				<div class="menu" id="sub-menu-news">
@@ -314,13 +307,11 @@
 				<ul class="sub-menu-ul">
 					<li>About</li>
 				</ul>
-			</a>
-			<a href="/ShopTandT/admin/menu/size-chart">
+			</a> <a href="/ShopTandT/admin/menu/size-chart">
 				<ul class="sub-menu-ul" id="">
 					<li>Size chart</li>
 				</ul>
-			</a>
-			<a href="/ShopTandT/admin/menu/contact">
+			</a> <a href="/ShopTandT/admin/menu/contact">
 				<ul class="sub-menu-ul" id="">
 					<li>Contact</li>
 				</ul>
@@ -364,5 +355,14 @@
 <script>
 	$('.other').click(function() {
 		$(".other-menu").removeClass("none", 10000, "easeInBack");
+	});
+</script>
+<script>
+	$('#shipping-a').click(function() {
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", "/ShopTandT/admin/shipping?shipping");
+		xhr.onload = function() {
+		};
+		xhr.send();
 	});
 </script>

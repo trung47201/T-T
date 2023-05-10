@@ -50,6 +50,9 @@
 .header {
 	display: flex;
 }
+.login {
+    width: 87% !important;
+ }
 </style>
 <body>
 	<%
@@ -110,8 +113,7 @@
 						<b>${ prod_checkout.title }</b>
 					</div>
 					<div class="price-product-checkout">
-						$
-						<fmt:formatNumber type="number" maxFractionDigits="2"
+						$<fmt:formatNumber type="number" maxFractionDigits="2"
 							value="${ prod_checkout.price - prod_checkout.price*prod_checkout.discount/100 }" />
 					</div>
 				</div>
@@ -577,12 +579,12 @@
 
 				<div class="shipping" id="radio2" onclick="radio(this)">
 					<div class="icon-cod">
-						<c:if test="${ method == 'cod' ||  method == null }">
-							<input type="radio" name="paymentmethods" id="rad2" value="cod"
+						<c:if test="${ method == 'COD' ||  method == null }">
+							<input type="radio" name="paymentmethods" id="rad2" value="COD"
 								checked>
 						</c:if>
-						<c:if test="${ method != 'cod' &&  method != null }">
-							<input type="radio" name="paymentmethods" id="rad2" value="cod">
+						<c:if test="${ method != 'COD' &&  method != null }">
+							<input type="radio" name="paymentmethods" id="rad2" value="COD">
 						</c:if>
 						&emsp;Payment on delivery (COD)
 					</div>
@@ -591,13 +593,13 @@
 						alt="">
 				</div>
 
-				<c:if test="${ method == 'cod' ||  method == null }">
+				<c:if test="${ method == 'COD' ||  method == null }">
 					<div class="content-pm" id="content-pm"
 						style="visibility: visible;">You only have to pay when you
 						receive the goods.</div>
 				</c:if>
 
-				<c:if test="${ method != 'cod' &&  method != null }">
+				<c:if test="${ method != 'COD' &&  method != null }">
 					<div class="content-pm none" id="content-pm"
 						style="visibility: visible;">You only have to pay when you
 						receive the goods.</div>
@@ -997,8 +999,11 @@
 			}
 			
 			var error = "";
+			
 			if(size == "") {
-				error = "You haven't select a size yet!";
+				if( ${ product.sub_category.category.id != 3 && product.sub_category.category.id != 5 && product.sub_category.category.id != 6 }) {
+					error = "You haven't select a size yet!";
+				}
 			} else if(firstname == "") {
 				error = "Firstname name is empty!";
 			} else if(lastname == "") {

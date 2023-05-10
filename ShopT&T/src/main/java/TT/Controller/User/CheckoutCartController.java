@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import TT.Model.Cart;
 import TT.Model.Product_color_size;
+import TT.Model.User;
 import TT.Service.User.CartService;
 import TT.Service.User.CheckoutService;
 import TT.Service.User.ReceiptService;
@@ -65,6 +66,7 @@ public class CheckoutCartController {
 			fullname = firstname + " " + lastname;
 		}
 		double total = 0;
+		User u = null;
 		List<Cart> liCart = cartService.get_all_cart_by_string(id);
 		if (liCart.size() > 0) {
 			for (Cart cart : liCart) {
@@ -76,6 +78,8 @@ public class CheckoutCartController {
 				} else {
 					total += cart.getColor_size().getProd().getPrice() * cart.getQuantity();
 				}
+				u = cart.getUser();
+
 			}
 		} else {
 			System.out.println("here");
@@ -114,6 +118,11 @@ public class CheckoutCartController {
 		}
 		if (method == null) {
 			method = "COD";
+		} else {
+			System.out.println(method);
+			if(u != null) {
+				phone_number = u.getPhone_number();
+			}
 		}
 
 		int vch_discount = voucherService.getDiscountById_Voucher(vc_id);
@@ -155,12 +164,15 @@ public class CheckoutCartController {
 									cart.getQuantity())
 							&& statisticsService.update_order_num_in_statistics_DB()
 							&& cartService.delete_cart_by_cart_id(cart.getId())) {
+						if (!method.equals("COD")) {
+							statisticsService.update_revenue_product_num_in_statistics_DB(1,
+									(double) Math.round((price_at * cart.getQuantity()) * 100) / 100);
+						}
 						System.out.println("success 147 checkoutcontroller");
 					} else {
 						System.out.println("unsucess 149 checkoutcontroller");
 					}
 				}
-
 				System.out.println("buy cart success this checkout cart controller");
 				System.out.println(vc_id + "_" + method);
 				session.setAttribute("checkoutcart", "end");
@@ -256,7 +268,7 @@ public class CheckoutCartController {
 						product_color_sizeService.updateColor_size_Quantity(c.getSize().getId(), c.getColor().getId(),
 								c.getProd().getId(), hm.get(c));
 						shoesService.updateProduct_Sold(c.getProd().getId(), hm.get(c));
-						if(!statisticsService.update_order_num_in_statistics_DB()) {
+						if (!statisticsService.update_order_num_in_statistics_DB()) {
 							System.out.println("update db statistic unsuccess");
 						}
 					}

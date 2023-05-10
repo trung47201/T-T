@@ -36,18 +36,36 @@ public class ShipperController {
 			// today order
 			int order_yesterday = sOrderService.get_order_yesterday(u.getId());
 			int order_today = sOrderService.get_order_today(u.getId());
-			double percent_order_of_day = (double) order_today / order_yesterday * 100 - 100;
+			double percent_order_of_day = 0;
+			
 			mv.addObject("orderofday", order_today);
-			mv.addObject("percentorderofday", (double) Math.round(percent_order_of_day * 10) / 10);
+			
+			if(order_yesterday != 0) {
+				percent_order_of_day = (double) (order_today / order_yesterday * 100 - 100);
+				mv.addObject("percentorderofday", (double) Math.round(percent_order_of_day * 10) / 10);
+			} else {
+				percent_order_of_day = 100;
+				mv.addObject("percentorderofday", Math.round(percent_order_of_day));
+			}
+			
+			System.out.println((double) Math.round(percent_order_of_day * 10) / 10);
 			// month order
 			mv.addObject("orderofmonth", sOrderService.get_order_of_month(u.getId()));
 
 			// today revenue
 			double revenue_today = order_today * 0.5 + order_today / 30 * 0.5;
 			double revenue_ytd = order_yesterday * 0.5 + order_yesterday / 30 * 0.5;
-			double percent_revenue_of_day = (double) revenue_today / revenue_ytd * 100 - 100;
+			double percent_revenue_of_day = 0;
 			mv.addObject("revenueofday", revenue_today);
-			mv.addObject("percentrevenueofday", (double) Math.round(percent_revenue_of_day * 10) / 10);
+			if(percent_revenue_of_day != 0) {
+				percent_revenue_of_day = (double) (revenue_today / revenue_ytd * 100 - 100);
+				mv.addObject("percentrevenueofday", (double) Math.round(percent_revenue_of_day * 10) / 10);
+			} else{
+				percent_revenue_of_day = 100;
+				mv.addObject("percentrevenueofday", Math.round(percent_revenue_of_day));
+			}
+			
+			System.out.println((double) Math.round(percent_revenue_of_day * 10) / 10);
 
 			// month revenue
 			int order_of_month = sOrderService.get_order_of_month(u.getId());

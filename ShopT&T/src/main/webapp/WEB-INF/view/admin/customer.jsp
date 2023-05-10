@@ -42,7 +42,8 @@ img.eye-show-hide, img.eye-show-hide-pw {
 }
 
 .message input {
-	width: 117px;
+	width: 157px;
+	padding: unset !important;
 }
 th.td-addnewshoes a {
     display: flex;
@@ -191,8 +192,8 @@ th.td-addnewshoes a {
 		<div class="tbl-add-new none">
 	</c:if>
 	<form
-		action="http://localhost:8888/ShopTandT/admin/customer/add-new-user/savefile"
-		method="post" enctype="multipart/form-data">
+		action="/ShopTandT/admin/customer/add-new-user/savefile"
+		method="post" enctype="multipart/form-data" id="formadduser">
 		<table class="tbl-new-user">
 			<tr>
 				<td class="choose-img-avt" rowspan="7">
@@ -553,7 +554,20 @@ th.td-addnewshoes a {
 				value="OK">
 		</div>
 	</div>
-
+	
+	<div class="message continue-add msg-order none" id="addcustomer1">
+		<h2 class="msg-h2">
+			Message <img alt=""
+				src="<c:url value="/assets/images/icons/icons8-notification-100-msg.png"/>">
+		</h2>
+		<p class="content-msg-add"></p>
+		<div class="btn-ok-cancel">
+			<input class="cancel continue back1" type="button"
+				value="Cancel"> <input class="ok hover-btn" type="button"
+				value="Continue Add">
+		</div>
+	</div>
+	
 	<div class="msg-done importantNone">Done!</div>
 
 	<script
@@ -747,7 +761,7 @@ th.td-addnewshoes a {
 							$(".content-msg-notify").text("Updated role successfully!");
 							$('.ok').click(function() {
 								$(".message-notify").addClass("none");
-								window.location.assign("http://localhost:8888/ShopTandT/admin/role");
+								window.location.assign("/ShopTandT/admin/role");
 							});
 						};
 						xhr.send();
@@ -859,11 +873,14 @@ th.td-addnewshoes a {
 				$(".message-notify").addClass("none");
 			});
 		} else {
-			$(".message-notify").removeClass("none");
-			$(".content-msg-notify").text("Add customer successfully!");
-			alert("b");
-			$('.message-notify .ok').click(function() {
-				$('#btn-addnewuser').attr('type', 'submit');
+			$("#addcustomer1").removeClass("none");
+			$("#addcustomer1 .content-msg-add").text("Add customer successfully!");
+			$('#addcustomer1 .ok').click(function() {
+				$('#formadduser').submit();
+			});
+			$('#addcustomer1 .back1').click(function(){
+				$('#formadduser').attr('action', '/ShopTandT/admin/customer/add-new-user/savefile?redirect');
+				$('#formadduser').submit();
 			});
 		}
  	});

@@ -140,6 +140,18 @@ public class sOrderService {
 		return rs;
 	}
 
+	public Receipt get_order_by_id(int id) {
+		ReceiptService r = new ReceiptService();
+		List<Receipt> li = r.getAllOrder();
+		Receipt rs = null;
+		for (Receipt re : li) {
+			if (re.getId() == id) {
+				rs = re;
+			}
+		}
+		return rs;
+	}
+
 	public int get_order_today(int id) {
 		aStatisticsService s = new aStatisticsService();
 		int rs = 0;
@@ -210,19 +222,19 @@ public class sOrderService {
 		}
 		return li;
 	}
-	
+
 	// revenue - list month name from 1 to now
-		public List<String> list_day_name_from_now() {
-			aStatisticsService s = new aStatisticsService();
-			List<String> li = new LinkedList<>();
-			java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
-			int this_day = s.get_day_of_week(date);
-			System.out.println(this_day);
-			for (int i = 1; i <= this_day; i++) {
-				li.add(s.get_day_name_by_num(i));
-			}
-			return li;
+	public List<String> list_day_name_from_now() {
+		aStatisticsService s = new aStatisticsService();
+		List<String> li = new LinkedList<>();
+		java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
+		int this_day = s.get_day_of_week(date);
+		System.out.println(this_day);
+		for (int i = 1; i <= this_day; i++) {
+			li.add(s.get_day_name_by_num(i));
 		}
+		return li;
+	}
 
 	// revenue - list revenue all month from 1 to now
 	public List<Double> list_revenue_all_month_from_1_to_now(int id) {
@@ -262,7 +274,7 @@ public class sOrderService {
 					count++;
 				}
 			}
-			System.out.println(count+"--" +i);
+			System.out.println(count + "--" + i);
 			li_order.add(count);
 		}
 		return li_order;

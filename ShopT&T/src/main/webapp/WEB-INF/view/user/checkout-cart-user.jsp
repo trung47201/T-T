@@ -214,7 +214,7 @@
 				<div class="shipping radio-checked" id="radio2"
 					onclick="radio(this)">
 					<div class=wrapper-shipping>
-						<input type="radio" name="paymentmethods" id="rad2" value="cod"
+						<input type="radio" name="paymentmethods" id="rad2" value="COD"
 							checked>
 						<div class="icon-cod">&emsp;Payment on delivery (COD)</div>
 

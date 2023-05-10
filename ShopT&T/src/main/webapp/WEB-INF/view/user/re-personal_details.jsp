@@ -50,13 +50,16 @@
 	z-index: 100;
 }
 
+div#box-add-intro {
+	height: 270px !important;
+}
+
 .box-add-intro {
 	z-index: 101;
 	top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
-
 
 .welcome {
 	box-shadow: 0px 5px 15px;
@@ -73,29 +76,47 @@
 .box-content {
 	margin-top: 15px;
 }
+
 .form-ip {
-    margin-top: 10px;
+	margin-top: 10px;
 }
+
 .form-ip p {
 	margin: 0;
 	margin-bottom: 3px;
 }
 
+.box-content textarea {
+	margin-bottom: -6px !important;
+}
+
 div#box-change-pw {
-	height: 360px !important;
+	height: 370px !important;
 }
 
 div#box-change-contact {
-    height: 432px !important;
+	height: 432px !important;
 }
 
 div#box-change-address {
-    height: 432px !important;
+	height: 432px !important;
 }
 
 button#save-pw, button#save-contact, button#save-address {
-	margin-top: 24px;
 	width: 100px;
+}
+
+.error-change {
+	margin-top: 7px;
+	font-size: 14px;
+	color: red;
+	height: 24px;
+	margin-bottom: 10px;
+}
+
+div#box-msg {
+	height: 145px;
+	width: 370px;
 }
 </style>
 <body style="color: black;">
@@ -266,6 +287,7 @@ button#save-pw, button#save-contact, button#save-address {
 				<div class="box-content">
 					<textarea rows="" cols=""></textarea>
 				</div>
+				<p class="error-change" id="error-intro"></p>
 				<div class="box-btn">
 					<button type="button" id="save-add-intro">Save</button>
 				</div>
@@ -277,22 +299,23 @@ button#save-pw, button#save-contact, button#save-address {
 				<div class="box-content">
 					<div class="form-ip">
 						<p>Old password</p>
-						<input id="oldpw" name="oldpw">
+						<input type="password" id="oldpw" name="oldpw">
 					</div>
 					<div class="form-ip">
 						<p>New password</p>
-						<input id="newpw" name="newpw">
+						<input type="password" id="newpw" name="newpw">
 					</div>
 					<div class="form-ip">
 						<p>Confirm password</p>
-						<input id="cfpw" name="cfpw">
+						<input type="password" id="cfpw" name="cfpw">
 					</div>
 				</div>
+				<p class="error-change" id="error-pw"></p>
 				<div class="box-btn">
 					<button type="button" id="save-pw">Save</button>
 				</div>
 			</div>
-			
+
 			<div class="box-add-intro none" id="box-change-contact">
 				<img class="close-box" alt=""
 					src="<c:url value="/assets/images/icons/icons8-close-67.png"/>">
@@ -300,26 +323,30 @@ button#save-pw, button#save-contact, button#save-address {
 				<div class="box-content">
 					<div class="form-ip">
 						<p>First name</p>
-						<input id="firstname" name="firstname" value="${ user.firstname }">
+						<input type="text" id="firstname" name="firstname"
+							value="${ user.firstname }">
 					</div>
 					<div class="form-ip">
 						<p>Last name</p>
-						<input id="lastname" name="lastname" value="${ user.lastname }">
+						<input type="text" id="lastname" name="lastname"
+							value="${ user.lastname }">
 					</div>
 					<div class="form-ip">
 						<p>Phone number</p>
-						<input id="phonenumber" name="phonenumber" value="${ user.phone_number }"> 
+						<input type="number" id="phonenumber" name="phonenumber"
+							value="${ user.phone_number }">
 					</div>
 					<div class="form-ip">
 						<p>Email</p>
-						<input id="email" name="email" value="${ user.email }">
+						<input type="text" id="email" name="email" value="${ user.email }">
 					</div>
 				</div>
+				<p class="error-change" id="error-contact"></p>
 				<div class="box-btn">
 					<button type="button" id="save-contact">Save</button>
 				</div>
 			</div>
-			
+
 			<div class="box-add-intro none" id="box-change-address">
 				<img class="close-box" alt=""
 					src="<c:url value="/assets/images/icons/icons8-close-67.png"/>">
@@ -327,26 +354,39 @@ button#save-pw, button#save-contact, button#save-address {
 				<div class="box-content">
 					<div class="form-ip">
 						<p>Address</p>
-						<input id="address" name="address" value="${ user.address }">
+						<input type="text" id="address" name="address"
+							value="${ user.address }">
 					</div>
 					<div class="form-ip">
 						<p>District</p>
-						<input id="district" name="district" value="${ user.district }">
+						<input type="text" id="district" name="district"
+							value="${ user.district }">
 					</div>
 					<div class="form-ip">
 						<p>City</p>
-						<input id="city" name="city" value="${ user.city }">
+						<input type="text" id="city" name="city" value="${ user.city }">
 					</div>
 					<div class="form-ip">
 						<p>Postal code</p>
-						<input id="postal" name="postal">
+						<input type="text" id="postal" name="postal" value="800000">
 					</div>
 				</div>
+				<p class="error-change" id="error-address"></p>
 				<div class="box-btn">
 					<button type="button" id="save-address">Save</button>
 				</div>
 			</div>
 			<div class="wrapper-all none" id="wrapper-all"></div>
+
+			<div class="box-add-intro none" id="box-msg">
+				<img class="close-box" alt=""
+					src="<c:url value="/assets/images/icons/icons8-close-67.png"/>">
+				<div class="box-title">Notify</div>
+				<p class="error-change" id="error-msg"></p>
+				<div class="box-btn">
+					<button type="button" id="btn-ok">OK</button>
+				</div>
+			</div>
 		</form>
 	</header>
 
@@ -357,79 +397,228 @@ button#save-pw, button#save-contact, button#save-address {
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-	<script> // contact
+
+	<script> // validate Email
+	const validateEmail = (email) => {
+	  	return email.match(
+	    	/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+	  	);
+	}
+	</script>
+
+	<script>
+		// contact
 		$("#change-contact").click(function() {
-			var id = "${ user.id}";
 			$("#box-change-contact").removeClass("none");
 			$("#wrapper-all").removeClass("none");
 			$("#profile-menu").toggle("none");
-			$("#save-contact").click(function() {
-				$("#box-change-contact").addClass("none");
-				$("#wrapper-all").addClass("none");
-				$('#myform').attr('action', '/ShopTandT/profile/save-contact/'+id);
-			});
-
-			$(".close-box").click(function() {
-				$("#box-change-contact").addClass("none");
-				$("#wrapper-all").addClass("none");
-			});
 		});
+		$("#save-contact").click(
+				function() {
+					var id = "${ user.id}";
+					var firstname = $("#firstname").val();
+					var lastname = $("#lastname").val();
+					var phonenumber = $("#phonenumber").val();
+					var email = $("#email").val();
+					if (firstname == "") {
+						$("#error-contact").text("First name is empty!");
+					} else if (lastname == "") {
+						$("#error-contact").text("Last name is empty!");
+					} else if (phonenumber == "") {
+						$("#error-contact").text("Phone number is empty!");
+					} else if (email == "") {
+						$("#error-contact").text("Email address is empty!");
+					} else if (!validateEmail(email)) {
+						$("#error-contact").text("Invaild email address!");
+					} else {
+						$("#box-change-contact").addClass("none");
+						$("#wrapper-all").addClass("none");
+						$('#myform').attr('action',
+								'/ShopTandT/profile/save-contact/' + id);
+						$('#myform').submit();
+					}
+				});
+		$(".close-box").click(function() {
+			$("#box-change-contact").addClass("none");
+			$("#wrapper-all").addClass("none");
+		});
+		
+		var check_contact = "${ sessionScope.change }";
+		if(check_contact == "contacttrue") {
+			$("#box-msg").removeClass("none");
+			$("#wrapper-all").removeClass("none");
+			$("#error-msg").css("fontSize", 14);
+			$("#error-msg").css("color", "darkgreen");
+			$("#error-msg").text("Contact change successful!!");
+			$(".close-box").click(function() {
+				$("#box-msg").addClass("none");
+				$("#wrapper-all").addClass("none");
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", "/ShopTandT/profile/save-change?change");
+				xhr.onload = function() {
+				};
+				xhr.send();
+			});
+		}
 	</script>
-	
-	<script> // address
+
+	<script>
+		// address
 		$("#change-address").click(function() {
-			var id = "${ user.id}";
 			$("#box-change-address").removeClass("none");
 			$("#wrapper-all").removeClass("none");
 			$("#profile-menu").toggle("none");
-			$("#save-address").click(function() {
-				$("#box-change-address").addClass("none");
-				$("#wrapper-all").addClass("none");
-				$('#myform').attr('action', '/ShopTandT/profile/save-address/'+id);
-			});
-
-			$(".close-box").click(function() {
-				$("#box-change-address").addClass("none");
-				$("#wrapper-all").addClass("none");
-			});
 		});
+		$("#save-address").click(
+				function() {
+					var id = "${ user.id}";
+					var address = $("#address").val();
+					var district = $("#district").val();
+					var city = $("#city").val();
+					if (address == "") {
+						$("#error-address").text("Address is empty!");
+					} else if (district == "") {
+						$("#error-address").text("District is empty!");
+					} else if (city == "") {
+						$("#error-address").text("City is empty!");
+					} else {
+						$("#box-change-address").addClass("none");
+						$("#wrapper-all").addClass("none");
+						$('#myform').attr('action',
+								'/ShopTandT/profile/save-address/' + id);
+						$('#myform').submit();
+					}
+				});
+		$(".close-box").click(function() {
+			$("#box-change-address").addClass("none");
+			$("#wrapper-all").addClass("none");
+		});
+		
+		var check_address = "${ sessionScope.change }";
+		if(check_address == "addresstrue") {
+			$("#box-msg").removeClass("none");
+			$("#wrapper-all").removeClass("none");
+			$("#error-msg").css("fontSize", 14);
+			$("#error-msg").css("color", "darkgreen");
+			$("#error-msg").text("Address change successful!!");
+			$(".close-box").click(function() {
+				$("#box-msg").addClass("none");
+				$("#wrapper-all").addClass("none");
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", "/ShopTandT/profile/save-change?change");
+				xhr.onload = function() {
+				};
+				xhr.send();
+			});
+		}
 	</script>
-
-	<script> // password
+	<script type="text/javascript"> //validate Password
+	function validatePassword(pw) {
+	    return /[A-Z]/       .test(pw) &&
+	           /[a-z]/       .test(pw) &&
+	           /[0-9]/       .test(pw) &&
+	           /[^A-Za-z0-9]/.test(pw) &&
+	           pw.length > 7;
+	}
+	</script>
+	<script>
+		// password
 		$("#change-pw").click(function() {
-			var id = "${ user.id}";
 			$("#box-change-pw").removeClass("none");
 			$("#wrapper-all").removeClass("none");
 			$("#profile-menu").toggle("none");
-			$("#save-pw").click(function() {
-				$("#box-change-pw").addClass("none");
-				$("#wrapper-all").addClass("none");
-				$('#myform').attr('action', '/ShopTandT/profile/save-pw/'+id);
-			});
+		});
+		$("#save-pw").click(
+				function() {
+					var id = "${ user.id}";
+					var oldpw = $("#oldpw").val();
+					var newpw = $("#newpw").val();
+					var cfpw = $("#cfpw").val();
+					if (oldpw == "") {
+						$("#error-pw").text("Old password is empty!");
+						$("#error-pw").css("fontSize", 14);
+					} else if (newpw == "") {
+						$("#error-pw").text("New password is empty!");
+						$("#error-pw").css("fontSize", 14);
+					} else if (!validatePassword(newpw)) {
+						$("#error-pw").text("Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, 1 character and 8 or more characters!");
+						$("#error-pw").css("fontSize", 12);
+					} else if (cfpw == "") {
+						$("#error-pw").text("Confirm password is empty!");
+						$("#error-pw").css("fontSize", 14);
+					} else if (cfpw != newpw) {
+						$("#error-pw").text("Confirm password must be same as password!");
+						$("#error-pw").css("fontSize", 14);
+					} else {
+						$("#box-change-pw").addClass("none");
+						$("#wrapper-all").addClass("none");
+						$('#myform').attr('action',
+								'/ShopTandT/profile/save-pw/' + id);
+						$('#myform').submit();
+					}
+				});
 
+		$(".close-box").click(function() {
+			$("#box-change-pw").addClass("none");
+			$("#wrapper-all").addClass("none");
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", "/ShopTandT/profile/save-change?change");
+			xhr.onload = function() {
+			};
+			xhr.send();
+		});
+		
+		var check_pw = "${ sessionScope.change }";
+		if(check_pw == "oldfalse") {
+			$("#box-change-pw").removeClass("none");
+			$("#wrapper-all").removeClass("none");
+			$("#error-pw").text("Old password is not correct!");
+			$("#error-pw").css("fontSize", 14);
+		} else if(check_pw == "pwtrue") {
+			$("#box-msg").removeClass("none");
+			$("#wrapper-all").removeClass("none");
+			$("#error-msg").css("fontSize", 14);
+			$("#error-msg").css("color", "darkgreen");
+			$("#error-msg").text("Password change successful!!");
 			$(".close-box").click(function() {
-				$("#box-change-pw").addClass("none");
+				$("#box-msg").addClass("none");
 				$("#wrapper-all").addClass("none");
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", "/ShopTandT/profile/save-change?change");
+				xhr.onload = function() {
+				};
+				xhr.send();
 			});
+		}
+		
+		$("#btn-ok").click(function() {
+			$("#box-msg").addClass("none");
+			$("#wrapper-all").addClass("none");
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", "/ShopTandT/profile/save-change?change");
+			xhr.onload = function() {
+			};
+			xhr.send();
 		});
 	</script>
 
-	<script> // intro
+	<script>
+		// intro
 		$("#add-intro").click(function() {
-			var id = "${ user.id}";
 			$("#box-add-intro").removeClass("none");
 			$("#wrapper-all").removeClass("none");
 			$("#profile-menu").toggle("none");
-			$("#save-add-intro").click(function() {
-				$("#box-add-intro").addClass("none");
-				$("#wrapper-all").addClass("none");
-				$('#myform').attr('action', '/ShopTandT/profile/save-intro/'+id);
-			});
+		});
+		$("#save-add-intro").click(function() {
+			var id = "${ user.id}";
+			$("#box-add-intro").addClass("none");
+			$("#wrapper-all").addClass("none");
+			$('#myform').attr('action', '/ShopTandT/profile/save-intro/' + id);
+		});
 
-			$(".close-box").click(function() {
-				$("#box-add-intro").addClass("none");
-				$("#wrapper-all").addClass("none");
-			});
+		$(".close-box").click(function() {
+			$("#box-add-intro").addClass("none");
+			$("#wrapper-all").addClass("none");
 		});
 	</script>
 

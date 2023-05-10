@@ -4,7 +4,10 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import TT.Model.User;
 import TT.Service.Admin.aRoleService;
+import TT.Service.Admin.aStatisticsService;
 import TT.Service.Admin.aUserService;
 
 @Controller
@@ -25,7 +30,7 @@ public class UserController {
 
 	private aRoleService aRoleService;
 	private aUserService aUserService;
-
+private aStatisticsService statisticsService;
 	@RequestMapping(value = { "/admin/customer" })
 	public ModelAndView loadCustomer(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("admin/customer");
@@ -52,7 +57,14 @@ public class UserController {
 			}
 		}
 		
-		mv.addObject("listUser", aUserService.getAllUser());
+		List<User> liUser = aUserService.getAllUser();
+		Collections.sort(liUser, new Comparator<User>() {
+			@Override
+			public int compare(User o1, User o2) {
+				return o2.getId() - o1.getId();
+			}
+		});
+		mv.addObject("listUser", liUser);
 		mv.addObject("user", "true");
 		mv.addObject("role", "false");
 		mv.addObject("addnewuser", "false");
@@ -65,7 +77,7 @@ public class UserController {
 	@RequestMapping(value = "/admin/customer/add-new-user/savefile", method = RequestMethod.POST)
 	public ModelAndView upload(@RequestParam(value="filetag", required = false) MultipartFile file ,HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		aUserService = new aUserService();
-		
+		statisticsService = new aStatisticsService();
 		String firstname = request.getParameter("firstname");
 		String lastname = request.getParameter("lastname");
 		String email = request.getParameter("email");
@@ -75,6 +87,7 @@ public class UserController {
 		String role_id = request.getParameter("role");
 		String district = request.getParameter("district");
 		String city = request.getParameter("city");
+		String redirect = request.getParameter("redirect");
 		//String avatar = request.getParameter("avatar");
 		
 		String image = saveFile(file);
@@ -84,7 +97,25 @@ public class UserController {
 				if (aUserService.insert(firstname, lastname, email, phone_number, address, district, city, password, image,
 						Integer.parseInt(role_id))) {
 					System.out.println("Add uesr success");
-					return new ModelAndView("redirect: /ShopTandT/admin/customer");
+					if (statisticsService.check_date_of_today_exist()) { // exists
+						if (statisticsService.update_user_num_in_statistics_DB()) {
+							System.out.println("Update user num in statistics DB success!");
+						} else {
+							System.out.println("Update user num in statistics DB unsuccess!");
+						}
+					} else { // not exists
+						statisticsService.insert_new_statistics();
+						if (statisticsService.update_user_num_in_statistics_DB()) {
+							System.out.println("Update user num in statistics DB success!");
+						} else {
+							System.out.println("Update user num in statistics DB unsuccess!");
+						}
+					}
+					if(redirect!= null) {
+						return new ModelAndView("redirect: /ShopTandT/admin/customer");
+					} else {
+						return new ModelAndView("redirect: /ShopTandT/admin/customer/add-new-user");
+					}
 				} else {
 					System.out.println("Add uesr unsuccess");
 					return new ModelAndView("redirect: /ShopTandT/admin/customer/add-new-user");
@@ -99,7 +130,25 @@ public class UserController {
 				if (aUserService.insert(firstname, lastname, email, phone_number, address, district, city, password, "avt-default.jpg",
 						Integer.parseInt(role_id))) {
 					System.out.println("Add uesr success");
-					return new ModelAndView("redirect: /ShopTandT/admin/customer");
+					if (statisticsService.check_date_of_today_exist()) { // exists
+						if (statisticsService.update_user_num_in_statistics_DB()) {
+							System.out.println("Update user num in statistics DB success!");
+						} else {
+							System.out.println("Update user num in statistics DB unsuccess!");
+						}
+					} else { // not exists
+						statisticsService.insert_new_statistics();
+						if (statisticsService.update_user_num_in_statistics_DB()) {
+							System.out.println("Update user num in statistics DB success!");
+						} else {
+							System.out.println("Update user num in statistics DB unsuccess!");
+						}
+					}
+					if(redirect!= null) {
+						return new ModelAndView("redirect: /ShopTandT/admin/customer");
+					} else {
+						return new ModelAndView("redirect: /ShopTandT/admin/customer/add-new-user");
+					}
 				} else {
 					System.out.println("Add uesr unsuccess");
 					return new ModelAndView("redirect: /ShopTandT/admin/customer/add-new-user");

@@ -18,6 +18,7 @@ import TT.Service.Admin.aReceiptService;
 import TT.Service.Admin.aReceipt_detailsSevice;
 import TT.Service.Admin.aStatusService;
 import TT.Service.Shipper.QRCodeService;
+import TT.Service.User.ReceiptService;
 import TT.Service.User.Receipt_detailsService;
 
 @Controller
@@ -27,6 +28,7 @@ public class OrderManagementController {
 	private aStatusService _aStatusService;
 	private Receipt_detailsService receipt_detailsService;
 	private QRCodeService qrCodeService;
+	private ReceiptService receiptService;
 
 	@RequestMapping(value = { "/admin/order-management" })
 	public ModelAndView loadManagement(HttpServletRequest request, HttpServletResponse response) {
@@ -34,6 +36,8 @@ public class OrderManagementController {
 
 		_aReceiptService = new aReceiptService();
 		qrCodeService = new QRCodeService();
+		receiptService = new  ReceiptService();
+		
 		String id_order = String.valueOf(request.getParameter("id_order"));
 		String status = String.valueOf(request.getParameter("status"));
 		String bill = request.getParameter("bill");
@@ -48,8 +52,26 @@ public class OrderManagementController {
 		}
 
 		if (!id_order.equals("null") && !status.equals("null")) {
-			if (_aReceiptService.editStatusOrderById(Integer.parseInt(id_order), Integer.parseInt(status))) {
-				System.out.println("Update status order success!");
+			if(Integer.parseInt(status) == 4) {
+				Receipt re = receiptService.get_all_order_by_order_id(Integer.parseInt(id_order));
+				System.out.println(re.getShipper().getId());
+				if(re.getShipper() != null) {
+					if (_aReceiptService.editStatusOrderById(Integer.parseInt(id_order), Integer.parseInt(status))) {
+						System.out.println("Update status order success!");
+						session.setAttribute("aShipped", "true");
+						return new ModelAndView("redirect: /ShopTandT/admin/shipping");
+					}
+				} else {
+					System.out.println("null shipper 58");
+					session.setAttribute("aShipped", "false");
+					return new ModelAndView("redirect: /ShopTandT/admin/shipping");
+				}
+			} else {
+				if (_aReceiptService.editStatusOrderById(Integer.parseInt(id_order), Integer.parseInt(status))) {
+					System.out.println("Update status order success!");
+					session.setAttribute("aShipped", "true");
+					return new ModelAndView("redirect: /ShopTandT/admin/shipping");
+				}
 			}
 		}
 		if (print != null && bill != null) {
@@ -76,7 +98,6 @@ public class OrderManagementController {
 
 		});
 		mv.addObject("listOrder", li);
-
 		return mv;
 	}
 
@@ -237,6 +258,11 @@ public class OrderManagementController {
 	@RequestMapping(value = { "admin/shipping" })
 	public ModelAndView shipping(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("admin/barcode");
+		String shipping  = request.getParameter("shipping");
+		HttpSession session = request.getSession();
+		if(shipping != null) {
+			session.setAttribute("aShipped", "start");
+		}
 		mv.addObject("shipping", "true");
 		return mv;
 	}

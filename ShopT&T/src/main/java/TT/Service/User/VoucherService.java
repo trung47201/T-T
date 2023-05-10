@@ -162,7 +162,7 @@ public class VoucherService implements VoucherRepository {
 		Timestamp end_date_vch = null;
 		List<Voucher> li = getAllVoucher();
 		for (Voucher vc : li) {
-			if (vc.getId() != 1) {
+			if (vc.getId() != 1 && vc.getLimit() > 0) {
 				start_date_vch = vc.getStart_date();
 				end_date_vch = vc.getEnd_date();
 				if (datenow.compareTo(start_date_vch) >= 0 && datenow.compareTo(end_date_vch) < 0) {
