@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.jasper.tagplugins.jstl.core.Out;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -66,11 +67,9 @@ public class PaymentController {
 			request.setAttribute("transaction", transaction);
 			request.setAttribute("shippingAddress", shippingAddress);
 			
-			
 			String cartid = "";
 			HashMap<Cart, Integer> liCS = new LinkedHashMap<>();
 			for (Item it : transaction.getItemList().getItems()) {
-				
 					if(it.getDescription() != null) {
 						if(it.getDescription().contains("cs")) {
 							System.out.println(it.getDescription());
@@ -95,7 +94,18 @@ public class PaymentController {
 			if(liCS.size() > 0) {
 				request.setAttribute("listProd", liCS);
 			}
+			double subtotal = 0;
+			for (Cart cart : liCS.keySet()) {
+				if (cart.getColor_size().getProd().getDiscount() > 0) {
+					subtotal += cart.getColor_size().getProd().getPrice() * cart.getQuantity()
+							- cart.getColor_size().getProd().getPrice() * cart.getQuantity()
+									* cart.getColor_size().getProd().getDiscount() / 100;
+				} else {
+					subtotal += cart.getColor_size().getProd().getPrice() * cart.getQuantity();
+				}
+			}
 			double total = Double.parseDouble(transaction.getAmount().getTotal());
+			mv.addObject("subtotal", subtotal);
 			mv.addObject("total", total);
 			mv.addObject("cartid", cartid);
 		} catch (PayPalRESTException ex) {
@@ -129,7 +139,8 @@ public class PaymentController {
 		String size = request.getParameter("size");
 		if(vchid != null) {
 			if(!vchid.equals("")) {
-				vccode = voucherService.get_voucher_code_by_id(Integer.parseInt(user_id));
+				vccode = voucherService.get_voucher_code_by_id(Integer.parseInt(vchid));
+				System.out.println(vccode+":aaaaaaaaaaaaaaaaaaaaaa");
 			}
 		}
 			

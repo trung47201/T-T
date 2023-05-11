@@ -112,6 +112,10 @@ public class aVoucherService implements aVoucherRepository {
 			for (Voucher vc : liVC) {
 				if (vc.getCode().toLowerCase().equals(s.toLowerCase()) || vc.getDescription().toLowerCase().equals(s.toLowerCase())) {
 					li.add(vc);
+				} else {
+					if(vc.getCode().contains(s.trim()) || vc.getDescription().contains(s)) {
+						li.add(vc);
+					}
 				}
 			}
 		}

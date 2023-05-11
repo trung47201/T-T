@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="<c:url value='/assets/css/admin-nav2.css'/>">
 
 <c:if test="${ voucher == 'true' }">
-	<title>Voucher </title>
+	<title>Voucher Management</title>
 </c:if>
 <c:if test="${ editvoucher == 'true' }">
 	<title>Edit voucher </title>
@@ -170,8 +170,9 @@
 								<input type="number" id="applyfor" name="applyfor">
 							</div>
 							<div class="fullname">
-								<p>End date</p>
-								<input type="datetime-local" id="end-date" name="end-date">
+								<p>Start date</p>
+								<input type="datetime-local" id="start-date" name="start-date"
+									value="">
 							</div>
 						</div>
 						<div class="customer-infor-form">
@@ -198,9 +199,8 @@
 								<input type="number" min="0" id="discount" name="discount">
 							</div>
 							<div class="fullname">
-								<p>Start date</p>
-								<input type="datetime-local" id="start-date" name="start-date"
-									value="">
+								<p>End date</p>
+								<input type="datetime-local" id="end-date" name="end-date">
 							</div>
 						</div>
 						<div class="customer-infor-form">
@@ -462,15 +462,15 @@
 			}
 		}
 	</script>
-
-		<script>
-	var m = new Date();
-	var dateCurrent =
-	    m.getUTCFullYear() + "-" +
-	    ("0" + (m.getUTCMonth()+1)).slice(-2) + "-" +
-	    ("0" + m.getUTCDate()).slice(-2) + "T" +
-	    ("0" + m.getHours()).slice(-2) + ":" +
-	    ("0" + m.getMinutes()).slice(-2);
+<c:if test="${ voucher == 'true' }">
+	<script>
+		var m = new Date();
+		var dateCurrent =
+		    m.getUTCFullYear() + "-" +
+		    ("0" + (m.getUTCMonth()+1)).slice(-2) + "-" +
+		    ("0" + m.getUTCDate()).slice(-2) + "T" +
+		    ("0" + m.getHours()).slice(-2) + ":" +
+		    ("0" + m.getMinutes()).slice(-2);
 	    
 		document.getElementById("start-date").min = dateCurrent;
 		document.getElementById("start-date").max = (m.getFullYear()+1)+"-01-01T00:00";
@@ -478,6 +478,7 @@
 		document.getElementById("end-date").min = dateCurrent;
 		document.getElementById("end-date").max = (m.getFullYear()+1)+"-01-01T00:00";
 	</script>
+</c:if>
 
 		<script>
 		if(${notFound == 'true'}) {

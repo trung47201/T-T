@@ -187,16 +187,9 @@
 						<td class="txt">
 							<div class="total-products-cost">Total products cost</div>
 						</td>
-						<c:if test="${ voucher != null && voucher > 0 }">
 							<td class="price"><b> $<fmt:formatNumber type="number"
-										maxFractionDigits="2" value="${ total + voucher }" />
+										maxFractionDigits="2" value="${ subtotal }" />
 							</b></td>
-						</c:if>
-						<c:if test="${ voucher == null || voucher <= 0 }">
-							<td class="price"><b> $<fmt:formatNumber type="number"
-										maxFractionDigits="2" value="${ total }" />
-							</b></td>
-						</c:if>
 					</tr>
 					<tr>
 						<td class="txt">

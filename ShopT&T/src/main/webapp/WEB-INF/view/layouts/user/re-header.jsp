@@ -8,7 +8,7 @@
 <header>
 	<div class="top-nav">
 		<div class="title-nav">
-			<p>Free Shipping On Orders Over $100 or In-Store Pick Up
+			<p>Free Shipping On Orders Over $50 or In-Store Pick Up
 				Available.</p>
 		</div>
 

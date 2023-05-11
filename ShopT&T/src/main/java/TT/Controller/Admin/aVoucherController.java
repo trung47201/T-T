@@ -126,6 +126,13 @@ public class aVoucherController {
 		if (search != null) {
 			List<Voucher> liVC = aVoucherService.find_voucher_by_string(search);
 			if (liVC.size() > 0) {
+				Collections.sort(liVC, new Comparator<Voucher>() {
+					@Override
+					public int compare(Voucher o1, Voucher o2) {
+						return o2.getId() - o1.getId();
+					}
+
+				});
 				mv.addObject("listVoucher", liVC);
 				mv.addObject("keyword", search);
 			} else {
@@ -134,6 +141,13 @@ public class aVoucherController {
 			}
 		} else {
 			List<Voucher> liVC = aVoucherService.getAllVoucher();
+			Collections.sort(liVC, new Comparator<Voucher>() {
+				@Override
+				public int compare(Voucher o1, Voucher o2) {
+					return o2.getId() - o1.getId();
+				}
+
+			});
 			mv.addObject("listVoucher", liVC);
 		}
 

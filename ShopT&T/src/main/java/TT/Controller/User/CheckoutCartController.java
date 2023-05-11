@@ -23,6 +23,7 @@ import TT.Service.User.PostsService;
 import TT.Service.User.Product_color_sizeService;
 import TT.Service.User.StatisticsService;
 import TT.Service.User.VoucherService;
+import TT.Service.User.Voucher_SaveService;
 import TT.Service.User.Product.ShoesService;
 
 @Controller
@@ -36,6 +37,7 @@ public class CheckoutCartController {
 	private ShoesService shoesService;
 	private StatisticsService statisticsService;
 	private PostsService postsService;
+	private Voucher_SaveService voucher_SaveService;
 
 	@RequestMapping(value = { "cart/checkout/user-cart/{id}" })
 	public ModelAndView checkout_ok_cart(@PathVariable String id, HttpServletRequest request,
@@ -47,6 +49,7 @@ public class CheckoutCartController {
 		product_color_sizeService = new Product_color_sizeService();
 		shoesService = new ShoesService();
 		statisticsService = new StatisticsService();
+		voucher_SaveService = new Voucher_SaveService();
 
 		HttpSession session = request.getSession();
 		System.out.println("heaaaa");
@@ -79,7 +82,6 @@ public class CheckoutCartController {
 					total += cart.getColor_size().getProd().getPrice() * cart.getQuantity();
 				}
 				u = cart.getUser();
-
 			}
 		} else {
 			System.out.println("here");
@@ -120,13 +122,12 @@ public class CheckoutCartController {
 			method = "COD";
 		} else {
 			System.out.println(method);
-			if(u != null) {
+			if (u != null) {
 				phone_number = u.getPhone_number();
 			}
 		}
 
 		int vch_discount = voucherService.getDiscountById_Voucher(vc_id);
-		System.out.println("---------------------------------------------------------------" + vch_discount);
 		double dis = 0;
 		if (vch_discount > 0) {
 			dis = (double) Math.round(vch_discount * total) / 100;
@@ -138,6 +139,7 @@ public class CheckoutCartController {
 			if (vc_id == 0) {
 				vc_id = 1;
 			}
+			System.out.println(dis + ": total: " + total);
 			if (receiptService.insertIntoOrder(fullname, email, phone_number, adr, vc_id, note, method, dis)) {
 				if (vc_id != 1) {
 					voucherService.update_limit_voucher(vc_id);
@@ -163,7 +165,8 @@ public class CheckoutCartController {
 							&& shoesService.updateProduct_Sold(cart.getColor_size().getProd().getId(),
 									cart.getQuantity())
 							&& statisticsService.update_order_num_in_statistics_DB()
-							&& cartService.delete_cart_by_cart_id(cart.getId())) {
+							&& cartService.delete_cart_by_cart_id(cart.getId())
+							&& voucher_SaveService.update(cart.getUser().getId(), vc_id)) {
 						if (!method.equals("COD")) {
 							statisticsService.update_revenue_product_num_in_statistics_DB(1,
 									(double) Math.round((price_at * cart.getQuantity()) * 100) / 100);
@@ -171,6 +174,15 @@ public class CheckoutCartController {
 						System.out.println("success 147 checkoutcontroller");
 					} else {
 						System.out.println("unsucess 149 checkoutcontroller");
+					}
+				}
+				if (!method.equals("COD")) {
+					if (dis != 0.0) {
+						if (total < 50) {
+							statisticsService.update_revenue_product_num_in_statistics_DB(0, -dis + 11.0);
+						} else {
+							statisticsService.update_revenue_product_num_in_statistics_DB(0, -dis);
+						}
 					}
 				}
 				System.out.println("buy cart success this checkout cart controller");

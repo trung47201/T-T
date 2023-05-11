@@ -52,7 +52,8 @@ public class CheckoutController {
 		voucherService = new VoucherService();
 		statisticsService = new StatisticsService();
 		product_color_sizeService = new Product_color_sizeService();
-
+		voucher_saveService = new Voucher_SaveService();
+		
 		HttpSession session = request.getSession();
 
 		String firstname = request.getParameter("firstname");
@@ -107,7 +108,6 @@ public class CheckoutController {
 		if (method == null) {
 			method = "COD";
 		} else {
-			method = String.valueOf(method);
 			if (method.equalsIgnoreCase("COD")) {
 				System.out.println("heare 111");
 			} else {
@@ -153,7 +153,8 @@ public class CheckoutController {
 							&& product_color_sizeService.updateColor_size_Quantity(Integer.parseInt(size),
 									Integer.parseInt(color), Integer.parseInt(id_prod), Integer.parseInt(quantity))
 							&& shoesService.updateProduct_Sold(Integer.parseInt(id_prod), Integer.parseInt(quantity))
-							&& statisticsService.update_order_num_in_statistics_DB()) {
+							&& statisticsService.update_order_num_in_statistics_DB()
+							&& voucher_saveService.update(Integer.parseInt(user), vc_id)) {
 						session.setAttribute("order", "end");
 						System.out.println("buy now success (118 checkoutController)");
 						voucher_saveService.update(Integer.parseInt(user), vc_id);

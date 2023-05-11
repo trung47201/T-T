@@ -76,7 +76,7 @@
 				</div>
 				<div class="cart-empty">
 					<div class="btn-effect">
-						<button type="submit" name="continueShopping"
+						<button type="button" name="continueShopping"
 							id="continue-shopping">Shopping</button>
 					</div>
 				</div>
@@ -246,7 +246,7 @@
 				</div>
 				<div class="btn-buy-continue">
 					<div class="btn-effect">
-						<button type="submit" name="continueShopping"
+						<button type="button" name="continueShopping"
 							id="continue-shopping">Continue Shopping</button>
 					</div>
 					<div class="btn-effect">

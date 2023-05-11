@@ -54,6 +54,10 @@ selecet#sl-month option:hover {
 .list-ele {
     margin-top: 27px;
 }
+p#total-revenue a {
+    font-size: 18px;
+    font-weight: normal;
+}
 </style>
 
 <body>
@@ -311,13 +315,13 @@ selecet#sl-month option:hover {
 							<div class="profile-report">
 								<div class="profile-report-left">
 									<p id="profile-report-title">Weekly Statistics</p>
-									<p id="profile-report-name">REVENUE</p>
+									<p id="profile-report-name">RECEIPT</p>
 									<p id="percent-revenue">
 										<img
 											src="<c:url value="/assets/images/icons/icons8-up-64.png"/>"
 											alt="up">68%
 									</p>
-									<p id="total-revenue">$84,602.5</p>
+									<p id="total-revenue">${ totalorderofweek } <a>Orders</a></p>
 								</div>
 								<div class="profile-report-right">
 									<div class="profile-report-chart">
@@ -372,7 +376,7 @@ selecet#sl-month option:hover {
 									<h4 id="title-total-qty">Total Orders</h4>
 								</div>
 								<div class="wrapper-chart-tbl">
-									<div class="percent-of-mychart" id="hoverval">60%</div>
+									<div class="percent-of-mychart" id="hoverval">62.8%</div>
 									<div>
 										<canvas id="myChart"></canvas>
 									</div>
@@ -713,7 +717,7 @@ selecet#sl-month option:hover {
 		var myChart_re = new Chart(ctx_re, {
 			type : "line",
 			data : {
-				labels : [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+				labels : ${ listdaynamefromnow },
 				datasets : [ {
 					label : "Order",
 					tension : 0,
@@ -725,7 +729,7 @@ selecet#sl-month option:hover {
 					borderWidth : 4,
 					backgroundColor : "transparent",
 					fill : true,
-					data : [ 50, 40, 300, 220, 500, 250, 400 ],
+					data : ${ listorderofweek },
 					maxBarThickness : 6
 				} ],
 			},

@@ -32,7 +32,13 @@ public class AdminController {
 		// ORDER
 		// ================================================================================
 		List<Integer> li_order = statisticsService.list_order_of_week_number();
+		int t_order = 0;
+		for (Integer i : li_order) {
+			t_order += i;
+		}
+		mv.addObject("totalorderofweek", t_order);
 		mv.addObject("listorderofweek", li_order);
+		mv.addObject("listdaynamefromnow", statisticsService.list_day_name_from_now());
 		mv.addObject("orderofday", statisticsService.get_order_of_day_number());
 		mv.addObject("percentorder", statisticsService.get_percent_order_of_day());
 		int rs_order = statisticsService.get_update_history_order();

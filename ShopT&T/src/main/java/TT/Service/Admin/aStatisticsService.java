@@ -1,6 +1,7 @@
 package TT.Service.Admin;
 
 import java.sql.Connection;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.TimeZone;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
+import TT.Model.Receipt;
 import TT.Model.Statistics;
 import TT.Service.User.ConnectService;
 
@@ -483,6 +485,7 @@ public class aStatisticsService {
 		double rs = get_view_of_day_number() * 1.0 / get_view_of_yesterday_number() * 100;
 		return (int) Math.round(rs) - 100;
 	}
+	
 
 	// HOURS - MINUTE - SECONDS
 	// =================================================================================================
@@ -580,6 +583,16 @@ public class aStatisticsService {
 			return "\"Dec\"";
 		}
 		return null;
+	}
+	public List<String> list_day_name_from_now() {
+		List<String> li = new LinkedList<>();
+		java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
+		int this_day = get_day_of_week(date);
+		System.out.println(this_day);
+		for (int i = 1; i <= this_day; i++) {
+			li.add(get_day_name_by_num(i));
+		}
+		return li;
 	}
 	
 	public String get_day_name_by_num(int m) {
